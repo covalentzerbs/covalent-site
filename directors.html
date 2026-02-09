@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directors - Covalent Studios</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables */
+        :root {
+            --ice: #FAFBFC;
+            --bond-blue: #5979e9;
+            --black: #0A0A0A;
+            --gray: #6B7280;
+            --white: #FFFFFF;
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        ::selection {
+            background: var(--black);
+            color: var(--white);
+            -webkit-text-fill-color: var(--white);
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--white);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+        }
+
+        /* Navigation - Plus Menu */
+        .nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 2rem 3rem;
+            z-index: 1000;
+        }
+
+        .menu-toggle {
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-toggle.active {
+            transform: rotate(45deg);
+        }
+
+        .plus-icon {
+            width: 32px;
+            height: 32px;
+            position: relative;
+        }
+
+        .plus-icon span {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: var(--white);
+            top: 50%;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .plus-icon span:first-child {
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .plus-icon span:last-child {
+            transform: translateY(-50%);
+        }
+
+        /* Expanded Menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-end;
+            padding: 7rem 3rem 3rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .menu-overlay.active {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .menu-link {
+            font-size: clamp(1rem, 1.8vw, 1.5rem);
+            font-weight: 500;
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            line-height: 1.1;
+        }
+
+        .menu-overlay.active .menu-link {
+            opacity: 0.6;
+            transform: translateX(0);
+        }
+
+        .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.05s; }
+        .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.1s; }
+        .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.15s; }
+
+        .menu-link:hover {
+            opacity: 1 !important;
+            background: linear-gradient(90deg, #3A5BD4, #5979e9, #3A5BD4, #2845B0);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .menu-link.current {
+            opacity: 1 !important;
+        }
+
+        /* Logo Bottom Right */
+        .logo-bottom {
+            position: fixed;
+            bottom: 2rem;
+            right: 3rem;
+            z-index: 1000;
+            opacity: 1;
+        }
+
+        .logo-bottom svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Directors Page */
+        .directors-page {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        .video-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: scale(1.33);
+            transform-origin: center center;
+            border: none;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.6s ease;
+            pointer-events: none;
+        }
+
+        .video-wrapper iframe.active {
+            opacity: 1;
+        }
+
+        .video-cursor-block {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: auto;
+            cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAAA1JREFUGFdj+P///38ACfsD/QjR0NMAAAAASUVORK5CYII=') 0 0, none;
+        }
+
+        /* Directors List */
+        .directors-list {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            padding: 2.5rem 3.5rem;
+        }
+
+        .directors-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0;
+        }
+
+        /* Director Row */
+        .director-row {
+            cursor: pointer;
+            padding: 0.15em 0;
+            margin: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .director-name {
+            font-size: clamp(3rem, 9vw, 8rem);
+            font-weight: 700;
+            line-height: 1.05;
+            color: var(--white);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.35;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+
+        .director-row:hover .director-name,
+        .director-row.active .director-name {
+            opacity: 1;
+            background: linear-gradient(90deg, #3A5BD4, #5979e9, #3A5BD4, #2845B0);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        /* No Video State */
+        /* Idle state - cursor stopped moving */
+        .directors-container.idle .director-name {
+            opacity: 0 !important;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .director-row.no-video .director-name {
+            opacity: 0.15;
+        }
+
+        .director-row.no-video:hover .director-name {
+            opacity: 0.3;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav {
+                padding: 1.5rem 2.5rem;
+            }
+
+            .logo-bottom {
+                bottom: 1.5rem;
+                right: 2.5rem;
+            }
+
+            .directors-list {
+                padding: 2rem 2.5rem;
+            }
+
+            .menu-overlay {
+                padding: 6rem 2.5rem 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1.5rem 1.5rem;
+            }
+
+            .logo-bottom {
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .logo-bottom svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            .directors-list {
+                padding: 1.5rem 1.5rem;
+            }
+
+            .director-row {
+                margin: 0.2em 0;
+            }
+
+            .menu-overlay {
+                padding: 5rem 1.5rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Navigation - Plus Menu -->
+    <nav class="nav">
+        <div class="menu-toggle" id="menuToggle">
+            <div class="plus-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-links">
+            <a href="work.html" class="menu-link">Work</a>
+            <a href="directors.html" class="menu-link current">Directors</a>
+            <a href="contact.html" class="menu-link">Contact</a>
+        </div>
+    </div>
+
+    <!-- Logo Bottom Right -->
+    <a href="index.html" class="logo-bottom">
+        <svg viewBox="0 0 160 160" fill="none">
+            <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+        </svg>
+    </a>
+
+    <!-- Main Content -->
+    <main class="directors-page">
+        <!-- Background Video Container -->
+        <div class="video-background">
+            <div class="video-wrapper" id="videoWrapper">
+                <!-- Videos loaded dynamically -->
+            </div>
+            <div class="video-cursor-block"></div>
+        </div>
+
+        <!-- Directors List -->
+        <div class="directors-list">
+            <div class="directors-container">
+                <div class="director-row" data-director="jacob" data-vimeo="1140543709">
+                    <span class="director-name">Jacob Frost</span>
+                </div>
+                <div class="director-row" data-director="wilbert" data-vimeo="1122231476">
+                    <span class="director-name">Wilbert Cheng</span>
+                </div>
+                <div class="director-row" data-director="afrim" data-vimeo="1148837909">
+                    <span class="director-name">Afrim Zenuni</span>
+                </div>
+                <div class="director-row" data-director="gracie" data-youtube="bZNgRUC2yuI">
+                    <span class="director-name">Gracie Ko</span>
+                </div>
+                <div class="director-row" data-director="jake">
+                    <span class="director-name">Jake Aks</span>
+                </div>
+                <div class="director-row" data-director="benjamin">
+                    <span class="director-name">Benjamin Gugick</span>
+                </div>
+                <div class="director-row" data-director="rob">
+                    <span class="director-name">Rob Luedtke</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Directors data
+        const directors = [
+            { id: 'jacob', name: 'Jacob Frost', vimeo: '1140543709' },
+            { id: 'wilbert', name: 'Wilbert Cheng', vimeo: '1122231476' },
+            { id: 'afrim', name: 'Afrim Zenuni', vimeo: '1148837909' },
+            { id: 'gracie', name: 'Gracie Ko', youtube: 'bZNgRUC2yuI' },
+            { id: 'jake', name: 'Jake Aks' },
+            { id: 'benjamin', name: 'Benjamin Gugick' },
+            { id: 'rob', name: 'Rob Luedtke' }
+        ];
+
+        const videoWrapper = document.getElementById('videoWrapper');
+        const directorRows = document.querySelectorAll('.director-row');
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        // Mark directors without video
+        directorRows.forEach(row => {
+            const directorId = row.getAttribute('data-director');
+            const director = directors.find(d => d.id === directorId);
+            if (!director || (!director.vimeo && !director.youtube)) {
+                row.classList.add('no-video');
+            }
+        });
+
+        // Create video iframes
+        function createVideoElement(director) {
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('data-director', director.id);
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+            iframe.setAttribute('allowfullscreen', '');
+
+            if (director.vimeo) {
+                iframe.src = `https://player.vimeo.com/video/${director.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1`;
+            } else if (director.youtube) {
+                iframe.src = `https://www.youtube.com/embed/${director.youtube}?autoplay=1&loop=1&muted=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=${director.youtube}&playsinline=1`;
+            }
+
+            return iframe;
+        }
+
+        // Initialize videos
+        directors.forEach(director => {
+            if (director.vimeo || director.youtube) {
+                const iframe = createVideoElement(director);
+                videoWrapper.appendChild(iframe);
+            }
+        });
+
+        // Switch video with crossfade
+        let currentVideoId = null;
+        let switchTimer = null;
+
+        function switchVideo(directorId) {
+            const director = directors.find(d => d.id === directorId);
+
+            if (!director || (!director.vimeo && !director.youtube)) {
+                return;
+            }
+
+            if (directorId === currentVideoId) return;
+            currentVideoId = directorId;
+
+            // Fade out all iframes (the CSS transition handles the smooth fade)
+            const iframes = videoWrapper.querySelectorAll('iframe');
+            iframes.forEach(iframe => iframe.classList.remove('active'));
+
+            // Delay before fading in the new one for a clean crossfade
+            setTimeout(() => {
+                if (currentVideoId !== directorId) return; // user already moved on
+                const currentIframe = videoWrapper.querySelector(`iframe[data-director="${directorId}"]`);
+                if (currentIframe) {
+                    currentIframe.classList.add('active');
+                }
+            }, 450);
+
+            directorRows.forEach(row => row.classList.remove('active'));
+            const activeRow = document.querySelector(`.director-row[data-director="${directorId}"]`);
+            if (activeRow) {
+                activeRow.classList.add('active');
+            }
+        }
+
+        // Hover and click listeners with debounce
+        directorRows.forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                const directorId = row.getAttribute('data-director');
+                clearTimeout(switchTimer);
+                switchTimer = setTimeout(() => {
+                    switchVideo(directorId);
+                }, 300);
+            });
+
+            row.addEventListener('mouseleave', () => {
+                clearTimeout(switchTimer);
+            });
+
+            row.addEventListener('click', () => {
+                const directorId = row.getAttribute('data-director');
+                const director = directors.find(d => d.id === directorId);
+
+                if (director) {
+                    // Navigate to director page (to be implemented)
+                    console.log(`Navigate to ${director.name}'s page`);
+                }
+            });
+        });
+
+        // Set initial video
+        const firstDirectorWithVideo = directors.find(d => d.vimeo || d.youtube);
+        if (firstDirectorWithVideo) {
+            setTimeout(() => {
+                switchVideo(firstDirectorWithVideo.id);
+            }, 500);
+        }
+
+        // Menu toggle
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuToggle.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        // Close menu on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menuOverlay.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        // Custom cursor + idle detection
+        const cursor = document.getElementById('cursor');
+        const directorsContainer = document.querySelector('.directors-container');
+        let idleTimer;
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            // Show text on mouse move
+            directorsContainer.classList.remove('idle');
+
+            // Reset idle timer
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => {
+                directorsContainer.classList.add('idle');
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
