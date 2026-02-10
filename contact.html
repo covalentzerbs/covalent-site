@@ -168,12 +168,28 @@
 
         .menu-link:hover {
             opacity: 1 !important;
+        }
+
+        .menu-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-link-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(90deg, #3A5BD4, #5979e9, #3A5BD4, #2845B0);
             background-size: 300% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: gradientShift 3s ease infinite;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--spread), transparent var(--spread));
+            mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--spread), transparent var(--spread));
         }
 
         .menu-link.current {
@@ -183,8 +199,8 @@
         /* Logo Bottom Right */
         .logo-bottom {
             position: fixed;
-            bottom: 2rem;
-            right: 3rem;
+            top: 2rem;
+            left: 3rem;
             z-index: 1000;
             opacity: 1;
             transition: opacity 0.3s ease;
@@ -236,6 +252,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            z-index: 1001;
+            background: var(--white);
         }
 
         .footer-left {
@@ -313,6 +332,56 @@
         }
 
         /* ==================== */
+        /* CLOCK */
+        /* ==================== */
+        .clock-widget {
+            position: fixed;
+            bottom: 2.5rem;
+            right: 3rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.15rem;
+            font-family: 'Space Grotesk', monospace;
+        }
+
+        .clock-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--black);
+            letter-spacing: 0.02em;
+        }
+
+        .clock-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            opacity: 0.4;
+            min-width: 2rem;
+            text-align: right;
+        }
+
+        .clock-time {
+            font-variant-numeric: tabular-nums;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .clock-colon {
+            opacity: 1;
+            transition: opacity 0.15s ease;
+        }
+
+        .clock-colon.blink {
+            opacity: 0;
+        }
+
+        /* ==================== */
         /* RESPONSIVE */
         /* ==================== */
         @media (max-width: 1024px) {
@@ -321,12 +390,17 @@
             }
 
             .logo-bottom {
-                bottom: 1.5rem;
-                right: 2.5rem;
+                top: 1.5rem;
+                left: 2.5rem;
             }
 
             .menu-overlay {
                 padding: 6rem 2.5rem 2.5rem;
+            }
+
+            .clock-widget {
+                bottom: 2rem;
+                right: 2.5rem;
             }
         }
 
@@ -336,8 +410,8 @@
             }
 
             .logo-bottom {
-                bottom: 1.5rem;
-                right: 1.5rem;
+                top: 1.5rem;
+                left: 1.5rem;
             }
 
             .logo-bottom svg {
@@ -359,6 +433,11 @@
             .footer-right {
                 flex-direction: column;
                 gap: 1rem;
+            }
+
+            .clock-widget {
+                bottom: 5.5rem;
+                right: 1.5rem;
             }
         }
     </style>
@@ -397,6 +476,22 @@
     <main class="contact-page">
         <a href="mailto:hello@covalentstudios.co" class="contact-email">hello@covalentstudios.co</a>
     </main>
+
+    <!-- Clock Widget -->
+    <div class="clock-widget" id="clockWidget">
+        <div class="clock-row">
+            <span class="clock-label">NYC</span>
+            <span class="clock-time" id="clockNYC">--<span class="clock-colon">:</span>--</span>
+        </div>
+        <div class="clock-row">
+            <span class="clock-label">CHI</span>
+            <span class="clock-time" id="clockCHI">--<span class="clock-colon">:</span>--</span>
+        </div>
+        <div class="clock-row">
+            <span class="clock-label">LA</span>
+            <span class="clock-time" id="clockLA">--<span class="clock-colon">:</span>--</span>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -455,6 +550,93 @@
                 menuOverlay.classList.remove('active');
             }
         });
+
+        // ==================== //
+        // MENU LINK GRADIENT SPREAD EFFECT
+        // ==================== //
+        document.querySelectorAll('.menu-link').forEach(link => {
+            const gradient = document.createElement('span');
+            gradient.classList.add('menu-link-gradient');
+            gradient.textContent = link.textContent;
+            gradient.style.setProperty('--spread', '0%');
+            link.appendChild(gradient);
+
+            let animationFrame;
+
+            link.addEventListener('mouseenter', (e) => {
+                const rect = link.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                gradient.style.setProperty('--mx', x + 'px');
+                gradient.style.setProperty('--my', y + 'px');
+                gradient.style.setProperty('--spread', '0%');
+
+                let start = null;
+                const duration = 900;
+                const animate = (timestamp) => {
+                    if (!start) start = timestamp;
+                    const progress = Math.min((timestamp - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    gradient.style.setProperty('--spread', (eased * 200) + '%');
+                    if (progress < 1) {
+                        animationFrame = requestAnimationFrame(animate);
+                    }
+                };
+                cancelAnimationFrame(animationFrame);
+                animationFrame = requestAnimationFrame(animate);
+            });
+
+            link.addEventListener('mouseleave', () => {
+                cancelAnimationFrame(animationFrame);
+                let start = null;
+                const currentSpread = parseFloat(gradient.style.getPropertyValue('--spread')) || 200;
+                const duration = 500;
+                const animate = (timestamp) => {
+                    if (!start) start = timestamp;
+                    const progress = Math.min((timestamp - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    gradient.style.setProperty('--spread', (currentSpread * (1 - eased)) + '%');
+                    if (progress < 1) {
+                        animationFrame = requestAnimationFrame(animate);
+                    }
+                };
+                animationFrame = requestAnimationFrame(animate);
+            });
+        });
+
+        // ==================== //
+        // CLOCK WIDGET
+        // ==================== //
+        function updateClocks() {
+            const now = new Date();
+
+            const timezones = [
+                { id: 'clockNYC', tz: 'America/New_York' },
+                { id: 'clockCHI', tz: 'America/Chicago' },
+                { id: 'clockLA', tz: 'America/Los_Angeles' }
+            ];
+
+            const seconds = now.getSeconds();
+            const colonVisible = seconds % 2 === 0;
+
+            timezones.forEach(({ id, tz }) => {
+                const el = document.getElementById(id);
+                const hours = new Intl.DateTimeFormat('en-US', {
+                    timeZone: tz, hour: '2-digit', hour12: false
+                }).format(now);
+                const minutes = new Intl.DateTimeFormat('en-US', {
+                    timeZone: tz, minute: '2-digit'
+                }).format(now);
+
+                const h = hours.padStart(2, '0');
+                const m = minutes.padStart(2, '0');
+                const colonClass = colonVisible ? 'clock-colon' : 'clock-colon blink';
+                el.innerHTML = h + '<span class="' + colonClass + '">:</span>' + m;
+            });
+        }
+
+        updateClocks();
+        setInterval(updateClocks, 500);
 
         // ==================== //
         // VIRUS SPREADING TEXT EFFECT (footer)

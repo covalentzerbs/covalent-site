@@ -184,12 +184,28 @@
 
         .menu-link:hover {
             opacity: 1 !important;
+        }
+
+        .menu-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-link-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
             background-size: 300% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: gradientShift 3s ease infinite;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--spread), transparent var(--spread));
+            mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--spread), transparent var(--spread));
         }
 
 
@@ -460,6 +476,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            z-index: 1001;
+            background: var(--white);
         }
 
         .footer-left {
@@ -541,8 +560,8 @@
         /* ==================== */
         .logo-bottom {
             position: fixed;
-            bottom: 6rem;
-            right: 3.5rem;
+            top: 2rem;
+            left: 3rem;
             z-index: 1000;
             transition: opacity 0.3s ease;
         }
@@ -578,8 +597,8 @@
             }
 
             .logo-bottom {
-                bottom: 5.5rem;
-                right: 3rem;
+                top: 1.5rem;
+                left: 2.5rem;
             }
 
             .footer {
@@ -597,8 +616,8 @@
             }
 
             .logo-bottom {
-                bottom: 5rem;
-                right: 2rem;
+                top: 1.5rem;
+                left: 1.5rem;
             }
 
             .logo-bottom svg {
@@ -629,13 +648,6 @@
     <!-- Custom Cursor -->
     <div class="cursor" id="cursor"></div>
 
-    <!-- Logo Bottom Right - Home Button -->
-    <a href="home.html" class="logo-bottom">
-        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
-        </svg>
-    </a>
-
     <!-- Navigation - Plus Menu -->
     <nav class="nav">
         <div class="menu-toggle" id="menuToggle">
@@ -657,6 +669,13 @@
 
 
     <!-- Page Wrapper -->
+    <!-- Logo Bottom Right - Home Button -->
+    <a href="home.html" class="logo-bottom">
+        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+        </svg>
+    </a>
+
     <div class="page-wrapper">
         <!-- Main Content -->
         <main class="main-content">
@@ -787,6 +806,59 @@
                 menuToggle.classList.remove('active');
                 menuOverlay.classList.remove('active');
             }
+        });
+
+        // ==================== //
+        // MENU LINK GRADIENT SPREAD EFFECT
+        // ==================== //
+        document.querySelectorAll('.menu-link').forEach(link => {
+            const gradient = document.createElement('span');
+            gradient.classList.add('menu-link-gradient');
+            gradient.textContent = link.textContent;
+            gradient.style.setProperty('--spread', '0%');
+            link.appendChild(gradient);
+
+            let animationFrame;
+
+            link.addEventListener('mouseenter', (e) => {
+                const rect = link.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                gradient.style.setProperty('--mx', x + 'px');
+                gradient.style.setProperty('--my', y + 'px');
+                gradient.style.setProperty('--spread', '0%');
+
+                let start = null;
+                const duration = 900;
+                const animate = (timestamp) => {
+                    if (!start) start = timestamp;
+                    const progress = Math.min((timestamp - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    gradient.style.setProperty('--spread', (eased * 200) + '%');
+                    if (progress < 1) {
+                        animationFrame = requestAnimationFrame(animate);
+                    }
+                };
+                cancelAnimationFrame(animationFrame);
+                animationFrame = requestAnimationFrame(animate);
+            });
+
+            link.addEventListener('mouseleave', () => {
+                cancelAnimationFrame(animationFrame);
+                let start = null;
+                const currentSpread = parseFloat(gradient.style.getPropertyValue('--spread')) || 200;
+                const duration = 500;
+                const animate = (timestamp) => {
+                    if (!start) start = timestamp;
+                    const progress = Math.min((timestamp - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    gradient.style.setProperty('--spread', (currentSpread * (1 - eased)) + '%');
+                    if (progress < 1) {
+                        animationFrame = requestAnimationFrame(animate);
+                    }
+                };
+                animationFrame = requestAnimationFrame(animate);
+            });
         });
 
         // ==================== //
