@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>world of hyatt — covalent studios</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ==================== */
+        /* CSS VARIABLES */
+        /* ==================== */
+        :root {
+            --black: #0A0A0A;
+            --white: #FFFFFF;
+            --gray: #6B7280;
+            --bond-blue: #5979e9;
+        }
+
+        /* ==================== */
+        /* RESET & BASE */
+        /* ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        ::selection {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            text-transform: lowercase;
+            letter-spacing: -0.02em;
+        }
+
+        /* ==================== */
+        /* CUSTOM CURSOR */
+        /* ==================== */
+        .cursor {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--white);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+
+        .cursor.hidden {
+            opacity: 0;
+        }
+
+        /* ==================== */
+        /* NAVIGATION - PLUS MENU */
+        /* ==================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 2rem 3rem;
+            z-index: 1000;
+        }
+
+        .menu-toggle {
+            width: 48px;
+            height: 48px;
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-toggle.active {
+            transform: rotate(45deg);
+        }
+
+        .plus-icon {
+            width: 32px;
+            height: 32px;
+            position: relative;
+        }
+
+        .plus-icon span {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: var(--black);
+            top: 50%;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .plus-icon span:first-child {
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .plus-icon span:last-child {
+            transform: translateY(-50%);
+        }
+
+        /* ==================== */
+        /* MENU OVERLAY */
+        /* ==================== */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-end;
+            padding: 7rem 3rem 3rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .menu-overlay.active {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .menu-link {
+            font-size: clamp(1rem, 1.8vw, 1.5rem);
+            font-weight: 500;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .menu-overlay.active .menu-link {
+            opacity: 0.6;
+            transform: translateX(0);
+        }
+
+        .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.05s; }
+        .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.1s; }
+        .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.15s; }
+
+        .menu-link:hover {
+            opacity: 1 !important;
+            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+
+
+        /* ==================== */
+        /* MAIN CONTENT LAYOUT */
+        /* ==================== */
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 3rem;
+            padding: 6rem 3rem 3rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ==================== */
+        /* VIDEO PLAYER SECTION */
+        /* ==================== */
+        .video-section {
+            position: relative;
+        }
+
+        .cs-video-hero {
+            position: relative;
+            width: 100%;
+        }
+
+        .cs-video-ratio {
+            position: relative;
+            background: transparent;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .cs-video-ratio iframe {
+            display: block;
+            width: 100%;
+            border: none;
+        }
+
+        /* Click layer for play/pause */
+        .cs-video-click-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            cursor: none;
+            background: transparent;
+        }
+
+        /* ==================== */
+        /* CUSTOM VIDEO CONTROLS */
+        /* ==================== */
+        .cs-video-controls {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 24px;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--white);
+            z-index: 20;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Auto-hide when playing */
+        .cs-video-hero.cs-playing .cs-video-controls {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cs-video-hero.cs-playing.cs-hover .cs-video-controls {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Control buttons */
+        .cs-ctrl {
+            border: none;
+            background: transparent;
+            color: inherit;
+            cursor: none;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: filter 0.3s ease;
+        }
+
+        .cs-ctrl:hover {
+            filter: brightness(0) saturate(100%) invert(47%) sepia(98%) saturate(456%) hue-rotate(194deg) brightness(95%) contrast(91%);
+        }
+
+        .cs-ctrl-icon {
+            width: 16px;
+            height: auto;
+            pointer-events: none;
+            transition: filter 0.3s ease;
+        }
+
+        .cs-icon-play { display: inline-block; }
+        .cs-icon-pause { display: none; }
+
+        .cs-video-hero.cs-playing .cs-icon-play { display: none; }
+        .cs-video-hero.cs-playing .cs-icon-pause { display: inline-block; }
+
+        /* Progress bar */
+        .cs-progress {
+            flex: 1;
+            cursor: none;
+            padding: 10px 0;
+        }
+
+        .cs-progress-track {
+            position: relative;
+            width: 100%;
+            height: 2px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .cs-progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0%;
+            background: var(--white);
+            border-radius: 999px;
+        }
+
+        /* Timecode */
+        .cs-time {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.02em;
+            font-size: 12px;
+            opacity: 1;
+            white-space: nowrap;
+        }
+
+        /* ==================== */
+        /* FULLSCREEN MODE */
+        /* ==================== */
+        .cs-video-ratio:fullscreen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--black);
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .cs-video-ratio:fullscreen #vimeoWrapper {
+            width: 100%;
+            height: 100%;
+            padding-top: 0 !important;
+            position: relative !important;
+        }
+
+        .cs-video-ratio:fullscreen #vimeoWrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cs-video-ratio:fullscreen .cs-video-controls {
+            position: fixed;
+            bottom: 40px;
+            left: 60px;
+            right: 60px;
+            padding: 0;
+        }
+
+        /* Always show controls in fullscreen on hover */
+        .cs-video-ratio:fullscreen .cs-video-hero.cs-playing .cs-video-controls {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cs-video-ratio:fullscreen:hover .cs-video-controls {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        /* ==================== */
+        /* PROJECT INFO SECTION */
+        /* ==================== */
+        .project-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .project-meta {
+            margin-bottom: 1.5rem;
+        }
+
+        .director-credit {
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .case-study-link {
+            display: inline-block;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--black);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .case-study-link .char {
+            display: inline-block;
+            color: var(--black);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .case-study-link .char.infected {
+            background: linear-gradient(90deg, #4A6CF7, #6B8CFF, #4A6CF7);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 2s ease infinite;
+        }
+
+        /* Underline that also spreads */
+        .case-study-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--black);
+            transform-origin: left;
+            transition: background 0.4s ease;
+        }
+
+        .case-study-link.fully-infected::after {
+            background: linear-gradient(90deg, #4A6CF7, #6B8CFF, #4A6CF7);
+            background-size: 200% 100%;
+            animation: gradientShift 2s ease infinite;
+        }
+
+        /* ==================== */
+        /* FOOTER */
+        /* ==================== */
+        .footer {
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            font-size: 0.75rem;
+            color: var(--black);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .footer-link .char {
+            display: inline-block;
+            color: var(--black);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .footer-link .char.infected {
+            background: linear-gradient(90deg, #4A6CF7, #6B8CFF, #4A6CF7);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 2s ease infinite;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--black);
+            transition: background 0.4s ease;
+        }
+
+        .footer-link.fully-infected::after {
+            background: linear-gradient(90deg, #4A6CF7, #6B8CFF, #4A6CF7);
+            background-size: 200% 100%;
+            animation: gradientShift 2s ease infinite;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-link:hover {
+            opacity: 1;
+        }
+
+        .social-link svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--black);
+        }
+
+        /* ==================== */
+        /* LOGO BOTTOM RIGHT */
+        /* ==================== */
+        .logo-bottom {
+            position: fixed;
+            bottom: 6rem;
+            right: 3.5rem;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-bottom:hover {
+            opacity: 0.7;
+        }
+
+        .logo-bottom svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-bottom svg path {
+            fill: var(--black);
+        }
+
+        /* ==================== */
+        /* RESPONSIVE */
+        /* ==================== */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                padding: 5rem 2.5rem 2.5rem;
+            }
+
+            .project-info {
+                padding: 1rem 0;
+            }
+
+            .nav {
+                padding: 1.5rem 2.5rem;
+            }
+
+            .logo-bottom {
+                bottom: 5.5rem;
+                right: 3rem;
+            }
+
+            .footer {
+                padding: 2rem 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 4rem 1.5rem 1.5rem;
+            }
+
+            .nav {
+                padding: 1.5rem;
+            }
+
+            .logo-bottom {
+                bottom: 5rem;
+                right: 2rem;
+            }
+
+            .logo-bottom svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            .footer {
+                padding: 1.5rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .footer-right {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cs-video-controls {
+                padding: 0 16px;
+                bottom: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Logo Bottom Right - Home Button -->
+    <a href="home.html" class="logo-bottom">
+        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+        </svg>
+    </a>
+
+    <!-- Navigation - Plus Menu -->
+    <nav class="nav">
+        <div class="menu-toggle" id="menuToggle">
+            <div class="plus-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-links">
+            <a href="directors.html" class="menu-link">directors</a>
+            <a href="case-studies.html" class="menu-link">case studies</a>
+            <a href="contact.html" class="menu-link">contact</a>
+        </div>
+    </div>
+
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Video Section -->
+            <div class="video-section">
+                <div class="cs-video-hero" id="videoHero">
+                    <div class="cs-video-ratio" id="videoRatio">
+                        <!-- VIMEO EMBED -->
+                        <div style="padding:56.25% 0 0 0;position:relative;" id="vimeoWrapper">
+                            <iframe
+                                id="vimeoPlayer"
+                                src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=vimeoPlayer&app_id=58479&controls=0"
+                                style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                                allow="autoplay; fullscreen; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="cs-video-click-layer" id="videoClickLayer"></div>
+
+                        <!-- Custom Controls -->
+                        <div class="cs-video-controls" id="videoControls">
+                            <!-- Play/Pause Button -->
+                            <button class="cs-ctrl" id="playPauseBtn">
+                                <img src="assets/logos/covalent_white_play_button.png" alt="Play" class="cs-ctrl-icon cs-icon-play">
+                                <img src="assets/logos/pause_button.png" alt="Pause" class="cs-ctrl-icon cs-icon-pause">
+                            </button>
+
+                            <!-- Progress Bar -->
+                            <div class="cs-progress" id="progressBar">
+                                <div class="cs-progress-track">
+                                    <div class="cs-progress-fill" id="progressFill"></div>
+                                </div>
+                            </div>
+
+                            <!-- Time Display -->
+                            <div class="cs-time">
+                                <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
+                            </div>
+
+                            <!-- Fullscreen Button -->
+                            <button class="cs-ctrl" id="fullscreenBtn">
+                                <img src="assets/logos/fullscreen_button.png" alt="Fullscreen" class="cs-ctrl-icon">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Info Section -->
+            <div class="project-info">
+                <div class="project-meta">
+                    <p class="director-credit">directed by jacob frost</p>
+
+                    <a href="#" class="case-study-link">full case study</a>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-left">
+                2026, covalent studios
+            </div>
+            <div class="footer-right">
+                <a href="#" class="footer-link">blog</a>
+                <div class="social-links">
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Vimeo Player API -->
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <script>
+        // ==================== //
+        // CUSTOM CURSOR
+        // ==================== //
+        const cursor = document.getElementById('cursor');
+        const vimeoWrapperEl = document.getElementById('vimeoWrapper');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Hide cursor when over video area (Vimeo has its own cursor)
+        vimeoWrapperEl.addEventListener('mouseenter', () => {
+            cursor.classList.add('hidden');
+        });
+
+        vimeoWrapperEl.addEventListener('mouseleave', () => {
+            cursor.classList.remove('hidden');
+        });
+
+        // ==================== //
+        // MENU TOGGLE
+        // ==================== //
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuToggle.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menuOverlay.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        // ==================== //
+        // VIMEO PLAYER CONTROLS
+        // ==================== //
+        const iframe = document.getElementById('vimeoPlayer');
+        const player = new Vimeo.Player(iframe);
+        const vimeoWrapper = document.getElementById('vimeoWrapper');
+
+        const videoHero = document.getElementById('videoHero');
+        const videoClickLayer = document.getElementById('videoClickLayer');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        let isPlaying = false;
+        let videoDuration = 0;
+
+        // Format time as MM:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Get video duration and set aspect ratio
+        player.getDuration().then(duration => {
+            videoDuration = duration;
+            durationEl.textContent = formatTime(duration);
+        });
+
+        // Get actual video dimensions and set aspect ratio
+        Promise.all([player.getVideoWidth(), player.getVideoHeight()]).then(([width, height]) => {
+            const aspectRatio = (height / width) * 100;
+            vimeoWrapper.style.paddingTop = aspectRatio + '%';
+        });
+
+        // Play/Pause toggle
+        function togglePlay() {
+            if (isPlaying) {
+                player.pause();
+            } else {
+                player.play();
+            }
+        }
+
+        videoClickLayer.addEventListener('click', togglePlay);
+        playPauseBtn.addEventListener('click', togglePlay);
+
+        // Update playing state
+        player.on('play', () => {
+            isPlaying = true;
+            videoHero.classList.add('cs-playing');
+        });
+
+        player.on('pause', () => {
+            isPlaying = false;
+            videoHero.classList.remove('cs-playing');
+        });
+
+        // Update progress bar
+        player.on('timeupdate', (data) => {
+            const percent = (data.seconds / videoDuration) * 100;
+            progressFill.style.width = percent + '%';
+            currentTimeEl.textContent = formatTime(data.seconds);
+        });
+
+        // Seek on progress bar click
+        progressBar.addEventListener('click', (e) => {
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            const seekTime = percent * videoDuration;
+            player.setCurrentTime(seekTime);
+        });
+
+        // Fullscreen toggle - fullscreen the container to keep custom controls
+        const videoRatio = document.getElementById('videoRatio');
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                videoRatio.requestFullscreen();
+            }
+        });
+
+        // Hover detection for controls visibility
+        videoHero.addEventListener('mouseenter', () => {
+            videoHero.classList.add('cs-hover');
+        });
+
+        videoHero.addEventListener('mouseleave', () => {
+            videoHero.classList.remove('cs-hover');
+        });
+
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && !menuOverlay.classList.contains('active')) {
+                e.preventDefault();
+                togglePlay();
+            }
+            // Escape exits fullscreen (browser handles this natively, but just in case)
+            if (e.key === 'Escape' && document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+        });
+
+        // ==================== //
+        // VIRUS SPREADING TEXT EFFECT
+        // ==================== //
+        const virusLinks = document.querySelectorAll('.case-study-link, .footer-link');
+
+        virusLinks.forEach(link => {
+            // Split text into individual characters wrapped in spans
+            const text = link.textContent;
+            link.textContent = '';
+
+            const chars = [];
+            for (let i = 0; i < text.length; i++) {
+                const char = document.createElement('span');
+                char.className = 'char';
+                char.textContent = text[i] === ' ' ? '\u00A0' : text[i]; // preserve spaces
+                link.appendChild(char);
+                chars.push(char);
+            }
+
+            let infectionTimeout = null;
+            let isInfected = false;
+
+            link.addEventListener('mouseenter', (e) => {
+                if (isInfected) return;
+                isInfected = true;
+
+                const rect = link.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                // Calculate distance from mouse entry point to each character
+                const charDistances = chars.map((char, index) => {
+                    const charRect = char.getBoundingClientRect();
+                    const charCenterX = charRect.left - rect.left + charRect.width / 2;
+                    const charCenterY = charRect.top - rect.top + charRect.height / 2;
+
+                    // Euclidean distance from mouse entry point
+                    const distance = Math.sqrt(
+                        Math.pow(charCenterX - mouseX, 2) +
+                        Math.pow(charCenterY - mouseY, 2)
+                    );
+
+                    return { char, distance, index };
+                });
+
+                // Sort by distance (closest first)
+                charDistances.sort((a, b) => a.distance - b.distance);
+
+                // Infect characters one by one based on distance
+                // Smoother spread with shorter delays but longer transitions
+                charDistances.forEach((item, i) => {
+                    setTimeout(() => {
+                        item.char.classList.add('infected');
+
+                        // Add fully-infected class when all chars are infected
+                        if (i === charDistances.length - 1) {
+                            link.classList.add('fully-infected');
+                        }
+                    }, i * 30); // 30ms delay for smoother cascade
+                });
+            });
+
+            link.addEventListener('mouseleave', (e) => {
+                const rect = link.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                // Calculate distance from mouse exit point to each character
+                const charDistances = chars.map((char, index) => {
+                    const charRect = char.getBoundingClientRect();
+                    const charCenterX = charRect.left - rect.left + charRect.width / 2;
+                    const charCenterY = charRect.top - rect.top + charRect.height / 2;
+
+                    const distance = Math.sqrt(
+                        Math.pow(charCenterX - mouseX, 2) +
+                        Math.pow(charCenterY - mouseY, 2)
+                    );
+
+                    return { char, distance, index };
+                });
+
+                // Sort by distance (closest to exit point first - they heal last)
+                charDistances.sort((a, b) => b.distance - a.distance);
+
+                // Remove infection starting from farthest from exit point
+                link.classList.remove('fully-infected');
+
+                charDistances.forEach((item, i) => {
+                    setTimeout(() => {
+                        item.char.classList.remove('infected');
+
+                        // Reset infected state when all chars are healed
+                        if (i === charDistances.length - 1) {
+                            isInfected = false;
+                        }
+                    }, i * 25); // faster healing for snappy exit
+                });
+            });
+        });
+    </script>
+</body>
+</html>

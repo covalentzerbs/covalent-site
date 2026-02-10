@@ -6,7 +6,7 @@
     <title>Covalent Studios</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* CSS Variables */
         :root {
@@ -18,11 +18,11 @@
         }
 
         /* Reset */
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none;
+            cursor: none !important;
         }
 
         ::selection {
@@ -32,32 +32,32 @@
         }
 
         html {
-            overflow-x: hidden;
-            overflow-y: scroll;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
-            scroll-snap-type: y mandatory;
-            scroll-behavior: auto;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
         }
 
-        html::-webkit-scrollbar {
-            display: none; /* Chrome, Safari */
-            width: 0;
-            height: 0;
-            background: transparent;
-        }
-
-        body::-webkit-scrollbar {
-            display: none;
-            width: 0;
-            height: 0;
-            background: transparent;
-        }
-
-        html, body {
+        /* Body is the scroll-snap container */
+        body {
             height: 100%;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+
+        body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari */
         }
 
         /* Custom Cursor */
@@ -71,15 +71,6 @@
             z-index: 9999;
             mix-blend-mode: difference;
             transform: translate(-50%, -50%);
-        }
-
-        body {
-            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--black);
-            color: var(--white);
-            overflow-x: hidden;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
         }
 
         /* Navigation - Plus Menu */
@@ -102,7 +93,6 @@
         .menu-toggle {
             width: 48px;
             height: 48px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -317,32 +307,22 @@
 
 
         /* ==================== */
-        /* REVEAL SECTION (transparent — fixed video shows through) */
+        /* ABOUT SECTION */
         /* ==================== */
-        .reveal-section {
+        .about-section {
             position: relative;
             width: 100%;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-        }
-
-        /* Black spacer between reveal and directors */
-        .spacer-section {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            background: var(--black);
             z-index: 2;
+            background: var(--black);
             scroll-snap-align: start;
             scroll-snap-stop: always;
         }
 
-        .reveal-text {
+        .about-text {
             font-size: clamp(1.5rem, 5vw, 5rem);
             font-weight: 700;
             text-transform: uppercase;
@@ -356,114 +336,80 @@
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
-        .reveal-text.visible {
+        .about-text.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
         /* ==================== */
-        /* DIRECTORS SECTION */
+        /* PROJECTS SECTION */
         /* ==================== */
-        .directors-section {
+        .project-section {
             position: relative;
-            width: 100%;
             height: 100vh;
-            overflow: hidden;
-            z-index: 2;
+            width: 100%;
             scroll-snap-align: start;
             scroll-snap-stop: always;
-        }
-
-        .directors-video-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
+            z-index: 2;
             background: var(--black);
+            overflow: hidden;
         }
 
-        .directors-video-wrapper {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        .directors-video-wrapper iframe {
+        .project-video-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            transform: scale(1.33);
-            transform-origin: center center;
+            overflow: hidden;
+        }
+
+        .project-video-container iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* Always cover the full viewport — no black bars */
+            min-width: 100%;
+            min-height: 100%;
+            width: 177.78vh; /* 16:9 wider than tall */
+            height: 56.25vw; /* 16:9 taller than wide */
+            transform: translate(-50%, -50%) scale(1.3);
             border: none;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 1.6s ease;
             pointer-events: none;
         }
 
-        .directors-video-wrapper iframe.active {
-            opacity: 1;
-        }
-
-        .directors-cursor-block {
+        /* Text overlay — bottom left, over the video */
+        .project-info {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: auto;
-            cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAAA1JREFUGFdj+P///38ACfsD/QjR0NMAAAAASUVORK5CYII=') 0 0, none;
-        }
-
-        /* Directors List */
-        .directors-list {
-            position: relative;
+            bottom: 5rem;
+            left: 5rem;
             z-index: 10;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2.5rem 3.5rem;
         }
 
-        .directors-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 0;
+        .project-client-link {
+            text-decoration: none;
+            color: inherit;
         }
 
-        /* Director Row */
-        .director-row {
-            cursor: pointer;
-            padding: 0.15em 0;
-            margin: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .director-name {
-            font-size: clamp(2rem, 6vw, 5rem);
+        .project-client {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3.5rem, 7vw, 7rem);
             font-weight: 700;
-            line-height: 1.05;
             color: var(--white);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0.35;
-            letter-spacing: -0.04em;
-            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            text-transform: lowercase;
+            margin: 0;
+            /* Start hidden for animation */
+            opacity: 0;
+            transform: translateY(30px);
+            /* Gradient hover */
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .director-row:hover .director-name,
-        .director-row.active .director-name {
-            opacity: 1;
-            background: linear-gradient(90deg, #3A5BD4, #5979e9, #3A5BD4, #2845B0);
+        .project-client:hover {
+            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
             background-size: 300% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -471,18 +417,30 @@
             animation: gradientShift 3s ease infinite;
         }
 
-        /* Idle state */
-        .directors-container.idle .director-name {
-            opacity: 0 !important;
-            -webkit-text-fill-color: transparent;
+        .project-subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            color: var(--white);
+            opacity: 0;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
+            text-transform: lowercase;
+            margin: 0.05em 0 0 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
+                        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
         }
 
-        .director-row.no-video .director-name {
-            opacity: 0.15;
+        /* When section is in view, animate text in */
+        .project-section.in-view .project-client {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .director-row.no-video:hover .director-name {
-            opacity: 0.3;
+        .project-section.in-view .project-subtitle {
+            opacity: 0.7;
+            transform: translateY(0);
         }
 
         /* Responsive */
@@ -500,12 +458,13 @@
                 right: 2.5rem;
             }
 
-            .directors-list {
-                padding: 2rem 2.5rem;
-            }
-
             .menu-overlay {
                 padding: 6rem 2.5rem 2.5rem;
+            }
+
+            .project-info {
+                bottom: 4rem;
+                left: 4rem;
             }
         }
 
@@ -528,18 +487,16 @@
                 right: 1.5rem;
             }
 
-            .directors-list {
-                padding: 1.5rem 1.5rem;
-            }
-
-            .director-row {
-                margin: 0.2em 0;
-            }
-
             .menu-overlay {
                 padding: 5rem 1.5rem 1.5rem;
             }
+
+            .project-info {
+                bottom: 2rem;
+                left: 2rem;
+            }
         }
+
     </style>
 </head>
 <body>
@@ -559,25 +516,29 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
-            <a href="work.html" class="menu-link">Work</a>
-            <a href="directors.html" class="menu-link">Directors</a>
-            <a href="contact.html" class="menu-link">Contact</a>
+            <a href="directors.html" class="menu-link">directors</a>
+            <a href="case-studies.html" class="menu-link">case studies</a>
+            <a href="contact.html" class="menu-link">contact</a>
         </div>
     </div>
 
     <!-- Logo Bottom Right (scrolls to reveal/home section) -->
-    <a href="#revealSection" class="logo-bottom" id="logoBottom">
+    <a href="#aboutSection" class="logo-bottom" id="logoBottom">
         <svg viewBox="0 0 160 160" fill="none">
             <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
         </svg>
     </a>
 
-    <!-- Scroll Progress Indicator -->
+    <!-- Scroll Progress Indicator (8 sections) -->
     <div class="scroll-progress" id="scrollProgress">
         <div class="scroll-progress-segment active" data-slide="0"></div>
         <div class="scroll-progress-segment" data-slide="1"></div>
         <div class="scroll-progress-segment" data-slide="2"></div>
         <div class="scroll-progress-segment" data-slide="3"></div>
+        <div class="scroll-progress-segment" data-slide="4"></div>
+        <div class="scroll-progress-segment" data-slide="5"></div>
+        <div class="scroll-progress-segment" data-slide="6"></div>
+        <div class="scroll-progress-segment" data-slide="7"></div>
     </div>
 
     <!-- Fixed background video (persists through hero + reveal) -->
@@ -597,54 +558,77 @@
     </section>
 
     <!-- ==================== -->
-    <!-- SECTION 2: REVEAL -->
+    <!-- SECTION 2: ABOUT -->
     <!-- ==================== -->
-    <section class="reveal-section" id="revealSection">
-        <h1 class="reveal-text" id="revealText">Lean Production.<br>Midwest Grit.<br>Real ASF.</h1>
+    <section class="about-section" id="aboutSection">
+        <h1 class="about-text" id="aboutText">Lean Production.<br>Midwest Grit.<br>Real ASF.</h1>
     </section>
 
     <!-- ==================== -->
-    <!-- SPACER: BLACK BREAK -->
+    <!-- SECTIONS 3-8: PROJECTS -->
     <!-- ==================== -->
-    <section class="spacer-section" id="spacerSection"></section>
-
-    <!-- ==================== -->
-    <!-- SECTION 3: DIRECTORS -->
-    <!-- ==================== -->
-    <section class="directors-section" id="directorsSection">
-        <div class="directors-video-bg">
-            <div class="directors-video-wrapper" id="videoWrapper">
-                <!-- Videos loaded dynamically -->
-            </div>
-            <div class="directors-cursor-block"></div>
+    <section class="project-section" id="project1">
+        <div class="project-video-container">
+            <iframe src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
         </div>
-
-        <div class="directors-list">
-            <div class="directors-container" id="directorsContainer">
-                <div class="director-row" data-director="jacob" data-vimeo="1140543709">
-                    <span class="director-name">Jacob Frost</span>
-                </div>
-                <div class="director-row" data-director="wilbert" data-vimeo="1122231476">
-                    <span class="director-name">Wilbert Cheng</span>
-                </div>
-                <div class="director-row" data-director="afrim" data-vimeo="1148837909">
-                    <span class="director-name">Afrim Zenuni</span>
-                </div>
-                <div class="director-row" data-director="gracie" data-youtube="bZNgRUC2yuI">
-                    <span class="director-name">Gracie Ko</span>
-                </div>
-                <div class="director-row" data-director="jake">
-                    <span class="director-name">Jake Aks</span>
-                </div>
-                <div class="director-row" data-director="benjamin">
-                    <span class="director-name">Benjamin Gugick</span>
-                </div>
-                <div class="director-row" data-director="rob">
-                    <span class="director-name">Rob Luedtke</span>
-                </div>
-            </div>
+        <div class="project-info">
+            <a href="wabi.html" class="project-client-link"><h2 class="project-client">wabi</h2></a>
+            <p class="project-subtitle">when did we stop playing</p>
         </div>
     </section>
+
+    <section class="project-section" id="project2">
+        <div class="project-video-container">
+            <iframe src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="project-info">
+            <a href="pinch.html" class="project-client-link"><h2 class="project-client">pinch</h2></a>
+            <p class="project-subtitle">a holiday campaign</p>
+        </div>
+    </section>
+
+    <section class="project-section" id="project3">
+        <div class="project-video-container">
+            <iframe src="https://player.vimeo.com/video/1142291147?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="project-info">
+            <a href="fare.html" class="project-client-link"><h2 class="project-client">fare</h2></a>
+            <p class="project-subtitle">beyond the bowl</p>
+        </div>
+    </section>
+
+    <section class="project-section" id="project4">
+        <div class="project-video-container">
+            <iframe src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="project-info">
+            <a href="arcteryx.html" class="project-client-link"><h2 class="project-client">arcteryx</h2></a>
+            <p class="project-subtitle">a city to summit</p>
+        </div>
+    </section>
+
+    <section class="project-section" id="project5">
+        <div class="project-video-container">
+            <iframe src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="project-info">
+            <a href="hyatt.html" class="project-client-link"><h2 class="project-client">world of hyatt</h2></a>
+            <p class="project-subtitle">jess pegula x us open</p>
+        </div>
+    </section>
+
+    <section class="project-section" id="project6">
+        <div class="project-video-container">
+            <iframe src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="project-info">
+            <a href="ever.html" class="project-client-link"><h2 class="project-client">ever</h2></a>
+            <p class="project-subtitle">a mini doc</p>
+        </div>
+    </section>
+
+    <!-- Motion library (vanilla JS) -->
+    <script src="https://cdn.jsdelivr.net/npm/motion@12.34.0/dist/motion.js"></script>
 
     <script>
         // ==================== //
@@ -652,7 +636,7 @@
         // ==================== //
         document.getElementById('logoBottom').addEventListener('click', (e) => {
             e.preventDefault();
-            document.getElementById('revealSection').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('aboutSection').scrollIntoView({ behavior: 'smooth' });
         });
 
         // ==================== //
@@ -690,178 +674,87 @@
         });
 
         // ==================== //
-        // SECTION OBSERVER (for scroll-snap)
+        // SECTION OBSERVER (8 sections)
         // ==================== //
         const heroLogo = document.querySelector('.hero-logo');
-        const revealText = document.getElementById('revealText');
+        const aboutText = document.getElementById('aboutText');
         const fixedVideoBg = document.getElementById('fixedVideoBg');
         const logoBottom = document.getElementById('logoBottom');
         const navEl = document.querySelector('.nav');
         const progressSegments = document.querySelectorAll('.scroll-progress-segment');
 
-        // Simple section observer - detects when each section is in view
+        // All 8 sections in order
+        const allSectionIds = [
+            'heroSection', 'aboutSection',
+            'project1', 'project2', 'project3', 'project4', 'project5', 'project6'
+        ];
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
+                const id = entry.target.id;
+
+                // Toggle in-view class for project text animations
+                if (id.startsWith('project')) {
+                    entry.target.classList.toggle('in-view', entry.isIntersecting && entry.intersectionRatio >= 0.5);
+                }
+
                 if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-                    const id = entry.target.id;
+                    const sectionIndex = allSectionIds.indexOf(id);
 
-                    // Update progress bar
-                    const sectionIndex = {
-                        'heroSection': 0,
-                        'revealSection': 1,
-                        'spacerSection': 2,
-                        'directorsSection': 3
-                    }[id];
-
+                    // Update progress dots
                     progressSegments.forEach((seg, i) => {
                         seg.classList.toggle('active', i === sectionIndex);
                     });
 
-                    // Section-specific effects
+                    // Hero-specific
                     heroLogo.style.opacity = id === 'heroSection' ? '1' : '0';
                     logoBottom.classList.toggle('visible', id !== 'heroSection');
                     navEl.classList.toggle('visible', id !== 'heroSection');
-                    fixedVideoBg.style.opacity = (id === 'spacerSection' || id === 'directorsSection') ? '0' : '1';
-                    revealText.classList.toggle('visible', id === 'revealSection');
+
+                    // About text animation
+                    aboutText.classList.toggle('visible', id === 'aboutSection');
+
+                    // Hide fixed bg video for about + projects
+                    const showBgVideo = id === 'heroSection';
+                    fixedVideoBg.style.opacity = showBgVideo ? '1' : '0';
                 }
             });
         }, { threshold: 0.5 });
 
-        // Observe all 4 sections
-        ['heroSection', 'revealSection', 'spacerSection', 'directorsSection'].forEach(id => {
-            observer.observe(document.getElementById(id));
+        // Observe all 8 sections
+        allSectionIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
         });
 
         // ==================== //
-        // DIRECTORS VIDEO LOGIC
+        // PROJECT ANIMATIONS (Motion)
         // ==================== //
-        const directors = [
-            { id: 'jacob', name: 'Jacob Frost', vimeo: '1140543709' },
-            { id: 'wilbert', name: 'Wilbert Cheng', vimeo: '1122231476' },
-            { id: 'afrim', name: 'Afrim Zenuni', vimeo: '1148837909' },
-            { id: 'gracie', name: 'Gracie Ko', youtube: 'bZNgRUC2yuI' },
-            { id: 'jake', name: 'Jake Aks' },
-            { id: 'benjamin', name: 'Benjamin Gugick' },
-            { id: 'rob', name: 'Rob Luedtke' }
-        ];
+        const { animate, inView } = Motion;
 
-        const videoWrapper = document.getElementById('videoWrapper');
-        const directorRows = document.querySelectorAll('.director-row');
-        const directorsContainer = document.getElementById('directorsContainer');
+        document.querySelectorAll('.project-section').forEach((section) => {
+            const client = section.querySelector('.project-client');
+            const subtitle = section.querySelector('.project-subtitle');
 
-        // Mark directors without video
-        directorRows.forEach(row => {
-            const directorId = row.getAttribute('data-director');
-            const director = directors.find(d => d.id === directorId);
-            if (!director || (!director.vimeo && !director.youtube)) {
-                row.classList.add('no-video');
-            }
-        });
-
-        // Create video iframes
-        function createVideoElement(director) {
-            const iframe = document.createElement('iframe');
-            iframe.setAttribute('data-director', director.id);
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
-            iframe.setAttribute('allowfullscreen', '');
-
-            if (director.vimeo) {
-                iframe.src = `https://player.vimeo.com/video/${director.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1`;
-            } else if (director.youtube) {
-                iframe.src = `https://www.youtube.com/embed/${director.youtube}?autoplay=1&loop=1&muted=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=${director.youtube}&playsinline=1`;
-            }
-
-            return iframe;
-        }
-
-        // Initialize videos
-        directors.forEach(director => {
-            if (director.vimeo || director.youtube) {
-                const iframe = createVideoElement(director);
-                videoWrapper.appendChild(iframe);
-            }
-        });
-
-        // Switch video with crossfade
-        let currentVideoId = null;
-        let switchTimer = null;
-
-        function switchVideo(directorId) {
-            const director = directors.find(d => d.id === directorId);
-
-            if (!director || (!director.vimeo && !director.youtube)) {
-                return;
-            }
-
-            if (directorId === currentVideoId) return;
-            currentVideoId = directorId;
-
-            const iframes = videoWrapper.querySelectorAll('iframe');
-            iframes.forEach(iframe => iframe.classList.remove('active'));
-
-            setTimeout(() => {
-                if (currentVideoId !== directorId) return;
-                const currentIframe = videoWrapper.querySelector(`iframe[data-director="${directorId}"]`);
-                if (currentIframe) {
-                    currentIframe.classList.add('active');
+            inView(section, () => {
+                if (client) {
+                    animate(client,
+                        { opacity: [0, 1], y: [30, 0] },
+                        { duration: 0.7, easing: [0.22, 1, 0.36, 1] }
+                    );
                 }
-            }, 450);
-
-            directorRows.forEach(row => row.classList.remove('active'));
-            const activeRow = document.querySelector(`.director-row[data-director="${directorId}"]`);
-            if (activeRow) {
-                activeRow.classList.add('active');
-            }
-        }
-
-        // Hover and click listeners with debounce
-        directorRows.forEach(row => {
-            row.addEventListener('mouseenter', () => {
-                const directorId = row.getAttribute('data-director');
-                clearTimeout(switchTimer);
-                switchTimer = setTimeout(() => {
-                    switchVideo(directorId);
-                }, 300);
-            });
-
-            row.addEventListener('mouseleave', () => {
-                clearTimeout(switchTimer);
-            });
-
-            row.addEventListener('click', () => {
-                const directorId = row.getAttribute('data-director');
-                const director = directors.find(d => d.id === directorId);
-                if (director) {
-                    console.log(`Navigate to ${director.name}'s page`);
+                if (subtitle) {
+                    animate(subtitle,
+                        { opacity: [0, 0.7], y: [20, 0] },
+                        { duration: 0.7, delay: 0.12, easing: [0.22, 1, 0.36, 1] }
+                    );
                 }
-            });
-        });
 
-        // Set Jacob Frost's video active immediately so it's ready
-        // when the user scrolls down (seamless handoff from fixed bg)
-        const directorsSection = document.getElementById('directorsSection');
-        const firstDirectorWithVideo = directors.find(d => d.vimeo || d.youtube);
-        if (firstDirectorWithVideo) {
-            currentVideoId = firstDirectorWithVideo.id;
-            const jacobIframe = videoWrapper.querySelector(`iframe[data-director="${firstDirectorWithVideo.id}"]`);
-            if (jacobIframe) {
-                jacobIframe.classList.add('active');
-            }
-            const firstRow = document.querySelector(`.director-row[data-director="${firstDirectorWithVideo.id}"]`);
-            if (firstRow) {
-                firstRow.classList.add('active');
-            }
-        }
-
-        // Idle detection for directors
-        let idleTimer;
-        directorsSection.addEventListener('mousemove', () => {
-            directorsContainer.classList.remove('idle');
-            clearTimeout(idleTimer);
-            idleTimer = setTimeout(() => {
-                directorsContainer.classList.add('idle');
-            }, 3000);
+                return () => {
+                    if (client) animate(client, { opacity: 0, y: 30 }, { duration: 0.3 });
+                    if (subtitle) animate(subtitle, { opacity: 0, y: 20 }, { duration: 0.3 });
+                };
+            }, { amount: 0.5 });
         });
     </script>
 </body>
