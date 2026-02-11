@@ -758,6 +758,15 @@
         // ==================== //
         // PROJECT TITLE GRADIENT SPREAD EFFECT
         // ==================== //
+        // Track scrolling state to prevent false mouseenter triggers
+        let isScrolling = false;
+        let scrollTimeout;
+        document.body.addEventListener('scroll', () => {
+            isScrolling = true;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => { isScrolling = false; }, 200);
+        }, { passive: true });
+
         document.querySelectorAll('.project-client').forEach(title => {
             const gradient = document.createElement('span');
             gradient.classList.add('project-client-gradient');
@@ -768,6 +777,9 @@
             let animationFrame;
 
             title.addEventListener('mouseenter', (e) => {
+                // Skip if page just scroll-snapped (title slid under cursor)
+                if (isScrolling) return;
+
                 const rect = title.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
