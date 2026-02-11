@@ -486,22 +486,25 @@
             position: relative;
         }
 
-        .case-study-link .char {
-            display: inline-block;
-            color: var(--black);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .case-study-link .char.infected {
-            background: linear-gradient(90deg, #4A6CF7, #6B8CFF, #4A6CF7);
-            background-size: 200% 100%;
+        .case-study-link::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: -0.15em;
+            bottom: -0.15em;
+            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
+            background-size: 300% 100%;
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: gradientShift 2s ease infinite;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
+            mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
         }
 
-        /* Underline that also spreads */
+        /* Underline */
         .case-study-link::after {
             content: '';
             position: absolute;
@@ -511,13 +514,6 @@
             height: 1px;
             background: var(--black);
             transform-origin: left;
-            transition: background 0.4s ease;
-        }
-
-        .case-study-link.fully-infected::after {
-            background: linear-gradient(90deg, #4A6CF7, #6B8CFF, #4A6CF7);
-            background-size: 200% 100%;
-            animation: gradientShift 2s ease infinite;
         }
 
         /* ==================== */
@@ -1065,12 +1061,61 @@
         });
 
         // ==================== //
-        // VIRUS SPREADING TEXT EFFECT
+        // GRADIENT SPREAD EFFECT (case study link)
         // ==================== //
-        const virusLinks = document.querySelectorAll('.case-study-link, .footer-link');
+        document.querySelectorAll('.case-study-link').forEach(link => {
+            link.setAttribute('data-text', link.textContent);
+
+            let animationFrame;
+
+            link.addEventListener('mouseenter', (e) => {
+                const rect = link.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                link.style.setProperty('--mx', x + 'px');
+                link.style.setProperty('--my', y + 'px');
+                link.style.setProperty('--spread', '0%');
+
+                let start = null;
+                const duration = 1400;
+                const animate = (timestamp) => {
+                    if (!start) start = timestamp;
+                    const progress = Math.min((timestamp - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    link.style.setProperty('--spread', (eased * 200) + '%');
+                    if (progress < 1) {
+                        animationFrame = requestAnimationFrame(animate);
+                    }
+                };
+                cancelAnimationFrame(animationFrame);
+                animationFrame = requestAnimationFrame(animate);
+            });
+
+            link.addEventListener('mouseleave', () => {
+                cancelAnimationFrame(animationFrame);
+                const currentSpread = parseFloat(link.style.getPropertyValue('--spread')) || 200;
+
+                let start = null;
+                const duration = 700;
+                const animate = (timestamp) => {
+                    if (!start) start = timestamp;
+                    const progress = Math.min((timestamp - start) / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    link.style.setProperty('--spread', (currentSpread * (1 - eased)) + '%');
+                    if (progress < 1) {
+                        animationFrame = requestAnimationFrame(animate);
+                    }
+                };
+                animationFrame = requestAnimationFrame(animate);
+            });
+        });
+
+        // ==================== //
+        // VIRUS SPREADING TEXT EFFECT (footer)
+        // ==================== //
+        const virusLinks = document.querySelectorAll('.footer-link');
 
         virusLinks.forEach(link => {
-            // Split text into individual characters wrapped in spans
             const text = link.textContent;
             link.textContent = '';
 
@@ -1078,12 +1123,11 @@
             for (let i = 0; i < text.length; i++) {
                 const char = document.createElement('span');
                 char.className = 'char';
-                char.textContent = text[i] === ' ' ? '\u00A0' : text[i]; // preserve spaces
+                char.textContent = text[i] === ' ' ? '\u00A0' : text[i];
                 link.appendChild(char);
                 chars.push(char);
             }
 
-            let infectionTimeout = null;
             let isInfected = false;
 
             link.addEventListener('mouseenter', (e) => {
@@ -1094,35 +1138,23 @@
                 const mouseX = e.clientX - rect.left;
                 const mouseY = e.clientY - rect.top;
 
-                // Calculate distance from mouse entry point to each character
                 const charDistances = chars.map((char, index) => {
                     const charRect = char.getBoundingClientRect();
                     const charCenterX = charRect.left - rect.left + charRect.width / 2;
                     const charCenterY = charRect.top - rect.top + charRect.height / 2;
-
-                    // Euclidean distance from mouse entry point
                     const distance = Math.sqrt(
                         Math.pow(charCenterX - mouseX, 2) +
                         Math.pow(charCenterY - mouseY, 2)
                     );
-
                     return { char, distance, index };
                 });
 
-                // Sort by distance (closest first)
                 charDistances.sort((a, b) => a.distance - b.distance);
 
-                // Infect characters one by one based on distance
-                // Smoother spread with shorter delays but longer transitions
                 charDistances.forEach((item, i) => {
                     setTimeout(() => {
                         item.char.classList.add('infected');
-
-                        // Add fully-infected class when all chars are infected
-                        if (i === charDistances.length - 1) {
-                            link.classList.add('fully-infected');
-                        }
-                    }, i * 30); // 30ms delay for smoother cascade
+                    }, i * 30);
                 });
             });
 
@@ -1131,35 +1163,26 @@
                 const mouseX = e.clientX - rect.left;
                 const mouseY = e.clientY - rect.top;
 
-                // Calculate distance from mouse exit point to each character
                 const charDistances = chars.map((char, index) => {
                     const charRect = char.getBoundingClientRect();
                     const charCenterX = charRect.left - rect.left + charRect.width / 2;
                     const charCenterY = charRect.top - rect.top + charRect.height / 2;
-
                     const distance = Math.sqrt(
                         Math.pow(charCenterX - mouseX, 2) +
                         Math.pow(charCenterY - mouseY, 2)
                     );
-
                     return { char, distance, index };
                 });
 
-                // Sort by distance (closest to exit point first - they heal last)
                 charDistances.sort((a, b) => b.distance - a.distance);
-
-                // Remove infection starting from farthest from exit point
-                link.classList.remove('fully-infected');
 
                 charDistances.forEach((item, i) => {
                     setTimeout(() => {
                         item.char.classList.remove('infected');
-
-                        // Reset infected state when all chars are healed
                         if (i === charDistances.length - 1) {
                             isInfected = false;
                         }
-                    }, i * 25); // faster healing for snappy exit
+                    }, i * 25);
                 });
             });
         });
