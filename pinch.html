@@ -279,18 +279,43 @@
             color: var(--white);
             z-index: 20;
             opacity: 1;
-            transition: opacity 0.4s ease;
+            transform: translateY(0);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
         }
 
         /* Auto-hide when playing */
         .cs-video-hero.cs-playing .cs-video-controls {
             opacity: 0;
+            transform: translateY(20px);
             pointer-events: none;
         }
 
         .cs-video-hero.cs-playing.cs-hover .cs-video-controls {
             opacity: 1;
+            transform: translateY(0);
             pointer-events: auto;
+        }
+
+        /* Idle state — controls slide down */
+        .cs-video-hero.cs-idle .cs-video-controls {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        /* When mouse moves again — snap back up */
+        .cs-video-hero:not(.cs-idle) .cs-video-controls {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease;
+        }
+
+        /* Hide cursor when idle */
+        .cs-video-hero.cs-idle {
+            cursor: none !important;
+        }
+
+        .cs-video-hero.cs-idle .cs-video-click-layer {
+            cursor: none !important;
         }
 
         /* Control buttons */
@@ -411,6 +436,24 @@
         .cs-video-ratio:fullscreen:hover .cs-video-controls {
             opacity: 1 !important;
             pointer-events: auto !important;
+        }
+
+        .cs-video-ratio:fullscreen .cs-video-hero:not(.cs-idle) .cs-video-controls {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            pointer-events: auto !important;
+        }
+
+        .cs-video-ratio:fullscreen .cs-video-hero.cs-idle .cs-video-controls {
+            opacity: 0 !important;
+            transform: translateY(20px) !important;
+            pointer-events: none !important;
+        }
+
+        /* Hide system cursor when idle in fullscreen */
+        .cs-video-ratio:fullscreen .cs-video-hero.cs-idle,
+        .cs-video-ratio:fullscreen .cs-video-hero.cs-idle * {
+            cursor: none !important;
         }
 
         /* ==================== */
@@ -976,6 +1019,37 @@
 
         videoHero.addEventListener('mouseleave', () => {
             videoHero.classList.remove('cs-hover');
+            videoHero.classList.remove('cs-idle');
+            clearTimeout(idleTimeout);
+        });
+
+        // Idle detection — hide controls after 1s of no mouse movement
+        let idleTimeout;
+
+        videoHero.addEventListener('mousemove', () => {
+            videoHero.classList.remove('cs-idle');
+            clearTimeout(idleTimeout);
+            if (isPlaying) {
+                idleTimeout = setTimeout(() => {
+                    videoHero.classList.add('cs-idle');
+                }, 1000);
+            }
+        });
+
+        // Start idle timer when video starts playing (if already hovering)
+        player.on('play', () => {
+            if (videoHero.classList.contains('cs-hover')) {
+                clearTimeout(idleTimeout);
+                idleTimeout = setTimeout(() => {
+                    videoHero.classList.add('cs-idle');
+                }, 1000);
+            }
+        });
+
+        // Remove idle state when video pauses
+        player.on('pause', () => {
+            videoHero.classList.remove('cs-idle');
+            clearTimeout(idleTimeout);
         });
 
         // Keyboard controls
