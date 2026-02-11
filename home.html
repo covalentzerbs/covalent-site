@@ -432,6 +432,21 @@
             display: inline-block;
         }
 
+        .project-client::before {
+            content: attr(data-text);
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
+            mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
+        }
+
         .project-subtitle {
             font-family: 'Space Grotesk', sans-serif;
             font-size: clamp(1rem, 2vw, 1.5rem);
@@ -749,8 +764,10 @@
         }, { passive: true });
 
         document.querySelectorAll('.project-client').forEach(title => {
+            // Set data-text for the ::before pseudo-element
+            title.setAttribute('data-text', title.textContent);
+
             let animationFrame;
-            let spread = 0;
 
             title.addEventListener('mouseenter', (e) => {
                 if (isScrolling) return;
@@ -758,16 +775,9 @@
                 const rect = title.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-
-                // Apply gradient text styling directly to the element
-                title.style.background = 'linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4)';
-                title.style.backgroundSize = '300% 100%';
-                title.style.webkitBackgroundClip = 'text';
-                title.style.backgroundClip = 'text';
-                title.style.webkitTextFillColor = 'transparent';
-                title.style.animation = 'gradientShift 3s ease infinite';
-
-                spread = 0;
+                title.style.setProperty('--mx', x + 'px');
+                title.style.setProperty('--my', y + 'px');
+                title.style.setProperty('--spread', '0%');
 
                 let start = null;
                 const duration = 1400;
@@ -775,10 +785,7 @@
                     if (!start) start = timestamp;
                     const progress = Math.min((timestamp - start) / duration, 1);
                     const eased = 1 - Math.pow(1 - progress, 3);
-                    spread = eased * 200;
-                    const maskVal = 'radial-gradient(circle at ' + x + 'px ' + y + 'px, black ' + spread + '%, transparent ' + spread + '%)';
-                    title.style.webkitMaskImage = maskVal;
-                    title.style.maskImage = maskVal;
+                    title.style.setProperty('--spread', (eased * 200) + '%');
                     if (progress < 1) {
                         animationFrame = requestAnimationFrame(animate);
                     }
@@ -787,12 +794,9 @@
                 animationFrame = requestAnimationFrame(animate);
             });
 
-            title.addEventListener('mouseleave', (e) => {
+            title.addEventListener('mouseleave', () => {
                 cancelAnimationFrame(animationFrame);
-                const rect = title.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const startSpread = spread || 200;
+                const currentSpread = parseFloat(title.style.getPropertyValue('--spread')) || 200;
 
                 let start = null;
                 const duration = 700;
@@ -800,22 +804,9 @@
                     if (!start) start = timestamp;
                     const progress = Math.min((timestamp - start) / duration, 1);
                     const eased = 1 - Math.pow(1 - progress, 3);
-                    spread = startSpread * (1 - eased);
-                    const maskVal = 'radial-gradient(circle at ' + x + 'px ' + y + 'px, black ' + spread + '%, transparent ' + spread + '%)';
-                    title.style.webkitMaskImage = maskVal;
-                    title.style.maskImage = maskVal;
+                    title.style.setProperty('--spread', (currentSpread * (1 - eased)) + '%');
                     if (progress < 1) {
                         animationFrame = requestAnimationFrame(animate);
-                    } else {
-                        // Reset to plain white text
-                        title.style.background = '';
-                        title.style.backgroundSize = '';
-                        title.style.webkitBackgroundClip = '';
-                        title.style.backgroundClip = '';
-                        title.style.webkitTextFillColor = '';
-                        title.style.animation = '';
-                        title.style.webkitMaskImage = '';
-                        title.style.maskImage = '';
                     }
                 };
                 animationFrame = requestAnimationFrame(animate);
