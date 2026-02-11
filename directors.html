@@ -580,8 +580,8 @@
             background: #FF4500 !important;
         }
 
-        body.dark-mode .project-info {
-            background-color: #0A0A0A !important;
+        body.dark-mode .hero-logo svg path {
+            fill: #FF4500 !important;
         }
 
         /* ==================== */
@@ -600,10 +600,10 @@
         }
 
         .toggle-track {
-            width: 50px;
-            height: 26px;
+            width: 44px;
+            height: 22px;
             background: #555;
-            border-radius: 13px;
+            border-radius: 11px;
             position: relative;
             transition: background 0.3s ease;
             cursor: none;
@@ -615,8 +615,8 @@
             position: absolute;
             top: 2px;
             left: 2px;
-            width: 22px;
-            height: 22px;
+            width: 18px;
+            height: 18px;
             background: #fff;
             border-radius: 50%;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -627,7 +627,7 @@
         }
 
         .dark-mode-toggle input:checked + .toggle-track::after {
-            transform: translateX(24px);
+            transform: translateX(22px);
         }
 
     </style>
@@ -1051,6 +1051,18 @@
             toggle.addEventListener('change', () => {
                 document.body.classList.toggle('dark-mode');
                 localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+
+            // Cursor inflate on toggle hover
+            const cursorEl = document.getElementById('cursor');
+            const toggleLabel = document.querySelector('.dark-mode-toggle');
+            toggleLabel.addEventListener('mouseenter', () => {
+                cursorEl.style.transform = 'translate(-50%, -50%) scale(1.8)';
+                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
+            });
+            toggleLabel.addEventListener('mouseleave', () => {
+                cursorEl.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
             });
         })();
     </script>
