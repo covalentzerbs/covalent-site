@@ -776,10 +776,12 @@
         const cursor = document.getElementById('cursor');
         const directorsContainer = document.querySelector('.directors-container');
         let idleTimer;
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
 
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            mouseX = e.clientX;
+            mouseY = e.clientY;
 
             // Show text on mouse move
             directorsContainer.classList.remove('idle');
@@ -790,6 +792,15 @@
                 directorsContainer.classList.add('idle');
             }, 3000);
         });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
 
         // ==================== //
         // VIRUS SPREADING TEXT EFFECT (footer)
