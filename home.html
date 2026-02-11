@@ -430,31 +430,6 @@
                         transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             display: inline-block;
-            overflow: visible;
-            padding-bottom: 0.15em;
-        }
-
-        .project-client-gradient {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: calc(100% + 0.15em);
-            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 3s ease infinite;
-            filter: saturate(1.5) brightness(1.2);
-            pointer-events: none;
-            font-family: inherit;
-            font-size: inherit;
-            font-weight: inherit;
-            letter-spacing: inherit;
-            text-transform: inherit;
-            line-height: inherit;
-            -webkit-mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--spread), transparent var(--spread));
-            mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--spread), transparent var(--spread));
         }
 
         .project-subtitle {
@@ -774,24 +749,25 @@
         }, { passive: true });
 
         document.querySelectorAll('.project-client').forEach(title => {
-            const gradient = document.createElement('span');
-            gradient.classList.add('project-client-gradient');
-            gradient.textContent = title.textContent;
-            gradient.style.setProperty('--spread', '0%');
-            title.appendChild(gradient);
-
             let animationFrame;
+            let spread = 0;
 
             title.addEventListener('mouseenter', (e) => {
-                // Skip if page just scroll-snapped (title slid under cursor)
                 if (isScrolling) return;
 
                 const rect = title.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                gradient.style.setProperty('--mx', x + 'px');
-                gradient.style.setProperty('--my', y + 'px');
-                gradient.style.setProperty('--spread', '0%');
+
+                // Apply gradient text styling directly to the element
+                title.style.background = 'linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4)';
+                title.style.backgroundSize = '300% 100%';
+                title.style.webkitBackgroundClip = 'text';
+                title.style.backgroundClip = 'text';
+                title.style.webkitTextFillColor = 'transparent';
+                title.style.animation = 'gradientShift 3s ease infinite';
+
+                spread = 0;
 
                 let start = null;
                 const duration = 1400;
@@ -799,7 +775,10 @@
                     if (!start) start = timestamp;
                     const progress = Math.min((timestamp - start) / duration, 1);
                     const eased = 1 - Math.pow(1 - progress, 3);
-                    gradient.style.setProperty('--spread', (eased * 200) + '%');
+                    spread = eased * 200;
+                    const maskVal = 'radial-gradient(circle at ' + x + 'px ' + y + 'px, black ' + spread + '%, transparent ' + spread + '%)';
+                    title.style.webkitMaskImage = maskVal;
+                    title.style.maskImage = maskVal;
                     if (progress < 1) {
                         animationFrame = requestAnimationFrame(animate);
                     }
@@ -808,18 +787,35 @@
                 animationFrame = requestAnimationFrame(animate);
             });
 
-            title.addEventListener('mouseleave', () => {
+            title.addEventListener('mouseleave', (e) => {
                 cancelAnimationFrame(animationFrame);
+                const rect = title.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const startSpread = spread || 200;
+
                 let start = null;
-                const currentSpread = parseFloat(gradient.style.getPropertyValue('--spread')) || 200;
                 const duration = 700;
                 const animate = (timestamp) => {
                     if (!start) start = timestamp;
                     const progress = Math.min((timestamp - start) / duration, 1);
                     const eased = 1 - Math.pow(1 - progress, 3);
-                    gradient.style.setProperty('--spread', (currentSpread * (1 - eased)) + '%');
+                    spread = startSpread * (1 - eased);
+                    const maskVal = 'radial-gradient(circle at ' + x + 'px ' + y + 'px, black ' + spread + '%, transparent ' + spread + '%)';
+                    title.style.webkitMaskImage = maskVal;
+                    title.style.maskImage = maskVal;
                     if (progress < 1) {
                         animationFrame = requestAnimationFrame(animate);
+                    } else {
+                        // Reset to plain white text
+                        title.style.background = '';
+                        title.style.backgroundSize = '';
+                        title.style.webkitBackgroundClip = '';
+                        title.style.backgroundClip = '';
+                        title.style.webkitTextFillColor = '';
+                        title.style.animation = '';
+                        title.style.webkitMaskImage = '';
+                        title.style.maskImage = '';
                     }
                 };
                 animationFrame = requestAnimationFrame(animate);
