@@ -436,8 +436,7 @@
 
         .project-client-gradient {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: calc(100% + 0.15em);
             background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
@@ -448,6 +447,12 @@
             animation: gradientShift 3s ease infinite;
             filter: saturate(1.5) brightness(1.2);
             pointer-events: none;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            letter-spacing: inherit;
+            text-transform: inherit;
+            line-height: inherit;
             -webkit-mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--spread), transparent var(--spread));
             mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--spread), transparent var(--spread));
         }
