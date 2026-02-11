@@ -366,6 +366,15 @@
         /* ==================== */
         /* FULLSCREEN MODE */
         /* ==================== */
+        /* Restore cursor in fullscreen */
+        :fullscreen, :fullscreen * {
+            cursor: auto !important;
+        }
+
+        :fullscreen .cursor {
+            display: none !important;
+        }
+
         .cs-video-ratio:fullscreen {
             display: flex;
             align-items: center;
