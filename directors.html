@@ -48,7 +48,7 @@
             border-radius: 50%;
             background: var(--white);
             pointer-events: none;
-            z-index: 9999;
+            z-index: 10001;
             mix-blend-mode: difference;
             transform: translate(-50%, -50%);
         }
@@ -591,7 +591,7 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            z-index: 9999;
+            z-index: 10000;
             cursor: none;
         }
 
@@ -600,10 +600,10 @@
         }
 
         .toggle-track {
-            width: 44px;
-            height: 22px;
-            background: #555;
-            border-radius: 11px;
+            width: 36px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 9px;
             position: relative;
             transition: background 0.3s ease;
             cursor: none;
@@ -615,19 +615,20 @@
             position: absolute;
             top: 2px;
             left: 2px;
-            width: 18px;
-            height: 18px;
-            background: #fff;
+            width: 14px;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 50%;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .dark-mode-toggle input:checked + .toggle-track {
-            background: #FF4500;
+            background: rgba(255, 69, 0, 0.8);
         }
 
         .dark-mode-toggle input:checked + .toggle-track::after {
-            transform: translateX(22px);
+            transform: translateX(18px);
+            background: #FF4500;
         }
 
     </style>
