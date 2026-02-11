@@ -339,7 +339,7 @@
             align-items: center;
             justify-content: center;
             z-index: 2;
-            background: var(--black);
+            background: rgba(10, 10, 10, 0.65);
             scroll-snap-align: start;
             scroll-snap-stop: always;
         }
@@ -878,8 +878,8 @@
                     // About text animation
                     aboutText.classList.toggle('visible', id === 'aboutSection');
 
-                    // Hide fixed bg video for about + projects
-                    const showBgVideo = id === 'heroSection';
+                    // Keep fixed bg video visible through hero + about (parallax)
+                    const showBgVideo = id === 'heroSection' || id === 'aboutSection';
                     fixedVideoBg.style.opacity = showBgVideo ? '1' : '0';
                 }
             });
