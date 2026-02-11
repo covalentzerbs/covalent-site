@@ -758,12 +758,6 @@
         // ==================== //
         // PROJECT TITLE GRADIENT SPREAD EFFECT
         // ==================== //
-        // Track last real mouse movement time
-        let lastMouseMoveTime = 0;
-        document.addEventListener('mousemove', () => {
-            lastMouseMoveTime = Date.now();
-        });
-
         document.querySelectorAll('.project-client').forEach(title => {
             const gradient = document.createElement('span');
             gradient.classList.add('project-client-gradient');
@@ -774,10 +768,6 @@
             let animationFrame;
 
             title.addEventListener('mouseenter', (e) => {
-                // Ignore mouseenter caused by scroll-snap (page moved under cursor)
-                // If no real mouse movement happened in the last 100ms, skip
-                if (Date.now() - lastMouseMoveTime > 100) return;
-
                 const rect = title.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
@@ -802,11 +792,8 @@
 
             title.addEventListener('mouseleave', () => {
                 cancelAnimationFrame(animationFrame);
-                // Reset spread instantly if it never really started
-                const currentSpread = parseFloat(gradient.style.getPropertyValue('--spread')) || 0;
-                if (currentSpread === 0) return;
-
                 let start = null;
+                const currentSpread = parseFloat(gradient.style.getPropertyValue('--spread')) || 200;
                 const duration = 700;
                 const animate = (timestamp) => {
                     if (!start) start = timestamp;
