@@ -375,6 +375,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            will-change: transform;
         }
 
         .project-video-container iframe {
@@ -391,11 +392,12 @@
             pointer-events: none;
         }
 
-        /* Text overlay — bottom left, over the video */
+        /* Text overlay — vertically centered, left side */
         .project-info {
             position: absolute;
-            bottom: 5rem;
+            top: 50%;
             left: 5rem;
+            transform: translateY(-50%);
             z-index: 10;
         }
 
@@ -487,8 +489,7 @@
             }
 
             .project-info {
-                bottom: 4rem;
-                left: 4rem;
+                left: 3rem;
             }
         }
 
@@ -516,8 +517,7 @@
             }
 
             .project-info {
-                bottom: 2rem;
-                left: 2rem;
+                left: 1.5rem;
             }
         }
 
@@ -990,36 +990,81 @@
         function scrollToSection(index) {
             if (index < 0 || index >= sections.length || isAnimating) return;
             isAnimating = true;
+            const prevIndex = currentIndex;
             currentIndex = index;
 
             const target = sections[index];
             const start = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
             const end = target.offsetTop;
             const distance = end - start;
-            const duration = 1200;
+            const duration = 1000;
             let startTime = null;
+            const direction = index > prevIndex ? 1 : -1;
 
-            function easeOutExpo(t) {
-                return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+            // Get elements for parallax
+            const leavingSection = sections[prevIndex];
+            const leavingVideo = leavingSection ? leavingSection.querySelector('.project-video-container, .hero-logo, .about-text') : null;
+            const leavingInfo = leavingSection ? leavingSection.querySelector('.project-info') : null;
+            const enteringSection = sections[index];
+            const enteringVideo = enteringSection ? enteringSection.querySelector('.project-video-container') : null;
+
+            // Pre-set entering section's video offset for parallax entrance
+            if (enteringVideo) {
+                enteringVideo.style.transform = 'translateY(' + (direction * 30) + '%)';
+            }
+
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
             }
 
             function step(timestamp) {
                 if (!startTime) startTime = timestamp;
                 const elapsed = timestamp - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                const eased = easeOutExpo(progress);
+                const eased = easeInOutCubic(progress);
 
-                document.documentElement.scrollTop = start + distance * eased;
-                document.body.scrollTop = start + distance * eased;
+                // Scroll position
+                const scrollPos = start + distance * eased;
+                document.documentElement.scrollTop = scrollPos;
+                document.body.scrollTop = scrollPos;
+
+                // Parallax: leaving section content moves faster (exaggerated departure)
+                if (leavingVideo) {
+                    const parallaxOffset = progress * direction * -40;
+                    leavingVideo.style.transform = 'translateY(' + parallaxOffset + '%)';
+                }
+                if (leavingInfo) {
+                    const infoOffset = progress * direction * -25;
+                    leavingInfo.style.transform = 'translateY(calc(-50% + ' + infoOffset + 'vh))';
+                }
+
+                // Parallax: entering section content settles into place
+                if (enteringVideo) {
+                    const enterOffset = (1 - eased) * direction * 30;
+                    enteringVideo.style.transform = 'translateY(' + enterOffset + '%)';
+                }
 
                 if (progress < 1) {
                     requestAnimationFrame(step);
                 } else {
-                    // Settle delay — adds the "weight" feel
+                    // Snap exact position — no residual movement
+                    document.documentElement.scrollTop = end;
+                    document.body.scrollTop = end;
+
+                    // Reset all transforms cleanly
+                    if (leavingVideo) leavingVideo.style.transform = '';
+                    if (leavingInfo) leavingInfo.style.transform = '';
+                    if (enteringVideo) enteringVideo.style.transform = '';
+
+                    // Reset project-info to centered
+                    if (leavingInfo) {
+                        leavingInfo.style.transform = 'translateY(-50%)';
+                    }
+
                     setTimeout(() => {
                         isAnimating = false;
                         wheelDelta = 0;
-                    }, 150);
+                    }, 100);
                 }
             }
 
