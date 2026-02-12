@@ -43,16 +43,13 @@
             height: 100%;
         }
 
-        /* Body is the scroll-snap container */
+        /* Body is the scroll container */
         body {
             height: 100%;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
             overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--black);
             color: var(--white);
@@ -305,8 +302,7 @@
             align-items: center;
             justify-content: center;
             z-index: 1;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
+            /* snap handled by JS */
         }
 
         /* Large centered logomark */
@@ -337,8 +333,7 @@
             justify-content: center;
             z-index: 2;
             background: transparent;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
+            /* snap handled by JS */
         }
 
         .about-text {
@@ -367,8 +362,7 @@
             position: relative;
             height: 100vh;
             width: 100%;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
+            /* snap handled by JS */
             z-index: 2;
             background: var(--black);
             overflow: hidden;
@@ -982,6 +976,114 @@
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
+
+        // ==================== //
+        // WEIGHTED SCROLL-SNAP
+        // ==================== //
+        const sections = document.querySelectorAll('.hero-section, .about-section, .project-section');
+        let currentIndex = 0;
+        let isAnimating = false;
+        let wheelDelta = 0;
+        let wheelTimer = null;
+        const THRESHOLD = 60; // accumulated delta needed to trigger snap
+
+        function scrollToSection(index) {
+            if (index < 0 || index >= sections.length || isAnimating) return;
+            isAnimating = true;
+            currentIndex = index;
+
+            const target = sections[index];
+            const start = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+            const end = target.offsetTop;
+            const distance = end - start;
+            const duration = 1200;
+            let startTime = null;
+
+            function easeOutExpo(t) {
+                return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+            }
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = timestamp - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = easeOutExpo(progress);
+
+                document.documentElement.scrollTop = start + distance * eased;
+                document.body.scrollTop = start + distance * eased;
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    // Settle delay — adds the "weight" feel
+                    setTimeout(() => {
+                        isAnimating = false;
+                        wheelDelta = 0;
+                    }, 150);
+                }
+            }
+
+            requestAnimationFrame(step);
+        }
+
+        // Determine starting section on load
+        const startScroll = window.scrollY || document.documentElement.scrollTop;
+        sections.forEach((s, i) => {
+            if (Math.abs(s.offsetTop - startScroll) < window.innerHeight * 0.5) {
+                currentIndex = i;
+            }
+        });
+
+        window.addEventListener('wheel', (e) => {
+            e.preventDefault();
+
+            if (isAnimating) return;
+
+            wheelDelta += e.deltaY;
+            clearTimeout(wheelTimer);
+
+            // Reset accumulated delta after inactivity
+            wheelTimer = setTimeout(() => { wheelDelta = 0; }, 300);
+
+            if (wheelDelta > THRESHOLD) {
+                wheelDelta = 0;
+                scrollToSection(currentIndex + 1);
+            } else if (wheelDelta < -THRESHOLD) {
+                wheelDelta = 0;
+                scrollToSection(currentIndex - 1);
+            }
+        }, { passive: false });
+
+        // Touch support
+        let touchStartY = 0;
+        window.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        window.addEventListener('touchend', (e) => {
+            if (isAnimating) return;
+            const diff = touchStartY - e.changedTouches[0].clientY;
+            if (Math.abs(diff) > 50) {
+                scrollToSection(currentIndex + (diff > 0 ? 1 : -1));
+            }
+        }, { passive: true });
+
+        // Keyboard support
+        window.addEventListener('keydown', (e) => {
+            if (isAnimating) return;
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                e.preventDefault();
+                scrollToSection(currentIndex + 1);
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                scrollToSection(currentIndex - 1);
+            }
+        });
+
+        // Click on progress dots to navigate
+        document.querySelectorAll('.scroll-progress-segment').forEach((dot, i) => {
+            dot.addEventListener('click', () => scrollToSection(i));
+        });
 
         // ==================== //
         // SECTION OBSERVER (8 sections)
