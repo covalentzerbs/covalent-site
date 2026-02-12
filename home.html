@@ -1071,12 +1071,24 @@
             requestAnimationFrame(step);
         }
 
-        // Determine starting section on load
-        const startScroll = window.scrollY || document.documentElement.scrollTop;
-        sections.forEach((s, i) => {
-            if (Math.abs(s.offsetTop - startScroll) < window.innerHeight * 0.5) {
-                currentIndex = i;
+        // Restore section on back-navigation
+        const savedSection = sessionStorage.getItem('homeSection');
+        if (savedSection !== null) {
+            const idx = parseInt(savedSection);
+            if (idx >= 0 && idx < sections.length) {
+                currentIndex = idx;
+                const target = sections[idx];
+                document.documentElement.scrollTop = target.offsetTop;
+                document.body.scrollTop = target.offsetTop;
             }
+            sessionStorage.removeItem('homeSection');
+        }
+
+        // Save current section when navigating away
+        document.querySelectorAll('.project-client-link').forEach(link => {
+            link.addEventListener('click', () => {
+                sessionStorage.setItem('homeSection', currentIndex);
+            });
         });
 
         window.addEventListener('wheel', (e) => {
