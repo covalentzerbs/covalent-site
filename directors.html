@@ -259,6 +259,10 @@
             pointer-events: none;
         }
 
+        .video-wrapper iframe.widescreen {
+            transform: scale(1);
+        }
+
         .video-wrapper iframe.active {
             opacity: 1;
         }
@@ -730,9 +734,9 @@
             { id: 'jacob', name: 'Jacob Frost', vimeo: '1140543709' },
             { id: 'wilbert', name: 'Wilbert Cheng', vimeo: '1122231476' },
             { id: 'afrim', name: 'Afrim Zenuni', vimeo: '1148837909' },
-            { id: 'benjamin', name: 'Benjamin Gugick', vimeo: '1162898083' },
-            { id: 'jon', name: 'Jon Schwartz', vimeo: '1163390482' },
-            { id: 'noah', name: 'Noah Keckler', vimeo: '1164768847' }
+            { id: 'benjamin', name: 'Benjamin Gugick', vimeo: '1162898083', widescreen: true },
+            { id: 'jon', name: 'Jon Schwartz', vimeo: '1163390482', widescreen: true },
+            { id: 'noah', name: 'Noah Keckler', vimeo: '1164768847', widescreen: true }
         ];
 
         const videoWrapper = document.getElementById('videoWrapper');
@@ -761,6 +765,10 @@
                 iframe.src = `https://player.vimeo.com/video/${director.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1`;
             } else if (director.youtube) {
                 iframe.src = `https://www.youtube.com/embed/${director.youtube}?autoplay=1&loop=1&muted=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=${director.youtube}&playsinline=1`;
+            }
+
+            if (director.widescreen) {
+                iframe.classList.add('widescreen');
             }
 
             return iframe;
