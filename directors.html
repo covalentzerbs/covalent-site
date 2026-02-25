@@ -187,8 +187,14 @@
             background-clip: text;
             animation: gradientShift 3s ease infinite;
             pointer-events: none;
-            -webkit-mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--spread), transparent var(--spread));
-            mask-image: radial-gradient(circle at var(--mx) var(--my), black var(--spread), transparent var(--spread));
+            -webkit-mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
+            mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
+            opacity: 0;
+            transition: opacity 0s;
+        }
+
+        .menu-link:hover .menu-link-gradient {
+            opacity: 1;
         }
 
         .menu-link.current {
