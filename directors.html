@@ -318,7 +318,8 @@
             font-weight: 700;
             line-height: 0.92;
             color: var(--white);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            /* No transition on base — hover-off snaps instantly, no white flash */
+            transition: none;
             opacity: 0.35;
             letter-spacing: -0.07em;
             text-transform: lowercase;
@@ -326,6 +327,8 @@
 
         .director-row:hover .director-name,
         .director-row.active .director-name {
+            /* Transition only applies on hover-in (CSS one-way transition) */
+            transition: opacity 0.2s ease;
             opacity: 1;
             background: linear-gradient(90deg, #3A5BD4, #5979e9, #3A5BD4, #2845B0);
             background-size: 300% 100%;
