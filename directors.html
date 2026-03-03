@@ -262,7 +262,7 @@
             border: none;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 1.6s ease;
+            transition: opacity 0.4s ease;
             pointer-events: none;
         }
 
@@ -308,15 +308,15 @@
         /* Director Row */
         .director-row {
             cursor: pointer;
-            padding: 0 0;
-            margin: -0.1em 0;
+            padding: 0;
+            margin: 0;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .director-name {
             font-size: clamp(3rem, 9vw, 8rem);
             font-weight: 700;
-            line-height: 1.05;
+            line-height: 0.92;
             color: var(--white);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0.35;
@@ -803,6 +803,8 @@
         // Switch video with crossfade
         let currentVideoId = null;
         let switchTimer = null;
+        let lastSwitchTime = 0;
+        const SWITCH_COOLDOWN = 350; // ms between switches to prevent thrashing
 
         function switchVideo(directorId) {
             const director = directors.find(d => d.id === directorId);
@@ -812,20 +814,22 @@
             }
 
             if (directorId === currentVideoId) return;
+
+            // Cooldown: ignore if we just switched (prevents rapid oscillation)
+            const now = Date.now();
+            if (now - lastSwitchTime < SWITCH_COOLDOWN) return;
+            lastSwitchTime = now;
+
             currentVideoId = directorId;
 
-            // Fade out all iframes (the CSS transition handles the smooth fade)
+            // True crossfade: remove active from all, add to new one simultaneously
+            // CSS transition handles the fade — no black gap
             const iframes = videoWrapper.querySelectorAll('iframe');
             iframes.forEach(iframe => iframe.classList.remove('active'));
-
-            // Delay before fading in the new one for a clean crossfade
-            setTimeout(() => {
-                if (currentVideoId !== directorId) return; // user already moved on
-                const currentIframe = videoWrapper.querySelector(`iframe[data-director="${directorId}"]`);
-                if (currentIframe) {
-                    currentIframe.classList.add('active');
-                }
-            }, 450);
+            const newIframe = videoWrapper.querySelector(`iframe[data-director="${directorId}"]`);
+            if (newIframe) {
+                newIframe.classList.add('active');
+            }
 
             directorRows.forEach(row => row.classList.remove('active'));
             const activeRow = document.querySelector(`.director-row[data-director="${directorId}"]`);
@@ -841,7 +845,7 @@
                 clearTimeout(switchTimer);
                 switchTimer = setTimeout(() => {
                     switchVideo(directorId);
-                }, 300);
+                }, 120);
             });
 
             row.addEventListener('mouseleave', () => {
