@@ -316,7 +316,7 @@
         .director-name {
             font-size: clamp(3rem, 9vw, 8rem);
             font-weight: 700;
-            line-height: 0.92;
+            line-height: 1.0;
             color: var(--white);
             /* No transition on base — hover-off snaps instantly, no white flash */
             transition: none;
@@ -325,8 +325,9 @@
             text-transform: lowercase;
         }
 
-        .director-row:hover .director-name,
-        .director-row.active .director-name {
+        /* Only CSS :hover controls the blue highlight — no .active class here.
+           Keeps exactly one name highlighted at a time, no lingering state. */
+        .director-row:hover .director-name {
             /* Transition only applies on hover-in (CSS one-way transition) */
             transition: opacity 0.2s ease;
             opacity: 1;
