@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="assets/logos/covalent_white_logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- ============================================
          PROJECT TEMPLATE - COVALENT STUDIOS
@@ -850,6 +851,15 @@
             background: #FF4500;
         }
 
+        /* Page loading gate */
+        body:not(.page-ready) {
+            opacity: 0;
+        }
+        body.page-ready {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
     </style>
 </head>
 <body>
@@ -988,8 +998,8 @@
         });
 
         function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.15;
-            cursorY += (mouseY - cursorY) * 0.15;
+            cursorX += (mouseX - cursorX) * 0.35;
+            cursorY += (mouseY - cursorY) * 0.35;
             cursor.style.left = cursorX + 'px';
             cursor.style.top = cursorY + 'px';
             requestAnimationFrame(animateCursor);
@@ -1384,6 +1394,24 @@
                 cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
             });
         })();
+    </script>
+    <script>
+    // Page loading gate — wait for first Vimeo video before showing page
+    (function() {
+        var shown = false;
+        function showPage() {
+            if (shown) return;
+            shown = true;
+            document.body.classList.add('page-ready');
+        }
+        var vimeoIframe = document.querySelector('iframe[src*="vimeo"]');
+        if (vimeoIframe) {
+            vimeoIframe.addEventListener('load', showPage);
+            setTimeout(showPage, 4000);
+        } else {
+            showPage();
+        }
+    })();
     </script>
 </body>
 </html>
