@@ -44,23 +44,34 @@
             height: 100%;
         }
 
-        /* Body is the scroll container */
+        /* Body — no scroll, scroll container handles it */
         body {
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
-            overflow-y: scroll;
+            overflow: hidden;
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--black);
             color: var(--white);
             letter-spacing: -0.07em;
-            /* Hide scrollbar */
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
         }
 
-        body::-webkit-scrollbar {
+        /* ==================== */
+        /* HORIZONTAL SCROLL CONTAINER */
+        /* ==================== */
+        .scroll-container {
+            display: flex;
+            flex-direction: row;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            width: 100vw;
+            height: 100vh;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+        }
+
+        .scroll-container::-webkit-scrollbar {
             display: none; /* Chrome, Safari */
         }
 
@@ -178,6 +189,8 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             letter-spacing: -0.07em;
             line-height: 1.1;
+            position: relative;
+            display: inline-block;
         }
 
         .menu-overlay.active .menu-link {
@@ -190,11 +203,6 @@
 
         .menu-link:hover {
             opacity: 1 !important;
-        }
-
-        .menu-link {
-            position: relative;
-            display: inline-block;
         }
 
         .menu-link-gradient {
@@ -224,7 +232,7 @@
             opacity: 1 !important;
         }
 
-        /* Logo Bottom Right */
+        /* Logo top-left */
         .logo-bottom {
             position: fixed;
             top: 2rem;
@@ -245,21 +253,21 @@
             height: 40px;
         }
 
-        /* Scroll Progress Indicator */
+        /* Scroll Progress Indicator — horizontal, bottom-center */
         .scroll-progress {
             position: fixed;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%);
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 1000;
             display: flex;
-            flex-direction: column;
-            gap: 6px;
+            flex-direction: row;
+            gap: 8px;
         }
 
         .scroll-progress-segment {
-            width: 3px;
-            height: 24px;
+            width: 24px;
+            height: 3px;
             background: var(--white);
             opacity: 0.2;
             transition: opacity 0.3s ease;
@@ -270,9 +278,8 @@
             opacity: 1;
         }
 
-
         /* ==================== */
-        /* FIXED BACKGROUND VIDEO (persists through hero + reveal) */
+        /* FIXED BACKGROUND VIDEO (hero panel only) */
         /* ==================== */
         .fixed-video-bg {
             position: fixed;
@@ -299,17 +306,20 @@
         }
 
         /* ==================== */
-        /* HERO SECTION (transparent spacer over fixed video) */
+        /* HERO SECTION — merged logo + tagline */
         /* ==================== */
         .hero-section {
             position: relative;
-            width: 100%;
+            min-width: 100vw;
             height: 100vh;
+            flex-shrink: 0;
+            scroll-snap-align: start;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 2.5rem;
             z-index: 1;
-            /* snap handled by JS */
         }
 
         /* Large centered logomark */
@@ -318,8 +328,6 @@
             z-index: 10;
             width: clamp(50px, 7.5vw, 100px);
             height: clamp(50px, 7.5vw, 100px);
-            opacity: 1;
-            transition: opacity 0.6s ease;
         }
 
         .hero-logo svg {
@@ -327,22 +335,7 @@
             height: 100%;
         }
 
-
-        /* ==================== */
-        /* ABOUT SECTION */
-        /* ==================== */
-        .about-section {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-            background: transparent;
-            /* snap handled by JS */
-        }
-
+        /* Tagline */
         .about-text {
             font-size: clamp(1.5rem, 5vw, 5rem);
             font-weight: 700;
@@ -352,24 +345,19 @@
             color: var(--white);
             text-align: center;
             margin: 0;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .about-text.visible {
-            opacity: 1;
-            transform: translateY(0);
+            position: relative;
+            z-index: 10;
         }
 
         /* ==================== */
-        /* PROJECTS SECTION */
+        /* PROJECT SECTIONS */
         /* ==================== */
         .project-section {
             position: relative;
+            min-width: 100vw;
             height: 100vh;
-            width: 100%;
-            /* snap handled by JS */
+            flex-shrink: 0;
+            scroll-snap-align: start;
             z-index: 2;
             background: var(--black);
             overflow: hidden;
@@ -389,11 +377,10 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            /* Always cover the full viewport — no black bars */
             min-width: 100%;
             min-height: 100%;
-            width: 177.78vh; /* 16:9 wider than tall */
-            height: 56.25vw; /* 16:9 taller than wide */
+            width: 177.78vh; /* 16:9 */
+            height: 56.25vw; /* 16:9 */
             transform: translate(-50%, -50%) scale(1.3);
             border: none;
             pointer-events: none;
@@ -422,10 +409,8 @@
             letter-spacing: -0.07em;
             text-transform: lowercase;
             margin: 0;
-            /* Start hidden for animation */
             opacity: 0;
             transform: translateY(30px);
-            /* Gradient hover */
             transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
                         transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -478,54 +463,20 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .nav {
-                padding: 1.5rem;
-            }
-
-            .logo-bottom {
-                top: 1.5rem;
-                left: 1.5rem;
-            }
-
-            .scroll-progress {
-                right: 1.5rem;
-            }
-
-            .menu-overlay {
-                padding: 6rem 2.5rem 2.5rem;
-            }
-
-            .project-info {
-                left: 3rem;
-            }
+            .nav { padding: 1.5rem; }
+            .logo-bottom { top: 1.5rem; left: 1.5rem; }
+            .scroll-progress { bottom: 1.5rem; }
+            .menu-overlay { padding: 6rem 2.5rem 2.5rem; }
+            .project-info { left: 3rem; }
         }
 
         @media (max-width: 768px) {
-            .nav {
-                padding: 1.5rem 1.5rem;
-            }
-
-            .logo-bottom {
-                top: 1.5rem;
-                left: 1.5rem;
-            }
-
-            .logo-bottom svg {
-                width: 32px;
-                height: 32px;
-            }
-
-            .scroll-progress {
-                right: 1.5rem;
-            }
-
-            .menu-overlay {
-                padding: 5rem 1.5rem 1.5rem;
-            }
-
-            .project-info {
-                left: 1.5rem;
-            }
+            .nav { padding: 1.5rem; }
+            .logo-bottom { top: 1.5rem; left: 1.5rem; }
+            .logo-bottom svg { width: 32px; height: 32px; }
+            .scroll-progress { bottom: 1.5rem; }
+            .menu-overlay { padding: 5rem 1.5rem 1.5rem; }
+            .project-info { left: 1.5rem; }
         }
 
         /* ==================== */
@@ -543,26 +494,16 @@
             -webkit-text-fill-color: #0A0A0A !important;
         }
 
-        body.dark-mode .cursor {
-            background: #FF4500 !important;
-        }
-
-        body.dark-mode .plus-icon span {
-            background: #FF4500 !important;
-        }
+        body.dark-mode .cursor { background: #FF4500 !important; }
+        body.dark-mode .plus-icon span { background: #FF4500 !important; }
 
         body.dark-mode .menu-link {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .logo-bottom svg path {
-            fill: #FF4500 !important;
-        }
-
-        body.dark-mode .footer {
-            background: #0A0A0A !important;
-        }
+        body.dark-mode .logo-bottom svg path { fill: #FF4500 !important; }
+        body.dark-mode .footer { background: #0A0A0A !important; }
 
         body.dark-mode .footer-left,
         body.dark-mode .footer-link,
@@ -571,13 +512,8 @@
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .footer-link::after {
-            background: #FF4500 !important;
-        }
-
-        body.dark-mode .social-link svg {
-            fill: #FF4500 !important;
-        }
+        body.dark-mode .footer-link::after { background: #FF4500 !important; }
+        body.dark-mode .social-link svg { fill: #FF4500 !important; }
 
         body.dark-mode .contact-email {
             color: #FF4500 !important;
@@ -604,9 +540,7 @@
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .scroll-progress-segment {
-            background: #FF4500 !important;
-        }
+        body.dark-mode .scroll-progress-segment { background: #FF4500 !important; }
 
         body.dark-mode .director-name {
             color: #FF4500 !important;
@@ -623,13 +557,9 @@
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .case-study-link::after {
-            background: #FF4500 !important;
-        }
+        body.dark-mode .case-study-link::after { background: #FF4500 !important; }
 
-        body.dark-mode .hero-logo svg path {
-            fill: #FF4500 !important;
-        }
+        body.dark-mode .hero-logo svg path { fill: #FF4500 !important; }
 
         /* ==================== */
         /* DARK MODE TOGGLE */
@@ -642,9 +572,7 @@
             cursor: none;
         }
 
-        .dark-mode-toggle input {
-            display: none;
-        }
+        .dark-mode-toggle input { display: none; }
 
         .toggle-track {
             width: 36px;
@@ -679,17 +607,13 @@
         }
 
         /* Page loading gate */
-        body:not(.page-ready) {
-            opacity: 0;
-        }
-        body.page-ready {
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
+        body:not(.page-ready) { opacity: 0; }
+        body.page-ready { opacity: 1; transition: opacity 0.3s ease; }
 
     </style>
 </head>
 <body>
+
     <!-- Custom Cursor -->
     <div class="cursor" id="cursor"></div>
 
@@ -711,14 +635,14 @@
         </div>
     </div>
 
-    <!-- Logo Bottom Right (scrolls to reveal/home section) -->
-    <a href="#aboutSection" class="logo-bottom" id="logoBottom">
+    <!-- Logo top-left — scrolls back to start -->
+    <a href="#" class="logo-bottom" id="logoBottom">
         <svg viewBox="0 0 160 160" fill="none">
             <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
         </svg>
     </a>
 
-    <!-- Scroll Progress Indicator (8 sections) -->
+    <!-- Horizontal Progress Indicator (8 panels: hero + 7 projects) -->
     <div class="scroll-progress" id="scrollProgress">
         <div class="scroll-progress-segment active" data-slide="0"></div>
         <div class="scroll-progress-segment" data-slide="1"></div>
@@ -728,123 +652,133 @@
         <div class="scroll-progress-segment" data-slide="5"></div>
         <div class="scroll-progress-segment" data-slide="6"></div>
         <div class="scroll-progress-segment" data-slide="7"></div>
-        <div class="scroll-progress-segment" data-slide="8"></div>
     </div>
 
-    <!-- Fixed background video (persists through hero + reveal) -->
+    <!-- Fixed background video (hero panel only — hidden on project panels) -->
     <div class="fixed-video-bg" id="fixedVideoBg">
         <iframe src="https://player.vimeo.com/video/1170378022?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
     </div>
 
-    <!-- ==================== -->
-    <!-- SECTION 1: HERO -->
-    <!-- ==================== -->
-    <section class="hero-section" id="heroSection">
-        <div class="hero-logo">
-            <svg viewBox="0 0 160 160" fill="none">
-                <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
-            </svg>
-        </div>
-    </section>
+    <!-- ============================= -->
+    <!-- HORIZONTAL SCROLL CONTAINER  -->
+    <!-- ============================= -->
+    <div class="scroll-container" id="scrollContainer">
 
-    <!-- ==================== -->
-    <!-- SECTION 2: ABOUT -->
-    <!-- ==================== -->
-    <section class="about-section" id="aboutSection">
-        <h1 class="about-text" id="aboutText">classically trained.<br>relentlessly efficient.</h1>
-    </section>
+        <!-- PANEL 1: HERO -->
+        <section class="hero-section" id="heroSection">
+            <div class="hero-logo">
+                <svg viewBox="0 0 160 160" fill="none">
+                    <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+                </svg>
+            </div>
+            <h1 class="about-text" id="aboutText">classically trained.<br>relentlessly efficient.</h1>
+        </section>
 
-    <!-- ==================== -->
-    <!-- SECTIONS 3-8: PROJECTS -->
-    <!-- ==================== -->
-    <section class="project-section" id="project1">
-        <div class="project-video-container">
-            <iframe src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="project-info">
-            <a href="wabi.html" class="project-client-link"><h2 class="project-client">wabi</h2></a>
-            <p class="project-subtitle">when did we stop playing</p>
-        </div>
-    </section>
+        <!-- PANEL 2: WABI -->
+        <section class="project-section" id="project1">
+            <div class="project-video-container">
+                <iframe src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <a href="wabi.html" class="project-client-link"><h2 class="project-client">wabi</h2></a>
+                <p class="project-subtitle">when did we stop playing</p>
+            </div>
+        </section>
 
-    <section class="project-section" id="project2">
-        <div class="project-video-container">
-            <iframe src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="project-info">
-            <a href="aesop.html" class="project-client-link"><h2 class="project-client">aesop</h2></a>
-            <p class="project-subtitle">skin</p>
-        </div>
-    </section>
+        <!-- PANEL 3: AESOP -->
+        <section class="project-section" id="project2">
+            <div class="project-video-container">
+                <iframe src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <a href="aesop.html" class="project-client-link"><h2 class="project-client">aesop</h2></a>
+                <p class="project-subtitle">skin</p>
+            </div>
+        </section>
 
-    <section class="project-section" id="project3">
-        <div class="project-video-container">
-            <iframe src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="project-info">
-            <a href="pinch.html" class="project-client-link"><h2 class="project-client">pinch</h2></a>
-            <p class="project-subtitle">a holiday campaign</p>
-        </div>
-    </section>
+        <!-- PANEL 4: PINCH -->
+        <section class="project-section" id="project3">
+            <div class="project-video-container">
+                <iframe src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <a href="pinch.html" class="project-client-link"><h2 class="project-client">pinch</h2></a>
+                <p class="project-subtitle">a holiday campaign</p>
+            </div>
+        </section>
 
-    <section class="project-section" id="project4">
-        <div class="project-video-container">
-            <iframe src="https://player.vimeo.com/video/1142291147?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="project-info">
-            <a href="fare.html" class="project-client-link"><h2 class="project-client">fare</h2></a>
-            <p class="project-subtitle">beyond the bowl</p>
-        </div>
-    </section>
+        <!-- PANEL 5: FARE -->
+        <section class="project-section" id="project4">
+            <div class="project-video-container">
+                <iframe src="https://player.vimeo.com/video/1142291147?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <a href="fare.html" class="project-client-link"><h2 class="project-client">fare</h2></a>
+                <p class="project-subtitle">beyond the bowl</p>
+            </div>
+        </section>
 
-    <section class="project-section" id="project5">
-        <div class="project-video-container">
-            <iframe src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="project-info">
-            <a href="arcteryx.html" class="project-client-link"><h2 class="project-client">arcteryx</h2></a>
-            <p class="project-subtitle">a city to summit</p>
-        </div>
-    </section>
+        <!-- PANEL 6: ARCTERYX -->
+        <section class="project-section" id="project5">
+            <div class="project-video-container">
+                <iframe src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <a href="arcteryx.html" class="project-client-link"><h2 class="project-client">arcteryx</h2></a>
+                <p class="project-subtitle">a city to summit</p>
+            </div>
+        </section>
 
-    <section class="project-section" id="project6">
-        <div class="project-video-container">
-            <iframe src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="project-info">
-            <a href="hyatt.html" class="project-client-link"><h2 class="project-client">world of hyatt</h2></a>
-            <p class="project-subtitle">jess pegula x us open</p>
-        </div>
-    </section>
+        <!-- PANEL 7: WORLD OF HYATT -->
+        <section class="project-section" id="project6">
+            <div class="project-video-container">
+                <iframe src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <a href="hyatt.html" class="project-client-link"><h2 class="project-client">world of hyatt</h2></a>
+                <p class="project-subtitle">jess pegula x us open</p>
+            </div>
+        </section>
 
-    <section class="project-section" id="project7">
-        <div class="project-video-container">
-            <iframe src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="project-info">
-            <a href="ever.html" class="project-client-link"><h2 class="project-client">ever</h2></a>
-            <p class="project-subtitle">a mini doc</p>
-        </div>
-    </section>
+        <!-- PANEL 8: EVER -->
+        <section class="project-section" id="project7">
+            <div class="project-video-container">
+                <iframe src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <a href="ever.html" class="project-client-link"><h2 class="project-client">ever</h2></a>
+                <p class="project-subtitle">a mini doc</p>
+            </div>
+        </section>
 
-    <!-- Motion library (vanilla JS) -->
+    </div><!-- /.scroll-container -->
+
+    <!-- Motion library -->
     <script src="https://cdn.jsdelivr.net/npm/motion@12.34.0/dist/motion.js"></script>
 
     <script>
         // ==================== //
-        // LOGO HOME BUTTON
+        // REFERENCES
         // ==================== //
-        document.getElementById('logoBottom').addEventListener('click', (e) => {
+        const scrollContainer = document.getElementById('scrollContainer');
+        const fixedVideoBg   = document.getElementById('fixedVideoBg');
+        const logoBottom     = document.getElementById('logoBottom');
+        const navEl          = document.querySelector('.nav');
+        const menuToggle     = document.getElementById('menuToggle');
+        const menuOverlay    = document.getElementById('menuOverlay');
+        const progressSegs   = document.querySelectorAll('.scroll-progress-segment');
+
+        // ==================== //
+        // LOGO — scroll back to start
+        // ==================== //
+        logoBottom.addEventListener('click', (e) => {
             e.preventDefault();
-            document.getElementById('aboutSection').scrollIntoView({ behavior: 'smooth' });
+            scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
         });
 
         // ==================== //
         // MENU
         // ==================== //
-        const menuToggle = document.getElementById('menuToggle');
-        const menuOverlay = document.getElementById('menuOverlay');
-
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
@@ -865,121 +799,90 @@
         });
 
         // ==================== //
-        // MENU LINK GRADIENT SPREAD EFFECT
+        // MENU LINK GRADIENT SPREAD
         // ==================== //
         document.querySelectorAll('.menu-link').forEach(link => {
-            // Create gradient overlay span (duplicate text for masking)
             const gradient = document.createElement('span');
             gradient.classList.add('menu-link-gradient');
             gradient.textContent = link.textContent;
             gradient.style.setProperty('--spread', '0%');
             link.appendChild(gradient);
 
-            let animationFrame;
+            let af;
 
             link.addEventListener('mouseenter', (e) => {
                 const rect = link.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                gradient.style.setProperty('--mx', x + 'px');
-                gradient.style.setProperty('--my', y + 'px');
+                gradient.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+                gradient.style.setProperty('--my', (e.clientY - rect.top) + 'px');
                 gradient.style.setProperty('--spread', '0%');
-
-                // Animate spread from 0% to 200% slowly
-                let start = null;
-                const duration = 900; // ms — slow premium feel
-                const animate = (timestamp) => {
-                    if (!start) start = timestamp;
-                    const progress = Math.min((timestamp - start) / duration, 1);
-                    // Ease out cubic for smooth deceleration
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    gradient.style.setProperty('--spread', (eased * 200) + '%');
-                    if (progress < 1) {
-                        animationFrame = requestAnimationFrame(animate);
-                    }
+                let t0 = null;
+                const run = (ts) => {
+                    if (!t0) t0 = ts;
+                    const p = Math.min((ts - t0) / 900, 1);
+                    gradient.style.setProperty('--spread', (( 1 - Math.pow(1 - p, 3)) * 200) + '%');
+                    if (p < 1) af = requestAnimationFrame(run);
                 };
-                cancelAnimationFrame(animationFrame);
-                animationFrame = requestAnimationFrame(animate);
+                cancelAnimationFrame(af);
+                af = requestAnimationFrame(run);
             });
 
             link.addEventListener('mouseleave', () => {
-                cancelAnimationFrame(animationFrame);
-                // Fade out by shrinking spread back
-                let start = null;
-                const currentSpread = parseFloat(gradient.style.getPropertyValue('--spread')) || 200;
-                const duration = 500;
-                const animate = (timestamp) => {
-                    if (!start) start = timestamp;
-                    const progress = Math.min((timestamp - start) / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    gradient.style.setProperty('--spread', (currentSpread * (1 - eased)) + '%');
-                    if (progress < 1) {
-                        animationFrame = requestAnimationFrame(animate);
-                    }
+                cancelAnimationFrame(af);
+                const cur = parseFloat(gradient.style.getPropertyValue('--spread')) || 200;
+                let t0 = null;
+                const run = (ts) => {
+                    if (!t0) t0 = ts;
+                    const p = Math.min((ts - t0) / 500, 1);
+                    gradient.style.setProperty('--spread', (cur * (1 - (1 - Math.pow(1 - p, 3)))) + '%');
+                    if (p < 1) af = requestAnimationFrame(run);
                 };
-                animationFrame = requestAnimationFrame(animate);
+                af = requestAnimationFrame(run);
             });
         });
 
         // ==================== //
-        // PROJECT TITLE GRADIENT SPREAD EFFECT
+        // PROJECT TITLE GRADIENT SPREAD
         // ==================== //
-        // Track scrolling state to prevent false mouseenter triggers
         let isScrolling = false;
-        let scrollTimeout;
-        document.body.addEventListener('scroll', () => {
+        let scrollTimer;
+        scrollContainer.addEventListener('scroll', () => {
             isScrolling = true;
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => { isScrolling = false; }, 200);
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => { isScrolling = false; }, 200);
         }, { passive: true });
 
         document.querySelectorAll('.project-client').forEach(title => {
-            // Set data-text for the ::before pseudo-element
             title.setAttribute('data-text', title.textContent);
-
-            let animationFrame;
+            let af;
 
             title.addEventListener('mouseenter', (e) => {
                 if (isScrolling) return;
-
                 const rect = title.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                title.style.setProperty('--mx', x + 'px');
-                title.style.setProperty('--my', y + 'px');
+                title.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+                title.style.setProperty('--my', (e.clientY - rect.top) + 'px');
                 title.style.setProperty('--spread', '0%');
-
-                let start = null;
-                const duration = 1400;
-                const animate = (timestamp) => {
-                    if (!start) start = timestamp;
-                    const progress = Math.min((timestamp - start) / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    title.style.setProperty('--spread', (eased * 200) + '%');
-                    if (progress < 1) {
-                        animationFrame = requestAnimationFrame(animate);
-                    }
+                let t0 = null;
+                const run = (ts) => {
+                    if (!t0) t0 = ts;
+                    const p = Math.min((ts - t0) / 1400, 1);
+                    title.style.setProperty('--spread', ((1 - Math.pow(1 - p, 3)) * 200) + '%');
+                    if (p < 1) af = requestAnimationFrame(run);
                 };
-                cancelAnimationFrame(animationFrame);
-                animationFrame = requestAnimationFrame(animate);
+                cancelAnimationFrame(af);
+                af = requestAnimationFrame(run);
             });
 
             title.addEventListener('mouseleave', () => {
-                cancelAnimationFrame(animationFrame);
-                const currentSpread = parseFloat(title.style.getPropertyValue('--spread')) || 200;
-
-                let start = null;
-                const duration = 700;
-                const animate = (timestamp) => {
-                    if (!start) start = timestamp;
-                    const progress = Math.min((timestamp - start) / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    title.style.setProperty('--spread', (currentSpread * (1 - eased)) + '%');
-                    if (progress < 1) {
-                        animationFrame = requestAnimationFrame(animate);
-                    }
+                cancelAnimationFrame(af);
+                const cur = parseFloat(title.style.getPropertyValue('--spread')) || 200;
+                let t0 = null;
+                const run = (ts) => {
+                    if (!t0) t0 = ts;
+                    const p = Math.min((ts - t0) / 700, 1);
+                    title.style.setProperty('--spread', (cur * (1 - (1 - Math.pow(1 - p, 3)))) + '%');
+                    if (p < 1) af = requestAnimationFrame(run);
                 };
-                animationFrame = requestAnimationFrame(animate);
+                af = requestAnimationFrame(run);
             });
         });
 
@@ -987,237 +890,86 @@
         // CUSTOM CURSOR
         // ==================== //
         const cursor = document.getElementById('cursor');
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
 
-        function animateCursor() {
+        (function animateCursor() {
             cursorX += (mouseX - cursorX) * 0.35;
             cursorY += (mouseY - cursorY) * 0.35;
             cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
+            cursor.style.top  = cursorY + 'px';
             requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
+        })();
 
         // ==================== //
-        // WEIGHTED SCROLL-SNAP
+        // KEYBOARD NAV (horizontal)
         // ==================== //
-        const sections = document.querySelectorAll('.hero-section, .about-section, .project-section');
-        let currentIndex = 0;
-        let isAnimating = false;
-        let wheelDelta = 0;
-        let wheelTimer = null;
-        const THRESHOLD = 60; // accumulated delta needed to trigger snap
-
-        function scrollToSection(index) {
-            if (index < 0 || index >= sections.length || isAnimating) return;
-            isAnimating = true;
-            const prevIndex = currentIndex;
-            currentIndex = index;
-
-            const target = sections[index];
-            const start = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
-            const end = target.offsetTop;
-            const distance = end - start;
-            const duration = 1000;
-            let startTime = null;
-            const direction = index > prevIndex ? 1 : -1;
-
-            // Get elements for parallax
-            const leavingSection = sections[prevIndex];
-            const leavingVideo = leavingSection ? leavingSection.querySelector('.project-video-container, .hero-logo, .about-text') : null;
-            const leavingInfo = leavingSection ? leavingSection.querySelector('.project-info') : null;
-            const enteringSection = sections[index];
-            const enteringVideo = enteringSection ? enteringSection.querySelector('.project-video-container') : null;
-
-            // Pre-set entering section's video offset for parallax entrance
-            if (enteringVideo) {
-                enteringVideo.style.transform = 'translateY(' + (direction * 30) + '%)';
+        document.addEventListener('keydown', (e) => {
+            if (menuOverlay.classList.contains('active')) return;
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                e.preventDefault();
+                scrollContainer.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                scrollContainer.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
             }
+        });
 
-            function easeInOutCubic(t) {
-                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-            }
-
-            function step(timestamp) {
-                if (!startTime) startTime = timestamp;
-                const elapsed = timestamp - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                const eased = easeInOutCubic(progress);
-
-                // Scroll position
-                const scrollPos = start + distance * eased;
-                document.documentElement.scrollTop = scrollPos;
-                document.body.scrollTop = scrollPos;
-
-                // Parallax: leaving section content moves faster (exaggerated departure)
-                if (leavingVideo) {
-                    const parallaxOffset = progress * direction * -40;
-                    leavingVideo.style.transform = 'translateY(' + parallaxOffset + '%)';
-                }
-                if (leavingInfo) {
-                    const infoOffset = progress * direction * -25;
-                    leavingInfo.style.transform = 'translateY(calc(-50% + ' + infoOffset + 'vh))';
-                }
-
-                // Parallax: entering section content settles into place
-                if (enteringVideo) {
-                    const enterOffset = (1 - eased) * direction * 30;
-                    enteringVideo.style.transform = 'translateY(' + enterOffset + '%)';
-                }
-
-                if (progress < 1) {
-                    requestAnimationFrame(step);
-                } else {
-                    // Snap exact position — no residual movement
-                    document.documentElement.scrollTop = end;
-                    document.body.scrollTop = end;
-
-                    // Reset all transforms cleanly
-                    if (leavingVideo) leavingVideo.style.transform = '';
-                    if (leavingInfo) leavingInfo.style.transform = '';
-                    if (enteringVideo) enteringVideo.style.transform = '';
-
-                    // Reset project-info to centered
-                    if (leavingInfo) {
-                        leavingInfo.style.transform = 'translateY(-50%)';
-                    }
-
-                    setTimeout(() => {
-                        isAnimating = false;
-                        wheelDelta = 0;
-                    }, 100);
-                }
-            }
-
-            requestAnimationFrame(step);
-        }
-
-        // Restore section on back-navigation
-        const savedSection = sessionStorage.getItem('homeSection');
-        if (savedSection !== null) {
-            const idx = parseInt(savedSection);
-            if (idx >= 0 && idx < sections.length) {
-                currentIndex = idx;
-                const target = sections[idx];
-                document.documentElement.scrollTop = target.offsetTop;
-                document.body.scrollTop = target.offsetTop;
-            }
-            sessionStorage.removeItem('homeSection');
-        }
-
-        // Save current section when navigating away
-        document.querySelectorAll('.project-client-link').forEach(link => {
-            link.addEventListener('click', () => {
-                sessionStorage.setItem('homeSection', currentIndex);
+        // ==================== //
+        // PROGRESS DOT CLICKS
+        // ==================== //
+        progressSegs.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                scrollContainer.scrollTo({ left: i * window.innerWidth, behavior: 'smooth' });
             });
         });
 
-        window.addEventListener('wheel', (e) => {
-            e.preventDefault();
-
-            if (isAnimating) return;
-
-            wheelDelta += e.deltaY;
-            clearTimeout(wheelTimer);
-
-            // Reset accumulated delta after inactivity
-            wheelTimer = setTimeout(() => { wheelDelta = 0; }, 300);
-
-            if (wheelDelta > THRESHOLD) {
-                wheelDelta = 0;
-                scrollToSection(currentIndex + 1);
-            } else if (wheelDelta < -THRESHOLD) {
-                wheelDelta = 0;
-                scrollToSection(currentIndex - 1);
-            }
-        }, { passive: false });
-
-        // Touch support
-        let touchStartY = 0;
-        window.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-
-        window.addEventListener('touchend', (e) => {
-            if (isAnimating) return;
-            const diff = touchStartY - e.changedTouches[0].clientY;
-            if (Math.abs(diff) > 50) {
-                scrollToSection(currentIndex + (diff > 0 ? 1 : -1));
-            }
-        }, { passive: true });
-
-        // Keyboard support
-        window.addEventListener('keydown', (e) => {
-            if (isAnimating) return;
-            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-                e.preventDefault();
-                scrollToSection(currentIndex + 1);
-            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-                e.preventDefault();
-                scrollToSection(currentIndex - 1);
-            }
-        });
-
-        // Click on progress dots to navigate
-        document.querySelectorAll('.scroll-progress-segment').forEach((dot, i) => {
-            dot.addEventListener('click', () => scrollToSection(i));
-        });
-
         // ==================== //
-        // SECTION OBSERVER (8 sections)
+        // INTERSECTION OBSERVER (8 panels)
         // ==================== //
-        const heroLogo = document.querySelector('.hero-logo');
-        const aboutText = document.getElementById('aboutText');
-        const fixedVideoBg = document.getElementById('fixedVideoBg');
-        const logoBottom = document.getElementById('logoBottom');
-        const navEl = document.querySelector('.nav');
-        const progressSegments = document.querySelectorAll('.scroll-progress-segment');
-
-        // All 8 sections in order
         const allSectionIds = [
-            'heroSection', 'aboutSection',
-            'project1', 'project2', 'project3', 'project4', 'project5', 'project6'
+            'heroSection',
+            'project1', 'project2', 'project3', 'project4',
+            'project5', 'project6', 'project7'
         ];
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 const id = entry.target.id;
 
-                // Toggle in-view class for project text animations
-                if (id.startsWith('project')) {
-                    entry.target.classList.toggle('in-view', entry.isIntersecting && entry.intersectionRatio >= 0.5);
-                }
-
                 if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-                    const sectionIndex = allSectionIds.indexOf(id);
+                    const idx = allSectionIds.indexOf(id);
 
-                    // Update progress dots
-                    progressSegments.forEach((seg, i) => {
-                        seg.classList.toggle('active', i === sectionIndex);
-                    });
+                    // Progress dots
+                    progressSegs.forEach((seg, i) => seg.classList.toggle('active', i === idx));
 
-                    // Hero-specific
-                    heroLogo.style.opacity = id === 'heroSection' ? '1' : '0';
-                    logoBottom.classList.toggle('visible', id !== 'heroSection');
-                    navEl.classList.toggle('visible', id !== 'heroSection');
+                    // Logo + nav: hidden on hero, visible on projects
+                    const onHero = id === 'heroSection';
+                    logoBottom.classList.toggle('visible', !onHero);
+                    navEl.classList.toggle('visible', !onHero);
 
-                    // About text animation
-                    aboutText.classList.toggle('visible', id === 'aboutSection');
+                    // Hero reel: show on hero only
+                    fixedVideoBg.style.opacity = onHero ? '1' : '0';
 
-                    // Keep fixed bg video visible through hero + about (parallax)
-                    const showBgVideo = id === 'heroSection' || id === 'aboutSection';
-                    fixedVideoBg.style.opacity = showBgVideo ? '1' : '0';
+                    // Project in-view class
+                    if (id.startsWith('project')) {
+                        entry.target.classList.add('in-view');
+                    }
+                } else if (!entry.isIntersecting) {
+                    if (id.startsWith('project')) {
+                        entry.target.classList.remove('in-view');
+                    }
                 }
             });
-        }, { threshold: 0.5 });
+        }, {
+            root: scrollContainer,
+            threshold: 0.5
+        });
 
-        // Observe all 8 sections
         allSectionIds.forEach(id => {
             const el = document.getElementById(id);
             if (el) observer.observe(el);
@@ -1229,25 +981,15 @@
         const { animate, inView } = Motion;
 
         document.querySelectorAll('.project-section').forEach((section) => {
-            const client = section.querySelector('.project-client');
+            const client   = section.querySelector('.project-client');
             const subtitle = section.querySelector('.project-subtitle');
 
             inView(section, () => {
-                if (client) {
-                    animate(client,
-                        { opacity: [0, 1], y: [30, 0] },
-                        { duration: 0.7, easing: [0.22, 1, 0.36, 1] }
-                    );
-                }
-                if (subtitle) {
-                    animate(subtitle,
-                        { opacity: [0, 0.7], y: [20, 0] },
-                        { duration: 0.7, delay: 0.12, easing: [0.22, 1, 0.36, 1] }
-                    );
-                }
+                if (client)   animate(client,   { opacity: [0, 1],   y: [30, 0] }, { duration: 0.7, easing: [0.22, 1, 0.36, 1] });
+                if (subtitle) animate(subtitle, { opacity: [0, 0.7], y: [20, 0] }, { duration: 0.7, delay: 0.12, easing: [0.22, 1, 0.36, 1] });
 
                 return () => {
-                    if (client) animate(client, { opacity: 0, y: 30 }, { duration: 0.3 });
+                    if (client)   animate(client,   { opacity: 0, y: 30 }, { duration: 0.3 });
                     if (subtitle) animate(subtitle, { opacity: 0, y: 20 }, { duration: 0.3 });
                 };
             }, { amount: 0.5 });
@@ -1261,13 +1003,9 @@
     </label>
 
     <script>
-        // ==================== //
-        // DARK MODE TOGGLE
-        // ==================== //
         (function() {
             const toggle = document.getElementById('darkModeToggle');
-            const isDark = localStorage.getItem('darkMode') === 'true';
-            if (isDark) {
+            if (localStorage.getItem('darkMode') === 'true') {
                 document.body.classList.add('dark-mode');
                 toggle.checked = true;
             }
@@ -1278,19 +1016,20 @@
 
             // Cursor inflate on toggle hover
             const cursorEl = document.getElementById('cursor');
-            const toggleLabel = document.querySelector('.dark-mode-toggle');
-            toggleLabel.addEventListener('mouseenter', () => {
+            const label = document.querySelector('.dark-mode-toggle');
+            label.addEventListener('mouseenter', () => {
                 cursorEl.style.transform = 'translate(-50%, -50%) scale(1.8)';
                 cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
             });
-            toggleLabel.addEventListener('mouseleave', () => {
+            label.addEventListener('mouseleave', () => {
                 cursorEl.style.transform = 'translate(-50%, -50%) scale(1)';
                 cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
             });
         })();
     </script>
+
     <script>
-    // Page loading gate — wait for first Vimeo video before showing page
+    // Page loading gate — show after first Vimeo iframe loads (4s fallback)
     (function() {
         var shown = false;
         function showPage() {
@@ -1307,5 +1046,6 @@
         }
     })();
     </script>
+
 </body>
 </html>
