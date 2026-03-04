@@ -279,7 +279,7 @@
         }
 
         /* ==================== */
-        /* FIXED BACKGROUND VIDEO (hero panel only) */
+        /* FIXED BACKGROUND VIDEO (hero + about panels) */
         /* ==================== */
         .fixed-video-bg {
             position: fixed;
@@ -306,7 +306,7 @@
         }
 
         /* ==================== */
-        /* HERO SECTION — merged logo + tagline */
+        /* HERO SECTION — logo only */
         /* ==================== */
         .hero-section {
             position: relative;
@@ -315,10 +315,8 @@
             flex-shrink: 0;
             scroll-snap-align: start;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2.5rem;
             z-index: 1;
         }
 
@@ -335,10 +333,25 @@
             height: 100%;
         }
 
-        /* Tagline */
+        /* ==================== */
+        /* ABOUT SECTION — tagline panel */
+        /* ==================== */
+        .about-section {
+            position: relative;
+            min-width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        /* Tagline — slides in from right */
         .about-text {
             font-size: clamp(1.5rem, 5vw, 5rem);
-            font-weight: 700;
+            font-weight: 300;
             text-transform: lowercase;
             letter-spacing: -0.07em;
             line-height: 1.2;
@@ -347,6 +360,15 @@
             margin: 0;
             position: relative;
             z-index: 10;
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .about-text.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         /* ==================== */
@@ -642,7 +664,7 @@
         </svg>
     </a>
 
-    <!-- Horizontal Progress Indicator (8 panels: hero + 7 projects) -->
+    <!-- Horizontal Progress Indicator (9 panels: hero + about + 7 projects) -->
     <div class="scroll-progress" id="scrollProgress">
         <div class="scroll-progress-segment active" data-slide="0"></div>
         <div class="scroll-progress-segment" data-slide="1"></div>
@@ -652,6 +674,7 @@
         <div class="scroll-progress-segment" data-slide="5"></div>
         <div class="scroll-progress-segment" data-slide="6"></div>
         <div class="scroll-progress-segment" data-slide="7"></div>
+        <div class="scroll-progress-segment" data-slide="8"></div>
     </div>
 
     <!-- Fixed background video (hero panel only — hidden on project panels) -->
@@ -664,13 +687,17 @@
     <!-- ============================= -->
     <div class="scroll-container" id="scrollContainer">
 
-        <!-- PANEL 1: HERO -->
+        <!-- PANEL 1: HERO (logo only) -->
         <section class="hero-section" id="heroSection">
             <div class="hero-logo">
                 <svg viewBox="0 0 160 160" fill="none">
                     <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
                 </svg>
             </div>
+        </section>
+
+        <!-- PANEL 2: ABOUT (tagline slides in, reel continues behind) -->
+        <section class="about-section" id="aboutSection">
             <h1 class="about-text" id="aboutText">classically trained.<br>relentlessly efficient.</h1>
         </section>
 
@@ -767,6 +794,7 @@
         const menuToggle     = document.getElementById('menuToggle');
         const menuOverlay    = document.getElementById('menuOverlay');
         const progressSegs   = document.querySelectorAll('.scroll-progress-segment');
+        const aboutText      = document.getElementById('aboutText');
 
         // ==================== //
         // LOGO — scroll back to start
@@ -906,6 +934,36 @@
         })();
 
         // ==================== //
+        // WHEEL → HORIZONTAL NAV
+        // Vertical trackpad scroll drives horizontal panel changes
+        // ==================== //
+        let wheelDelta = 0;
+        let wheelTimer = null;
+        let isWheelScrolling = false;
+        const WHEEL_THRESHOLD = 60;
+
+        window.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            if (isWheelScrolling) return;
+
+            wheelDelta += e.deltaY;
+            clearTimeout(wheelTimer);
+            wheelTimer = setTimeout(() => { wheelDelta = 0; }, 300);
+
+            if (wheelDelta > WHEEL_THRESHOLD) {
+                isWheelScrolling = true;
+                wheelDelta = 0;
+                scrollContainer.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
+                setTimeout(() => { isWheelScrolling = false; }, 800);
+            } else if (wheelDelta < -WHEEL_THRESHOLD) {
+                isWheelScrolling = true;
+                wheelDelta = 0;
+                scrollContainer.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
+                setTimeout(() => { isWheelScrolling = false; }, 800);
+            }
+        }, { passive: false });
+
+        // ==================== //
         // KEYBOARD NAV (horizontal)
         // ==================== //
         document.addEventListener('keydown', (e) => {
@@ -932,7 +990,7 @@
         // INTERSECTION OBSERVER (8 panels)
         // ==================== //
         const allSectionIds = [
-            'heroSection',
+            'heroSection', 'aboutSection',
             'project1', 'project2', 'project3', 'project4',
             'project5', 'project6', 'project7'
         ];
@@ -947,13 +1005,16 @@
                     // Progress dots
                     progressSegs.forEach((seg, i) => seg.classList.toggle('active', i === idx));
 
-                    // Logo + nav: hidden on hero, visible on projects
-                    const onHero = id === 'heroSection';
-                    logoBottom.classList.toggle('visible', !onHero);
-                    navEl.classList.toggle('visible', !onHero);
+                    // Logo + nav: hidden on hero + about, visible on projects
+                    const onIntro = id === 'heroSection' || id === 'aboutSection';
+                    logoBottom.classList.toggle('visible', !onIntro);
+                    navEl.classList.toggle('visible', !onIntro);
 
-                    // Hero reel: show on hero only
-                    fixedVideoBg.style.opacity = onHero ? '1' : '0';
+                    // Hero reel: show on hero + about panels
+                    fixedVideoBg.style.opacity = onIntro ? '1' : '0';
+
+                    // Tagline: slide in when about panel is active
+                    aboutText.classList.toggle('visible', id === 'aboutSection');
 
                     // Project in-view class
                     if (id.startsWith('project')) {
