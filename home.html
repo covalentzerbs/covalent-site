@@ -506,6 +506,14 @@
             * { cursor: auto !important; }
         }
 
+        /* Disable blue gradient text effect on touch/mobile */
+        @media (pointer: coarse) {
+            .project-client.is-hovered { -webkit-text-fill-color: unset !important; color: unset !important; }
+            .project-client::before { display: none !important; }
+            .project-client.is-hovered::before,
+            .project-client.is-animating::before { display: none !important; }
+        }
+
         /* ==================== */
         /* DARK MODE OVERRIDES */
         /* ==================== */
@@ -965,7 +973,7 @@ body.dark-mode .project-client {
         });
 
         // ==================== //
-        // MENU LINK GRADIENT SPREAD
+        // MENU LINK GRADIENT SPREAD (desktop only)
         // ==================== //
         document.querySelectorAll('.menu-link').forEach(link => {
             const gradient = document.createElement('span');
@@ -973,6 +981,8 @@ body.dark-mode .project-client {
             gradient.textContent = link.textContent;
             gradient.style.setProperty('--spread', '0%');
             link.appendChild(gradient);
+
+            if (isTouchDevice) return; // no hover on touch
 
             let af;
 
@@ -1007,10 +1017,12 @@ body.dark-mode .project-client {
         });
 
         // ==================== //
-        // PROJECT TITLE RADIAL HOVER
+        // PROJECT TITLE RADIAL HOVER (desktop only)
         // ==================== //
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         document.querySelectorAll('.project-client').forEach(title => {
             title.setAttribute('data-text', title.textContent.trim());
+            if (isTouchDevice) return; // skip hover effect on touch screens
 
             title.addEventListener('mouseenter', (e) => {
                 title.classList.add('is-hovered');
