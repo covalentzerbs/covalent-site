@@ -253,23 +253,26 @@
             height: 40px;
         }
 
-        /* Scroll Progress Indicator — solid growing line */
+        /* Scroll Progress Indicator — lives inside footer, grows from center */
         .scroll-progress {
-            position: fixed;
-            bottom: 2rem;
-            left: 2rem;
-            right: 2rem;
-            height: 1.5px;
-            z-index: 1000;
-            background: rgba(255,255,255,0.12);
+            flex: 1;
+            margin: 0 1.5rem;
+            height: 4px;
+            position: relative;
+            align-self: center;
         }
 
         .scroll-progress-line {
-            height: 100%;
-            width: 0%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            right: 50%;
             background: var(--white);
-            opacity: 0.6;
-            transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            border-radius: 2px;
+            transition: left 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+                        right 0.55s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* ==================== */
@@ -413,6 +416,12 @@
             pointer-events: none;
             -webkit-mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
             mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
+            opacity: 0;
+        }
+
+        /* Only visible while actively hovering */
+        .project-client.is-hovered::before {
+            opacity: 1;
         }
 
         .project-subtitle {
@@ -441,7 +450,6 @@
         @media (max-width: 1024px) {
             .nav { padding: 1.5rem; }
             .logo-bottom { top: 1.5rem; left: 1.5rem; }
-            .scroll-progress { bottom: 1.5rem; }
             .menu-overlay { padding: 6rem 2.5rem 2.5rem; }
         }
 
@@ -449,7 +457,6 @@
             .nav { padding: 1.5rem; }
             .logo-bottom { top: 1.5rem; left: 1.5rem; }
             .logo-bottom svg { width: 32px; height: 32px; }
-            .scroll-progress { bottom: 1.5rem; }
             .menu-overlay { padding: 5rem 1.5rem 1.5rem; }
         }
 
@@ -510,7 +517,6 @@ body.dark-mode .project-client {
         }
 
         body.dark-mode .scroll-progress-line { background: #FF4500 !important; }
-        body.dark-mode .scroll-progress { background: rgba(255,69,0,0.15) !important; }
 
         body.dark-mode .director-name {
             color: #FF4500 !important;
@@ -740,11 +746,6 @@ body.dark-mode .project-client {
         </svg>
     </a>
 
-    <!-- Horizontal Progress Indicator (8 panels: hero + 7 projects) -->
-    <div class="scroll-progress" id="scrollProgress">
-        <div class="scroll-progress-line" id="progressLine"></div>
-    </div>
-
     <!-- Fixed background video (hero panel only — hidden on project panels) -->
     <div class="fixed-video-bg" id="fixedVideoBg">
         <iframe src="https://player.vimeo.com/video/1170378022?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
@@ -842,6 +843,9 @@ body.dark-mode .project-client {
     <!-- Global Footer -->
     <footer class="site-footer">
         <div class="site-footer-left">2026, covalent studios</div>
+        <div class="scroll-progress" id="scrollProgress">
+            <div class="scroll-progress-line" id="progressLine"></div>
+        </div>
         <div class="site-footer-right">
             <div class="site-footer-socials">
                 <label class="dark-mode-toggle">
@@ -971,6 +975,7 @@ body.dark-mode .project-client {
 
             title.addEventListener('mouseenter', (e) => {
                 if (isScrolling) return;
+                title.classList.add('is-hovered');
                 const rect = title.getBoundingClientRect();
                 title.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
                 title.style.setProperty('--my', (e.clientY - rect.top) + 'px');
@@ -994,7 +999,11 @@ body.dark-mode .project-client {
                     if (!t0) t0 = ts;
                     const p = Math.min((ts - t0) / 700, 1);
                     title.style.setProperty('--spread', (cur * (1 - (1 - Math.pow(1 - p, 3)))) + '%');
-                    if (p < 1) af = requestAnimationFrame(run);
+                    if (p < 1) {
+                        af = requestAnimationFrame(run);
+                    } else {
+                        title.classList.remove('is-hovered'); // fully gone → hide overlay
+                    }
                 };
                 af = requestAnimationFrame(run);
             });
@@ -1116,8 +1125,11 @@ body.dark-mode .project-client {
                 if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
                     const idx = allSectionIds.indexOf(id);
 
-                    // Progress line — grows equally per panel (0% on hero, 100% on last project)
-                    progressLine.style.width = (idx / (allSectionIds.length - 1) * 100) + '%';
+                    // Progress line — grows from center outward each panel
+                    const pct  = idx / (allSectionIds.length - 1) * 100;
+                    const half = pct / 2;
+                    progressLine.style.left  = (50 - half) + '%';
+                    progressLine.style.right = (50 - half) + '%';
 
                     // Logo + nav: hidden on hero, visible on projects
                     const onHero = id === 'heroSection';
