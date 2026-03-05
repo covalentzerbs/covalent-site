@@ -396,32 +396,16 @@
             margin: 0;
             opacity: 0;
             transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            display: inline-block;
         }
 
-        .project-client::before {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        /* Blue gradient only on hover — clean CSS, no JS needed */
+        .project-client:hover {
             background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
             background-size: 300% 100%;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: gradientShift 3s ease infinite;
-            pointer-events: none;
-            -webkit-mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
-            mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
-            opacity: 0;
-        }
-
-        /* Only visible while actively hovering */
-        .project-client.is-hovered::before {
-            opacity: 1;
         }
 
         .project-subtitle {
@@ -665,18 +649,20 @@ body.dark-mode .project-client {
             transition: opacity 0.5s ease;
         }
         .site-footer.visible {
-            opacity: 0.5;
+            opacity: 1;
             pointer-events: auto;
         }
         .site-footer-left {
             font-size: 0.7rem;
             font-weight: 500;
             color: var(--white);
+            opacity: 0.5;
         }
         .site-footer-right {
             display: flex;
             align-items: center;
             gap: 1.5rem;
+            opacity: 0.5;
         }
         .site-footer-link {
             font-size: 0.7rem;
@@ -953,57 +939,6 @@ body.dark-mode .project-client {
                     const p = Math.min((ts - t0) / 500, 1);
                     gradient.style.setProperty('--spread', (cur * (1 - (1 - Math.pow(1 - p, 3)))) + '%');
                     if (p < 1) af = requestAnimationFrame(run);
-                };
-                af = requestAnimationFrame(run);
-            });
-        });
-
-        // ==================== //
-        // PROJECT TITLE GRADIENT SPREAD
-        // ==================== //
-        let isScrolling = false;
-        let scrollTimer;
-        scrollContainer.addEventListener('scroll', () => {
-            isScrolling = true;
-            clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(() => { isScrolling = false; }, 200);
-        }, { passive: true });
-
-        document.querySelectorAll('.project-client').forEach(title => {
-            title.setAttribute('data-text', title.textContent);
-            let af;
-
-            title.addEventListener('mouseenter', (e) => {
-                if (isScrolling) return;
-                title.classList.add('is-hovered');
-                const rect = title.getBoundingClientRect();
-                title.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
-                title.style.setProperty('--my', (e.clientY - rect.top) + 'px');
-                title.style.setProperty('--spread', '0%');
-                let t0 = null;
-                const run = (ts) => {
-                    if (!t0) t0 = ts;
-                    const p = Math.min((ts - t0) / 1400, 1);
-                    title.style.setProperty('--spread', ((1 - Math.pow(1 - p, 3)) * 200) + '%');
-                    if (p < 1) af = requestAnimationFrame(run);
-                };
-                cancelAnimationFrame(af);
-                af = requestAnimationFrame(run);
-            });
-
-            title.addEventListener('mouseleave', () => {
-                cancelAnimationFrame(af);
-                const cur = parseFloat(title.style.getPropertyValue('--spread')) || 200;
-                let t0 = null;
-                const run = (ts) => {
-                    if (!t0) t0 = ts;
-                    const p = Math.min((ts - t0) / 700, 1);
-                    title.style.setProperty('--spread', (cur * (1 - (1 - Math.pow(1 - p, 3)))) + '%');
-                    if (p < 1) {
-                        af = requestAnimationFrame(run);
-                    } else {
-                        title.classList.remove('is-hovered'); // fully gone → hide overlay
-                    }
                 };
                 af = requestAnimationFrame(run);
             });
