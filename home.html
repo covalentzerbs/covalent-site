@@ -393,6 +393,7 @@
             line-height: 1;
             letter-spacing: -0.07em;
             text-transform: lowercase;
+            text-align: left; /* prevent inherited center desync with ::before */
             margin: 0;
             opacity: 0;
             transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -400,11 +401,18 @@
             display: inline-block;
         }
 
+        /* While hovering: hide parent white text so only ::before gradient shows — no double-render bleed */
+        .project-client.is-hovered {
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
         /* Radial blue-gradient overlay — shown only while actively hovering */
         .project-client::before {
             content: attr(data-text);
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
+            text-align: left;
             background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
             background-size: 300% 100%;
             -webkit-background-clip: text;
@@ -414,7 +422,7 @@
             pointer-events: none;
             -webkit-mask-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), black var(--spread, 0%), transparent var(--spread, 0%));
             mask-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), black var(--spread, 0%), transparent var(--spread, 0%));
-            display: none; /* hidden by default — display:none is more reliable than opacity:0 */
+            display: none;
         }
 
         .project-client.is-hovered::before {
