@@ -321,16 +321,12 @@
         }
 
         /* Large centered logomark */
-        .hero-logo {
+        .hero-wordmark {
             position: relative;
             z-index: 10;
-            width: clamp(50px, 7.5vw, 100px);
-            height: clamp(50px, 7.5vw, 100px);
-        }
-
-        .hero-logo svg {
-            width: 100%;
-            height: 100%;
+            width: 75vw;
+            max-width: 700px;
+            height: auto;
         }
 
         /* ==================== */
@@ -581,7 +577,7 @@
 
         body.dark-mode .case-study-link::after { background: #FF4500 !important; }
 
-        body.dark-mode .hero-logo svg path { fill: #FF4500 !important; }
+        body.dark-mode .hero-wordmark { filter: brightness(0) saturate(100%) invert(38%) sepia(99%) saturate(1200%) hue-rotate(358deg) brightness(103%) contrast(107%) !important; }
 
         /* ==================== */
         /* DARK MODE TOGGLE */
@@ -687,13 +683,9 @@
     <!-- ============================= -->
     <div class="scroll-container" id="scrollContainer">
 
-        <!-- PANEL 1: HERO (logo only) -->
+        <!-- PANEL 1: HERO (wordmark only) -->
         <section class="hero-section" id="heroSection">
-            <div class="hero-logo">
-                <svg viewBox="0 0 160 160" fill="none">
-                    <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
-                </svg>
-            </div>
+            <img src="assets/logos/WORDMARK FINAL_WHITE.png" class="hero-wordmark" alt="Covalent Studios">
         </section>
 
         <!-- PANEL 2: ABOUT (tagline slides in, reel continues behind) -->
