@@ -253,29 +253,23 @@
             height: 40px;
         }
 
-        /* Scroll Progress Indicator — horizontal, bottom-center */
+        /* Scroll Progress Indicator — solid growing line */
         .scroll-progress {
             position: fixed;
             bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 2rem;
+            right: 2rem;
+            height: 1.5px;
             z-index: 1000;
-            display: flex;
-            flex-direction: row;
-            gap: 8px;
+            background: rgba(255,255,255,0.12);
         }
 
-        .scroll-progress-segment {
-            width: 24px;
-            height: 3px;
+        .scroll-progress-line {
+            height: 100%;
+            width: 0%;
             background: var(--white);
-            opacity: 0.2;
-            transition: opacity 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .scroll-progress-segment.active {
-            opacity: 1;
+            opacity: 0.6;
+            transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* ==================== */
@@ -408,8 +402,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: -0.15em;
-            bottom: -0.15em;
+            right: 0;
+            bottom: 0;
             background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
             background-size: 300% 100%;
             -webkit-background-clip: text;
@@ -515,7 +509,8 @@ body.dark-mode .project-client {
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .scroll-progress-segment { background: #FF4500 !important; }
+        body.dark-mode .scroll-progress-line { background: #FF4500 !important; }
+        body.dark-mode .scroll-progress { background: rgba(255,69,0,0.15) !important; }
 
         body.dark-mode .director-name {
             color: #FF4500 !important;
@@ -747,14 +742,7 @@ body.dark-mode .project-client {
 
     <!-- Horizontal Progress Indicator (8 panels: hero + 7 projects) -->
     <div class="scroll-progress" id="scrollProgress">
-        <div class="scroll-progress-segment active" data-slide="0"></div>
-        <div class="scroll-progress-segment" data-slide="1"></div>
-        <div class="scroll-progress-segment" data-slide="2"></div>
-        <div class="scroll-progress-segment" data-slide="3"></div>
-        <div class="scroll-progress-segment" data-slide="4"></div>
-        <div class="scroll-progress-segment" data-slide="5"></div>
-        <div class="scroll-progress-segment" data-slide="6"></div>
-        <div class="scroll-progress-segment" data-slide="7"></div>
+        <div class="scroll-progress-line" id="progressLine"></div>
     </div>
 
     <!-- Fixed background video (hero panel only — hidden on project panels) -->
@@ -891,7 +879,7 @@ body.dark-mode .project-client {
         const navEl          = document.querySelector('.nav');
         const menuToggle     = document.getElementById('menuToggle');
         const menuOverlay    = document.getElementById('menuOverlay');
-        const progressSegs   = document.querySelectorAll('.scroll-progress-segment');
+        const progressLine   = document.getElementById('progressLine');
         const siteFooter     = document.querySelector('.site-footer');
 
         // ==================== //
@@ -1113,15 +1101,6 @@ body.dark-mode .project-client {
         updateParallax(); // set initial positions
 
         // ==================== //
-        // PROGRESS DOT CLICKS
-        // ==================== //
-        progressSegs.forEach((dot, i) => {
-            dot.addEventListener('click', () => {
-                scrollContainer.scrollTo({ left: i * window.innerWidth, behavior: 'smooth' });
-            });
-        });
-
-        // ==================== //
         // INTERSECTION OBSERVER (8 panels)
         // ==================== //
         const allSectionIds = [
@@ -1137,8 +1116,8 @@ body.dark-mode .project-client {
                 if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
                     const idx = allSectionIds.indexOf(id);
 
-                    // Progress dots
-                    progressSegs.forEach((seg, i) => seg.classList.toggle('active', i === idx));
+                    // Progress line — grows equally per panel (0% on hero, 100% on last project)
+                    progressLine.style.width = (idx / (allSectionIds.length - 1) * 100) + '%';
 
                     // Logo + nav: hidden on hero, visible on projects
                     const onHero = id === 'heroSection';
