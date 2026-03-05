@@ -465,6 +465,45 @@
             .logo-bottom { top: 1.5rem; left: 1.5rem; }
             .logo-bottom svg { width: 32px; height: 32px; }
             .menu-overlay { padding: 5rem 1.5rem 1.5rem; }
+
+            /* Use dynamic viewport height — Safari ignores vh percentage chains */
+            .scroll-container { height: 100dvh; }
+            .project-section, .hero-section { height: 100dvh; }
+            .fixed-video-bg { height: 100dvh; }
+            .loading-overlay { height: 100dvh; }
+
+            /* Full-bleed video: bypass Safari's broken min-height % chain.
+               Set explicit dvh/dvw so the iframe is always 16:9 and covers the screen. */
+            .project-video-container {
+                height: 100dvh !important;
+            }
+            .project-video-container iframe {
+                width: 177.78dvh !important;
+                height: 100dvh !important;
+                min-width: unset !important;
+                min-height: unset !important;
+            }
+            .fixed-video-bg iframe {
+                width: 177.78dvh !important;
+                height: 100dvh !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+            }
+
+            /* Loading tagline — center and move up */
+            .loading-tagline {
+                left: 0;
+                right: 0;
+                top: 58%;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Hide dot cursor on touch devices */
+        @media (pointer: coarse) {
+            .cursor { display: none !important; }
+            * { cursor: auto !important; }
         }
 
         /* ==================== */
@@ -1109,10 +1148,13 @@ body.dark-mode .project-client {
                 const offset = panelLeft - scrollLeft;
                 const info = section.querySelector('.project-info');
                 if (info) {
-                    // Parallax factor: text moves at 65% of scroll speed
-                    // Creates a dramatic sweep from far-right as panel comes into view
-                    const tx = offset * 0.65;
-                    info.style.transform = `translateY(-50%) translateX(${tx}px)`;
+                    if (window.innerWidth <= 768) {
+                        info.style.transform = 'translateY(-50%)';
+                    } else {
+                        // Parallax factor: text moves at 65% of scroll speed
+                        const tx = offset * 0.65;
+                        info.style.transform = `translateY(-50%) translateX(${tx}px)`;
+                    }
                 }
             });
         }
@@ -1222,6 +1264,33 @@ body.dark-mode .project-client {
 
     <script>
     // ==================== //
+    // ==================== //
+    // MOBILE: hide cursor on touch, fix video dimensions
+    // ==================== //
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        document.getElementById('cursor').style.display = 'none';
+    }
+
+    function fixMobileVideos() {
+        if (window.innerWidth > 768) return;
+        // Use the section's actual rendered height for pixel accuracy
+        const h = document.querySelector('.project-section')
+                    ? document.querySelector('.project-section').offsetHeight
+                    : window.innerHeight;
+        const w = Math.ceil(h * 16 / 9) + 2;
+        document.querySelectorAll('.project-video-container iframe, .fixed-video-bg iframe').forEach(function(iframe) {
+            iframe.style.width     = w + 'px';
+            iframe.style.height    = h + 'px';
+            iframe.style.minWidth  = 'unset';
+            iframe.style.minHeight = 'unset';
+            // Reset any per-iframe inline transform so CSS centering takes over
+            iframe.style.transform = 'translate(-50%, -50%)';
+        });
+    }
+    fixMobileVideos();
+    window.addEventListener('resize', fixMobileVideos);
+
+    // ==================== //
     // LOADING SCREEN
     // ==================== //
     (function() {
@@ -1233,6 +1302,13 @@ body.dark-mode .project-client {
         const total        = allIframes.length;
         let loaded         = 0;
         let completed      = false;
+
+        // Skip loading screen on return visits within the same session
+        if (sessionStorage.getItem('covalent_visited')) {
+            overlay.style.display = 'none';
+            return;
+        }
+        sessionStorage.setItem('covalent_visited', '1');
 
         function setProgress(n) {
             barFill.style.width = Math.round((n / total) * 100) + '%';
