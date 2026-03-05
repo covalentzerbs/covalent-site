@@ -346,7 +346,7 @@
 
         /* Tagline — slides in from right */
         .about-text {
-            font-size: clamp(1.5rem, 5vw, 5rem);
+            font-size: clamp(0.75rem, 2.5vw, 2.5rem);
             font-weight: 300;
             text-transform: lowercase;
             letter-spacing: -0.07em;
@@ -997,8 +997,8 @@
                     // Progress dots
                     progressSegs.forEach((seg, i) => seg.classList.toggle('active', i === idx));
 
-                    // Logo + nav: hidden on hero + about, visible on projects
-                    const onIntro = id === 'heroSection' || id === 'aboutSection';
+                    // Logo + nav: hidden on hero only, visible on about + projects
+                    const onIntro = id === 'heroSection';
                     logoBottom.classList.toggle('visible', !onIntro);
                     navEl.classList.toggle('visible', !onIntro);
 
