@@ -401,17 +401,17 @@
             display: inline-block;
         }
 
-        /* While hovering: hide parent white text so only ::before gradient shows — no double-render bleed */
+        /* Hide parent text only while cursor is on it — no double-render bleed */
         .project-client.is-hovered {
             -webkit-text-fill-color: transparent;
             color: transparent;
         }
 
-        /* Radial blue-gradient overlay — shown only while actively hovering */
+        /* Radial blue-gradient overlay */
         .project-client::before {
             content: attr(data-text);
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0; left: 0; right: -0.12em; bottom: 0; /* slight right overhang covers last-glyph ink */
             text-align: left;
             background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
             background-size: 300% 100%;
@@ -425,7 +425,9 @@
             display: none;
         }
 
-        .project-client.is-hovered::before {
+        /* Show ::before while cursor is on it OR while retract animation plays */
+        .project-client.is-hovered::before,
+        .project-client.is-animating::before {
             display: block;
         }
 
@@ -990,6 +992,9 @@ body.dark-mode .project-client {
 
             title.addEventListener('mouseleave', () => {
                 cancelAnimationFrame(title._af);
+                // Immediately restore white parent text; keep ::before visible for retract
+                title.classList.remove('is-hovered');
+                title.classList.add('is-animating');
                 const cur = parseFloat(title.style.getPropertyValue('--spread')) || 200;
                 let t0 = null;
                 const run = (ts) => {
@@ -999,7 +1004,7 @@ body.dark-mode .project-client {
                     if (p < 1) {
                         title._af = requestAnimationFrame(run);
                     } else {
-                        title.classList.remove('is-hovered'); // hide ::before after fully retracted
+                        title.classList.remove('is-animating');
                     }
                 };
                 title._af = requestAnimationFrame(run);
@@ -1039,9 +1044,9 @@ body.dark-mode .project-client {
         // Release lock once the container stops scrolling (200ms after last scroll event)
         // Also clean up any hover states that got stuck during scroll
         scrollContainer.addEventListener('scroll', () => {
-            document.querySelectorAll('.project-client.is-hovered').forEach(el => {
+            document.querySelectorAll('.project-client.is-hovered, .project-client.is-animating').forEach(el => {
                 cancelAnimationFrame(el._af);
-                el.classList.remove('is-hovered');
+                el.classList.remove('is-hovered', 'is-animating');
             });
 
             if (isWheelScrolling) {
