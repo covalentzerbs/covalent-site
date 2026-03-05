@@ -400,6 +400,11 @@
             .menu-overlay {
                 padding: 5rem 1.5rem 1.5rem;
             }
+
+            /* Cursor block not needed on touch — remove so it can't block taps */
+            .video-cursor-block {
+                pointer-events: none;
+            }
         }
         /* ==================== */
         /* FOOTER */
@@ -782,6 +787,12 @@
 
         // Hover and click listeners with debounce
         directorRows.forEach(row => {
+            // Touch: tap to switch video (mouseenter doesn't fire on mobile)
+            row.addEventListener('touchstart', (e) => {
+                const directorId = row.getAttribute('data-director');
+                switchVideo(directorId);
+            }, { passive: true });
+
             row.addEventListener('mouseenter', () => {
                 const directorId = row.getAttribute('data-director');
                 clearTimeout(switchTimer);
