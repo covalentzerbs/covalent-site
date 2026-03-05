@@ -396,16 +396,29 @@
             margin: 0;
             opacity: 0;
             transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: inline-block;
         }
 
-        /* Blue gradient only on hover — clean CSS, no JS needed */
-        .project-client:hover {
+        /* Radial blue-gradient overlay — shown only while actively hovering */
+        .project-client::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
             background-size: 300% 100%;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: gradientShift 3s ease infinite;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), black var(--spread, 0%), transparent var(--spread, 0%));
+            mask-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), black var(--spread, 0%), transparent var(--spread, 0%));
+            display: none; /* hidden by default — display:none is more reliable than opacity:0 */
+        }
+
+        .project-client.is-hovered::before {
+            display: block;
         }
 
         .project-subtitle {
@@ -945,6 +958,47 @@ body.dark-mode .project-client {
         });
 
         // ==================== //
+        // PROJECT TITLE RADIAL HOVER
+        // ==================== //
+        document.querySelectorAll('.project-client').forEach(title => {
+            title.setAttribute('data-text', title.textContent.trim());
+
+            title.addEventListener('mouseenter', (e) => {
+                title.classList.add('is-hovered');
+                const rect = title.getBoundingClientRect();
+                title.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+                title.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+                title.style.setProperty('--spread', '0%');
+                let t0 = null;
+                const run = (ts) => {
+                    if (!t0) t0 = ts;
+                    const p = Math.min((ts - t0) / 1400, 1);
+                    title.style.setProperty('--spread', ((1 - Math.pow(1 - p, 3)) * 200) + '%');
+                    if (p < 1) title._af = requestAnimationFrame(run);
+                };
+                cancelAnimationFrame(title._af);
+                title._af = requestAnimationFrame(run);
+            });
+
+            title.addEventListener('mouseleave', () => {
+                cancelAnimationFrame(title._af);
+                const cur = parseFloat(title.style.getPropertyValue('--spread')) || 200;
+                let t0 = null;
+                const run = (ts) => {
+                    if (!t0) t0 = ts;
+                    const p = Math.min((ts - t0) / 600, 1);
+                    title.style.setProperty('--spread', (cur * (1 - (1 - Math.pow(1 - p, 3)))) + '%');
+                    if (p < 1) {
+                        title._af = requestAnimationFrame(run);
+                    } else {
+                        title.classList.remove('is-hovered'); // hide ::before after fully retracted
+                    }
+                };
+                title._af = requestAnimationFrame(run);
+            });
+        });
+
+        // ==================== //
         // CUSTOM CURSOR
         // ==================== //
         const cursor = document.getElementById('cursor');
@@ -975,7 +1029,13 @@ body.dark-mode .project-client {
         const WHEEL_THRESHOLD = 20;
 
         // Release lock once the container stops scrolling (200ms after last scroll event)
+        // Also clean up any hover states that got stuck during scroll
         scrollContainer.addEventListener('scroll', () => {
+            document.querySelectorAll('.project-client.is-hovered').forEach(el => {
+                cancelAnimationFrame(el._af);
+                el.classList.remove('is-hovered');
+            });
+
             if (isWheelScrolling) {
                 clearTimeout(scrollEndTimer);
                 scrollEndTimer = setTimeout(() => {
@@ -996,11 +1056,21 @@ body.dark-mode .project-client {
             if (wheelDelta > WHEEL_THRESHOLD) {
                 isWheelScrolling = true;
                 wheelDelta = 0;
+                const prevLeft = scrollContainer.scrollLeft;
                 scrollContainer.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
+                // If already at the right edge, scroll won't fire → release lock immediately
+                requestAnimationFrame(() => {
+                    if (scrollContainer.scrollLeft === prevLeft) { isWheelScrolling = false; }
+                });
             } else if (wheelDelta < -WHEEL_THRESHOLD) {
                 isWheelScrolling = true;
                 wheelDelta = 0;
+                const prevLeft = scrollContainer.scrollLeft;
                 scrollContainer.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
+                // If already at the left edge, scroll won't fire → release lock immediately
+                requestAnimationFrame(() => {
+                    if (scrollContainer.scrollLeft === prevLeft) { isWheelScrolling = false; }
+                });
             }
         }, { passive: false });
 
