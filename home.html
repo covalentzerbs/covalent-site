@@ -687,6 +687,11 @@ body.dark-mode .project-client {
             align-items: center;
             gap: 1rem;
         }
+        .social-link {
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+        }
         .site-footer-social {
             display: flex;
             align-items: center;
@@ -1174,12 +1179,12 @@ body.dark-mode .project-client {
             const subtitle = section.querySelector('.project-subtitle');
 
             inView(section, () => {
-                if (client)   animate(client,   { opacity: [0, 1],   y: [30, 0] }, { duration: 0.7, easing: [0.22, 1, 0.36, 1] });
-                if (subtitle) animate(subtitle, { opacity: [0, 0.7], y: [20, 0] }, { duration: 0.7, delay: 0.12, easing: [0.22, 1, 0.36, 1] });
+                if (client)   animate(client,   { opacity: [0, 1]   }, { duration: 0.7, easing: [0.22, 1, 0.36, 1] });
+                if (subtitle) animate(subtitle, { opacity: [0, 0.7] }, { duration: 0.7, delay: 0.12, easing: [0.22, 1, 0.36, 1] });
 
                 return () => {
-                    if (client)   animate(client,   { opacity: 0, y: 30 }, { duration: 0.3 });
-                    if (subtitle) animate(subtitle, { opacity: 0, y: 20 }, { duration: 0.3 });
+                    if (client)   animate(client,   { opacity: 0 }, { duration: 0.3 });
+                    if (subtitle) animate(subtitle, { opacity: 0 }, { duration: 0.3 });
                 };
             }, { amount: 0.5 });
         });
