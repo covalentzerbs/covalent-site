@@ -491,13 +491,33 @@
                 transform: translate(-50%, -50%) !important;
             }
 
-            /* Loading tagline — center and move up */
+            /* Loading screen — all items centered */
             .loading-tagline {
+                position: absolute;
                 left: 0;
                 right: 0;
-                top: 58%;
-                font-size: 0.8rem;
+                top: calc(50% + 5rem);
+                font-size: clamp(0.65rem, 3.5vw, 0.9rem);
+                text-align: center;
+                letter-spacing: -0.05em;
             }
+
+            /* Force all chrome visible — IntersectionObserver unreliable on mobile */
+            .nav, .logo-bottom, .site-footer {
+                opacity: 1 !important;
+                pointer-events: auto !important;
+            }
+
+            /* Project titles: always visible, centered on mobile */
+            .project-client {
+                opacity: 1 !important;
+                text-align: center !important;
+            }
+            .project-subtitle {
+                opacity: 0.7 !important;
+                text-align: center !important;
+            }
+            .project-info { text-align: center; }
         }
 
         /* Hide dot cursor on touch devices */
@@ -1019,7 +1039,7 @@ body.dark-mode .project-client {
         // ==================== //
         // PROJECT TITLE RADIAL HOVER (desktop only)
         // ==================== //
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
         document.querySelectorAll('.project-client').forEach(title => {
             title.setAttribute('data-text', title.textContent.trim());
             if (isTouchDevice) return; // skip hover effect on touch screens
@@ -1279,7 +1299,8 @@ body.dark-mode .project-client {
     // ==================== //
     // MOBILE: hide cursor on touch, fix video dimensions
     // ==================== //
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    const _isTouch = window.matchMedia('(pointer: coarse)').matches;
+    if (_isTouch) {
         document.getElementById('cursor').style.display = 'none';
     }
 
