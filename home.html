@@ -395,9 +395,7 @@
             text-transform: lowercase;
             margin: 0;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             display: inline-block;
         }
@@ -430,20 +428,16 @@
             letter-spacing: -0.07em;
             text-transform: lowercase;
             margin: 0.05em 0 0 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s,
-                        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.08s;
         }
 
-        /* When section is in view, animate text in */
+        /* When section is in view, fade text in */
         .project-section.in-view .project-client {
             opacity: 1;
-            transform: translateY(0);
         }
 
         .project-section.in-view .project-subtitle {
             opacity: 0.7;
-            transform: translateY(0);
         }
 
         /* Responsive */
@@ -545,20 +539,18 @@ body.dark-mode .project-client {
         /* DARK MODE TOGGLE */
         /* ==================== */
         .dark-mode-toggle {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 10000;
+            display: flex;
+            align-items: center;
             cursor: none;
         }
 
         .dark-mode-toggle input { display: none; }
 
         .toggle-track {
-            width: 36px;
-            height: 18px;
+            width: 28px;
+            height: 16px;
             background: rgba(255, 255, 255, 0.25);
-            border-radius: 9px;
+            border-radius: 8px;
             position: relative;
             transition: background 0.3s ease;
             cursor: none;
@@ -570,8 +562,8 @@ body.dark-mode .project-client {
             position: absolute;
             top: 2px;
             left: 2px;
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 50%;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -582,7 +574,7 @@ body.dark-mode .project-client {
         }
 
         .dark-mode-toggle input:checked + .toggle-track::after {
-            transform: translateX(18px);
+            transform: translateX(12px);
             background: #FF4500;
         }
 
@@ -666,7 +658,13 @@ body.dark-mode .project-client {
             justify-content: space-between;
             align-items: center;
             z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        .site-footer.visible {
             opacity: 0.5;
+            pointer-events: auto;
         }
         .site-footer-left {
             font-size: 0.7rem;
@@ -861,6 +859,7 @@ body.dark-mode .project-client {
         const menuToggle     = document.getElementById('menuToggle');
         const menuOverlay    = document.getElementById('menuOverlay');
         const progressSegs   = document.querySelectorAll('.scroll-progress-segment');
+        const siteFooter     = document.querySelector('.site-footer');
 
         // ==================== //
         // LOGO — scroll back to start
@@ -1055,6 +1054,32 @@ body.dark-mode .project-client {
         });
 
         // ==================== //
+        // PARALLAX TEXT (project-info sweeps in from scroll direction)
+        // ==================== //
+        const projectSections = document.querySelectorAll('.project-section');
+
+        function updateParallax() {
+            const scrollLeft = scrollContainer.scrollLeft;
+            const vw = window.innerWidth;
+            projectSections.forEach(section => {
+                const panelLeft = section.offsetLeft;
+                // Distance from viewport left edge: positive = to the right, negative = to the left
+                const offset = panelLeft - scrollLeft;
+                const info = section.querySelector('.project-info');
+                if (info) {
+                    // Parallax factor: text moves at 40% of scroll speed
+                    // Creates a dramatic sweep from far-right as panel comes into view
+                    const tx = offset * 0.4;
+                    info.style.transform = `translateY(-50%) translateX(${tx}px)`;
+                }
+            });
+        }
+
+        scrollContainer.addEventListener('scroll', updateParallax, { passive: true });
+        window.addEventListener('resize', updateParallax);
+        updateParallax(); // set initial positions
+
+        // ==================== //
         // PROGRESS DOT CLICKS
         // ==================== //
         progressSegs.forEach((dot, i) => {
@@ -1086,6 +1111,7 @@ body.dark-mode .project-client {
                     const onHero = id === 'heroSection';
                     logoBottom.classList.toggle('visible', !onHero);
                     navEl.classList.toggle('visible', !onHero);
+                    siteFooter.classList.toggle('visible', !onHero);
 
                     // Hero reel: show on hero panel only
                     fixedVideoBg.style.opacity = onHero ? '1' : '0';
@@ -1131,11 +1157,6 @@ body.dark-mode .project-client {
         });
     </script>
 
-    <!-- Dark Mode Toggle -->
-    <label class="dark-mode-toggle">
-        <input type="checkbox" id="darkModeToggle">
-        <span class="toggle-track"></span>
-    </label>
 
     <script>
         (function() {
@@ -1231,8 +1252,11 @@ body.dark-mode .project-client {
     <footer class="site-footer">
         <div class="site-footer-left">2026, covalent studios</div>
         <div class="site-footer-right">
-            <a href="#" class="site-footer-link">blog</a>
             <div class="site-footer-socials">
+                <label class="dark-mode-toggle">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="toggle-track"></span>
+                </label>
                 <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="site-footer-social">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                 </a>
