@@ -1053,24 +1053,18 @@ body.dark-mode .project-client {
             clearTimeout(wheelTimer);
             wheelTimer = setTimeout(() => { wheelDelta = 0; }, 300);
 
+            const maxLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+
             if (wheelDelta > WHEEL_THRESHOLD) {
-                isWheelScrolling = true;
                 wheelDelta = 0;
-                const prevLeft = scrollContainer.scrollLeft;
+                if (scrollContainer.scrollLeft >= maxLeft - 1) return; // already at right edge
+                isWheelScrolling = true;
                 scrollContainer.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
-                // If already at the right edge, scroll won't fire → release lock immediately
-                requestAnimationFrame(() => {
-                    if (scrollContainer.scrollLeft === prevLeft) { isWheelScrolling = false; }
-                });
             } else if (wheelDelta < -WHEEL_THRESHOLD) {
-                isWheelScrolling = true;
                 wheelDelta = 0;
-                const prevLeft = scrollContainer.scrollLeft;
+                if (scrollContainer.scrollLeft <= 1) return; // already at left edge
+                isWheelScrolling = true;
                 scrollContainer.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
-                // If already at the left edge, scroll won't fire → release lock immediately
-                requestAnimationFrame(() => {
-                    if (scrollContainer.scrollLeft === prevLeft) { isWheelScrolling = false; }
-                });
             }
         }, { passive: false });
 
