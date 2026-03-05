@@ -1003,7 +1003,8 @@
                     navEl.classList.toggle('visible', !onIntro);
 
                     // Hero reel: show on hero + about panels
-                    fixedVideoBg.style.opacity = onIntro ? '1' : '0';
+                    const showReel = id === 'heroSection' || id === 'aboutSection';
+                    fixedVideoBg.style.opacity = showReel ? '1' : '0';
 
                     // Tagline: slide in when about panel is active
                     aboutText.classList.toggle('visible', id === 'aboutSection');
