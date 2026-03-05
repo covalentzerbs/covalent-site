@@ -932,7 +932,7 @@
         let wheelDelta = 0;
         let wheelTimer = null;
         let isWheelScrolling = false;
-        const WHEEL_THRESHOLD = 60;
+        const WHEEL_THRESHOLD = 20;
 
         window.addEventListener('wheel', (e) => {
             e.preventDefault();
@@ -946,12 +946,12 @@
                 isWheelScrolling = true;
                 wheelDelta = 0;
                 scrollContainer.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
-                setTimeout(() => { isWheelScrolling = false; }, 800);
+                setTimeout(() => { isWheelScrolling = false; }, 400);
             } else if (wheelDelta < -WHEEL_THRESHOLD) {
                 isWheelScrolling = true;
                 wheelDelta = 0;
                 scrollContainer.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
-                setTimeout(() => { isWheelScrolling = false; }, 800);
+                setTimeout(() => { isWheelScrolling = false; }, 400);
             }
         }, { passive: false });
 
