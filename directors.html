@@ -117,7 +117,7 @@
             right: 0;
             width: 100%;
             height: 100%;
-            z-index: 999;
+            z-index: 10000;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -149,7 +149,7 @@
         .menu-link {
             font-size: clamp(1rem, 1.8vw, 1.5rem);
             font-weight: 500;
-            color: var(--black);
+            color: var(--white);
             text-decoration: none;
             opacity: 0;
             transform: translateX(30px);
@@ -690,7 +690,7 @@
     <script>
         // Directors data
         const directors = [
-            { id: 'jacob', name: 'Jacob Frost', vimeo: '1170741864', widescreen: true },
+            { id: 'jacob', name: 'Jacob Frost', vimeo: '1170741864', zoom: 'slight' },
             { id: 'wilbert', name: 'Wilbert Cheng', vimeo: '1122231476' },
             { id: 'benjamin', name: 'Benjamin Gugick', vimeo: '1170747372', widescreen: true },
             { id: 'jon', name: 'Jon Schwartz', vimeo: '1163390482', widescreen: true },
