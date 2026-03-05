@@ -621,7 +621,7 @@ body.dark-mode .project-client {
         }
         .loading-bar-track {
             width: 100px;
-            height: 1.5px;
+            height: 3px;
             background: rgba(255,255,255,0.15);
             border-radius: 1px;
             overflow: hidden;
@@ -636,8 +636,8 @@ body.dark-mode .project-client {
         .loading-tagline {
             position: absolute;
             font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(0.75rem, 2.5vw, 2.5rem);
-            font-weight: 300;
+            font-size: clamp(0.6rem, 1.2vw, 1.2rem);
+            font-weight: 500;
             color: var(--white);
             letter-spacing: -0.07em;
             text-align: center;
@@ -953,11 +953,24 @@ body.dark-mode .project-client {
         // ==================== //
         // WHEEL → HORIZONTAL NAV
         // Vertical trackpad scroll drives horizontal panel changes
+        // Lock releases only after scrolling fully stops (not a fixed timer)
         // ==================== //
         let wheelDelta = 0;
         let wheelTimer = null;
         let isWheelScrolling = false;
+        let scrollEndTimer = null;
         const WHEEL_THRESHOLD = 20;
+
+        // Release lock once the container stops scrolling (200ms after last scroll event)
+        scrollContainer.addEventListener('scroll', () => {
+            if (isWheelScrolling) {
+                clearTimeout(scrollEndTimer);
+                scrollEndTimer = setTimeout(() => {
+                    isWheelScrolling = false;
+                    wheelDelta = 0;
+                }, 200);
+            }
+        });
 
         window.addEventListener('wheel', (e) => {
             e.preventDefault();
@@ -971,12 +984,10 @@ body.dark-mode .project-client {
                 isWheelScrolling = true;
                 wheelDelta = 0;
                 scrollContainer.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
-                setTimeout(() => { isWheelScrolling = false; }, 400);
             } else if (wheelDelta < -WHEEL_THRESHOLD) {
                 isWheelScrolling = true;
                 wheelDelta = 0;
                 scrollContainer.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
-                setTimeout(() => { isWheelScrolling = false; }, 400);
             }
         }, { passive: false });
 
