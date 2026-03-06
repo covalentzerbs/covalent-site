@@ -24,6 +24,9 @@
         }
 
         /* Reset */
+        /* Explicit root — bfcache restore can miss the * selector */
+        html, body, .scroll-container { cursor: none !important; }
+
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -1090,6 +1093,14 @@ body.dark-mode .project-client {
         // ==================== //
         const cursor = document.getElementById('cursor');
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+
+        // Re-enforce cursor:none on bfcache restore (back/forward navigation)
+        window.addEventListener('pageshow', function() {
+            document.documentElement.style.setProperty('cursor', 'none', 'important');
+            document.body.style.setProperty('cursor', 'none', 'important');
+            const sc = document.getElementById('scrollContainer');
+            if (sc) sc.style.setProperty('cursor', 'none', 'important');
+        });
 
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
