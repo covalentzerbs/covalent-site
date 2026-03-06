@@ -494,12 +494,10 @@
                 transform: translate(-50%, -50%) !important;
             }
 
-            /* Loading screen — all items centered */
+            /* Loading screen — put tagline in flex flow so bar+tagline center as a group */
             .loading-tagline {
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: calc(50% + 5rem);
+                position: static;
+                margin-top: 1.5rem;
                 font-size: clamp(0.65rem, 3.5vw, 0.9rem);
                 text-align: center;
                 letter-spacing: -0.05em;

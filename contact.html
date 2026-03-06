@@ -380,9 +380,17 @@
                 padding: 5rem 1.5rem 1.5rem;
             }
 
-            .clock-widget {
-                bottom: 5.5rem;
-                right: 1.5rem;
+            /* Mobile: lock page, center email, hide everything else */
+            html, body {
+                overflow: hidden !important;
+                height: 100dvh !important;
+            }
+
+            .contact-page {
+                height: 100dvh;
+                min-height: unset;
+                text-align: center;
+                padding: 1.5rem;
             }
 
             /* hello@ email — fit and center on mobile */
@@ -391,9 +399,11 @@
                 text-align: center;
                 word-break: break-all;
             }
-            .contact-page {
-                text-align: center;
-                padding: 1.5rem;
+
+            /* Hide clock and footer — just the email, nothing else */
+            .clock-widget,
+            .site-footer {
+                display: none !important;
             }
         }
 

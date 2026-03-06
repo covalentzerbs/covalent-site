@@ -405,6 +405,18 @@
             .video-cursor-block {
                 pointer-events: none;
             }
+
+            /* Full-bleed video fix for portrait mobile — same as home.html */
+            .video-background {
+                overflow: hidden;
+            }
+            .video-wrapper iframe {
+                width: 177.78dvh !important;
+                height: 100dvh !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+            }
         }
         /* ==================== */
         /* FOOTER */
