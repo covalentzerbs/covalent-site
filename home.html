@@ -91,7 +91,9 @@
             pointer-events: none;
             z-index: 10001;
             mix-blend-mode: difference;
-            transform: translate(-50%, -50%);
+            left: 0;
+            top: 0;
+            will-change: transform;
         }
 
         /* Navigation - Plus Menu */
@@ -1097,6 +1099,8 @@ body.dark-mode .project-client {
         // ==================== //
         const cursor = document.getElementById('cursor');
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+        let cursorScale = 1;
+        window._cursorTargetScale = 1; // shared with other script blocks
 
         // Re-enforce cursor:none on bfcache restore (back/forward navigation)
         window.addEventListener('pageshow', function() {
@@ -1112,10 +1116,11 @@ body.dark-mode .project-client {
         });
 
         (function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.35;
-            cursorY += (mouseY - cursorY) * 0.35;
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top  = cursorY + 'px';
+            cursorX += (mouseX - cursorX) * 0.5;
+            cursorY += (mouseY - cursorY) * 0.5;
+            cursorScale += (window._cursorTargetScale - cursorScale) * 0.15;
+            // transform is GPU-composited in Safari — much faster than left/top
+            cursor.style.transform = `translate(${cursorX - 5}px, ${cursorY - 5}px) scale(${cursorScale})`;
             requestAnimationFrame(animateCursor);
         })();
 
@@ -1302,12 +1307,10 @@ body.dark-mode .project-client {
             const cursorEl = document.getElementById('cursor');
             const label = document.querySelector('.dark-mode-toggle');
             label.addEventListener('mouseenter', () => {
-                cursorEl.style.transform = 'translate(-50%, -50%) scale(1.8)';
-                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
+                window._cursorTargetScale = 1.8;
             });
             label.addEventListener('mouseleave', () => {
-                cursorEl.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
+                window._cursorTargetScale = 1;
             });
         })();
     </script>
