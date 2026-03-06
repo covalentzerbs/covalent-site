@@ -250,6 +250,30 @@
             opacity: 0.7;
         }
 
+        /* Copy toast */
+        .copy-toast {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--black);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 20000;
+            white-space: nowrap;
+        }
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
         /* ==================== */
         /* ==================== */
         /* GLOBAL FOOTER        */
@@ -584,8 +608,11 @@
 
     <!-- Main Content -->
     <main class="contact-page">
-        <a href="mailto:hello@covalentstudios.co" class="contact-email">hello@covalentstudios.co</a>
+        <a href="mailto:hello@covalentstudios.co" class="contact-email" id="contactEmail">hello@covalentstudios.co</a>
     </main>
+
+    <!-- Copy toast -->
+    <div class="copy-toast" id="copyToast">copied to clipboard</div>
 
     <!-- Clock Widget -->
     <div class="clock-widget" id="clockWidget">
@@ -882,6 +909,28 @@
     <script>
     // Page loading gate — no video on this page, show immediately
     document.body.classList.add('page-ready');
+    </script>
+    <script>
+    // Email — open mailto AND copy to clipboard as fallback
+    (function() {
+        const emailLink = document.getElementById('contactEmail');
+        const toast = document.getElementById('copyToast');
+        let toastTimer;
+
+        emailLink.addEventListener('click', function(e) {
+            // Copy to clipboard (works silently alongside mailto)
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText('hello@covalentstudios.co').then(function() {
+                    clearTimeout(toastTimer);
+                    toast.classList.add('show');
+                    toastTimer = setTimeout(function() {
+                        toast.classList.remove('show');
+                    }, 2000);
+                }).catch(function() {});
+            }
+            // Let the mailto: href open naturally — don't preventDefault
+        });
+    })();
     </script>
 </body>
 </html>
