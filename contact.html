@@ -566,15 +566,6 @@
             background: #FF4500;
         }
 
-        /* Page loading gate */
-        body:not(.page-ready) {
-            opacity: 0;
-        }
-        body.page-ready {
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -906,10 +897,6 @@
                 cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
             });
         })();
-    </script>
-    <script>
-    // Page loading gate — no video on this page, show immediately
-    document.body.classList.add('page-ready');
     </script>
     <script>
     // Email — open mailto AND copy to clipboard as fallback

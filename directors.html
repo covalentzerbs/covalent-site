@@ -600,15 +600,6 @@
             background: #FF4500;
         }
 
-        /* Page loading gate */
-        body:not(.page-ready) {
-            opacity: 0;
-        }
-        body.page-ready {
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -1055,24 +1046,6 @@
                 cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
             });
         })();
-    </script>
-    <script>
-    // Page loading gate — wait for first Vimeo video before showing page
-    (function() {
-        var shown = false;
-        function showPage() {
-            if (shown) return;
-            shown = true;
-            document.body.classList.add('page-ready');
-        }
-        var vimeoIframe = document.querySelector('iframe[src*="vimeo"]');
-        if (vimeoIframe) {
-            vimeoIframe.addEventListener('load', showPage);
-            setTimeout(showPage, 4000);
-        } else {
-            showPage();
-        }
-    })();
     </script>
 </body>
 </html>

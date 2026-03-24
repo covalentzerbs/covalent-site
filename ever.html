@@ -847,15 +847,6 @@
             background: #FF4500;
         }
 
-        /* Page loading gate */
-        body:not(.page-ready) {
-            opacity: 0;
-        }
-        body.page-ready {
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -898,7 +889,7 @@
                 <div class="cs-video-hero" id="videoHero">
                     <div class="cs-video-ratio" id="videoRatio">
                         <!-- VIMEO EMBED -->
-                        <div style="padding:56.25% 0 0 0;position:relative;" id="vimeoWrapper">
+                        <div style="padding:56.25% 0 0 0;position:relative;background:#0A0A0A;" id="vimeoWrapper">
                             <iframe
                                 id="vimeoPlayer"
                                 src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=vimeoPlayer&app_id=58479&controls=0"
@@ -1387,24 +1378,6 @@
                 cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
             });
         })();
-    </script>
-    <script>
-    // Page loading gate — wait for first Vimeo video before showing page
-    (function() {
-        var shown = false;
-        function showPage() {
-            if (shown) return;
-            shown = true;
-            document.body.classList.add('page-ready');
-        }
-        var vimeoIframe = document.querySelector('iframe[src*="vimeo"]');
-        if (vimeoIframe) {
-            vimeoIframe.addEventListener('load', showPage);
-            setTimeout(showPage, 4000);
-        } else {
-            showPage();
-        }
-    })();
     </script>
 </body>
 </html>
