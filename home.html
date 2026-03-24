@@ -861,7 +861,7 @@ body.dark-mode .project-client {
         <!-- PANEL 3: AESOP -->
         <section class="project-section" id="project2">
             <div class="project-video-container">
-                <iframe src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="aesop.html" class="project-client-link"><h2 class="project-client">aesop</h2></a>
@@ -872,7 +872,7 @@ body.dark-mode .project-client {
         <!-- PANEL 4: PINCH -->
         <section class="project-section" id="project3">
             <div class="project-video-container">
-                <iframe src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="pinch.html" class="project-client-link"><h2 class="project-client">pinch</h2></a>
@@ -883,7 +883,7 @@ body.dark-mode .project-client {
         <!-- PANEL 5: FARE -->
         <section class="project-section" id="project4">
             <div class="project-video-container">
-                <iframe src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="fare.html" class="project-client-link"><h2 class="project-client">fare</h2></a>
@@ -894,7 +894,7 @@ body.dark-mode .project-client {
         <!-- PANEL 6: ARCTERYX -->
         <section class="project-section" id="project5">
             <div class="project-video-container">
-                <iframe src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="transform: translate(-50%, -50%) scale(1.365);"></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="transform: translate(-50%, -50%) scale(1.365);"></iframe>
             </div>
             <div class="project-info">
                 <a href="arcteryx.html" class="project-client-link"><h2 class="project-client">arcteryx</h2></a>
@@ -905,7 +905,7 @@ body.dark-mode .project-client {
         <!-- PANEL 7: WORLD OF HYATT -->
         <section class="project-section" id="project6">
             <div class="project-video-container">
-                <iframe src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="hyatt.html" class="project-client-link"><h2 class="project-client">world of hyatt</h2></a>
@@ -916,7 +916,7 @@ body.dark-mode .project-client {
         <!-- PANEL 8: EVER -->
         <section class="project-section" id="project7">
             <div class="project-video-container">
-                <iframe src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="ever.html" class="project-client-link"><h2 class="project-client">ever</h2></a>
@@ -1340,17 +1340,46 @@ body.dark-mode .project-client {
     window.addEventListener('resize', fixMobileVideos);
 
     // ==================== //
-    // LOADING SCREEN
+    // LAZY LOADER
+    // Iframes with data-src load only when their section nears the viewport.
     // ==================== //
     (function() {
-        const overlay      = document.getElementById('loadingOverlay');
-        const barFill      = document.getElementById('loadingBarFill');
-        const content      = document.getElementById('loadingContent');
-        const tagline      = document.getElementById('loadingTagline');
-        const allIframes   = document.querySelectorAll('iframe[src*="vimeo"]');
-        const total        = allIframes.length;
-        let loaded         = 0;
-        let completed      = false;
+        const sc = document.getElementById('scrollContainer');
+        const lazyObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (!entry.isIntersecting) return;
+                const iframe = entry.target.querySelector('iframe[data-src]');
+                if (iframe) {
+                    iframe.src = iframe.dataset.src;
+                    iframe.removeAttribute('data-src');
+                }
+                lazyObserver.unobserve(entry.target);
+            });
+        }, { root: sc, rootMargin: '0px 200% 0px 200%', threshold: 0 });
+
+        document.querySelectorAll('.project-section').forEach(function(section) {
+            if (section.querySelector('iframe[data-src]')) {
+                lazyObserver.observe(section);
+            }
+        });
+    })();
+
+    // ==================== //
+    // LOADING SCREEN
+    // Waits for the hero video to actually start playing (via Vimeo postMessage)
+    // before dismissing. Falls back after 5s if postMessage never fires.
+    // ==================== //
+    (function() {
+        const overlay    = document.getElementById('loadingOverlay');
+        const barFill    = document.getElementById('loadingBarFill');
+        const content    = document.getElementById('loadingContent');
+        const tagline    = document.getElementById('loadingTagline');
+        // Only the two eager iframes (hero bg + wabi) are tracked for progress
+        const eagerIframes = document.querySelectorAll('iframe[src*="vimeo"]');
+        const total      = eagerIframes.length;
+        let iframesLoaded = 0;
+        let videoStarted  = false;
+        let completed     = false;
 
         // Skip loading screen on return visits within the same session
         if (sessionStorage.getItem('covalent_visited')) {
@@ -1359,53 +1388,71 @@ body.dark-mode .project-client {
         }
         sessionStorage.setItem('covalent_visited', '1');
 
-        function setProgress(n) {
-            barFill.style.width = Math.round((n / total) * 100) + '%';
+        function setProgress(pct) {
+            barFill.style.width = pct + '%';
         }
 
         function runSequence() {
             if (completed) return;
             completed = true;
-
-            // Fill bar to 100%
-            setProgress(total);
-
-            // After bar fills: fade out loading text
+            setProgress(100);
             setTimeout(() => {
                 content.classList.add('fade-out');
-
-                // Show tagline
                 setTimeout(() => {
                     tagline.classList.add('visible');
-
-                    // Hold for 1.5s, then fade out tagline
                     setTimeout(() => {
                         tagline.classList.remove('visible');
-
-                        // Once tagline fades, dismiss overlay
-                        setTimeout(() => {
-                            overlay.classList.add('hidden');
-                        }, 700);
+                        setTimeout(() => { overlay.classList.add('hidden'); }, 700);
                     }, 1500);
                 }, 500);
             }, 400);
         }
 
-        allIframes.forEach(iframe => {
-            iframe.addEventListener('load', () => {
-                loaded++;
-                setProgress(loaded);
-                if (loaded >= total) runSequence();
+        function checkReady() {
+            if (iframesLoaded >= total && videoStarted) runSequence();
+        }
+
+        // Track iframe HTML loads for progress bar (fills to 80%)
+        eagerIframes.forEach(function(iframe) {
+            iframe.addEventListener('load', function() {
+                iframesLoaded++;
+                setProgress(Math.round((iframesLoaded / total) * 80));
+                checkReady();
             });
         });
 
-        // Fallback: 8s max wait
-        setTimeout(() => {
-            if (!completed) {
-                loaded = total;
-                runSequence();
-            }
-        }, 8000);
+        // Vimeo postMessage: subscribe to play event on ready, dismiss when play fires
+        window.addEventListener('message', function(e) {
+            if (e.origin !== 'https://player.vimeo.com') return;
+            try {
+                const data = JSON.parse(e.data);
+                if (data.event === 'ready') {
+                    eagerIframes.forEach(function(iframe) {
+                        if (iframe.contentWindow) {
+                            iframe.contentWindow.postMessage(
+                                JSON.stringify({ method: 'addEventListener', value: 'play' }),
+                                'https://player.vimeo.com'
+                            );
+                        }
+                    });
+                }
+                if (data.event === 'play' && !videoStarted) {
+                    videoStarted = true;
+                    setProgress(100);
+                    checkReady();
+                }
+            } catch(err) {}
+        });
+
+        // Fallback: if Vimeo play event never fires, proceed after 5s
+        setTimeout(function() {
+            if (!videoStarted) { videoStarted = true; checkReady(); }
+        }, 5000);
+
+        // Hard fallback: 10s max
+        setTimeout(function() {
+            if (!completed) runSequence();
+        }, 10000);
     })();
     </script>
 
