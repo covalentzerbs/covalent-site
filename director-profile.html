@@ -262,27 +262,6 @@
         }
 
         /* Breadcrumb — sits in hero below the nav */
-        .hero-breadcrumb {
-            position: absolute;
-            top: 5.5rem;
-            left: 2rem;
-            z-index: 10;
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: lowercase;
-            color: rgba(255,255,255,0.5);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.4em;
-            transition: color 0.2s ease;
-        }
-
-        .hero-breadcrumb:hover { color: rgba(255,255,255,0.9); }
-
-        .hero-breadcrumb .sep { opacity: 0.4; }
-
         /* Director name + tagline — bottom-left of hero */
         .hero-content {
             position: absolute;
@@ -436,13 +415,13 @@
             text-transform: uppercase;
         }
 
-        /* Full-width 2-col grid, cards touch with a 3px white gap */
+        /* Full-width 2-col grid, white gap between cards */
         .work-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3px;
+            gap: 10px;
             width: 100%;
-            background: var(--white); /* gap colour */
+            background: var(--white); /* gap colour shows through */
         }
 
         /* Work card — full-bleed, text overlaid */
@@ -455,25 +434,24 @@
             aspect-ratio: 16 / 9;
             overflow: hidden;
             background: #111;
+            /* Grow-in starting state: slightly smaller, slightly low */
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.55s ease, transform 0.55s ease;
+            transform: scale(0.92) translateY(16px);
+            transform-origin: center center;
+            transition: opacity 0.7s ease,
+                        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .work-card.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: scale(1) translateY(0);
         }
 
-        /* Stagger */
-        .work-card:nth-child(1)  { transition-delay: 0.00s; }
-        .work-card:nth-child(2)  { transition-delay: 0.08s; }
-        .work-card:nth-child(3)  { transition-delay: 0.16s; }
-        .work-card:nth-child(4)  { transition-delay: 0.24s; }
-        .work-card:nth-child(5)  { transition-delay: 0.32s; }
-        .work-card:nth-child(6)  { transition-delay: 0.40s; }
-        .work-card:nth-child(7)  { transition-delay: 0.48s; }
-        .work-card:nth-child(8)  { transition-delay: 0.56s; }
+        /* Stagger by row pairs so both cards in a row grow in together */
+        .work-card:nth-child(1), .work-card:nth-child(2) { transition-delay: 0.00s; }
+        .work-card:nth-child(3), .work-card:nth-child(4) { transition-delay: 0.07s; }
+        .work-card:nth-child(5), .work-card:nth-child(6) { transition-delay: 0.07s; }
+        .work-card:nth-child(7), .work-card:nth-child(8) { transition-delay: 0.07s; }
 
         /* Thumbnail fills the card */
         .card-thumb {
@@ -666,7 +644,7 @@
             .bio-inner { grid-template-columns: 1fr; gap: 2rem; }
 
             .work-section { padding: 0; }
-            .work-grid { grid-template-columns: 1fr; gap: 3px; }
+            .work-grid { grid-template-columns: 1fr; gap: 10px; }
             .work-section-header { padding: 1.5rem; }
             .card-text { bottom: 1rem; left: 1rem; }
 
@@ -726,13 +704,6 @@
         </div>
 
         <div class="hero-overlay"></div>
-
-        <!-- Breadcrumb -->
-        <a href="directors" class="hero-breadcrumb">
-            <span>talent</span>
-            <span class="sep">/</span>
-            <span>directors</span>
-        </a>
 
         <!-- Name + Tagline — bottom-left -->
         <div class="hero-content">
@@ -822,6 +793,9 @@
         </div>
     </footer>
 
+    <!-- Vimeo Player SDK — used for 10-second clip looping on card hover -->
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
     <script>
     // ============================================================
     // DIRECTOR DATA
@@ -848,46 +822,52 @@
 
         work: [
             {
-                client:    'fare',
-                title:     'beyond the bowl',
-                thumbnail: '', // 'assets/images/thumbnails/fare.jpg'
-                url:       'fare',
-                vimeo:     '1175563835'  // optional hover-to-play
+                client:     'fare',
+                title:      'beyond the bowl',
+                thumbnail:  'https://i.vimeocdn.com/video/2136430771-f53c21717a7bbd356033553598ee8ab44587fc7bfb1f902567c96ef2ccf98eb5-d_1280x720',
+                url:        'fare',
+                vimeo:      '1175563835',
+                clip_start: 0   // seconds — adjust to the best 10s window
             },
             {
-                client:    'aesop',
-                title:     'skin',
-                thumbnail: '',
-                url:       'aesop',
-                vimeo:     '1167988129'
+                client:     'aesop',
+                title:      'skin',
+                thumbnail:  'https://i.vimeocdn.com/video/2126179638-f6c354c75518a1be78a136a9d2531222a8d363f2f1dec81d60727825d123bc01-d_1280x720',
+                url:        'aesop',
+                vimeo:      '1167988129',
+                clip_start: 0
             },
             {
-                client:    'wabi',
-                title:     'when did we stop playing',
-                thumbnail: '',
-                url:       'wabi',
-                vimeo:     '1161268499'
+                client:     'wabi',
+                title:      'when did we stop playing',
+                thumbnail:  'https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280x720',
+                url:        'wabi',
+                vimeo:      '1161268499',
+                clip_start: 0
             },
             {
-                client:    'pinch',
-                title:     'a holiday campaign',
-                thumbnail: '',
-                url:       'pinch',
-                vimeo:     '1140543709'
+                client:     'pinch',
+                title:      'a holiday campaign',
+                thumbnail:  'https://i.vimeocdn.com/video/2089993227-e000ed9b7ef428ebf6588769ae040780042629649a7118b7c81199783dabe96a-d_1280x720',
+                url:        'pinch',
+                vimeo:      '1140543709',
+                clip_start: 0
             },
             {
-                client:    'arcteryx',
-                title:     'a city to summit',
-                thumbnail: '',
-                url:       'arcteryx',
-                vimeo:     '1141586908'
+                client:     'arcteryx',
+                title:      'a city to summit',
+                thumbnail:  'https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280x720',
+                url:        'arcteryx',
+                vimeo:      '1141586908',
+                clip_start: 0
             },
             {
-                client:    'world of hyatt',
-                title:     'jess pegula × us open',
-                thumbnail: '',
-                url:       'hyatt',
-                vimeo:     '1149097153'
+                client:     'world of hyatt',
+                title:      'jess pegula × us open',
+                thumbnail:  'https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280x720',
+                url:        'hyatt',
+                vimeo:      '1149097153',
+                clip_start: 0
             }
         ]
     };
@@ -947,30 +927,42 @@
 
             grid.appendChild(card);
 
-            // Hover-to-play (desktop only — touch falls through to navigation)
+            // Hover-to-play with 10-second loop (desktop only)
             if (item.vimeo && window.matchMedia('(pointer: fine)').matches) {
                 let hoverIframe = null;
+                let hoverPlayer = null;
                 const videoLayer = card.querySelector(`#cardVideo${i}`);
+                const clipStart  = item.clip_start || 0;
 
                 card.addEventListener('mouseenter', () => {
                     if (hoverIframe) return;
+
                     hoverIframe = document.createElement('iframe');
-                    hoverIframe.src = `https://player.vimeo.com/video/${item.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1`;
+                    hoverIframe.src = `https://player.vimeo.com/video/${item.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&controls=0&background=1`;
                     hoverIframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
                     videoLayer.appendChild(hoverIframe);
-                    // Small rAF delay so browser starts buffering before fade-in
-                    requestAnimationFrame(() => videoLayer.classList.add('playing'));
+
+                    hoverPlayer = new Vimeo.Player(hoverIframe);
+
+                    hoverPlayer.ready().then(() => {
+                        hoverPlayer.setCurrentTime(clipStart);
+                        videoLayer.classList.add('playing');
+
+                        // Loop back to clip_start every 10 seconds
+                        hoverPlayer.on('timeupdate', ({ seconds }) => {
+                            if (seconds >= clipStart + 10) {
+                                hoverPlayer.setCurrentTime(clipStart);
+                            }
+                        });
+                    });
                 });
 
                 card.addEventListener('mouseleave', () => {
                     videoLayer.classList.remove('playing');
-                    // Remove iframe after fade-out to stop network usage
                     setTimeout(() => {
-                        if (hoverIframe) {
-                            hoverIframe.remove();
-                            hoverIframe = null;
-                        }
-                    }, 400);
+                        if (hoverPlayer) { hoverPlayer.destroy(); hoverPlayer = null; }
+                        if (hoverIframe) { hoverIframe.remove(); hoverIframe = null; }
+                    }, 500);
                 });
             }
         });
