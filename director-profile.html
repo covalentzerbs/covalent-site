@@ -418,39 +418,45 @@
         /* WORK SECTION         */
         /* ==================== */
         .work-section {
-            background: var(--black);
-            padding: 0 3rem 6rem;
+            background: var(--white);
+            padding: 0;
+            /* white bg shows through grid gap = white border between cards */
         }
 
         .work-section-header {
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 2rem;
+            padding: 2rem 3rem;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
         }
 
         .work-section-label {
             font-size: 0.65rem;
             font-weight: 600;
             letter-spacing: 0.1em;
-            color: rgba(255,255,255,0.3);
+            color: rgba(0,0,0,0.35);
             text-transform: uppercase;
         }
 
-        /* 2-col grid */
+        /* Full-width 2-col grid, cards touch with a 3px white gap */
         .work-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            max-width: 1200px;
+            gap: 3px;
+            width: 100%;
+            background: var(--white); /* gap colour */
         }
 
-        /* Work card */
+        /* Work card — full-bleed, text overlaid */
         .work-card {
             display: block;
             text-decoration: none;
-            color: inherit;
+            color: var(--white);
+            position: relative;
+            /* 16:9 */
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #111;
             opacity: 0;
-            transform: translateY(24px);
+            transform: translateY(20px);
             transition: opacity 0.55s ease, transform 0.55s ease;
         }
 
@@ -459,7 +465,7 @@
             transform: translateY(0);
         }
 
-        /* Stagger each card */
+        /* Stagger */
         .work-card:nth-child(1)  { transition-delay: 0.00s; }
         .work-card:nth-child(2)  { transition-delay: 0.08s; }
         .work-card:nth-child(3)  { transition-delay: 0.16s; }
@@ -469,37 +475,33 @@
         .work-card:nth-child(7)  { transition-delay: 0.48s; }
         .work-card:nth-child(8)  { transition-delay: 0.56s; }
 
-        .card-media {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 */
-            overflow: hidden;
-            background: var(--surface);
-            border-radius: 2px;
-        }
-
+        /* Thumbnail fills the card */
         .card-thumb {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease, opacity 0.3s ease;
+            transition: transform 0.6s ease;
         }
+
+        .work-card:hover .card-thumb { transform: scale(1.04); }
 
         /* Hover-to-play video layer */
         .card-video {
             position: absolute;
             inset: 0;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
             pointer-events: none;
+            z-index: 1;
         }
 
         .card-video iframe {
             position: absolute;
             top: 50%;
             left: 50%;
+            /* fill card regardless of aspect ratio */
             width: 177.78%;
             height: 100%;
             min-width: 100%;
@@ -510,43 +512,43 @@
 
         .card-video.playing { opacity: 1; }
 
-        /* Subtle darkening scrim on hover */
-        .card-media::after {
-            content: '';
+        /* Bottom gradient scrim for text legibility */
+        .card-scrim {
             position: absolute;
             inset: 0;
-            background: rgba(0,0,0,0);
-            transition: background 0.3s ease;
+            background: linear-gradient(
+                to top,
+                rgba(0,0,0,0.72) 0%,
+                rgba(0,0,0,0.0) 55%
+            );
             z-index: 2;
             pointer-events: none;
         }
 
-        .work-card:hover .card-media::after { background: rgba(0,0,0,0.2); }
-        .work-card:hover .card-thumb        { transform: scale(1.03); }
-
-        /* Card info */
-        .card-info {
-            padding: 1rem 0 0.5rem;
+        /* Text overlaid bottom-left */
+        .card-text {
+            position: absolute;
+            bottom: 1.4rem;
+            left: 1.5rem;
+            z-index: 3;
         }
 
         .card-client {
-            font-size: 0.68rem;
+            font-size: 0.65rem;
             font-weight: 600;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.07em;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.35);
-            margin-bottom: 0.25rem;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 0.2rem;
         }
 
         .card-title {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.4rem);
             font-weight: 500;
-            color: rgba(255,255,255,0.85);
+            color: var(--white);
             letter-spacing: -0.05em;
-            transition: color 0.2s ease;
+            line-height: 1.1;
         }
-
-        .work-card:hover .card-title { color: var(--white); }
 
         /* ==================== */
         /* FOOTER               */
@@ -663,8 +665,10 @@
             .bio-section { padding: 3rem 1.5rem; }
             .bio-inner { grid-template-columns: 1fr; gap: 2rem; }
 
-            .work-section { padding: 0 1.5rem 5rem; }
-            .work-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+            .work-section { padding: 0; }
+            .work-grid { grid-template-columns: 1fr; gap: 3px; }
+            .work-section-header { padding: 1.5rem; }
+            .card-text { bottom: 1rem; left: 1rem; }
 
             .menu-overlay { padding: 5rem 1.5rem 1.5rem; }
 
@@ -928,16 +932,15 @@
             card.className = 'work-card';
             card.href = item.url;
 
-            const mediaHTML = item.thumbnail
+            const thumbHTML = item.thumbnail
                 ? `<img class="card-thumb" src="${item.thumbnail}" alt="${item.client} — ${item.title}" loading="lazy">`
-                : `<div class="card-thumb" style="position:absolute;inset:0;background:var(--surface);"></div>`;
+                : `<div class="card-thumb" style="background:#1a1a1a;"></div>`;
 
             card.innerHTML = `
-                <div class="card-media">
-                    ${mediaHTML}
-                    <div class="card-video" id="cardVideo${i}"></div>
-                </div>
-                <div class="card-info">
+                ${thumbHTML}
+                <div class="card-video" id="cardVideo${i}"></div>
+                <div class="card-scrim"></div>
+                <div class="card-text">
                     <p class="card-client">${item.client}</p>
                     <p class="card-title">${item.title}</p>
                 </div>`;
