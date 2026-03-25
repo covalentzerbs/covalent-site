@@ -399,7 +399,7 @@
         .work-section {
             background: var(--white);
             padding: 0;
-            /* white bg shows through grid gap = white border between cards */
+            padding-bottom: 5rem; /* room for fixed footer */
         }
 
         .work-section-header {
@@ -969,7 +969,11 @@
     })();
 
     // ============================================================
-    // SCROLL-TRIGGERED REVEAL (IntersectionObserver)
+    // SCROLL-TRIGGERED GROW REVEAL (IntersectionObserver)
+    // Delay observation so the browser paints the initial
+    // scale(0.92)/opacity:0 state before we start watching.
+    // Negative rootMargin means cards must scroll into view
+    // before triggering (not just exist below the fold).
     // ============================================================
     (function initReveal() {
         const observer = new IntersectionObserver(function(entries) {
@@ -979,14 +983,15 @@
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.12 });
+        }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
 
-        // Observe after cards are injected (slight defer)
-        requestAnimationFrame(function() {
+        // Wait 120ms so initial CSS state (invisible/scaled-down) is painted
+        // before we start observing — otherwise first cards skip the animation
+        setTimeout(function() {
             document.querySelectorAll('.work-card').forEach(function(card) {
                 observer.observe(card);
             });
-        });
+        }, 120);
     })();
 
     // ============================================================
