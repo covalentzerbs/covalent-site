@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="assets/logos/covalent_white_logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ============================================================
+         PAGE TITLE — update per director
+    ============================================================ -->
+    <title>Jacob Frost — covalent studios</title>
+    <meta property="og:title" content="covalent studios">
+    <meta property="og:description" content="a modern production company.">
+    <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
+    <meta property="og:url" content="https://covalentstudios.co/directors/jacob-frost">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ==================== */
+        /* CSS VARIABLES        */
+        /* ==================== */
+        :root {
+            --black:     #0A0A0A;
+            --white:     #FFFFFF;
+            --gray:      #6B7280;
+            --bond-blue: #5979e9;
+            --surface:   #141414;
+            --border:    rgba(255,255,255,0.08);
+        }
+
+        /* ==================== */
+        /* RESET & BASE         */
+        /* ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        ::selection {
+            background: var(--black);
+            color: var(--white);
+            -webkit-text-fill-color: var(--white);
+        }
+
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            text-transform: lowercase;
+            letter-spacing: -0.07em;
+        }
+
+        /* ==================== */
+        /* CUSTOM CURSOR        */
+        /* ==================== */
+        .cursor {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--white);
+            pointer-events: none;
+            z-index: 99999;
+            mix-blend-mode: difference;
+            left: 0;
+            top: 0;
+            will-change: transform;
+        }
+
+        @media (pointer: coarse) {
+            .cursor { display: none; }
+        }
+
+        /* ==================== */
+        /* NAV — PLUS MENU      */
+        /* ==================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 2rem;
+            z-index: 10000;
+        }
+
+        .menu-toggle {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-toggle.active {
+            transform: rotate(45deg);
+        }
+
+        .plus-icon {
+            width: 22px;
+            height: 22px;
+            position: relative;
+        }
+
+        .plus-icon span {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--white);
+            top: 50%;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .plus-icon span:first-child { transform: translateY(-50%) rotate(90deg); }
+        .plus-icon span:last-child  { transform: translateY(-50%); }
+
+        /* ==================== */
+        /* MENU OVERLAY         */
+        /* ==================== */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-end;
+            padding: 7rem 3rem 3rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .menu-overlay.active {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0;
+        }
+
+        @keyframes gradientShift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .menu-link {
+            font-size: clamp(1rem, 1.8vw, 1.5rem);
+            font-weight: 500;
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: -0.07em;
+            line-height: 1.1;
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-overlay.active .menu-link           { opacity: 0.6; transform: translateX(0); }
+        .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.05s; }
+        .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.10s; }
+        .menu-link:hover { opacity: 1 !important; }
+
+        .menu-link-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(circle at var(--mx,0px) var(--my,0px), black var(--spread,0%), transparent var(--spread,0%));
+            mask-image:         radial-gradient(circle at var(--mx,0px) var(--my,0px), black var(--spread,0%), transparent var(--spread,0%));
+            opacity: 0;
+            transition: opacity 0s;
+        }
+
+        .menu-link:hover .menu-link-gradient { opacity: 1; }
+        .menu-link.current { opacity: 1 !important; }
+
+        /* ==================== */
+        /* LOGO TOP-LEFT        */
+        /* ==================== */
+        .logo-top {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 10000;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-top:hover { opacity: 0.7; }
+
+        .logo-top svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* ==================== */
+        /* HERO SECTION         */
+        /* ==================== */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100dvh;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        /* Full-bleed Vimeo background */
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-video iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* 16:9 fill: wider dimension covers both axes */
+            width: 177.78dvh; /* 100dvh * 16/9 */
+            height: 100dvh;
+            min-width: 100%;
+            min-height: 56.25vw; /* 100vw * 9/16 */
+            transform: translate(-50%, -50%);
+            border: none;
+            pointer-events: none;
+        }
+
+        /* Gradient scrim: transparent top → dark bottom */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(
+                to bottom,
+                rgba(10,10,10,0.2) 0%,
+                rgba(10,10,10,0.0) 30%,
+                rgba(10,10,10,0.0) 50%,
+                rgba(10,10,10,0.75) 80%,
+                rgba(10,10,10,0.95) 100%
+            );
+        }
+
+        /* Breadcrumb — sits in hero below the nav */
+        .hero-breadcrumb {
+            position: absolute;
+            top: 5.5rem;
+            left: 2rem;
+            z-index: 10;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: lowercase;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            transition: color 0.2s ease;
+        }
+
+        .hero-breadcrumb:hover { color: rgba(255,255,255,0.9); }
+
+        .hero-breadcrumb .sep { opacity: 0.4; }
+
+        /* Director name + tagline — bottom-left of hero */
+        .hero-content {
+            position: absolute;
+            bottom: 3rem;
+            left: 3rem;
+            z-index: 10;
+        }
+
+        .hero-name {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 500;
+            line-height: 1.0;
+            color: var(--white);
+            letter-spacing: -0.07em;
+        }
+
+        .hero-tagline {
+            margin-top: 0.5rem;
+            font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+            font-weight: 400;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: -0.04em;
+            max-width: 480px;
+        }
+
+        /* ==================== */
+        /* BIO SECTION          */
+        /* ==================== */
+        .bio-section {
+            background: var(--black);
+            padding: 5rem 3rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .bio-inner {
+            max-width: 960px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .bio-short {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.65;
+            color: rgba(255,255,255,0.75);
+            letter-spacing: -0.04em;
+        }
+
+        /* Expandable full bio */
+        .bio-expanded {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .bio-expanded.open {
+            max-height: 600px;
+            opacity: 1;
+        }
+
+        .bio-expanded p {
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: -0.04em;
+        }
+
+        .bio-toggle {
+            margin-top: 1.25rem;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.4);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: -0.04em;
+            text-transform: lowercase;
+            padding: 0;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3em;
+        }
+
+        .bio-toggle:hover { color: rgba(255,255,255,0.9); }
+
+        .bio-toggle .toggle-icon {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            font-style: normal;
+        }
+
+        .bio-toggle.open .toggle-icon { transform: rotate(45deg); }
+
+        /* Tag pills */
+        .bio-tags { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .tag-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+        .tag-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+        }
+
+        .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+        .tag {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.55);
+            letter-spacing: -0.02em;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .tag:hover {
+            border-color: rgba(255,255,255,0.25);
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* ==================== */
+        /* WORK SECTION         */
+        /* ==================== */
+        .work-section {
+            background: var(--black);
+            padding: 0 3rem 6rem;
+        }
+
+        .work-section-header {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .work-section-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+        }
+
+        /* 2-col grid */
+        .work-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            max-width: 1200px;
+        }
+
+        /* Work card */
+        .work-card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+
+        .work-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger each card */
+        .work-card:nth-child(1)  { transition-delay: 0.00s; }
+        .work-card:nth-child(2)  { transition-delay: 0.08s; }
+        .work-card:nth-child(3)  { transition-delay: 0.16s; }
+        .work-card:nth-child(4)  { transition-delay: 0.24s; }
+        .work-card:nth-child(5)  { transition-delay: 0.32s; }
+        .work-card:nth-child(6)  { transition-delay: 0.40s; }
+        .work-card:nth-child(7)  { transition-delay: 0.48s; }
+        .work-card:nth-child(8)  { transition-delay: 0.56s; }
+
+        .card-media {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 */
+            overflow: hidden;
+            background: var(--surface);
+            border-radius: 2px;
+        }
+
+        .card-thumb {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, opacity 0.3s ease;
+        }
+
+        /* Hover-to-play video layer */
+        .card-video {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .card-video iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 177.78%;
+            height: 100%;
+            min-width: 100%;
+            transform: translate(-50%, -50%);
+            border: none;
+            pointer-events: none;
+        }
+
+        .card-video.playing { opacity: 1; }
+
+        /* Subtle darkening scrim on hover */
+        .card-media::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0);
+            transition: background 0.3s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .work-card:hover .card-media::after { background: rgba(0,0,0,0.2); }
+        .work-card:hover .card-thumb        { transform: scale(1.03); }
+
+        /* Card info */
+        .card-info {
+            padding: 1rem 0 0.5rem;
+        }
+
+        .card-client {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 0.25rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.85);
+            letter-spacing: -0.05em;
+            transition: color 0.2s ease;
+        }
+
+        .work-card:hover .card-title { color: var(--white); }
+
+        /* ==================== */
+        /* FOOTER               */
+        /* ==================== */
+        .site-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .site-footer-left {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--white);
+            opacity: 0.5;
+        }
+
+        .site-footer-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .site-footer-socials {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+
+        /* ==================== */
+        /* DARK MODE TOGGLE     */
+        /* ==================== */
+        .dark-mode-toggle { cursor: none; }
+        .dark-mode-toggle input { display: none; }
+
+        .toggle-track {
+            width: 36px;
+            height: 18px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 9px;
+            position: relative;
+            transition: background 0.3s ease;
+            cursor: none;
+            display: block;
+        }
+
+        .toggle-track::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-mode-toggle input:checked + .toggle-track { background: rgba(255,69,0,0.8); }
+        .dark-mode-toggle input:checked + .toggle-track::after {
+            transform: translateX(18px);
+            background: #FF4500;
+        }
+
+        /* ==================== */
+        /* DARK MODE OVERRIDES  */
+        /* ==================== */
+        body.dark-mode { background-color: #0A0A0A !important; color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode ::selection { background: #FF4500 !important; color: #0A0A0A !important; -webkit-text-fill-color: #0A0A0A !important; }
+        body.dark-mode .cursor { background: #FF4500 !important; }
+        body.dark-mode .plus-icon span { background: #FF4500 !important; }
+        body.dark-mode .menu-link { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .logo-top svg path { fill: #FF4500 !important; }
+        body.dark-mode .social-link { color: #FF4500 !important; }
+        body.dark-mode .site-footer-left { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .hero-name { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .card-title { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
+        /* ==================== */
+        /* PAGE LOAD GATE       */
+        /* ==================== */
+        body:not(.page-ready) { opacity: 0; }
+        body.page-ready { opacity: 1; transition: opacity 0.4s ease; }
+
+        /* ==================== */
+        /* RESPONSIVE           */
+        /* ==================== */
+        @media (max-width: 1024px) {
+            .bio-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+            .bio-tags { flex-direction: row; flex-wrap: wrap; gap: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav { padding: 1.5rem; }
+            .logo-top { top: 1.5rem; left: 1.5rem; }
+            .logo-top svg { width: 32px; height: 32px; }
+
+            .hero-content { bottom: 2rem; left: 1.5rem; right: 1.5rem; }
+            .hero-breadcrumb { top: 5rem; left: 1.5rem; }
+
+            .bio-section { padding: 3rem 1.5rem; }
+            .bio-inner { grid-template-columns: 1fr; gap: 2rem; }
+
+            .work-section { padding: 0 1.5rem 5rem; }
+            .work-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+
+            .menu-overlay { padding: 5rem 1.5rem 1.5rem; }
+
+            /* Bottom padding for fixed footer */
+            body { padding-bottom: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Logo / Home Link -->
+    <a href="home" class="logo-top">
+        <svg viewBox="0 0 160 160" fill="none">
+            <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+        </svg>
+    </a>
+
+    <!-- Nav — Plus Menu -->
+    <nav class="nav">
+        <div class="menu-toggle" id="menuToggle">
+            <div class="plus-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-links">
+            <a href="directors" class="menu-link current">directors</a>
+            <a href="contact" class="menu-link">contact</a>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         HERO SECTION
+    ============================================================ -->
+    <section class="hero" id="hero">
+
+        <!-- Vimeo background video -->
+        <div class="hero-video" id="heroVideo">
+            <!--
+                HERO VIDEO — replace the Vimeo ID (1170741864) with this director's reel ID.
+                Keep all other params exactly as-is.
+            -->
+            <iframe
+                src="https://player.vimeo.com/video/1170741864?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <div class="hero-overlay"></div>
+
+        <!-- Breadcrumb -->
+        <a href="directors" class="hero-breadcrumb">
+            <span>talent</span>
+            <span class="sep">/</span>
+            <span>directors</span>
+        </a>
+
+        <!-- Name + Tagline — bottom-left -->
+        <div class="hero-content">
+            <!--
+                DIRECTOR NAME & TAGLINE — update these for each director.
+            -->
+            <h1 class="hero-name" id="heroName">Jacob Frost</h1>
+            <p class="hero-tagline" id="heroTagline">cinematic storytelling for modern brands</p>
+        </div>
+
+    </section>
+
+    <!-- ============================================================
+         BIO SECTION
+    ============================================================ -->
+    <section class="bio-section" id="bioSection">
+        <div class="bio-inner">
+
+            <!-- Bio text column -->
+            <div class="bio-text-col">
+                <!--
+                    BIO SHORT — always visible. 1–2 sentences.
+                    BIO FULL  — shown on expand. Can be several paragraphs.
+                -->
+                <p class="bio-short" id="bioShort">
+                    jacob frost is a los angeles-based director whose work lives at the intersection of raw emotion and refined craft — building worlds that feel lived-in before the first frame is done.
+                </p>
+
+                <div class="bio-expanded" id="bioExpanded">
+                    <p>
+                        with a background in documentary and commercial production, jacob brings an instinctual eye to beauty, lifestyle, and narrative-driven content. his work across food, fashion, and culture has been recognized internationally and featured across platforms from hbo to adweek.
+                    </p>
+                    <p>
+                        jacob approaches every project with a deep curiosity for the people and stories behind a brand — translating that into visuals that resonate long after the screen goes dark.
+                    </p>
+                </div>
+
+                <button class="bio-toggle" id="bioToggle">
+                    <em class="toggle-icon">+</em> biography
+                </button>
+            </div>
+
+            <!-- Tags column -->
+            <div class="bio-tags" id="bioTags">
+                <!-- populated by JS from DIRECTOR.types and DIRECTOR.styles -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================================
+         WORK SECTION
+    ============================================================ -->
+    <section class="work-section" id="workSection">
+        <div class="work-section-header">
+            <span class="work-section-label">selected work</span>
+        </div>
+        <div class="work-grid" id="workGrid">
+            <!-- Cards are generated by JS from DIRECTOR.work array below -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="site-footer-left">2026, covalent studios</div>
+        <div class="site-footer-right">
+            <div class="site-footer-socials">
+                <label class="dark-mode-toggle">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="toggle-track"></span>
+                </label>
+                <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // ============================================================
+    // DIRECTOR DATA
+    // To create a new director page, duplicate this file and
+    // update ONLY this object. All HTML/rendering is driven by it.
+    // ============================================================
+    const DIRECTOR = {
+        name:      'Jacob Frost',
+        tagline:   'cinematic storytelling for modern brands',
+
+        bio_short: 'jacob frost is a los angeles-based director whose work lives at the intersection of raw emotion and refined craft — building worlds that feel lived-in before the first frame is done.',
+
+        bio_full: [
+            'with a background in documentary and commercial production, jacob brings an instinctual eye to beauty, lifestyle, and narrative-driven content. his work across food, fashion, and culture has been recognized internationally and featured across platforms from hbo to adweek.',
+            'jacob approaches every project with a deep curiosity for the people and stories behind a brand — translating that into visuals that resonate long after the screen goes dark.'
+        ],
+
+        headshot: '', // optional: 'assets/images/jacob-frost.jpg'
+
+        hero_vimeo: '1170741864', // Vimeo ID for full-bleed hero background video
+
+        types:  ['commercial', 'content', 'entertainment'],
+        styles: ['beauty & lifestyle', 'documentary', 'celebrity', 'food'],
+
+        work: [
+            {
+                client:    'fare',
+                title:     'beyond the bowl',
+                thumbnail: '', // 'assets/images/thumbnails/fare.jpg'
+                url:       'fare',
+                vimeo:     '1175563835'  // optional hover-to-play
+            },
+            {
+                client:    'aesop',
+                title:     'skin',
+                thumbnail: '',
+                url:       'aesop',
+                vimeo:     '1167988129'
+            },
+            {
+                client:    'wabi',
+                title:     'when did we stop playing',
+                thumbnail: '',
+                url:       'wabi',
+                vimeo:     '1161268499'
+            },
+            {
+                client:    'pinch',
+                title:     'a holiday campaign',
+                thumbnail: '',
+                url:       'pinch',
+                vimeo:     '1140543709'
+            },
+            {
+                client:    'arcteryx',
+                title:     'a city to summit',
+                thumbnail: '',
+                url:       'arcteryx',
+                vimeo:     '1141586908'
+            },
+            {
+                client:    'world of hyatt',
+                title:     'jess pegula × us open',
+                thumbnail: '',
+                url:       'hyatt',
+                vimeo:     '1149097153'
+            }
+        ]
+    };
+
+    // ============================================================
+    // POPULATE PAGE FROM DATA
+    // ============================================================
+    (function populatePage() {
+        // Hero text
+        document.getElementById('heroName').textContent    = DIRECTOR.name;
+        document.getElementById('heroTagline').textContent = DIRECTOR.tagline;
+
+        // Hero video
+        const heroIframe = document.querySelector('.hero-video iframe');
+        heroIframe.src = `https://player.vimeo.com/video/${DIRECTOR.hero_vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1`;
+
+        // Bio short
+        document.getElementById('bioShort').textContent = DIRECTOR.bio_short;
+
+        // Bio full
+        const bioExpanded = document.getElementById('bioExpanded');
+        bioExpanded.innerHTML = DIRECTOR.bio_full.map(p => `<p>${p}</p>`).join('');
+
+        // Tags
+        const tagsContainer = document.getElementById('bioTags');
+        const tagGroups = [
+            { label: 'type',  items: DIRECTOR.types  },
+            { label: 'style', items: DIRECTOR.styles }
+        ];
+        tagGroups.forEach(group => {
+            const groupEl = document.createElement('div');
+            groupEl.className = 'tag-group';
+            groupEl.innerHTML = `<span class="tag-label">${group.label}</span>
+                <div class="tags">${group.items.map(t => `<span class="tag">${t}</span>`).join('')}</div>`;
+            tagsContainer.appendChild(groupEl);
+        });
+
+        // Work grid
+        const grid = document.getElementById('workGrid');
+        DIRECTOR.work.forEach((item, i) => {
+            const card = document.createElement('a');
+            card.className = 'work-card';
+            card.href = item.url;
+
+            const mediaHTML = item.thumbnail
+                ? `<img class="card-thumb" src="${item.thumbnail}" alt="${item.client} — ${item.title}" loading="lazy">`
+                : `<div class="card-thumb" style="position:absolute;inset:0;background:var(--surface);"></div>`;
+
+            card.innerHTML = `
+                <div class="card-media">
+                    ${mediaHTML}
+                    <div class="card-video" id="cardVideo${i}"></div>
+                </div>
+                <div class="card-info">
+                    <p class="card-client">${item.client}</p>
+                    <p class="card-title">${item.title}</p>
+                </div>`;
+
+            grid.appendChild(card);
+
+            // Hover-to-play (desktop only — touch falls through to navigation)
+            if (item.vimeo && window.matchMedia('(pointer: fine)').matches) {
+                let hoverIframe = null;
+                const videoLayer = card.querySelector(`#cardVideo${i}`);
+
+                card.addEventListener('mouseenter', () => {
+                    if (hoverIframe) return;
+                    hoverIframe = document.createElement('iframe');
+                    hoverIframe.src = `https://player.vimeo.com/video/${item.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1`;
+                    hoverIframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+                    videoLayer.appendChild(hoverIframe);
+                    // Small rAF delay so browser starts buffering before fade-in
+                    requestAnimationFrame(() => videoLayer.classList.add('playing'));
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    videoLayer.classList.remove('playing');
+                    // Remove iframe after fade-out to stop network usage
+                    setTimeout(() => {
+                        if (hoverIframe) {
+                            hoverIframe.remove();
+                            hoverIframe = null;
+                        }
+                    }, 400);
+                });
+            }
+        });
+    })();
+
+    // ============================================================
+    // SCROLL-TRIGGERED REVEAL (IntersectionObserver)
+    // ============================================================
+    (function initReveal() {
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        // Observe after cards are injected (slight defer)
+        requestAnimationFrame(function() {
+            document.querySelectorAll('.work-card').forEach(function(card) {
+                observer.observe(card);
+            });
+        });
+    })();
+
+    // ============================================================
+    // BIO EXPAND TOGGLE
+    // ============================================================
+    (function initBioToggle() {
+        const toggle   = document.getElementById('bioToggle');
+        const expanded = document.getElementById('bioExpanded');
+
+        toggle.addEventListener('click', function() {
+            const isOpen = expanded.classList.toggle('open');
+            toggle.classList.toggle('open', isOpen);
+            toggle.querySelector('.toggle-icon').textContent = isOpen ? '+' : '+';
+        });
+    })();
+
+    // ============================================================
+    // MENU TOGGLE
+    // ============================================================
+    (function initMenu() {
+        const menuToggle  = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuToggle.addEventListener('click', function() {
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        menuOverlay.addEventListener('click', function(e) {
+            if (e.target === menuOverlay) {
+                menuToggle.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && menuOverlay.classList.contains('active')) {
+                menuToggle.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
+        });
+    })();
+
+    // ============================================================
+    // MENU LINK GRADIENT SPREAD EFFECT
+    // ============================================================
+    (function initMenuGradient() {
+        document.querySelectorAll('.menu-link').forEach(function(link) {
+            const gradient = document.createElement('span');
+            gradient.classList.add('menu-link-gradient');
+            gradient.textContent = link.textContent;
+            gradient.style.setProperty('--spread', '0%');
+            link.appendChild(gradient);
+
+            let animFrame;
+
+            link.addEventListener('mouseenter', function(e) {
+                const rect = link.getBoundingClientRect();
+                gradient.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+                gradient.style.setProperty('--my', (e.clientY - rect.top)  + 'px');
+                gradient.style.setProperty('--spread', '0%');
+
+                let start = null;
+                const run = function(ts) {
+                    if (!start) start = ts;
+                    const p = Math.min((ts - start) / 900, 1);
+                    gradient.style.setProperty('--spread', ((1 - Math.pow(1 - p, 3)) * 200) + '%');
+                    if (p < 1) animFrame = requestAnimationFrame(run);
+                };
+                cancelAnimationFrame(animFrame);
+                animFrame = requestAnimationFrame(run);
+            });
+
+            link.addEventListener('mouseleave', function() {
+                cancelAnimationFrame(animFrame);
+                const cur = parseFloat(gradient.style.getPropertyValue('--spread')) || 200;
+                let start = null;
+                const run = function(ts) {
+                    if (!start) start = ts;
+                    const p = Math.min((ts - start) / 500, 1);
+                    gradient.style.setProperty('--spread', (cur * (1 - (1 - Math.pow(1 - p, 3)))) + '%');
+                    if (p < 1) animFrame = requestAnimationFrame(run);
+                };
+                animFrame = requestAnimationFrame(run);
+            });
+        });
+    })();
+
+    // ============================================================
+    // CUSTOM CURSOR — GPU-composited transform (Safari-safe)
+    // ============================================================
+    (function initCursor() {
+        const cursor = document.getElementById('cursor');
+        if (!cursor) return;
+
+        let mouseX = 0, mouseY = 0, cx = 0, cy = 0;
+        let scale = 1;
+        window._cursorTargetScale = 1;
+
+        document.addEventListener('mousemove', function(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        (function loop() {
+            cx += (mouseX - cx) * 0.5;
+            cy += (mouseY - cy) * 0.5;
+            scale += (window._cursorTargetScale - scale) * 0.15;
+            cursor.style.transform = `translate(${cx - 5}px, ${cy - 5}px) scale(${scale})`;
+            requestAnimationFrame(loop);
+        })();
+
+        // Inflate cursor over interactive elements
+        const inflateEls = document.querySelectorAll('a, button, .work-card, .bio-toggle, .menu-toggle, .dark-mode-toggle, .tag');
+        inflateEls.forEach(function(el) {
+            el.addEventListener('mouseenter', function() { window._cursorTargetScale = 1.8; });
+            el.addEventListener('mouseleave', function() { window._cursorTargetScale = 1; });
+        });
+    })();
+
+    // ============================================================
+    // DARK MODE
+    // ============================================================
+    (function initDarkMode() {
+        const toggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            toggle.checked = true;
+        }
+        toggle.addEventListener('change', function() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        });
+
+        // Cursor inflate on toggle hover
+        const label = document.querySelector('.dark-mode-toggle');
+        label.addEventListener('mouseenter', function() { window._cursorTargetScale = 1.8; });
+        label.addEventListener('mouseleave', function() { window._cursorTargetScale = 1; });
+    })();
+
+    // ============================================================
+    // PAGE LOAD GATE — fade in once hero video iframe is loaded
+    // ============================================================
+    (function initPageGate() {
+        var shown = false;
+        function show() {
+            if (shown) return;
+            shown = true;
+            document.body.classList.add('page-ready');
+        }
+        var heroIframe = document.querySelector('.hero-video iframe');
+        if (heroIframe) {
+            heroIframe.addEventListener('load', show);
+            setTimeout(show, 3000);
+        } else {
+            show();
+        }
+    })();
+
+    </script>
+
+</body>
+</html>
