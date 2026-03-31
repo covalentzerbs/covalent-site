@@ -8,6 +8,14 @@
          PAGE TITLE — update per director
     ============================================================ -->
     <title>Jacob Frost — covalent studios</title>
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-T14F8BVFLJ');
+    </script>
     <meta property="og:title" content="covalent studios">
     <meta property="og:description" content="a modern production company.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
@@ -424,53 +432,39 @@
             background: var(--white); /* gap colour shows through */
         }
 
-        /* Work card — full-bleed, text overlaid */
+        /* Work card — height-based scroll reveal (Tool of NA style) */
         .work-card {
             display: block;
             text-decoration: none;
             color: var(--white);
             position: relative;
-            /* 16:9 */
-            aspect-ratio: 16 / 9;
             overflow: hidden;
             background: #111;
-            /* Grow-in starting state: slightly smaller, slightly low */
-            opacity: 0;
-            transform: scale(0.92) translateY(16px);
-            transform-origin: center center;
-            transition: opacity 0.7s ease,
-                        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: height;
+            /* Start collapsed — height driven directly by scroll JS, no CSS transition */
+            height: 60px;
+            min-height: 60px;
         }
 
-        .work-card.visible {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-
-        /* Stagger by row pairs so both cards in a row grow in together */
-        .work-card:nth-child(1), .work-card:nth-child(2) { transition-delay: 0.00s; }
-        .work-card:nth-child(3), .work-card:nth-child(4) { transition-delay: 0.07s; }
-        .work-card:nth-child(5), .work-card:nth-child(6) { transition-delay: 0.07s; }
-        .work-card:nth-child(7), .work-card:nth-child(8) { transition-delay: 0.07s; }
-
-        /* Thumbnail fills the card */
+        /* Thumbnail: always the full 16:9 height, vertically centered —
+           card overflow:hidden clips it as the card grows */
         .card-thumb {
             position: absolute;
-            inset: 0;
             width: 100%;
-            height: 100%;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
             object-fit: cover;
-            transition: transform 0.6s ease;
         }
 
-        .work-card:hover .card-thumb { transform: scale(1.04); }
+        .work-card:hover .card-thumb { filter: brightness(0.92); transition: filter 0.4s ease; }
 
         /* Hover-to-play video layer */
         .card-video {
             position: absolute;
             inset: 0;
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.15s ease;
             pointer-events: none;
             z-index: 1;
         }
@@ -503,12 +497,21 @@
             pointer-events: none;
         }
 
-        /* Text overlaid bottom-left */
+        /* Text overlaid bottom-left — hidden until card is nearly fully open */
         .card-text {
             position: absolute;
             bottom: 1.4rem;
             left: 1.5rem;
             z-index: 3;
+            opacity: 0;
+            /* Fast fade-out when condensing (destination state = no show-meta) */
+            transition: opacity 0.2s ease;
+        }
+
+        /* Delayed fade-in when growing (destination state = show-meta) */
+        .work-card.show-meta .card-text {
+            opacity: 1;
+            transition: opacity 0.3s ease 0.75s;
         }
 
         .card-client {
@@ -935,7 +938,10 @@
                 const clipStart  = item.clip_start || 0;
 
                 card.addEventListener('mouseenter', () => {
-                    if (hoverIframe) return;
+                    // Show video layer immediately — don't wait for ready()
+                    videoLayer.classList.add('playing');
+
+                    if (hoverIframe) return; // already loaded, just re-show
 
                     hoverIframe = document.createElement('iframe');
                     hoverIframe.src = `https://player.vimeo.com/video/${item.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&controls=0&background=1`;
@@ -944,11 +950,10 @@
 
                     hoverPlayer = new Vimeo.Player(hoverIframe);
 
+                    // Seek to clip window once loaded; set up 10s loop
                     hoverPlayer.ready().then(() => {
+                        if (!hoverIframe) return; // user left before load finished
                         hoverPlayer.setCurrentTime(clipStart);
-                        videoLayer.classList.add('playing');
-
-                        // Loop back to clip_start every 10 seconds
                         hoverPlayer.on('timeupdate', ({ seconds }) => {
                             if (seconds >= clipStart + 10) {
                                 hoverPlayer.setCurrentTime(clipStart);
@@ -959,39 +964,73 @@
 
                 card.addEventListener('mouseleave', () => {
                     videoLayer.classList.remove('playing');
+                    // Keep player alive so re-hover is instant; only destroy after a delay
                     setTimeout(() => {
                         if (hoverPlayer) { hoverPlayer.destroy(); hoverPlayer = null; }
                         if (hoverIframe) { hoverIframe.remove(); hoverIframe = null; }
-                    }, 500);
+                    }, 2000);
                 });
             }
         });
     })();
 
     // ============================================================
-    // SCROLL-TRIGGERED GROW REVEAL (IntersectionObserver)
-    // Delay observation so the browser paints the initial
-    // scale(0.92)/opacity:0 state before we start watching.
-    // Negative rootMargin means cards must scroll into view
-    // before triggering (not just exist below the fold).
+    // SCROLL-DRIVEN HEIGHT REVEAL (Tool of NA style)
+    // Height is set DIRECTLY from scrollY — no CSS transition.
+    // The user's scroll speed dictates how fast cards grow.
+    // Row order is fixed (row 0 first, row 1 next, etc.) so the
+    // math works regardless of DOM reflow as cards change height.
     // ============================================================
     (function initReveal() {
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
+        var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
+        if (!cards.length) return;
 
-        // Wait 120ms so initial CSS state (invisible/scaled-down) is painted
-        // before we start observing — otherwise first cards skip the animation
-        setTimeout(function() {
-            document.querySelectorAll('.work-card').forEach(function(card) {
-                observer.observe(card);
+        var NUM_COLS   = 2;
+        var workGrid   = document.querySelector('.work-grid');
+        var vh, gridDocTop, scrollPerRow;
+
+        function measure() {
+            vh          = window.innerHeight;
+            // gridDocTop is stable — hero + bio above it never change size
+            gridDocTop  = workGrid.getBoundingClientRect().top + window.scrollY;
+            scrollPerRow = vh * 0.55; // scroll px allocated per row to reach full height
+        }
+
+        function easeOut(t) {
+            // Cubic ease-out so the first pixels of scroll feel responsive
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+        function update() {
+            var scrollY = window.scrollY;
+            // s = 0 when the work grid top hits the bottom of the viewport
+            var s = scrollY - (gridDocTop - vh);
+
+            cards.forEach(function(card, i) {
+                var row   = Math.floor(i / NUM_COLS);
+                var fullH = card.offsetWidth * 9 / 16;
+
+                // Set thumb to full 16:9 height so it's always centred inside card
+                var thumb = card.querySelector('.card-thumb');
+                if (thumb) thumb.style.height = fullH + 'px';
+
+                var raw   = (s - row * scrollPerRow) / scrollPerRow;
+                var prog  = Math.max(0, Math.min(1, raw));
+                var eased = easeOut(prog);
+
+                card.style.height = (60 + (fullH - 60) * eased) + 'px';
+
+                // Show/hide text overlay based on how open the card is
+                if (prog >= 0.88) card.classList.add('show-meta');
+                else              card.classList.remove('show-meta');
             });
-        }, 120);
+        }
+
+        measure();
+        update(); // set initial state
+
+        window.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', function() { measure(); update(); }, { passive: true });
     })();
 
     // ============================================================
@@ -1153,5 +1192,6 @@
 
     </script>
 
+    <script src="scripts/analytics.js"></script>
 </body>
 </html>
