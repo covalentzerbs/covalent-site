@@ -40,9 +40,9 @@
         }
 
         ::selection {
-            background: var(--black);
-            color: var(--white);
-            -webkit-text-fill-color: var(--white);
+            background: var(--white);
+            color: var(--black);
+            -webkit-text-fill-color: var(--black);
         }
 
         html, body {
@@ -64,8 +64,8 @@
 
         body {
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--white);
-            color: var(--black);
+            background-color: var(--black);
+            color: var(--white);
             overflow-x: hidden;
             letter-spacing: -0.07em;
         }
@@ -104,7 +104,7 @@
             position: absolute;
             width: 100%;
             height: 2px;
-            background: var(--black);
+            background: var(--white);
             top: 50%;
             left: 0;
             transition: all 0.3s ease;
@@ -157,7 +157,7 @@
         .menu-link {
             font-size: clamp(1rem, 1.8vw, 1.5rem);
             font-weight: 500;
-            color: var(--black);
+            color: var(--white);
             text-decoration: none;
             opacity: 0;
             transform: translateX(30px);
@@ -231,7 +231,7 @@
         }
 
         .logo-bottom svg path {
-            fill: var(--black);
+            fill: var(--white);
         }
 
         /* ==================== */
@@ -256,7 +256,7 @@
             font-weight: 700;
             line-height: 1;
             letter-spacing: -0.07em;
-            color: var(--black);
+            color: var(--white);
             text-transform: lowercase;
         }
 
@@ -271,243 +271,34 @@
         .lab-hero-copy {
             font-size: clamp(0.85rem, 1.2vw, 1rem);
             font-weight: 400;
-            color: var(--black);
+            color: var(--white);
             line-height: 1.6;
             max-width: 640px;
             margin-top: 2rem;
             opacity: 0.7;
         }
 
-        /* Principles */
-        .lab-principles {
-            padding: 6rem 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .lab-principles-left h2 {
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
-            font-weight: 700;
-            letter-spacing: -0.07em;
-            line-height: 1.1;
-            color: var(--black);
-            text-transform: lowercase;
-        }
-
-        .lab-principles-left p {
-            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
-            font-weight: 400;
-            color: var(--black);
-            line-height: 1.6;
-            margin-top: 1.5rem;
-            opacity: 0.7;
-        }
-
-        .lab-principles-right {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .principle-row {
-            padding: 1.5rem 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        .principle-row:last-child {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        .principle-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .principle-label {
-            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
-            font-weight: 600;
-            color: var(--black);
-            letter-spacing: -0.05em;
-            line-height: 1.3;
-        }
-
-        .principle-tag {
-            font-size: 0.65rem;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-            text-transform: uppercase;
-            color: var(--gray);
-            white-space: nowrap;
-            flex-shrink: 0;
-            padding-top: 0.15rem;
-        }
-
-        .principle-desc {
-            font-size: clamp(0.75rem, 0.95vw, 0.85rem);
-            font-weight: 400;
-            color: var(--black);
-            opacity: 0.5;
-            line-height: 1.5;
-            margin-top: 0.5rem;
-        }
-
-        /* Experiments Grid */
-        .lab-experiments {
-            padding: 4rem 0;
-        }
-
-        .lab-experiments h2 {
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
-            font-weight: 700;
-            letter-spacing: -0.07em;
-            line-height: 1.1;
-            color: var(--black);
-            text-transform: lowercase;
-            margin-bottom: 2.5rem;
-        }
-
-        .experiments-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .experiment-card {
-            display: flex;
-            flex-direction: column;
-            transition: opacity 0.3s ease;
-        }
-
-        .experiment-card:hover {
-            opacity: 0.7;
-        }
-
-        .experiment-thumb {
-            width: 100%;
-            aspect-ratio: 16 / 10;
-            background: var(--black);
-            border-radius: 2px;
-        }
-
-        .experiment-tool {
-            font-size: 0.65rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: var(--gray);
-            margin-top: 1rem;
-        }
-
-        .experiment-title {
-            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
-            font-weight: 500;
-            color: var(--black);
-            letter-spacing: -0.05em;
-            line-height: 1.3;
-            margin-top: 0.4rem;
-        }
-
-        .experiment-date {
-            font-size: 0.7rem;
-            font-weight: 400;
-            color: var(--gray);
-            margin-top: 0.3rem;
-        }
-
-        /* Stack */
-        .lab-stack {
-            padding: 4rem 0;
-        }
-
-        .lab-stack h2 {
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
-            font-weight: 700;
-            letter-spacing: -0.07em;
-            line-height: 1.1;
-            color: var(--black);
-            text-transform: lowercase;
-            margin-bottom: 2.5rem;
-        }
-
-        .stack-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
-
-        .stack-item h3 {
-            font-size: clamp(0.9rem, 1.2vw, 1rem);
-            font-weight: 600;
-            color: var(--black);
-            letter-spacing: -0.05em;
-        }
-
-        .stack-item p {
-            font-size: clamp(0.75rem, 0.95vw, 0.85rem);
-            font-weight: 400;
-            color: var(--black);
-            opacity: 0.5;
-            line-height: 1.5;
-            margin-top: 0.5rem;
-        }
-
-        /* Closing */
-        .lab-closing {
+        /* Image Grid */
+        .lab-grid {
             padding: 4rem 0 2rem;
-            max-width: 640px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
         }
 
-        .lab-closing p {
-            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
-            font-weight: 400;
-            color: var(--black);
-            line-height: 1.6;
-            opacity: 0.7;
+        .lab-grid-item {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: #1a1a1a;
+            border-radius: 2px;
+            overflow: hidden;
         }
 
-        .lab-closing p + p {
-            margin-top: 1.5rem;
-        }
-
-        /* ==================== */
-        /* GLOBAL FOOTER        */
-        /* ==================== */
-        .site-footer {
-            position: relative;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1001;
-            opacity: 1;
-        }
-        .site-footer-left {
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: var(--black);
-            opacity: 0.5;
-        }
-        .site-footer-right {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            opacity: 0.5;
-        }
-        .site-footer-socials {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .social-link {
-            color: var(--black);
-            display: flex;
-            align-items: center;
+        .lab-grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         /* ==================== */
@@ -529,14 +320,6 @@
 
             .lab-page {
                 padding: 7rem 2.5rem 4rem;
-            }
-
-            .lab-principles {
-                gap: 3rem;
-            }
-
-            .stack-grid {
-                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -567,31 +350,8 @@
                 min-height: 50vh;
             }
 
-            .lab-principles {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-                padding: 4rem 0;
-            }
-
-            .experiments-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1.25rem;
-            }
-
-            .stack-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .lab-experiments,
-            .lab-stack {
-                padding: 3rem 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .experiments-grid {
-                grid-template-columns: 1fr;
+            .lab-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -599,128 +359,6 @@
         @media (pointer: coarse) {
             .cursor { display: none !important; }
             * { cursor: auto !important; }
-        }
-
-        /* ==================== */
-        /* DARK MODE OVERRIDES */
-        /* ==================== */
-        body.dark-mode {
-            background-color: #0A0A0A !important;
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode ::selection {
-            background: #FF4500 !important;
-            color: #0A0A0A !important;
-            -webkit-text-fill-color: #0A0A0A !important;
-        }
-
-        body.dark-mode .cursor {
-            background: #FF4500 !important;
-        }
-
-        body.dark-mode .plus-icon span {
-            background: #FF4500 !important;
-        }
-
-        body.dark-mode .menu-link {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .logo-bottom svg path {
-            fill: #FF4500 !important;
-        }
-
-        body.dark-mode .social-link { color: #FF4500 !important; }
-        body.dark-mode .site-footer-left { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
-
-        body.dark-mode .lab-hero h1 {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .lab-hero-sub {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .lab-hero-copy,
-        body.dark-mode .lab-principles-left p,
-        body.dark-mode .principle-desc,
-        body.dark-mode .lab-closing p,
-        body.dark-mode .stack-item p {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .lab-principles-left h2,
-        body.dark-mode .lab-experiments h2,
-        body.dark-mode .lab-stack h2,
-        body.dark-mode .principle-label,
-        body.dark-mode .experiment-title,
-        body.dark-mode .stack-item h3 {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .principle-tag,
-        body.dark-mode .experiment-tool,
-        body.dark-mode .experiment-date {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .principle-row {
-            border-color: rgba(255, 69, 0, 0.15);
-        }
-
-        body.dark-mode .experiment-thumb {
-            background: #1a1a1a;
-        }
-
-        /* ==================== */
-        /* DARK MODE TOGGLE */
-        /* ==================== */
-        .dark-mode-toggle {
-            cursor: none;
-        }
-
-        .dark-mode-toggle input {
-            display: none;
-        }
-
-        .toggle-track {
-            width: 36px;
-            height: 18px;
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 9px;
-            position: relative;
-            transition: background 0.3s ease;
-            cursor: none;
-            display: block;
-        }
-
-        .toggle-track::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 14px;
-            height: 14px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .dark-mode-toggle input:checked + .toggle-track {
-            background: rgba(255, 69, 0, 0.8);
-        }
-
-        .dark-mode-toggle input:checked + .toggle-track::after {
-            transform: translateX(18px);
-            background: #FF4500;
         }
 
     </style>
@@ -766,138 +404,19 @@
             <p class="lab-hero-copy">AI image and video generation is real, it's fast, and pretending otherwise doesn't make us more principled. The Lab is where we stay fluent in tools we've chosen not to use in client work. Knowing how something works and choosing not to deploy it is a different thing than refusing to look.</p>
         </section>
 
-        <!-- Section 2: Principles -->
-        <section class="lab-principles">
-            <div class="lab-principles-left">
-                <h2>what we will and won't do here.</h2>
-                <p>We're not generating synthetic people. We're not building a cheaper version of what we do. The lines exist because we thought about them, not because someone told us to draw them.</p>
-            </div>
-            <div class="lab-principles-right">
-                <div class="principle-row">
-                    <div class="principle-header">
-                        <span class="principle-label">Environmental and abstract image research</span>
-                        <span class="principle-tag">In scope</span>
-                    </div>
-                    <p class="principle-desc">Texture, atmosphere, form. Used for internal mood development and visual direction work.</p>
-                </div>
-                <div class="principle-row">
-                    <div class="principle-header">
-                        <span class="principle-label">Synthetic depictions of real or realistic people</span>
-                        <span class="principle-tag">Not here</span>
-                    </div>
-                    <p class="principle-desc">We don't generate human likenesses for any deliverable context.</p>
-                </div>
-                <div class="principle-row">
-                    <div class="principle-header">
-                        <span class="principle-label">Pre-viz and moodboard development</span>
-                        <span class="principle-tag">In scope</span>
-                    </div>
-                    <p class="principle-desc">If something from The Lab shows up in a pitch, it's there to articulate an idea. The execution is always human.</p>
-                </div>
-                <div class="principle-row">
-                    <div class="principle-header">
-                        <span class="principle-label">Replacing production with prompts</span>
-                        <span class="principle-tag">Not here</span>
-                    </div>
-                    <p class="principle-desc">The Lab is not a cost-cutting exercise. It doesn't replace crew.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: Experiments Grid -->
-        <section class="lab-experiments">
-            <h2>experiments.</h2>
-            <div class="experiments-grid">
-                <div class="experiment-card">
-                    <div class="experiment-thumb"></div>
-                    <span class="experiment-tool">Nano Banana</span>
-                    <span class="experiment-title">Atmospheric environmental textures for pre-viz moodboards</span>
-                    <span class="experiment-date">Apr 2025</span>
-                </div>
-                <div class="experiment-card">
-                    <div class="experiment-thumb"></div>
-                    <span class="experiment-tool">Runway Gen-3</span>
-                    <span class="experiment-title">Motion study -- light behavior on industrial surfaces</span>
-                    <span class="experiment-date">Mar 2025</span>
-                </div>
-                <div class="experiment-card">
-                    <div class="experiment-thumb"></div>
-                    <span class="experiment-tool">Midjourney v6.1</span>
-                    <span class="experiment-title">Abstract product language -- material and form exploration</span>
-                    <span class="experiment-date">Mar 2025</span>
-                </div>
-                <div class="experiment-card">
-                    <div class="experiment-thumb"></div>
-                    <span class="experiment-tool">Kling AI</span>
-                    <span class="experiment-title">Color timing language research -- pushing grade palettes</span>
-                    <span class="experiment-date">Feb 2025</span>
-                </div>
-                <div class="experiment-card">
-                    <div class="experiment-thumb"></div>
-                    <span class="experiment-tool">Stable Diffusion XL</span>
-                    <span class="experiment-title">Typographic layout concept testing for title cards</span>
-                    <span class="experiment-date">Feb 2025</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 4: Stack -->
-        <section class="lab-stack">
-            <h2>the stack.</h2>
-            <div class="stack-grid">
-                <div class="stack-item">
-                    <h3>Nano Banana</h3>
-                    <p>Fastest iteration loop we've found for environmental and abstract work.</p>
-                </div>
-                <div class="stack-item">
-                    <h3>Midjourney</h3>
-                    <p>Reference image generation for moodboards and visual direction pitch materials.</p>
-                </div>
-                <div class="stack-item">
-                    <h3>Runway</h3>
-                    <p>Gen-3 for motion and temporal studies. Understanding how AI interprets movement and light over time.</p>
-                </div>
-                <div class="stack-item">
-                    <h3>Kling AI</h3>
-                    <p>Video generation benchmark. Comparing motion fidelity and creative control against Runway.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Closing -->
-        <section class="lab-closing">
-            <p>The Lab is a sandbox, not a production workflow. Nothing generated here ships to a client without human craft at its core.</p>
-            <p>If you're a brand, agency, or collaborator reading this: this is us being transparent about the landscape we're operating in. It doesn't change what we make for you.</p>
+        <!-- Image Grid -->
+        <section class="lab-grid">
+            <!-- Drop images here -->
+            <div class="lab-grid-item"></div>
+            <div class="lab-grid-item"></div>
+            <div class="lab-grid-item"></div>
+            <div class="lab-grid-item"></div>
+            <div class="lab-grid-item"></div>
+            <div class="lab-grid-item"></div>
         </section>
 
     </main>
 
-    <!-- Global Footer -->
-    <footer class="site-footer">
-        <div class="site-footer-left">2026, covalent studios</div>
-        <div class="site-footer-right">
-            <div class="site-footer-socials">
-                <label class="dark-mode-toggle">
-                    <input type="checkbox" id="darkModeToggle">
-                    <span class="toggle-track"></span>
-                </label>
-                <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </footer>
 
     <script>
         // ==================== //
@@ -1004,35 +523,6 @@
         });
     </script>
 
-    <script>
-        // ==================== //
-        // DARK MODE TOGGLE
-        // ==================== //
-        (function() {
-            const toggle = document.getElementById('darkModeToggle');
-            const isDark = localStorage.getItem('darkMode') === 'true';
-            if (isDark) {
-                document.body.classList.add('dark-mode');
-                toggle.checked = true;
-            }
-            toggle.addEventListener('change', () => {
-                document.body.classList.toggle('dark-mode');
-                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-            });
-
-            // Cursor inflate on toggle hover
-            const cursorEl = document.getElementById('cursor');
-            const toggleLabel = document.querySelector('.dark-mode-toggle');
-            toggleLabel.addEventListener('mouseenter', () => {
-                cursorEl.style.transform = 'translate(-50%, -50%) scale(1.8)';
-                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
-            });
-            toggleLabel.addEventListener('mouseleave', () => {
-                cursorEl.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
-            });
-        })();
-    </script>
     <script src="scripts/analytics.js"></script>
 </body>
 </html>
