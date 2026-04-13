@@ -55,7 +55,7 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: var(--white);
+            background: #A6FF8E;
             pointer-events: none;
             z-index: 10001;
             mix-blend-mode: difference;
@@ -104,7 +104,7 @@
             position: absolute;
             width: 100%;
             height: 2px;
-            background: var(--white);
+            background: #A6FF8E;
             top: 50%;
             left: 0;
             transition: all 0.3s ease;
@@ -157,7 +157,7 @@
         .menu-link {
             font-size: clamp(1rem, 1.8vw, 1.5rem);
             font-weight: 500;
-            color: var(--white);
+            color: #A6FF8E;
             text-decoration: none;
             opacity: 0;
             transform: translateX(30px);
@@ -231,7 +231,7 @@
         }
 
         .logo-bottom svg path {
-            fill: var(--white);
+            fill: #A6FF8E;
         }
 
         /* ==================== */
@@ -239,66 +239,57 @@
         /* ==================== */
         .lab-page {
             padding: 8rem 3.5rem 6rem;
-            max-width: 1200px;
             margin: 0 auto;
         }
 
         /* Hero */
         .lab-hero {
-            min-height: 60vh;
+            min-height: 70vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
         .lab-hero h1 {
-            font-size: clamp(4rem, 10vw, 9rem);
+            font-size: clamp(6rem, 18vw, 20rem);
             font-weight: 700;
-            line-height: 1;
+            line-height: 0.9;
             letter-spacing: -0.07em;
-            color: var(--white);
+            color: #A6FF8E;
             text-transform: lowercase;
+            width: 100%;
         }
 
         .lab-hero-sub {
             font-size: clamp(1rem, 2vw, 1.5rem);
             font-weight: 300;
-            color: var(--gray);
+            color: #A6FF8E;
             letter-spacing: -0.07em;
-            margin-top: 0.5rem;
+            margin-top: 1rem;
+            opacity: 0.5;
         }
 
         .lab-hero-copy {
             font-size: clamp(0.85rem, 1.2vw, 1rem);
             font-weight: 400;
-            color: var(--white);
+            color: #A6FF8E;
             line-height: 1.6;
             max-width: 640px;
             margin-top: 2rem;
-            opacity: 0.7;
+            opacity: 0.5;
         }
 
-        /* Image Grid */
-        .lab-grid {
-            padding: 4rem 0 2rem;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
+        /* Coming Soon */
+        .lab-coming-soon {
+            padding: 6rem 0 2rem;
         }
 
-        .lab-grid-item {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            background: #1a1a1a;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .lab-grid-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+        .lab-coming-soon p {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            color: #A6FF8E;
+            letter-spacing: -0.07em;
+            opacity: 0.3;
         }
 
         /* ==================== */
@@ -348,10 +339,6 @@
 
             .lab-hero {
                 min-height: 50vh;
-            }
-
-            .lab-grid {
-                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -404,15 +391,9 @@
             <p class="lab-hero-copy">AI image and video generation is real, it's fast, and pretending otherwise doesn't make us more principled. The Lab is where we stay fluent in tools we've chosen not to use in client work. Knowing how something works and choosing not to deploy it is a different thing than refusing to look.</p>
         </section>
 
-        <!-- Image Grid -->
-        <section class="lab-grid">
-            <!-- Drop images here -->
-            <div class="lab-grid-item"></div>
-            <div class="lab-grid-item"></div>
-            <div class="lab-grid-item"></div>
-            <div class="lab-grid-item"></div>
-            <div class="lab-grid-item"></div>
-            <div class="lab-grid-item"></div>
+        <!-- Coming Soon -->
+        <section class="lab-coming-soon">
+            <p>coming soon.</p>
         </section>
 
     </main>
