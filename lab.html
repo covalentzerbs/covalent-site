@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="assets/logos/covalent_white_logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>contact — covalent studios</title>
+    <title>the lab - covalent studios</title>
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
     <script>
@@ -16,7 +16,7 @@
     <meta property="og:title" content="covalent studios">
     <meta property="og:description" content="a modern production company.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
-    <meta property="og:url" content="https://covalentstudios.co/contact">
+    <meta property="og:url" content="https://covalentstudios.co/lab">
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -235,60 +235,248 @@
         }
 
         /* ==================== */
-        /* CONTACT PAGE */
+        /* THE LAB PAGE */
         /* ==================== */
-        .contact-page {
-            min-height: 100vh;
+        .lab-page {
+            padding: 8rem 3.5rem 6rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero */
+        .lab-hero {
+            min-height: 60vh;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            padding: 2rem;
         }
 
-        .contact-email {
-            font-size: clamp(2rem, 7vw, 6rem);
+        .lab-hero h1 {
+            font-size: clamp(4rem, 10vw, 9rem);
             font-weight: 700;
+            line-height: 1;
             letter-spacing: -0.07em;
-            line-height: 1.1;
-            color: var(--bond-blue);
-            text-decoration: none;
-            transition: opacity 0.3s ease;
+            color: var(--black);
+            text-transform: lowercase;
         }
 
-        .contact-email:hover {
+        .lab-hero-sub {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            color: var(--gray);
+            letter-spacing: -0.07em;
+            margin-top: 0.5rem;
+        }
+
+        .lab-hero-copy {
+            font-size: clamp(0.85rem, 1.2vw, 1rem);
+            font-weight: 400;
+            color: var(--black);
+            line-height: 1.6;
+            max-width: 640px;
+            margin-top: 2rem;
             opacity: 0.7;
         }
 
-        /* Copy toast */
-        .copy-toast {
-            position: fixed;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: var(--black);
-            color: var(--white);
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: -0.03em;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            z-index: 20000;
-            white-space: nowrap;
-        }
-        .copy-toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
+        /* Principles */
+        .lab-principles {
+            padding: 6rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
         }
 
-        /* ==================== */
+        .lab-principles-left h2 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.07em;
+            line-height: 1.1;
+            color: var(--black);
+            text-transform: lowercase;
+        }
+
+        .lab-principles-left p {
+            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+            font-weight: 400;
+            color: var(--black);
+            line-height: 1.6;
+            margin-top: 1.5rem;
+            opacity: 0.7;
+        }
+
+        .lab-principles-right {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .principle-row {
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .principle-row:last-child {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .principle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .principle-label {
+            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+            font-weight: 600;
+            color: var(--black);
+            letter-spacing: -0.05em;
+            line-height: 1.3;
+        }
+
+        .principle-tag {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: var(--gray);
+            white-space: nowrap;
+            flex-shrink: 0;
+            padding-top: 0.15rem;
+        }
+
+        .principle-desc {
+            font-size: clamp(0.75rem, 0.95vw, 0.85rem);
+            font-weight: 400;
+            color: var(--black);
+            opacity: 0.5;
+            line-height: 1.5;
+            margin-top: 0.5rem;
+        }
+
+        /* Experiments Grid */
+        .lab-experiments {
+            padding: 4rem 0;
+        }
+
+        .lab-experiments h2 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.07em;
+            line-height: 1.1;
+            color: var(--black);
+            text-transform: lowercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .experiments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .experiment-card {
+            display: flex;
+            flex-direction: column;
+            transition: opacity 0.3s ease;
+        }
+
+        .experiment-card:hover {
+            opacity: 0.7;
+        }
+
+        .experiment-thumb {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: var(--black);
+            border-radius: 2px;
+        }
+
+        .experiment-tool {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--gray);
+            margin-top: 1rem;
+        }
+
+        .experiment-title {
+            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+            font-weight: 500;
+            color: var(--black);
+            letter-spacing: -0.05em;
+            line-height: 1.3;
+            margin-top: 0.4rem;
+        }
+
+        .experiment-date {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: var(--gray);
+            margin-top: 0.3rem;
+        }
+
+        /* Stack */
+        .lab-stack {
+            padding: 4rem 0;
+        }
+
+        .lab-stack h2 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.07em;
+            line-height: 1.1;
+            color: var(--black);
+            text-transform: lowercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .stack-item h3 {
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            font-weight: 600;
+            color: var(--black);
+            letter-spacing: -0.05em;
+        }
+
+        .stack-item p {
+            font-size: clamp(0.75rem, 0.95vw, 0.85rem);
+            font-weight: 400;
+            color: var(--black);
+            opacity: 0.5;
+            line-height: 1.5;
+            margin-top: 0.5rem;
+        }
+
+        /* Closing */
+        .lab-closing {
+            padding: 4rem 0 2rem;
+            max-width: 640px;
+        }
+
+        .lab-closing p {
+            font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+            font-weight: 400;
+            color: var(--black);
+            line-height: 1.6;
+            opacity: 0.7;
+        }
+
+        .lab-closing p + p {
+            margin-top: 1.5rem;
+        }
+
         /* ==================== */
         /* GLOBAL FOOTER        */
         /* ==================== */
         .site-footer {
-            position: fixed;
+            position: relative;
             bottom: 0;
             left: 0;
             right: 0;
@@ -323,55 +511,6 @@
         }
 
         /* ==================== */
-        /* CLOCK */
-        /* ==================== */
-        .clock-widget {
-            position: fixed;
-            bottom: 5rem;
-            right: 3rem;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.15rem;
-            font-family: 'Space Grotesk', monospace;
-        }
-
-        .clock-row {
-            display: flex;
-            align-items: baseline;
-            gap: 0.4rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--black);
-            letter-spacing: -0.07em;
-        }
-
-        .clock-label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: -0.07em;
-            min-width: 2rem;
-            text-align: right;
-        }
-
-        .clock-time {
-            font-variant-numeric: tabular-nums;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .clock-colon {
-            opacity: 1;
-            transition: opacity 0.15s ease;
-        }
-
-        .clock-colon.blink {
-            opacity: 0;
-        }
-
-        /* ==================== */
         /* RESPONSIVE */
         /* ==================== */
         @media (max-width: 1024px) {
@@ -388,9 +527,16 @@
                 padding: 6rem 2.5rem 2.5rem;
             }
 
-            .clock-widget {
-                bottom: 4.5rem;
-                right: 2.5rem;
+            .lab-page {
+                padding: 7rem 2.5rem 4rem;
+            }
+
+            .lab-principles {
+                gap: 3rem;
+            }
+
+            .stack-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -413,30 +559,39 @@
                 padding: 5rem 1.5rem 1.5rem;
             }
 
-            /* Mobile: lock page, center email, hide everything else */
-            html, body {
-                overflow: hidden !important;
-                height: 100dvh !important;
+            .lab-page {
+                padding: 6rem 1.5rem 3rem;
             }
 
-            .contact-page {
-                height: 100dvh;
-                min-height: unset;
-                text-align: center;
-                padding: 1.5rem;
+            .lab-hero {
+                min-height: 50vh;
             }
 
-            /* hello@ email — fit and center on mobile */
-            .contact-email {
-                font-size: clamp(1.5rem, 6.5vw, 3rem);
-                text-align: center;
-                word-break: break-all;
+            .lab-principles {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                padding: 4rem 0;
             }
 
-            /* Hide clock and footer — just the email, nothing else */
-            .clock-widget,
-            .site-footer {
-                display: none !important;
+            .experiments-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.25rem;
+            }
+
+            .stack-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .lab-experiments,
+            .lab-stack {
+                padding: 3rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .experiments-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -445,6 +600,7 @@
             .cursor { display: none !important; }
             * { cursor: auto !important; }
         }
+
         /* ==================== */
         /* DARK MODE OVERRIDES */
         /* ==================== */
@@ -480,56 +636,48 @@
         body.dark-mode .social-link { color: #FF4500 !important; }
         body.dark-mode .site-footer-left { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
 
-        body.dark-mode .contact-email {
+        body.dark-mode .lab-hero h1 {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .clock-row {
+        body.dark-mode .lab-hero-sub {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .about-text {
+        body.dark-mode .lab-hero-copy,
+        body.dark-mode .lab-principles-left p,
+        body.dark-mode .principle-desc,
+        body.dark-mode .lab-closing p,
+        body.dark-mode .stack-item p {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .project-client {
+        body.dark-mode .lab-principles-left h2,
+        body.dark-mode .lab-experiments h2,
+        body.dark-mode .lab-stack h2,
+        body.dark-mode .principle-label,
+        body.dark-mode .experiment-title,
+        body.dark-mode .stack-item h3 {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .project-subtitle {
+        body.dark-mode .principle-tag,
+        body.dark-mode .experiment-tool,
+        body.dark-mode .experiment-date {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .scroll-progress-segment {
-            background: #FF4500 !important;
+        body.dark-mode .principle-row {
+            border-color: rgba(255, 69, 0, 0.15);
         }
 
-        body.dark-mode .director-name {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .director-credit {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .case-study-link {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .case-study-link::after {
-            background: #FF4500 !important;
-        }
-
-        body.dark-mode .hero-logo svg path {
-            fill: #FF4500 !important;
+        body.dark-mode .experiment-thumb {
+            background: #1a1a1a;
         }
 
         /* ==================== */
@@ -596,8 +744,8 @@
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
             <a href="directors.html" class="menu-link">directors</a>
-            <a href="lab.html" class="menu-link">lab</a>
-            <a href="contact.html" class="menu-link current">contact</a>
+            <a href="lab.html" class="menu-link current">lab</a>
+            <a href="contact.html" class="menu-link">contact</a>
         </div>
     </div>
 
@@ -609,28 +757,120 @@
     </a>
 
     <!-- Main Content -->
-    <main class="contact-page">
-        <a href="mailto:hello@covalentstudios.co" class="contact-email" id="contactEmail">hello@covalentstudios.co</a>
+    <main class="lab-page">
+
+        <!-- Section 1: Hero -->
+        <section class="lab-hero">
+            <h1>the lab.</h1>
+            <p class="lab-hero-sub">where we mess around.</p>
+            <p class="lab-hero-copy">AI image and video generation is real, it's fast, and pretending otherwise doesn't make us more principled. The Lab is where we stay fluent in tools we've chosen not to use in client work. Knowing how something works and choosing not to deploy it is a different thing than refusing to look.</p>
+        </section>
+
+        <!-- Section 2: Principles -->
+        <section class="lab-principles">
+            <div class="lab-principles-left">
+                <h2>what we will and won't do here.</h2>
+                <p>We're not generating synthetic people. We're not building a cheaper version of what we do. The lines exist because we thought about them, not because someone told us to draw them.</p>
+            </div>
+            <div class="lab-principles-right">
+                <div class="principle-row">
+                    <div class="principle-header">
+                        <span class="principle-label">Environmental and abstract image research</span>
+                        <span class="principle-tag">In scope</span>
+                    </div>
+                    <p class="principle-desc">Texture, atmosphere, form. Used for internal mood development and visual direction work.</p>
+                </div>
+                <div class="principle-row">
+                    <div class="principle-header">
+                        <span class="principle-label">Synthetic depictions of real or realistic people</span>
+                        <span class="principle-tag">Not here</span>
+                    </div>
+                    <p class="principle-desc">We don't generate human likenesses for any deliverable context.</p>
+                </div>
+                <div class="principle-row">
+                    <div class="principle-header">
+                        <span class="principle-label">Pre-viz and moodboard development</span>
+                        <span class="principle-tag">In scope</span>
+                    </div>
+                    <p class="principle-desc">If something from The Lab shows up in a pitch, it's there to articulate an idea. The execution is always human.</p>
+                </div>
+                <div class="principle-row">
+                    <div class="principle-header">
+                        <span class="principle-label">Replacing production with prompts</span>
+                        <span class="principle-tag">Not here</span>
+                    </div>
+                    <p class="principle-desc">The Lab is not a cost-cutting exercise. It doesn't replace crew.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Experiments Grid -->
+        <section class="lab-experiments">
+            <h2>experiments.</h2>
+            <div class="experiments-grid">
+                <div class="experiment-card">
+                    <div class="experiment-thumb"></div>
+                    <span class="experiment-tool">Nano Banana</span>
+                    <span class="experiment-title">Atmospheric environmental textures for pre-viz moodboards</span>
+                    <span class="experiment-date">Apr 2025</span>
+                </div>
+                <div class="experiment-card">
+                    <div class="experiment-thumb"></div>
+                    <span class="experiment-tool">Runway Gen-3</span>
+                    <span class="experiment-title">Motion study -- light behavior on industrial surfaces</span>
+                    <span class="experiment-date">Mar 2025</span>
+                </div>
+                <div class="experiment-card">
+                    <div class="experiment-thumb"></div>
+                    <span class="experiment-tool">Midjourney v6.1</span>
+                    <span class="experiment-title">Abstract product language -- material and form exploration</span>
+                    <span class="experiment-date">Mar 2025</span>
+                </div>
+                <div class="experiment-card">
+                    <div class="experiment-thumb"></div>
+                    <span class="experiment-tool">Kling AI</span>
+                    <span class="experiment-title">Color timing language research -- pushing grade palettes</span>
+                    <span class="experiment-date">Feb 2025</span>
+                </div>
+                <div class="experiment-card">
+                    <div class="experiment-thumb"></div>
+                    <span class="experiment-tool">Stable Diffusion XL</span>
+                    <span class="experiment-title">Typographic layout concept testing for title cards</span>
+                    <span class="experiment-date">Feb 2025</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Stack -->
+        <section class="lab-stack">
+            <h2>the stack.</h2>
+            <div class="stack-grid">
+                <div class="stack-item">
+                    <h3>Nano Banana</h3>
+                    <p>Fastest iteration loop we've found for environmental and abstract work.</p>
+                </div>
+                <div class="stack-item">
+                    <h3>Midjourney</h3>
+                    <p>Reference image generation for moodboards and visual direction pitch materials.</p>
+                </div>
+                <div class="stack-item">
+                    <h3>Runway</h3>
+                    <p>Gen-3 for motion and temporal studies. Understanding how AI interprets movement and light over time.</p>
+                </div>
+                <div class="stack-item">
+                    <h3>Kling AI</h3>
+                    <p>Video generation benchmark. Comparing motion fidelity and creative control against Runway.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Closing -->
+        <section class="lab-closing">
+            <p>The Lab is a sandbox, not a production workflow. Nothing generated here ships to a client without human craft at its core.</p>
+            <p>If you're a brand, agency, or collaborator reading this: this is us being transparent about the landscape we're operating in. It doesn't change what we make for you.</p>
+        </section>
+
     </main>
-
-    <!-- Copy toast -->
-    <div class="copy-toast" id="copyToast">copied to clipboard</div>
-
-    <!-- Clock Widget -->
-    <div class="clock-widget" id="clockWidget">
-        <div class="clock-row">
-            <span class="clock-label">NYC</span>
-            <span class="clock-time" id="clockNYC">--<span class="clock-colon">:</span>--</span>
-        </div>
-        <div class="clock-row">
-            <span class="clock-label">CHI</span>
-            <span class="clock-time" id="clockCHI">--<span class="clock-colon">:</span>--</span>
-        </div>
-        <div class="clock-row">
-            <span class="clock-label">LA</span>
-            <span class="clock-time" id="clockLA">--<span class="clock-colon">:</span>--</span>
-        </div>
-    </div>
 
     <!-- Global Footer -->
     <footer class="site-footer">
@@ -762,121 +1002,6 @@
                 animationFrame = requestAnimationFrame(animate);
             });
         });
-
-        // ==================== //
-        // CLOCK WIDGET
-        // ==================== //
-        function updateClocks() {
-            const now = new Date();
-
-            const timezones = [
-                { id: 'clockNYC', tz: 'America/New_York' },
-                { id: 'clockCHI', tz: 'America/Chicago' },
-                { id: 'clockLA', tz: 'America/Los_Angeles' }
-            ];
-
-            const seconds = now.getSeconds();
-            const colonVisible = seconds % 2 === 0;
-
-            timezones.forEach(({ id, tz }) => {
-                const el = document.getElementById(id);
-                const hours = new Intl.DateTimeFormat('en-US', {
-                    timeZone: tz, hour: '2-digit', hour12: false
-                }).format(now);
-                const minutes = new Intl.DateTimeFormat('en-US', {
-                    timeZone: tz, minute: '2-digit'
-                }).format(now);
-
-                const h = hours.padStart(2, '0');
-                const m = minutes.padStart(2, '0');
-                const colonClass = colonVisible ? 'clock-colon' : 'clock-colon blink';
-                el.innerHTML = h + '<span class="' + colonClass + '">:</span>' + m;
-            });
-        }
-
-        updateClocks();
-        setInterval(updateClocks, 500);
-
-        // ==================== //
-        // VIRUS SPREADING TEXT EFFECT (footer)
-        // ==================== //
-        const virusLinks = document.querySelectorAll('.footer-link');
-
-        virusLinks.forEach(link => {
-            const text = link.textContent;
-            link.textContent = '';
-
-            const chars = [];
-            for (let i = 0; i < text.length; i++) {
-                const char = document.createElement('span');
-                char.className = 'char';
-                char.textContent = text[i] === ' ' ? '\u00A0' : text[i];
-                link.appendChild(char);
-                chars.push(char);
-            }
-
-            let isInfected = false;
-
-            link.addEventListener('mouseenter', (e) => {
-                if (isInfected) return;
-                isInfected = true;
-
-                const rect = link.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-
-                const charDistances = chars.map((char, index) => {
-                    const charRect = char.getBoundingClientRect();
-                    const charCenterX = charRect.left - rect.left + charRect.width / 2;
-                    const charCenterY = charRect.top - rect.top + charRect.height / 2;
-                    const distance = Math.sqrt(
-                        Math.pow(charCenterX - mouseX, 2) +
-                        Math.pow(charCenterY - mouseY, 2)
-                    );
-                    return { char, distance, index };
-                });
-
-                charDistances.sort((a, b) => a.distance - b.distance);
-
-                charDistances.forEach((item, i) => {
-                    setTimeout(() => {
-                        item.char.classList.add('infected');
-                        if (i === charDistances.length - 1) {
-                            link.classList.add('fully-infected');
-                        }
-                    }, i * 30);
-                });
-            });
-
-            link.addEventListener('mouseleave', (e) => {
-                const rect = link.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-
-                const charDistances = chars.map((char, index) => {
-                    const charRect = char.getBoundingClientRect();
-                    const charCenterX = charRect.left - rect.left + charRect.width / 2;
-                    const charCenterY = charRect.top - rect.top + charRect.height / 2;
-                    const distance = Math.sqrt(
-                        Math.pow(charCenterX - mouseX, 2) +
-                        Math.pow(charCenterY - mouseY, 2)
-                    );
-                    return { char, distance, index };
-                });
-
-                charDistances.sort((a, b) => b.distance - a.distance);
-                link.classList.remove('fully-infected');
-
-                charDistances.forEach((item, i) => {
-                    setTimeout(() => {
-                        item.char.classList.remove('infected');
-                        if (i === charDistances.length - 1) {
-                            isInfected = false;
-                        }
-                    }, i * 25);
-                });
-            });
-        });
     </script>
 
     <script>
@@ -907,28 +1032,6 @@
                 cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
             });
         })();
-    </script>
-    <script>
-    // Email — open mailto AND copy to clipboard as fallback
-    (function() {
-        const emailLink = document.getElementById('contactEmail');
-        const toast = document.getElementById('copyToast');
-        let toastTimer;
-
-        emailLink.addEventListener('click', function(e) {
-            // Copy to clipboard (works silently alongside mailto)
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText('hello@covalentstudios.co').then(function() {
-                    clearTimeout(toastTimer);
-                    toast.classList.add('show');
-                    toastTimer = setTimeout(function() {
-                        toast.classList.remove('show');
-                    }, 2000);
-                }).catch(function() {});
-            }
-            // Let the mailto: href open naturally — don't preventDefault
-        });
-    })();
     </script>
     <script src="scripts/analytics.js"></script>
 </body>
