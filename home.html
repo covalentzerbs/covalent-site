@@ -25,6 +25,14 @@
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co">
     <meta property="og:type" content="website">
+    <!-- Preload client logos so they're ready before loading screen ends -->
+    <link rel="preload" as="image" href="assets/logos/client-logos/wabi logo_white.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/AESOP LOGO WHITE.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/PINCH.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/fare logo white.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/arc-teryx-logo-png-transparent.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/WOH logo white.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/EVER_LOGO_hero_middle.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -539,7 +547,8 @@
             .menu-overlay { padding: 5rem 1.5rem 1.5rem; }
 
             /* Use dynamic viewport height — Safari ignores vh percentage chains */
-            html, body { overscroll-behavior: auto; }
+            html { overflow: visible !important; overscroll-behavior-y: auto !important; }
+            body { overflow: visible !important; overscroll-behavior-y: auto !important; }
             .scroll-container { height: 100dvh; overscroll-behavior-y: auto; }
             .project-section, .hero-section { height: 100dvh; }
             .fixed-video-bg { height: 100dvh; }
@@ -548,14 +557,13 @@
             /* Vertical video cards on mobile - fill between nav and footer */
             .fixed-video-bg {
                 position: fixed !important;
-                top: 5.5rem !important;
-                left: 7.5% !important;
-                right: 7.5% !important;
-                bottom: 3.5rem !important;
                 width: 85% !important;
-                height: auto !important;
+                height: calc(100dvh - 9rem) !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
                 aspect-ratio: unset !important;
-                transform: none !important;
+                border-radius: 4px !important;
             }
 
             .project-video-container {
