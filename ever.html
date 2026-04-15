@@ -598,6 +598,7 @@
 
         .social-links {
             display: flex;
+            align-items: center;
             gap: 1rem;
         }
 
@@ -813,10 +814,9 @@
         /* DARK MODE TOGGLE */
         /* ==================== */
         .dark-mode-toggle {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 10000;
+            
+            
+            
             cursor: none;
         }
 
@@ -956,6 +956,10 @@
             <div class="footer-right">
                 <a href="#" class="footer-link">blog</a>
                 <div class="social-links">
+                    <label class="dark-mode-toggle">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="toggle-track"></span>
+                    </label>
                     <!-- Instagram -->
                     <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1355,10 +1359,6 @@
     </script>
 
     <!-- Dark Mode Toggle -->
-    <label class="dark-mode-toggle">
-        <input type="checkbox" id="darkModeToggle">
-        <span class="toggle-track"></span>
-    </label>
 
     <script>
         // ==================== //
