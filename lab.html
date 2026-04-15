@@ -529,55 +529,7 @@
         // ==================== //
         // MENU LINK GRADIENT SPREAD EFFECT
         // ==================== //
-        document.querySelectorAll('.menu-link').forEach(link => {
-            const gradient = document.createElement('span');
-            gradient.classList.add('menu-link-gradient');
-            gradient.textContent = link.textContent;
-            gradient.style.setProperty('--spread', '0%');
-            link.appendChild(gradient);
-
-            let animationFrame;
-
-            link.addEventListener('mouseenter', (e) => {
-                const rect = link.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                gradient.style.setProperty('--mx', x + 'px');
-                gradient.style.setProperty('--my', y + 'px');
-                gradient.style.setProperty('--spread', '0%');
-
-                let start = null;
-                const duration = 900;
-                const animate = (timestamp) => {
-                    if (!start) start = timestamp;
-                    const progress = Math.min((timestamp - start) / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    gradient.style.setProperty('--spread', (eased * 200) + '%');
-                    if (progress < 1) {
-                        animationFrame = requestAnimationFrame(animate);
-                    }
-                };
-                cancelAnimationFrame(animationFrame);
-                animationFrame = requestAnimationFrame(animate);
-            });
-
-            link.addEventListener('mouseleave', () => {
-                cancelAnimationFrame(animationFrame);
-                let start = null;
-                const currentSpread = parseFloat(gradient.style.getPropertyValue('--spread')) || 200;
-                const duration = 500;
-                const animate = (timestamp) => {
-                    if (!start) start = timestamp;
-                    const progress = Math.min((timestamp - start) / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    gradient.style.setProperty('--spread', (currentSpread * (1 - eased)) + '%');
-                    if (progress < 1) {
-                        animationFrame = requestAnimationFrame(animate);
-                    }
-                };
-                animationFrame = requestAnimationFrame(animate);
-            });
-        });
+        // (menu hover handled by CSS only)
     </script>
 
     <script src="scripts/analytics.js"></script>

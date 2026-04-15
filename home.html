@@ -284,29 +284,18 @@
 
         .menu-link:hover {
             opacity: 1 !important;
+            color: var(--bond-blue) !important;
+            -webkit-text-fill-color: var(--bond-blue);
         }
 
-        .menu-link-gradient {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 3s ease infinite;
-            pointer-events: none;
-            -webkit-mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
-            mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
-            opacity: 0;
-            transition: opacity 0s;
+        .menu-link-lab:hover {
+            color: #A6FF8E !important;
+            -webkit-text-fill-color: #A6FF8E !important;
         }
 
-        .menu-link:hover .menu-link-gradient {
-            opacity: 1;
+        .menu-link-bond:hover {
+            color: var(--bond-blue) !important;
+            -webkit-text-fill-color: var(--bond-blue) !important;
         }
 
         .menu-link.current {
@@ -1126,47 +1115,7 @@ body.dark-mode .project-client {
 
         // ==================== //
         // MENU LINK GRADIENT SPREAD (desktop only)
-        // ==================== //
-        document.querySelectorAll('.menu-link').forEach(link => {
-            const gradient = document.createElement('span');
-            gradient.classList.add('menu-link-gradient');
-            gradient.textContent = link.textContent;
-            gradient.style.setProperty('--spread', '0%');
-            link.appendChild(gradient);
-
-            if (isTouchDevice) return; // no hover on touch
-
-            let af;
-
-            link.addEventListener('mouseenter', (e) => {
-                const rect = link.getBoundingClientRect();
-                gradient.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
-                gradient.style.setProperty('--my', (e.clientY - rect.top) + 'px');
-                gradient.style.setProperty('--spread', '0%');
-                let t0 = null;
-                const run = (ts) => {
-                    if (!t0) t0 = ts;
-                    const p = Math.min((ts - t0) / 900, 1);
-                    gradient.style.setProperty('--spread', (( 1 - Math.pow(1 - p, 3)) * 200) + '%');
-                    if (p < 1) af = requestAnimationFrame(run);
-                };
-                cancelAnimationFrame(af);
-                af = requestAnimationFrame(run);
-            });
-
-            link.addEventListener('mouseleave', () => {
-                cancelAnimationFrame(af);
-                const cur = parseFloat(gradient.style.getPropertyValue('--spread')) || 200;
-                let t0 = null;
-                const run = (ts) => {
-                    if (!t0) t0 = ts;
-                    const p = Math.min((ts - t0) / 500, 1);
-                    gradient.style.setProperty('--spread', (cur * (1 - (1 - Math.pow(1 - p, 3)))) + '%');
-                    if (p < 1) af = requestAnimationFrame(run);
-                };
-                af = requestAnimationFrame(run);
-            });
-        });
+        // (menu hover handled by CSS only)
 
 
         // ==================== //
