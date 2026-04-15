@@ -98,6 +98,7 @@
             scroll-behavior: smooth;
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none; /* IE/Edge */
+            -webkit-overflow-scrolling: touch;
         }
 
         .scroll-container::-webkit-scrollbar {
@@ -538,7 +539,8 @@
             .menu-overlay { padding: 5rem 1.5rem 1.5rem; }
 
             /* Use dynamic viewport height — Safari ignores vh percentage chains */
-            .scroll-container { height: 100dvh; }
+            html, body { overscroll-behavior: auto; }
+            .scroll-container { height: 100dvh; overscroll-behavior-y: auto; }
             .project-section, .hero-section { height: 100dvh; }
             .fixed-video-bg { height: 100dvh; }
             .loading-overlay { height: 100dvh; }
@@ -1211,7 +1213,11 @@ body.dark-mode .project-client {
             }
         });
 
+        // Only intercept wheel on desktop — mobile touch handles its own scrolling
+        const isTouchOnly = 'ontouchstart' in window && !window.matchMedia('(pointer: fine)').matches;
+
         window.addEventListener('wheel', (e) => {
+            if (isTouchOnly) return; // let mobile handle natively
             e.preventDefault();
             if (isWheelScrolling) return;
 
