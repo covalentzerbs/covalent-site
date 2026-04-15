@@ -1407,6 +1407,30 @@ body.dark-mode .project-client {
     })();
     </script>
 
+    <script>
+    // ==================== //
+    // SCROLL POSITION RESTORE
+    // Save scroll position before navigating away so back-button
+    // returns to the same project panel.
+    // ==================== //
+    (function() {
+        var sc = document.getElementById('scrollContainer');
+        if (!sc) return;
+
+        // Save scroll position continuously
+        sc.addEventListener('scroll', function() {
+            sessionStorage.setItem('homeScrollLeft', sc.scrollLeft);
+        }, { passive: true });
+
+        // Restore on page load (back-button or reload)
+        var saved = sessionStorage.getItem('homeScrollLeft');
+        if (saved) {
+            // Instant scroll (no smooth) to avoid visual slide
+            sc.scrollLeft = parseInt(saved, 10);
+        }
+    })();
+    </script>
+
     <script src="scripts/analytics.js"></script>
 </body>
 </html>
