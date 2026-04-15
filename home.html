@@ -495,10 +495,27 @@
             .fixed-video-bg { height: 100dvh; }
             .loading-overlay { height: 100dvh; }
 
-            /* Video fills container on mobile */
-            .project-video-container,
+            /* Vertical editorial video cards on mobile */
             .fixed-video-bg {
-                width: 85% !important;
+                width: 88% !important;
+                aspect-ratio: 3 / 4 !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+            }
+
+            .project-video-container {
+                width: 88% !important;
+                aspect-ratio: 3 / 4 !important;
+            }
+
+            /* Crop iframe to cover the taller container */
+            .project-video-container iframe,
+            .fixed-video-bg iframe {
+                width: 100% !important;
+                height: 178% !important;
+                top: -39% !important;
+                left: 0 !important;
             }
 
             /* Loading screen — put tagline in flex flow so bar+tagline center as a group */
