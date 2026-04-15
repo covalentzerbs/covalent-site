@@ -65,8 +65,8 @@
             padding: 0;
             overflow: hidden;
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--black);
-            color: var(--white);
+            background-color: var(--white);
+            color: var(--black);
             letter-spacing: -0.07em;
         }
 
@@ -145,7 +145,7 @@
             position: absolute;
             width: 100%;
             height: 2px;
-            background: var(--white);
+            background: var(--black);
             top: 50%;
             left: 0;
             transition: all 0.3s ease;
@@ -198,7 +198,7 @@
         .menu-link {
             font-size: clamp(1rem, 1.8vw, 1.5rem);
             font-weight: 500;
-            color: var(--white);
+            color: var(--black);
             text-decoration: none;
             opacity: 0;
             transform: translateX(30px);
@@ -285,7 +285,7 @@
             bottom: 0;
             left: 50%;
             right: 50%;
-            background: var(--white);
+            background: var(--black);
             opacity: 1;
             border-radius: 2px;
             transition: left 0.55s cubic-bezier(0.4, 0, 0.2, 1),
@@ -297,24 +297,23 @@
         /* ==================== */
         .fixed-video-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            width: 60%;
+            aspect-ratio: 16 / 9;
+            transform: translate(-50%, -50%);
             z-index: 0;
             overflow: hidden;
-            background: var(--black);
+            border-radius: 4px;
             transition: opacity 0.6s ease;
         }
 
         .fixed-video-bg iframe {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: max(100%, 177.78vh);
-            height: max(100%, 56.25vw);
-            transform: translate(-50%, -50%);
-            transform-origin: center center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             border: none;
             pointer-events: none;
         }
@@ -362,40 +361,39 @@
             scroll-snap-align: start;
             scroll-snap-stop: always; /* Safari: never skip this snap point */
             z-index: 2;
-            background: var(--black);
+            background: var(--white);
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .project-video-container {
+            position: relative;
+            width: 60%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .project-video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            will-change: transform;
-        }
-
-        .project-video-container iframe {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: max(100%, 177.78vh);
-            height: max(100%, 56.25vw);
-            transform: translate(-50%, -50%);
             border: none;
             pointer-events: none;
         }
 
-        /* Text overlay — vertically centered, horizontally centered */
+        /* Text overlay — below the video */
         .project-info {
             position: absolute;
-            top: 50%;
+            bottom: 5%;
             left: 0;
             right: 0;
             width: 100%;
             text-align: center;
-            transform: translateY(-50%);
             z-index: 10;
         }
 
@@ -408,7 +406,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: clamp(3.5rem, 7vw, 7rem);
             font-weight: 700;
-            color: var(--white);
+            color: var(--black);
             line-height: 1;
             letter-spacing: -0.07em;
             text-transform: lowercase;
@@ -454,7 +452,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: clamp(1rem, 2vw, 1.5rem);
             font-weight: 300;
-            color: var(--white);
+            color: var(--black);
             opacity: 0;
             line-height: 1.3;
             letter-spacing: -0.07em;
@@ -491,11 +489,10 @@
             .fixed-video-bg { height: 100dvh; }
             .loading-overlay { height: 100dvh; }
 
-            /* Full-bleed video cover on mobile */
-            .project-video-container iframe,
-            .fixed-video-bg iframe {
-                width: max(100%, 177.78dvh) !important;
-                height: max(100%, 56.25dvw) !important;
+            /* Video fills container on mobile */
+            .project-video-container,
+            .fixed-video-bg {
+                width: 85% !important;
             }
 
             /* Loading screen — put tagline in flex flow so bar+tagline center as a group */
@@ -630,7 +627,7 @@ body.dark-mode .project-client {
         .toggle-track {
             width: 28px;
             height: 16px;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(0, 0, 0, 0.15);
             border-radius: 8px;
             position: relative;
             transition: background 0.3s ease;
@@ -645,7 +642,7 @@ body.dark-mode .project-client {
             left: 2px;
             width: 12px;
             height: 12px;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 50%;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -750,7 +747,7 @@ body.dark-mode .project-client {
         .site-footer-left {
             font-size: 0.7rem;
             font-weight: 500;
-            color: var(--white);
+            color: var(--black);
             opacity: 0.5;
         }
         .site-footer-right {
@@ -761,7 +758,7 @@ body.dark-mode .project-client {
         }
         .site-footer-link {
             font-size: 0.7rem;
-            color: var(--white);
+            color: var(--black);
             text-decoration: none;
         }
         .site-footer-socials {
@@ -770,7 +767,7 @@ body.dark-mode .project-client {
             gap: 1rem;
         }
         .social-link {
-            color: #ffffff;
+            color: var(--black);
             display: flex;
             align-items: center;
         }
@@ -781,7 +778,7 @@ body.dark-mode .project-client {
         .site-footer-social svg {
             width: 16px;
             height: 16px;
-            fill: var(--white);
+            fill: var(--black);
         }
 
     </style>
@@ -825,7 +822,7 @@ body.dark-mode .project-client {
     <!-- Logo top-left — scrolls back to start -->
     <a href="#" class="logo-bottom" id="logoBottom">
         <svg viewBox="0 0 160 160" fill="none">
-            <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+            <path fill="#0A0A0A" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
         </svg>
     </a>
 
