@@ -387,6 +387,14 @@
             pointer-events: none;
         }
 
+        /* Crop 2px off each side for fare video edit artifact */
+        .project-video-crop iframe {
+            top: -2px;
+            left: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+        }
+
         /* Text overlay — dead center of viewport */
         .project-info {
             position: absolute;
@@ -424,35 +432,6 @@
             display: inline-block;
         }
 
-        /* Hide parent text only while cursor is on it — no double-render bleed */
-        .project-client.is-hovered {
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-        }
-
-        /* Radial blue-gradient overlay */
-        .project-client::before {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0; right: -0.12em; bottom: 0;
-            text-align: center;
-            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 3s ease infinite;
-            pointer-events: none;
-            -webkit-mask-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), black var(--spread, 0%), transparent var(--spread, 0%));
-            mask-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), black var(--spread, 0%), transparent var(--spread, 0%));
-            display: none;
-        }
-
-        /* Show ::before while cursor is on it OR while retract animation plays */
-        .project-client.is-hovered::before,
-        .project-client.is-animating::before {
-            display: block;
-        }
 
         .project-subtitle {
             font-family: 'Space Grotesk', sans-serif;
@@ -536,10 +515,6 @@
 
         /* Disable blue gradient text effect on touch/mobile */
         @media (pointer: coarse) {
-            .project-client.is-hovered { -webkit-text-fill-color: unset !important; color: unset !important; }
-            .project-client::before { display: none !important; }
-            .project-client.is-hovered::before,
-            .project-client.is-animating::before { display: none !important; }
         }
 
         /* ==================== */
@@ -882,7 +857,7 @@ body.dark-mode .project-client {
 
         <!-- PANEL 5: FARE -->
         <section class="project-section" id="project4">
-            <div class="project-video-container">
+            <div class="project-video-container project-video-crop">
                 <iframe data-src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
@@ -1055,50 +1030,6 @@ body.dark-mode .project-client {
             });
         });
 
-        // ==================== //
-        // PROJECT TITLE RADIAL HOVER (desktop only)
-        // ==================== //
-        document.querySelectorAll('.project-client').forEach(title => {
-            title.setAttribute('data-text', title.textContent.trim());
-            if (isTouchDevice) return; // skip hover effect on touch screens
-
-            title.addEventListener('mouseenter', (e) => {
-                title.classList.add('is-hovered');
-                const rect = title.getBoundingClientRect();
-                title.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
-                title.style.setProperty('--my', (e.clientY - rect.top) + 'px');
-                title.style.setProperty('--spread', '0%');
-                let t0 = null;
-                const run = (ts) => {
-                    if (!t0) t0 = ts;
-                    const p = Math.min((ts - t0) / 1400, 1);
-                    title.style.setProperty('--spread', ((1 - Math.pow(1 - p, 3)) * 200) + '%');
-                    if (p < 1) title._af = requestAnimationFrame(run);
-                };
-                cancelAnimationFrame(title._af);
-                title._af = requestAnimationFrame(run);
-            });
-
-            title.addEventListener('mouseleave', () => {
-                cancelAnimationFrame(title._af);
-                // Immediately restore white parent text; keep ::before visible for retract
-                title.classList.remove('is-hovered');
-                title.classList.add('is-animating');
-                const cur = parseFloat(title.style.getPropertyValue('--spread')) || 200;
-                let t0 = null;
-                const run = (ts) => {
-                    if (!t0) t0 = ts;
-                    const p = Math.min((ts - t0) / 600, 1);
-                    title.style.setProperty('--spread', (cur * (1 - (1 - Math.pow(1 - p, 3)))) + '%');
-                    if (p < 1) {
-                        title._af = requestAnimationFrame(run);
-                    } else {
-                        title.classList.remove('is-animating');
-                    }
-                };
-                title._af = requestAnimationFrame(run);
-            });
-        });
 
         // ==================== //
         // CUSTOM CURSOR
@@ -1139,22 +1070,16 @@ body.dark-mode .project-client {
         let wheelTimer = null;
         let isWheelScrolling = false;
         let scrollEndTimer = null;
-        const WHEEL_THRESHOLD = 20;
+        const WHEEL_THRESHOLD = 10;
 
-        // Release lock once the container stops scrolling (200ms after last scroll event)
-        // Also clean up any hover states that got stuck during scroll
+        // Release lock once the container stops scrolling
         scrollContainer.addEventListener('scroll', () => {
-            document.querySelectorAll('.project-client.is-hovered, .project-client.is-animating').forEach(el => {
-                cancelAnimationFrame(el._af);
-                el.classList.remove('is-hovered', 'is-animating');
-            });
-
             if (isWheelScrolling) {
                 clearTimeout(scrollEndTimer);
                 scrollEndTimer = setTimeout(() => {
                     isWheelScrolling = false;
                     wheelDelta = 0;
-                }, 200);
+                }, 100);
             }
         });
 
@@ -1164,7 +1089,7 @@ body.dark-mode .project-client {
 
             wheelDelta += e.deltaY;
             clearTimeout(wheelTimer);
-            wheelTimer = setTimeout(() => { wheelDelta = 0; }, 300);
+            wheelTimer = setTimeout(() => { wheelDelta = 0; }, 150);
 
             const maxLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
 
