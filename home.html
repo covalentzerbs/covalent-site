@@ -195,6 +195,9 @@
         .menu-overlay.active {
             pointer-events: auto;
             opacity: 1;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .menu-links {
@@ -432,6 +435,21 @@
             pointer-events: auto;
         }
 
+        .project-logo {
+            width: clamp(120px, 15vw, 250px);
+            height: auto;
+            opacity: 0;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-user-drag: none;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .project-section.in-view .project-logo {
+            opacity: 1;
+        }
+
         .project-client-link {
             text-decoration: none;
             color: inherit;
@@ -498,7 +516,7 @@
             /* Vertical video cards on mobile - fill between nav and footer */
             .fixed-video-bg {
                 position: fixed !important;
-                top: 4rem !important;
+                top: 5.5rem !important;
                 left: 7.5% !important;
                 right: 7.5% !important;
                 bottom: 3.5rem !important;
@@ -510,7 +528,7 @@
 
             .project-video-container {
                 width: 85% !important;
-                height: calc(100dvh - 7.5rem) !important;
+                height: calc(100dvh - 9rem) !important;
                 aspect-ratio: unset !important;
             }
 
@@ -551,16 +569,18 @@
                 pointer-events: auto !important;
             }
 
-            /* Project titles: always visible, centered on mobile */
-            .project-client {
+            /* Project logos: always visible on mobile */
+            .project-logo {
                 opacity: 1 !important;
-                text-align: center !important;
-            }
-            .project-subtitle {
-                opacity: 0.7 !important;
-                text-align: center !important;
+                width: clamp(100px, 40vw, 200px) !important;
             }
             .project-info { text-align: center; }
+
+            /* Bigger menu links on mobile */
+            .menu-link {
+                font-size: clamp(1.8rem, 7vw, 2.5rem) !important;
+                padding: 0.3rem 0 !important;
+            }
         }
 
         /* Hide dot cursor on touch devices */
@@ -890,8 +910,7 @@ body.dark-mode .project-client {
                 <iframe src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="wabi.html" class="project-client-link"><h2 class="project-client">wabi</h2></a>
-                <p class="project-subtitle">when did we stop playing</p>
+                <a href="wabi.html" class="project-client-link"><img src="assets/logos/client-logos/wabi logo_white.png" class="project-logo" alt="wabi"></a>
             </div>
         </section>
 
@@ -901,8 +920,7 @@ body.dark-mode .project-client {
                 <iframe data-src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="aesop.html" class="project-client-link"><h2 class="project-client">aesop</h2></a>
-                <p class="project-subtitle">skin</p>
+                <a href="aesop.html" class="project-client-link"><img src="assets/logos/client-logos/AESOP LOGO WHITE.png" class="project-logo" alt="aesop"></a>
             </div>
         </section>
 
@@ -912,8 +930,7 @@ body.dark-mode .project-client {
                 <iframe data-src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="pinch.html" class="project-client-link"><h2 class="project-client">pinch</h2></a>
-                <p class="project-subtitle">a holiday campaign</p>
+                <a href="pinch.html" class="project-client-link"><img src="assets/logos/client-logos/PINCH.png" class="project-logo" alt="pinch"></a>
             </div>
         </section>
 
@@ -923,8 +940,7 @@ body.dark-mode .project-client {
                 <iframe data-src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="fare.html" class="project-client-link"><h2 class="project-client">fare</h2></a>
-                <p class="project-subtitle">beyond the bowl</p>
+                <a href="fare.html" class="project-client-link"><img src="assets/logos/client-logos/fare logo white.png" class="project-logo" alt="fare"></a>
             </div>
         </section>
 
@@ -934,8 +950,7 @@ body.dark-mode .project-client {
                 <iframe data-src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="arcteryx.html" class="project-client-link"><h2 class="project-client">arcteryx</h2></a>
-                <p class="project-subtitle">a city to summit</p>
+                <a href="arcteryx.html" class="project-client-link"><img src="assets/logos/client-logos/arc-teryx-logo-png-transparent.png" class="project-logo" alt="arcteryx"></a>
             </div>
         </section>
 
@@ -945,8 +960,7 @@ body.dark-mode .project-client {
                 <iframe data-src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="hyatt.html" class="project-client-link"><h2 class="project-client">world of hyatt</h2></a>
-                <p class="project-subtitle">jess pegula x us open</p>
+                <a href="hyatt.html" class="project-client-link"><img src="assets/logos/client-logos/WOH logo white.png" class="project-logo" alt="world of hyatt"></a>
             </div>
         </section>
 
@@ -956,8 +970,7 @@ body.dark-mode .project-client {
                 <iframe data-src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="ever.html" class="project-client-link"><h2 class="project-client">ever</h2></a>
-                <p class="project-subtitle">a mini doc</p>
+                <a href="ever.html" class="project-client-link"><img src="assets/logos/client-logos/EVER_LOGO_hero_middle.png" class="project-logo" alt="ever"></a>
             </div>
         </section>
 
