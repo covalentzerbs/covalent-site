@@ -495,29 +495,45 @@
             .fixed-video-bg { height: 100dvh; }
             .loading-overlay { height: 100dvh; }
 
-            /* Vertical 9:16 video cards on mobile */
+            /* Vertical video cards on mobile - fill between nav and footer */
             .fixed-video-bg {
+                position: fixed !important;
+                top: 4rem !important;
+                left: 7.5% !important;
+                right: 7.5% !important;
+                bottom: 3.5rem !important;
                 width: 85% !important;
-                aspect-ratio: 9 / 16 !important;
-                top: 50% !important;
-                left: 50% !important;
-                transform: translate(-50%, -50%) !important;
+                height: auto !important;
+                aspect-ratio: unset !important;
+                transform: none !important;
             }
 
             .project-video-container {
                 width: 85% !important;
-                aspect-ratio: 9 / 16 !important;
+                height: calc(100dvh - 7.5rem) !important;
+                aspect-ratio: unset !important;
             }
 
-            /* Scale 16:9 iframe to cover the 9:16 container */
+            /* Scale 16:9 iframe to cover the tall container */
             .project-video-container iframe,
             .fixed-video-bg iframe {
                 position: absolute !important;
                 top: 50% !important;
                 left: 50% !important;
-                width: 177.78% !important;
+                min-width: 100% !important;
+                min-height: 100% !important;
+                width: auto !important;
                 height: 100% !important;
                 transform: translate(-50%, -50%) !important;
+            }
+
+            /* Ensure width covers when container is narrow */
+            @supports (width: max(1px, 1px)) {
+                .project-video-container iframe,
+                .fixed-video-bg iframe {
+                    width: max(100%, 177.78vh) !important;
+                    height: max(100%, 56.25vw) !important;
+                }
             }
 
             /* Loading screen — put tagline in flex flow so bar+tagline center as a group */
