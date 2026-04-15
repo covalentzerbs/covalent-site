@@ -81,6 +81,7 @@
             width: 100vw;
             height: 100vh;
             scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none; /* IE/Edge */
         }
@@ -328,7 +329,7 @@
             height: 100vh;
             flex-shrink: 0;
             scroll-snap-align: start;
-            scroll-snap-stop: always; /* Safari: never skip this snap point */
+            scroll-snap-stop: normal;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -359,7 +360,7 @@
             height: 100vh;
             flex-shrink: 0;
             scroll-snap-align: start;
-            scroll-snap-stop: always; /* Safari: never skip this snap point */
+            scroll-snap-stop: normal;
             z-index: 2;
             background: var(--white);
             overflow: hidden;
@@ -386,13 +387,13 @@
             pointer-events: none;
         }
 
-        /* Text overlay — below the video */
+        /* Text overlay — centered on video */
         .project-info {
             position: absolute;
-            bottom: 2%;
-            left: 0;
-            right: 0;
-            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 75%;
             text-align: center;
             z-index: 10;
         }
@@ -406,7 +407,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: clamp(3.5rem, 7vw, 7rem);
             font-weight: 700;
-            color: var(--black);
+            color: var(--white);
             line-height: 1;
             letter-spacing: -0.07em;
             text-transform: lowercase;
@@ -452,7 +453,7 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: clamp(1rem, 2vw, 1.5rem);
             font-weight: 300;
-            color: var(--black);
+            color: var(--white);
             opacity: 0;
             line-height: 1.3;
             letter-spacing: -0.07em;
