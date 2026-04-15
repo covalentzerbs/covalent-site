@@ -22,6 +22,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Satoshi';
+            src: url('assets/fonts/Satoshi-Variable.ttf') format('truetype');
+            font-weight: 300 900;
+            font-display: swap;
+        }
+
         /* CSS Variables */
         :root {
             --ice: #FAFBFC;
@@ -218,6 +225,13 @@
         .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.05s; }
         .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.1s; }
         .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.15s; }
+        .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.2s; }
+
+        .menu-link-bond {
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
 
         .menu-link:hover {
             opacity: 1 !important;
@@ -751,6 +765,11 @@ body.dark-mode .project-client {
             color: var(--black);
             display: flex;
             align-items: center;
+            transition: color 0.2s ease;
+        }
+
+        .social-link-ionic:hover {
+            color: #6C5CE7;
         }
         .site-footer-social {
             display: flex;
@@ -797,6 +816,7 @@ body.dark-mode .project-client {
             <a href="directors.html" class="menu-link">directors</a>
             <a href="lab.html" class="menu-link">lab</a>
             <a href="contact.html" class="menu-link">contact</a>
+            <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
         </div>
     </div>
 
@@ -927,7 +947,7 @@ body.dark-mode .project-client {
                         <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
                     </svg>
                 </a>
-                <a href="https://ionicpost.com" target="_blank" rel="noopener" class="social-link" aria-label="Ionic Post">
+                <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="12" cy="5" r="2.5" fill="currentColor"/>
                         <rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/>
