@@ -387,15 +387,20 @@
             pointer-events: none;
         }
 
-        /* Text overlay — centered on video */
+        /* Text overlay — dead center of viewport */
         .project-info {
             position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 75%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
             text-align: center;
             z-index: 10;
+            pointer-events: none;
+        }
+
+        .project-info a {
+            pointer-events: auto;
         }
 
         .project-client-link {
@@ -411,7 +416,7 @@
             line-height: 1;
             letter-spacing: -0.07em;
             text-transform: lowercase;
-            text-align: left; /* prevent inherited center desync with ::before */
+            text-align: center;
             margin: 0;
             opacity: 0;
             transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -429,8 +434,8 @@
         .project-client::before {
             content: attr(data-text);
             position: absolute;
-            top: 0; left: 0; right: -0.12em; bottom: 0; /* slight right overhang covers last-glyph ink */
-            text-align: left;
+            top: 0; left: 0; right: -0.12em; bottom: 0;
+            text-align: center;
             background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
             background-size: 300% 100%;
             -webkit-background-clip: text;
