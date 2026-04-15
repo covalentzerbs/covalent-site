@@ -509,13 +509,15 @@
                 aspect-ratio: 9 / 16 !important;
             }
 
-            /* Crop iframe to cover the taller container */
+            /* Scale 16:9 iframe to cover the 9:16 container */
             .project-video-container iframe,
             .fixed-video-bg iframe {
-                width: 100% !important;
-                height: 316% !important;
-                top: -108% !important;
-                left: 0 !important;
+                position: absolute !important;
+                top: 50% !important;
+                left: 50% !important;
+                width: 177.78% !important;
+                height: 100% !important;
+                transform: translate(-50%, -50%) !important;
             }
 
             /* Loading screen — put tagline in flex flow so bar+tagline center as a group */
