@@ -1094,14 +1094,28 @@
     <script src="scripts/analytics.js"></script>
 
     <script>
-    // Re-enforce cursor:none on bfcache restore (back/forward navigation)
-    window.addEventListener('pageshow', function() {
-        document.documentElement.style.setProperty('cursor', 'none', 'important');
-        document.body.style.setProperty('cursor', 'none', 'important');
-        document.querySelectorAll('*').forEach(function(el) {
-            el.style.setProperty('cursor', 'none', 'important');
+    // Re-enforce cursor:none via injected stylesheet (bfcache-safe)
+    (function() {
+        function enforceNoCursor() {
+            var existing = document.getElementById('no-native-cursor');
+            if (existing) existing.remove();
+            var style = document.createElement('style');
+            style.id = 'no-native-cursor';
+            style.textContent = 'html, html *, body, body * { cursor: none !important; }';
+            document.head.appendChild(style);
+        }
+        enforceNoCursor();
+        window.addEventListener('pageshow', function(e) {
+            enforceNoCursor();
+            var cursor = document.getElementById('cursor');
+            if (cursor && !('ontouchstart' in window)) {
+                cursor.style.display = 'block';
+            }
         });
-    });
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) enforceNoCursor();
+        });
+    })();
     </script>
 </body>
 </html>
