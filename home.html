@@ -146,8 +146,8 @@
         }
 
         .menu-toggle {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -159,8 +159,8 @@
         }
 
         .plus-icon {
-            width: 22px;
-            height: 22px;
+            width: 18px;
+            height: 18px;
             position: relative;
         }
 
@@ -550,6 +550,8 @@
             .nav { padding: 1.5rem; }
             .logo-bottom { top: 1.5rem; left: 1.5rem; }
             .logo-bottom svg { width: 32px; height: 32px; }
+            .menu-toggle { width: 32px; height: 32px; }
+            .plus-icon { width: 14px; height: 14px; }
             .menu-overlay { padding: 5rem 1.5rem 1.5rem; }
 
             /* Use dynamic viewport height — Safari ignores vh percentage chains */
@@ -656,22 +658,7 @@
         .swipe-arrow.right { right: 0.5rem; }
 
         .swipe-arrow.visible {
-            opacity: 0.6;
-            animation: swipeNudge 1.8s ease-in-out infinite;
-        }
-
-        .swipe-arrow.left.visible {
-            animation-name: swipeNudgeLeft;
-        }
-
-        @keyframes swipeNudge {
-            0%, 100% { transform: translateY(-50%) translateX(0); }
-            50% { transform: translateY(-50%) translateX(6px); }
-        }
-
-        @keyframes swipeNudgeLeft {
-            0%, 100% { transform: translateY(-50%) translateX(0); }
-            50% { transform: translateY(-50%) translateX(-6px); }
+            opacity: 0.5;
         }
 
         @media (max-width: 768px) {
