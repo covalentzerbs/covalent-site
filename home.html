@@ -628,6 +628,56 @@
             }
         }
 
+        /* ==================== */
+        /* SWIPE ARROWS (mobile only) */
+        /* ==================== */
+        .swipe-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            z-index: 1002;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            display: none;
+        }
+
+        .swipe-arrow svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--black);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .swipe-arrow.left { left: 0.5rem; }
+        .swipe-arrow.right { right: 0.5rem; }
+
+        .swipe-arrow.visible {
+            opacity: 0.6;
+            animation: swipeNudge 1.8s ease-in-out infinite;
+        }
+
+        .swipe-arrow.left.visible {
+            animation-name: swipeNudgeLeft;
+        }
+
+        @keyframes swipeNudge {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(6px); }
+        }
+
+        @keyframes swipeNudgeLeft {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-6px); }
+        }
+
+        @media (max-width: 768px) {
+            .swipe-arrow { display: block; }
+        }
+
         /* Hide dot cursor on touch devices */
         @media (pointer: coarse) {
             .cursor { display: none !important; }
@@ -1044,6 +1094,18 @@ body.dark-mode .project-client {
         </section>
 
     </div><!-- /.scroll-container -->
+
+    <!-- Swipe Arrows (mobile only) -->
+    <div class="swipe-arrow left" id="swipeLeft" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="15 18 9 12 15 6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+        </svg>
+    </div>
+    <div class="swipe-arrow right" id="swipeRight" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"></polyline>
+        </svg>
+    </div>
 
     <!-- Global Footer -->
     <footer class="site-footer">
@@ -1516,6 +1578,40 @@ body.dark-mode .project-client {
             // Instant scroll (no smooth) to avoid visual slide
             sc.scrollLeft = parseInt(saved, 10);
         }
+    })();
+    </script>
+
+    <script>
+    // ==================== //
+    // SWIPE ARROW INDICATORS (mobile only)
+    // Show right arrow when there are more panels to the right,
+    // left arrow when there are panels to the left.
+    // ==================== //
+    (function() {
+        var sc = document.getElementById('scrollContainer');
+        var leftArrow = document.getElementById('swipeLeft');
+        var rightArrow = document.getElementById('swipeRight');
+        if (!sc || !leftArrow || !rightArrow) return;
+
+        function updateArrows() {
+            if (window.innerWidth > 768) {
+                leftArrow.classList.remove('visible');
+                rightArrow.classList.remove('visible');
+                return;
+            }
+            var left = sc.scrollLeft;
+            var maxLeft = sc.scrollWidth - sc.clientWidth;
+            // Tolerance for snap rounding
+            var atStart = left <= 4;
+            var atEnd = left >= maxLeft - 4;
+            leftArrow.classList.toggle('visible', !atStart);
+            rightArrow.classList.toggle('visible', !atEnd);
+        }
+
+        sc.addEventListener('scroll', updateArrows, { passive: true });
+        window.addEventListener('resize', updateArrows);
+        // Initial state (after a tick so scroll-restore runs first)
+        setTimeout(updateArrows, 100);
     })();
     </script>
 
