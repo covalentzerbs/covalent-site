@@ -26,6 +26,11 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://covalentstudios.co/onco-optima</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://covalentstudios.co/wabi</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>

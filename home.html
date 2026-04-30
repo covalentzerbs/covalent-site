@@ -26,6 +26,7 @@
     <meta property="og:url" content="https://covalentstudios.co">
     <meta property="og:type" content="website">
     <!-- Preload client logos so they're ready before loading screen ends -->
+    <link rel="preload" as="image" href="assets/logos/client-logos/onco_optima_logo.png">
     <link rel="preload" as="image" href="assets/logos/client-logos/wabi logo_white.png">
     <link rel="preload" as="image" href="assets/logos/client-logos/AESOP LOGO WHITE.png">
     <link rel="preload" as="image" href="assets/logos/client-logos/PINCH.png">
@@ -1010,8 +1011,18 @@ body.dark-mode .project-client {
             <img src="assets/logos/WORDMARK_FINAL_WHITE.png" class="hero-wordmark" alt="Covalent Studios">
         </section>
 
-        <!-- PANEL 2: WABI -->
+        <!-- PANEL 2: ONCO OPTIMA -->
         <section class="project-section" id="project1">
+            <div class="project-video-container" style="aspect-ratio: 344 / 240;">
+                <iframe src="https://player.vimeo.com/video/1184586128?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <a href="onco-optima.html" class="project-client-link"><img src="assets/logos/client-logos/onco_optima_logo.png" class="project-logo" alt="onco optima"></a>
+            </div>
+        </section>
+
+        <!-- PANEL 3: WABI -->
+        <section class="project-section" id="project2">
             <div class="project-video-container" style="aspect-ratio: 344 / 240;">
                 <iframe src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -1020,8 +1031,8 @@ body.dark-mode .project-client {
             </div>
         </section>
 
-        <!-- PANEL 3: AESOP -->
-        <section class="project-section" id="project2">
+        <!-- PANEL 4: AESOP -->
+        <section class="project-section" id="project3">
             <div class="project-video-container" style="aspect-ratio: 3 / 2;">
                 <iframe src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -1030,8 +1041,8 @@ body.dark-mode .project-client {
             </div>
         </section>
 
-        <!-- PANEL 4: PINCH -->
-        <section class="project-section" id="project3">
+        <!-- PANEL 5: PINCH -->
+        <section class="project-section" id="project4">
             <div class="project-video-container" style="aspect-ratio: 344 / 240;">
                 <iframe src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -1040,8 +1051,8 @@ body.dark-mode .project-client {
             </div>
         </section>
 
-        <!-- PANEL 5: FARE -->
-        <section class="project-section" id="project4">
+        <!-- PANEL 6: FARE -->
+        <section class="project-section" id="project5">
             <div class="project-video-container project-video-crop">
                 <iframe src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -1050,8 +1061,8 @@ body.dark-mode .project-client {
             </div>
         </section>
 
-        <!-- PANEL 6: ARCTERYX -->
-        <section class="project-section" id="project5">
+        <!-- PANEL 7: ARCTERYX -->
+        <section class="project-section" id="project6">
             <div class="project-video-container" style="aspect-ratio: 4 / 3;">
                 <iframe src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -1060,8 +1071,8 @@ body.dark-mode .project-client {
             </div>
         </section>
 
-        <!-- PANEL 7: WORLD OF HYATT -->
-        <section class="project-section" id="project6">
+        <!-- PANEL 8: WORLD OF HYATT -->
+        <section class="project-section" id="project7">
             <div class="project-video-container" style="aspect-ratio: 1 / 1;">
                 <iframe src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -1070,8 +1081,8 @@ body.dark-mode .project-client {
             </div>
         </section>
 
-        <!-- PANEL 8: EVER -->
-        <section class="project-section" id="project7">
+        <!-- PANEL 9: EVER -->
+        <section class="project-section" id="project8">
             <div class="project-video-container" style="aspect-ratio: 344 / 240;">
                 <iframe src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -1307,12 +1318,12 @@ body.dark-mode .project-client {
         updateParallax(); // set initial positions
 
         // ==================== //
-        // INTERSECTION OBSERVER (8 panels)
+        // INTERSECTION OBSERVER (9 panels)
         // ==================== //
         const allSectionIds = [
             'heroSection',
             'project1', 'project2', 'project3', 'project4',
-            'project5', 'project6', 'project7'
+            'project5', 'project6', 'project7', 'project8'
         ];
 
         const observer = new IntersectionObserver((entries) => {
