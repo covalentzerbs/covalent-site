@@ -723,8 +723,14 @@
             margin: 0;
         }
 
+        .about-page .manifesto-wrap {
+            max-width: none;
+            margin: 0;
+            padding: 0 64px 0 96px;
+        }
+
         .about-page .manifesto-section {
-            padding: 140px 0 120px;
+            padding: 64px 0 120px;
         }
 
         .about-page .reveal-text {
@@ -734,12 +740,13 @@
             letter-spacing: -0.02em;
             white-space: pre-wrap;
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            max-width: 1400px;
         }
 
         .about-page .reveal-text .word {
             display: inline;
             transition: color 0.06s linear;
-            color: rgba(10, 10, 10, 0.08);
+            color: rgba(10, 10, 10, 0.025);
         }
 
         .about-page .reveal-text .word.lit,
@@ -833,7 +840,8 @@
 
         @media (max-width: 768px) {
             .about-page .about-page-wrap { padding: 0 24px; }
-            .about-page .manifesto-section { padding: 110px 0 80px; }
+            .about-page .manifesto-wrap { padding: 0 24px; }
+            .about-page .manifesto-section { padding: 40px 0 80px; }
             .about-page .row-item { grid-template-columns: 1fr; gap: 6px; }
             .about-page .tagline-row { gap: 14px; }
         }
@@ -844,7 +852,7 @@
             color: var(--white);
         }
         body.dark-mode .about-page .reveal-text .word {
-            color: rgba(250, 250, 250, 0.08);
+            color: rgba(250, 250, 250, 0.025);
         }
         body.dark-mode .about-page .reveal-text .word.lit,
         body.dark-mode .about-page .reveal-text .word.always-lit {
@@ -923,12 +931,8 @@
     <!-- Main Content -->
     <main class="about-page">
         <!-- 01 MANIFESTO -->
-        <div class="about-page-wrap">
+        <div class="about-page-wrap manifesto-wrap">
             <section class="manifesto-section">
-                <div class="section-header">
-                    <span class="section-index">01</span>
-                    <span class="section-label">Manifesto</span>
-                </div>
                 <p class="reveal-text" id="manifesto-text">Film is fucking cool. We don't want to create AI videos — we think those are lame. What's more human than struggle. What's more human than emotion. AI takes away all of that. What's more human than perfect imperfections. What's more human than working on set with 20 other people exuding their physical and mental strength for the same goal. Everyone with different abilities, tasks, and talents. Not a water-cooled computer plant in the middle of some rural town in Arizona stealing from real artists so that a suit can buy another lake house.
 
 New age production companies are trying to replace their current workflows with AI-generated content that is high margin and low effort. That's not what Covalent wants to be. We started Covalent in 2024 because we wanted to bridge the gap between traditional production — film school knowledge — and AI slop. We continue to see how things can be more efficient and we're constantly striving for that. We integrate AI agents into our workflow, we create systems that make us more time efficient, allowing us more time to focus on the human experience.
@@ -1279,7 +1283,7 @@ A bad carpenter complains about his tools.</p>
             const paragraphs = raw.split(/\n\n+/);
 
             // First 3 sentences render at full opacity on load
-            const introMatch = raw.match(/^[^.!?]+[.!?](?:\s+[^.!?]+[.!?]){0,2}/);
+            const introMatch = raw.match(/^[^.!?]+[.!?](?:\s+[^.!?]+[.!?]){0,1}/);
             const introWordCount = introMatch
                 ? introMatch[0].split(/\s+/).filter(Boolean).length
                 : 0;
