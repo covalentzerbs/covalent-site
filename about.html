@@ -960,6 +960,51 @@
             color: var(--white);
         }
 
+        /* PEOPLE — name + role stack, matches reference image */
+        .about-page .people-section {
+            padding: 120px 0 140px;
+        }
+
+        .about-page .people-grid {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 56px 80px;
+        }
+
+        .about-page .person-card {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .about-page .person-name {
+            font-size: clamp(20px, 1.9vw, 26px);
+            font-weight: 700;
+            letter-spacing: -0.045em;
+            line-height: 1.15;
+            color: var(--black);
+        }
+
+        .about-page .person-role {
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        @media (max-width: 720px) {
+            .about-page .people-grid {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+        }
+
+        body.dark-mode .about-page .person-name { color: var(--white); }
+
         .about-page .row-list {
             list-style: none;
             padding: 0;
@@ -1181,7 +1226,7 @@ Call us old fashioned, or call us luxury. It's up for interpretation.</p>
                         <div class="preview-pane active" data-pane="covalent">
                             <iframe
                                 class="preview-video"
-                                data-src="https://player.vimeo.com/video/COVALENT_REEL_ID?background=1&autoplay=1&loop=1&muted=1&controls=0"
+                                data-src="https://player.vimeo.com/video/1170378022?background=1&autoplay=1&loop=1&muted=1&controls=0"
                                 allow="autoplay; fullscreen; picture-in-picture"
                                 allowfullscreen
                                 title="Covalent reel"></iframe>
@@ -1217,33 +1262,29 @@ Call us old fashioned, or call us luxury. It's up for interpretation.</p>
 
         <hr class="about-divider-rule">
 
-        <!-- 03 THE PEOPLE -->
+        <!-- PEOPLE -->
         <div class="about-page-wrap">
-            <section class="list-section">
-                <div class="section-header scroll-reveal">
-                    <span class="section-index">03</span>
-                    <span class="section-label">The People</span>
-                </div>
-                <ul class="row-list scroll-reveal">
-                    <li class="row-item">
-                        <span class="row-name">Ben Zebrowski-Rocheleau</span>
-                        <span class="row-meta">Partner, CEO</span>
+            <section class="people-section scroll-reveal">
+                <ul class="people-grid">
+                    <li class="person-card">
+                        <span class="person-name">ben zebrowski-rocheleau</span>
+                        <span class="person-role">founding partner / ceo</span>
                     </li>
-                    <li class="row-item">
-                        <span class="row-name">Jacob Frost</span>
-                        <span class="row-meta">Partner, Director</span>
+                    <li class="person-card">
+                        <span class="person-name">jacob frost</span>
+                        <span class="person-role">founding partner / director</span>
                     </li>
-                    <li class="row-item">
-                        <span class="row-name">Jude Gabriel Nelson</span>
-                        <span class="row-meta">Executive Producer</span>
+                    <li class="person-card">
+                        <span class="person-name">jude gabriel nelson</span>
+                        <span class="person-role">executive producer / partner @ ionicpost</span>
                     </li>
-                    <li class="row-item">
-                        <span class="row-name">Gabriella Galloway</span>
-                        <span class="row-meta">Creative Director</span>
+                    <li class="person-card">
+                        <span class="person-name">gabby galloway</span>
+                        <span class="person-role">creative director</span>
                     </li>
-                    <li class="row-item">
-                        <span class="row-name">Olivia Goss</span>
-                        <span class="row-meta">Head of Production</span>
+                    <li class="person-card">
+                        <span class="person-name">olivia goss</span>
+                        <span class="person-role">head of production</span>
                     </li>
                 </ul>
             </section>
