@@ -726,7 +726,7 @@
 
         .about-page .manifesto-scroll-container {
             position: relative;
-            height: 250vh;
+            height: 200vh;
         }
 
         .about-page .manifesto-sticky {
@@ -746,10 +746,10 @@
         }
 
         .about-page .reveal-text {
-            font-size: clamp(20px, 2.4vw, 30px);
+            font-size: clamp(17px, 2.05vw, 26px);
             font-weight: 500;
-            line-height: 1.5;
-            letter-spacing: -0.045em;
+            line-height: 1.45;
+            letter-spacing: -0.06em;
             white-space: pre-wrap;
             font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
             max-width: 1500px;
@@ -1330,6 +1330,21 @@ A bad carpenter complains about his tools.</p>
             const words = el.querySelectorAll('.word:not(.always-lit)');
             const total = words.length;
             const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+            let visibleWordCount = 0;
+
+            function measureVisible() {
+                const sticky = container.querySelector('.manifesto-sticky');
+                if (!sticky) return;
+                const stickyRect = sticky.getBoundingClientRect();
+                const padBot = parseFloat(getComputedStyle(sticky).paddingBottom) || 0;
+                const visibleBottom = stickyRect.bottom - padBot - 24;
+                let count = 0;
+                for (let i = 0; i < total; i++) {
+                    const r = words[i].getBoundingClientRect();
+                    if (r.top < visibleBottom) count = i + 1;
+                }
+                visibleWordCount = count < 20 ? total : count;
+            }
 
             function update() {
                 if (isMobile()) {
@@ -1343,18 +1358,29 @@ A bad carpenter complains about his tools.</p>
                 const scrolled = Math.max(0, -rect.top);
                 const progress = Math.max(0, Math.min(1, scrolled / runway));
 
-                // Text stays put — only the words light up as scroll progresses
                 inner.style.transform = 'translate3d(0,0,0)';
 
-                const litThreshold = progress + 0.04;
+                // Light up words across the visible chunk only; once progress
+                // hits 1 (= pin releases), snap remaining off-screen words lit
+                // so they're not dim as the section scrolls past.
+                const target = visibleWordCount || total;
+                const litCount = Math.ceil((progress + 0.02) * target);
+                const allLit = progress >= 0.99;
                 for (let i = 0; i < total; i++) {
-                    words[i].classList.toggle('lit', (i / total) < litThreshold);
+                    words[i].classList.toggle('lit', allLit || i < litCount);
                 }
             }
 
+            // Defer first measure until layout settles
+            requestAnimationFrame(() => {
+                measureVisible();
+                update();
+            });
             window.addEventListener('scroll', update, { passive: true });
-            window.addEventListener('resize', update, { passive: true });
-            update();
+            window.addEventListener('resize', () => {
+                measureVisible();
+                update();
+            }, { passive: true });
         })();
 
         // ==================== //
