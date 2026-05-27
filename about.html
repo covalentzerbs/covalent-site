@@ -738,8 +738,8 @@
             display: flex;
             align-items: flex-start;
             box-sizing: border-box;
-            -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 82%, transparent 100%);
-            mask-image: linear-gradient(to bottom, #000 0, #000 82%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 94%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0, #000 94%, transparent 100%);
         }
 
         .about-page .manifesto-inner {
@@ -770,6 +770,194 @@
 
         .about-page .list-section {
             padding: 100px 0;
+        }
+
+        /* COMPANIES SHOWCASE — stacked cards + hover preview */
+        .about-page .companies-section {
+            padding: 120px 0;
+        }
+
+        .about-page .companies-grid {
+            display: grid;
+            grid-template-columns: minmax(280px, 380px) 1fr;
+            gap: 56px;
+            align-items: stretch;
+        }
+
+        .about-page .companies-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .about-page .company-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 26px 28px;
+            border: 1px solid rgba(10, 10, 10, 0.1);
+            border-radius: 14px;
+            background: var(--white);
+            cursor: pointer;
+            transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+        }
+
+        .about-page .company-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 14px;
+            bottom: 14px;
+            width: 3px;
+            background: var(--bond-blue);
+            border-radius: 2px;
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .about-page .company-card:hover,
+        .about-page .company-card.active {
+            border-color: rgba(10, 10, 10, 0.35);
+            background: var(--ice, #fafbfc);
+            transform: translateX(4px);
+        }
+
+        .about-page .company-card:hover::before,
+        .about-page .company-card.active::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-page .company-name {
+            display: block;
+            font-size: clamp(20px, 1.8vw, 26px);
+            font-weight: 500;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            color: var(--black);
+        }
+
+        .about-page .company-desc {
+            display: block;
+            margin-top: 8px;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            color: var(--gray);
+        }
+
+        .about-page .companies-preview {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            border: 1px solid rgba(10, 10, 10, 0.1);
+            border-radius: 14px;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        .about-page .preview-pane {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease;
+        }
+
+        .about-page .preview-pane.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .about-page .preview-video {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        .about-page .preview-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .about-page .preview-eyebrow {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: lowercase;
+            color: var(--bond-blue);
+            margin-bottom: 18px;
+        }
+
+        .about-page .preview-headline {
+            font-size: clamp(22px, 2.6vw, 36px);
+            font-weight: 500;
+            letter-spacing: -0.045em;
+            line-height: 1.15;
+            color: var(--black);
+            margin: 0 0 16px;
+            max-width: 540px;
+        }
+
+        .about-page .preview-body {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--gray);
+            letter-spacing: -0.01em;
+            margin: 0 0 24px;
+            max-width: 480px;
+        }
+
+        .about-page .preview-link {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            color: var(--bond-blue);
+            text-decoration: none;
+            text-transform: lowercase;
+        }
+
+        @media (max-width: 900px) {
+            .about-page .companies-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .about-page .companies-preview {
+                aspect-ratio: 16 / 9;
+            }
+        }
+
+        /* Dark mode */
+        body.dark-mode .about-page .company-card {
+            background: transparent;
+            border-color: rgba(250, 250, 250, 0.12);
+        }
+        body.dark-mode .about-page .company-card:hover,
+        body.dark-mode .about-page .company-card.active {
+            background: rgba(250, 250, 250, 0.04);
+            border-color: rgba(250, 250, 250, 0.3);
+        }
+        body.dark-mode .about-page .company-name {
+            color: var(--white);
+        }
+        body.dark-mode .about-page .preview-text {
+            background: #111;
+        }
+        body.dark-mode .about-page .preview-headline {
+            color: var(--white);
         }
 
         .about-page .row-list {
@@ -981,31 +1169,63 @@ A bad carpenter complains about his tools.</p>
 
         <hr class="about-divider-rule">
 
-        <!-- 02 THE COMPANIES -->
+        <!-- 02 COMPANIES SHOWCASE -->
         <div class="about-page-wrap">
-            <section class="list-section">
-                <div class="section-header scroll-reveal">
-                    <span class="section-index">02</span>
-                    <span class="section-label">The Companies</span>
+            <section class="companies-section scroll-reveal">
+                <div class="companies-grid">
+                    <ul class="companies-list" id="companiesList">
+                        <li class="company-card active" data-target="covalent">
+                            <span class="company-name">covalent</span>
+                            <span class="company-desc">boutique commercial production · chicago</span>
+                        </li>
+                        <li class="company-card" data-target="ionic">
+                            <span class="company-name">ionic post</span>
+                            <span class="company-desc">editorial · color · vfx</span>
+                        </li>
+                        <li class="company-card" data-target="bond">
+                            <span class="company-name">bond</span>
+                            <span class="company-desc">visual reference tool for directors</span>
+                        </li>
+                        <li class="company-card" data-target="app">
+                            <span class="company-name">the app</span>
+                            <span class="company-desc">client portal · production os</span>
+                        </li>
+                    </ul>
+                    <div class="companies-preview" id="companiesPreview">
+                        <div class="preview-pane active" data-pane="covalent">
+                            <iframe
+                                class="preview-video"
+                                data-src="https://player.vimeo.com/video/COVALENT_REEL_ID?background=1&autoplay=1&loop=1&muted=1&controls=0"
+                                allow="autoplay; fullscreen; picture-in-picture"
+                                allowfullscreen
+                                title="Covalent reel"></iframe>
+                        </div>
+                        <div class="preview-pane" data-pane="ionic">
+                            <iframe
+                                class="preview-video"
+                                data-src="https://player.vimeo.com/video/IONIC_REEL_ID?background=1&autoplay=1&loop=1&muted=1&controls=0"
+                                allow="autoplay; fullscreen; picture-in-picture"
+                                allowfullscreen
+                                title="Ionic Post reel"></iframe>
+                        </div>
+                        <div class="preview-pane" data-pane="bond">
+                            <div class="preview-text">
+                                <span class="preview-eyebrow">bond.</span>
+                                <h3 class="preview-headline">a visual reference tool for directors.</h3>
+                                <p class="preview-body">mood, shot, palette — built collaboratively, shareable in one link.</p>
+                                <a href="https://bond.covalentstudios.co" target="_blank" rel="noopener" class="preview-link">visit bond →</a>
+                            </div>
+                        </div>
+                        <div class="preview-pane" data-pane="app">
+                            <div class="preview-text">
+                                <span class="preview-eyebrow">the app</span>
+                                <h3 class="preview-headline">our internal production os.</h3>
+                                <p class="preview-body">scheduling, financials, contracts, crew onboarding, client previews — under one roof.</p>
+                                <span class="preview-link">in production</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="row-list scroll-reveal">
-                    <li class="row-item">
-                        <span class="row-name">Covalent</span>
-                        <span class="row-meta">Boutique commercial production. Chicago.</span>
-                    </li>
-                    <li class="row-item">
-                        <span class="row-name">Ionic Post</span>
-                        <span class="row-meta">Post-production. Editorial, color, VFX.</span>
-                    </li>
-                    <li class="row-item">
-                        <span class="row-name">Bond</span>
-                        <span class="row-meta">Visual reference tool for directors.</span>
-                    </li>
-                    <li class="row-item">
-                        <span class="row-name">The App</span>
-                        <span class="row-meta">Client portal and production OS.</span>
-                    </li>
-                </ul>
             </section>
         </div>
 
@@ -1383,6 +1603,47 @@ A bad carpenter complains about his tools.</p>
                 measureVisible();
                 update();
             }, { passive: true });
+        })();
+
+        // ==================== //
+        // COMPANIES HOVER PREVIEW
+        // ==================== //
+        (function initCompaniesPreview() {
+            const list = document.getElementById('companiesList');
+            const preview = document.getElementById('companiesPreview');
+            if (!list || !preview) return;
+
+            const cards = list.querySelectorAll('.company-card');
+            const panes = preview.querySelectorAll('.preview-pane');
+            const loaded = new Set();
+
+            function ensureLoaded(target) {
+                if (loaded.has(target)) return;
+                const pane = preview.querySelector('.preview-pane[data-pane="' + target + '"]');
+                if (!pane) return;
+                const iframe = pane.querySelector('iframe[data-src]');
+                if (iframe) {
+                    iframe.src = iframe.getAttribute('data-src');
+                }
+                loaded.add(target);
+            }
+
+            function activate(target) {
+                cards.forEach(c => c.classList.toggle('active', c.dataset.target === target));
+                panes.forEach(p => p.classList.toggle('active', p.dataset.pane === target));
+                ensureLoaded(target);
+            }
+
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => activate(card.dataset.target));
+                card.addEventListener('focus', () => activate(card.dataset.target));
+                card.addEventListener('click', () => activate(card.dataset.target));
+                card.setAttribute('tabindex', '0');
+            });
+
+            // Load the default-active pane so the first reel is ready on landing
+            const initial = list.querySelector('.company-card.active');
+            if (initial) ensureLoaded(initial.dataset.target);
         })();
 
         // ==================== //
