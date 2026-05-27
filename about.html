@@ -726,7 +726,7 @@
 
         .about-page .manifesto-scroll-container {
             position: relative;
-            height: 500vh;
+            height: 250vh;
         }
 
         .about-page .manifesto-sticky {
@@ -1343,17 +1343,9 @@ A bad carpenter complains about his tools.</p>
                 const scrolled = Math.max(0, -rect.top);
                 const progress = Math.max(0, Math.min(1, scrolled / runway));
 
-                // Translate inner text upward so all of it is reachable while pinned
-                const sticky = container.querySelector('.manifesto-sticky');
-                const stickyHeight = sticky.clientHeight;
-                const padTop = parseFloat(getComputedStyle(sticky).paddingTop) || 0;
-                const padBot = parseFloat(getComputedStyle(sticky).paddingBottom) || 0;
-                const visibleH = stickyHeight - padTop - padBot;
-                const textH = el.offsetHeight;
-                const maxTranslate = Math.max(0, textH - visibleH);
-                inner.style.transform = 'translate3d(0,' + (-progress * maxTranslate) + 'px,0)';
+                // Text stays put — only the words light up as scroll progresses
+                inner.style.transform = 'translate3d(0,0,0)';
 
-                // Light up words based on overall scroll progress
                 const litThreshold = progress + 0.04;
                 for (let i = 0; i < total; i++) {
                     words[i].classList.toggle('lit', (i / total) < litThreshold);
