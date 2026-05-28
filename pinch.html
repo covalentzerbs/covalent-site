@@ -668,10 +668,6 @@
             opacity: 1;
         }
 
-        .social-link[aria-label="Instagram"]:hover { color: #E1306C; opacity: 1; }
-        .social-link[aria-label="LinkedIn"]:hover  { color: #0A66C2; opacity: 1; }
-        .social-link.social-link-ionic:hover       { color: #714BDD; opacity: 1; }
-
         .social-link svg {
             width: 18px;
             height: 16px;
@@ -913,6 +909,33 @@
             transform: translateX(12px);
             background: #FF4500;
         }
+        /* SOCIAL ICON BRAND HOVER — high-saturation feedback */
+        .social-link {
+            transition: color 0.18s ease, opacity 0.18s ease, transform 0.18s ease, filter 0.18s ease;
+            transform-origin: center;
+        }
+        .social-link[aria-label="Instagram"]:hover {
+            color: #E1306C !important;
+            opacity: 1 !important;
+            transform: scale(1.22);
+            filter: drop-shadow(0 0 10px rgba(225, 48, 108, 0.55)) saturate(1.4);
+        }
+        .social-link[aria-label="LinkedIn"]:hover {
+            color: #0A66C2 !important;
+            opacity: 1 !important;
+            transform: scale(1.22);
+            filter: drop-shadow(0 0 10px rgba(10, 102, 194, 0.6)) saturate(1.4);
+        }
+        .social-link.social-link-ionic:hover {
+            color: #714BDD !important;
+            opacity: 1 !important;
+            transform: scale(1.22);
+            filter: drop-shadow(0 0 10px rgba(113, 75, 221, 0.6)) saturate(1.4);
+        }
+        /* Lift the muted .menu-socials row so the hovered icon shows full color */
+        .menu-overlay.active .menu-socials:hover { opacity: 1 !important; }
+
+
 
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
