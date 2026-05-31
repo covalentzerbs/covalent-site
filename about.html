@@ -893,18 +893,26 @@
             visibility: visible;
         }
 
-        .about-page .preview-video {
+        /* 16:9 frame around the iframe — Vimeo's player only respects parent
+           aspect ratio, not iframe CSS width/height. Wrap is oversized so it
+           covers the 3:2 pane with crop on every side instead of letterboxing.
+           Width 130% in a 3:2 parent yields ~110% height at 16:9 aspect. */
+        .about-page .preview-iframe-wrap {
             position: absolute;
             top: 50%;
             left: 50%;
-            /* Oversize the iframe so a 16:9 Vimeo source covers the 3:2 pane
-               with crop on all sides — kills the letterbox bars regardless of
-               how Vimeo's player renders internally. */
             width: 130%;
-            height: 110%;
+            aspect-ratio: 16 / 9;
+            transform: translate(-50%, -50%);
+        }
+
+        .about-page .preview-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
             border: 0;
             display: block;
-            transform: translate(-50%, -50%);
             pointer-events: none;
         }
 
@@ -1281,20 +1289,24 @@ Call us old fashioned, or call us luxury. It's up for interpretation.</p>
                     </ul>
                     <div class="companies-preview" id="companiesPreview">
                         <div class="preview-pane active" data-pane="covalent">
-                            <iframe
-                                class="preview-video"
-                                data-src="https://player.vimeo.com/video/1170378022?h=1bb1658087&background=1&autoplay=1&loop=1&muted=1&controls=0"
-                                allow="autoplay; fullscreen; picture-in-picture"
-                                allowfullscreen
-                                title="Covalent reel"></iframe>
+                            <div class="preview-iframe-wrap">
+                                <iframe
+                                    class="preview-video"
+                                    data-src="https://player.vimeo.com/video/1170378022?h=1bb1658087&background=1&autoplay=1&loop=1&muted=1&controls=0"
+                                    allow="autoplay; fullscreen; picture-in-picture"
+                                    allowfullscreen
+                                    title="Covalent reel"></iframe>
+                            </div>
                         </div>
                         <div class="preview-pane" data-pane="ionic">
-                            <iframe
-                                class="preview-video"
-                                data-src="https://player.vimeo.com/video/IONIC_REEL_ID?background=1&autoplay=1&loop=1&muted=1&controls=0"
-                                allow="autoplay; fullscreen; picture-in-picture"
-                                allowfullscreen
-                                title="Ionic Post reel"></iframe>
+                            <div class="preview-iframe-wrap">
+                                <iframe
+                                    class="preview-video"
+                                    data-src="https://player.vimeo.com/video/IONIC_REEL_ID?background=1&autoplay=1&loop=1&muted=1&controls=0"
+                                    allow="autoplay; fullscreen; picture-in-picture"
+                                    allowfullscreen
+                                    title="Ionic Post reel"></iframe>
+                            </div>
                         </div>
                         <div class="preview-pane" data-pane="bond">
                             <div class="preview-text">
