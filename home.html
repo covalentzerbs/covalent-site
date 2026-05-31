@@ -955,6 +955,29 @@ body.dark-mode .project-client {
         }
         /* Lift the muted .menu-socials row so the hovered icon shows full color */
         .menu-overlay.active .menu-socials:hover { opacity: 1 !important; }
+        /* BRANDED SCROLLBAR — replaces the native macOS overlay scrollbar
+           with a thin Bond-Blue line on the right edge of the page. */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(89, 121, 233, 0.45) transparent;
+        }
+        html::-webkit-scrollbar {
+            width: 6px;
+        }
+        html::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        html::-webkit-scrollbar-thumb {
+            background: rgba(89, 121, 233, 0.35);
+            border-radius: 3px;
+            border: 1px solid transparent;
+            background-clip: padding-box;
+            transition: background-color 0.2s ease;
+        }
+        html::-webkit-scrollbar-thumb:hover {
+            background: var(--bond-blue, #5979e9);
+        }
+
 
 
 
