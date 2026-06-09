@@ -874,16 +874,17 @@
             }
         });
 
-        // Create video iframes
+        // Create video iframes lazily — only the first one upfront, others on demand
         function createVideoElement(director) {
             const iframe = document.createElement('iframe');
             iframe.setAttribute('data-director', director.id);
             iframe.setAttribute('frameborder', '0');
             iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
             iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('loading', 'eager');
 
             if (director.vimeo) {
-                iframe.src = `https://player.vimeo.com/video/${director.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1`;
+                iframe.src = `https://player.vimeo.com/video/${director.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1`;
             } else if (director.youtube) {
                 iframe.src = `https://www.youtube.com/embed/${director.youtube}?autoplay=1&loop=1&muted=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=${director.youtube}&playsinline=1`;
             }
@@ -897,13 +898,36 @@
             return iframe;
         }
 
-        // Initialize videos
-        directors.forEach(director => {
-            if (director.vimeo || director.youtube) {
-                const iframe = createVideoElement(director);
-                videoWrapper.appendChild(iframe);
-            }
-        });
+        // Ensure an iframe exists for a given director — creates lazily, returns the iframe
+        function ensureVideo(directorId) {
+            let iframe = videoWrapper.querySelector(`iframe[data-director="${directorId}"]`);
+            if (iframe) return iframe;
+            const director = directors.find(d => d.id === directorId);
+            if (!director || (!director.vimeo && !director.youtube)) return null;
+            iframe = createVideoElement(director);
+            videoWrapper.appendChild(iframe);
+            return iframe;
+        }
+
+        // Eagerly load ONLY the first director with a video — others spin up on hover/tap
+        const firstWithVideo = directors.find(d => d.vimeo || d.youtube);
+        if (firstWithVideo) ensureVideo(firstWithVideo.id);
+
+        // Pre-warm the rest after the page is idle so hover is instant.
+        // Staggered so they don't all hit the network at once.
+        function prewarmRemaining() {
+            const remaining = directors.filter(d =>
+                (d.vimeo || d.youtube) && d.id !== firstWithVideo?.id
+            );
+            remaining.forEach((director, i) => {
+                setTimeout(() => ensureVideo(director.id), 600 * (i + 1));
+            });
+        }
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(prewarmRemaining, { timeout: 2500 });
+        } else {
+            setTimeout(prewarmRemaining, 1500);
+        }
 
         // Switch video with crossfade
         let currentVideoId = null;
@@ -927,11 +951,13 @@
 
             currentVideoId = directorId;
 
+            // Lazy-create the iframe on first hover (after that it's cached in the DOM)
+            const newIframe = ensureVideo(directorId);
+
             // True crossfade: remove active from all, add to new one simultaneously
             // CSS transition handles the fade — no black gap
             const iframes = videoWrapper.querySelectorAll('iframe');
             iframes.forEach(iframe => iframe.classList.remove('active'));
-            const newIframe = videoWrapper.querySelector(`iframe[data-director="${directorId}"]`);
             if (newIframe) {
                 newIframe.classList.add('active');
             }
