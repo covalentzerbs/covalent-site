@@ -26,14 +26,14 @@
     <meta property="og:url" content="https://covalentstudios.co">
     <meta property="og:type" content="website">
     <!-- Preload client logos so they're ready before loading screen ends -->
-    <link rel="preload" as="image" href="assets/logos/client-logos/onco_optima_logo.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/wabi logo_white.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/AESOP LOGO WHITE.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/PINCH.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/fare logo white.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/arc-teryx-logo-png-transparent.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/WOH logo white.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/EVER_LOGO_hero_middle.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/onco-optima-logo.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/wabi-logo-white.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/aesop-logo-white.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/pinch.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/fare-logo-white.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/arcteryx-logo.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/woh-logo-white.png">
+    <link rel="preload" as="image" href="assets/logos/client-logos/ever-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -321,6 +321,13 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.6s ease;
+            /* button reset (logo-bottom is a <button>) */
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            display: block;
+            line-height: 0;
         }
 
         .logo-bottom.visible {
@@ -1046,11 +1053,11 @@ body.dark-mode .project-client {
     </div>
 
     <!-- Logo top-left — scrolls back to start -->
-    <a href="#" class="logo-bottom" id="logoBottom">
+    <button type="button" class="logo-bottom" id="logoBottom" aria-label="back to start">
         <svg viewBox="0 0 160 160" fill="none">
             <path fill="#0A0A0A" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
         </svg>
-    </a>
+    </button>
 
     <!-- Fixed background video (hero panel only — hidden on project panels) -->
     <div class="fixed-video-bg" id="fixedVideoBg">
@@ -1064,86 +1071,86 @@ body.dark-mode .project-client {
 
         <!-- PANEL 1: HERO (wordmark only) -->
         <section class="hero-section" id="heroSection">
-            <img src="assets/logos/WORDMARK_FINAL_WHITE.png" class="hero-wordmark" alt="Covalent Studios">
+            <img src="assets/logos/WORDMARK_FINAL_WHITE.png" width="1920" height="1080" class="hero-wordmark" alt="Covalent Studios">
         </section>
 
         <!-- PANEL 2: ONCO OPTIMA -->
         <section class="project-section" id="project1">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe src="https://player.vimeo.com/video/1184586128?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1184586128?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="onco-optima.html" class="project-client-link"><img src="assets/logos/client-logos/onco_optima_logo.png" class="project-logo" alt="onco optima"></a>
+                <a href="onco-optima.html" class="project-client-link"><img src="assets/logos/client-logos/onco-optima-logo.png" width="2250" height="346" class="project-logo" alt="onco optima"></a>
             </div>
         </section>
 
         <!-- PANEL 3: WABI -->
         <section class="project-section" id="project2">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="wabi.html" class="project-client-link"><img src="assets/logos/client-logos/wabi logo_white.png" class="project-logo" alt="wabi"></a>
+                <a href="wabi.html" class="project-client-link"><img src="assets/logos/client-logos/wabi-logo-white.png" width="1008" height="354" class="project-logo" alt="wabi"></a>
             </div>
         </section>
 
         <!-- PANEL 4: AESOP -->
         <section class="project-section" id="project3">
             <div class="project-video-container" style="aspect-ratio: 3 / 2;">
-                <iframe src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="aesop.html" class="project-client-link"><img src="assets/logos/client-logos/AESOP LOGO WHITE.png" class="project-logo" alt="aesop"></a>
+                <a href="aesop.html" class="project-client-link"><img src="assets/logos/client-logos/aesop-logo-white.png" width="2397" height="1257" class="project-logo" alt="aesop"></a>
             </div>
         </section>
 
         <!-- PANEL 5: PINCH -->
         <section class="project-section" id="project4">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="pinch.html" class="project-client-link"><img src="assets/logos/client-logos/PINCH.png" class="project-logo" alt="pinch"></a>
+                <a href="pinch.html" class="project-client-link"><img src="assets/logos/client-logos/pinch.png" width="2000" height="564" class="project-logo" alt="pinch"></a>
             </div>
         </section>
 
         <!-- PANEL 6: FARE -->
         <section class="project-section" id="project5">
             <div class="project-video-container project-video-crop">
-                <iframe src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="fare.html" class="project-client-link"><img src="assets/logos/client-logos/fare logo white.png" class="project-logo" alt="fare"></a>
+                <a href="fare.html" class="project-client-link"><img src="assets/logos/client-logos/fare-logo-white.png" width="1893" height="801" class="project-logo" alt="fare"></a>
             </div>
         </section>
 
         <!-- PANEL 7: ARCTERYX -->
         <section class="project-section" id="project6">
             <div class="project-video-container" style="aspect-ratio: 4 / 3;">
-                <iframe src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="arcteryx.html" class="project-client-link"><img src="assets/logos/client-logos/arc-teryx-logo-png-transparent.png" class="project-logo" alt="arcteryx"></a>
+                <a href="arcteryx.html" class="project-client-link"><img src="assets/logos/client-logos/arcteryx-logo.png" width="2400" height="2400" class="project-logo" alt="arcteryx"></a>
             </div>
         </section>
 
         <!-- PANEL 8: WORLD OF HYATT -->
         <section class="project-section" id="project7">
             <div class="project-video-container" style="aspect-ratio: 1 / 1;">
-                <iframe src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="hyatt.html" class="project-client-link"><img src="assets/logos/client-logos/WOH logo white.png" class="project-logo" alt="world of hyatt"></a>
+                <a href="hyatt.html" class="project-client-link"><img src="assets/logos/client-logos/woh-logo-white.png" width="600" height="600" class="project-logo" alt="world of hyatt"></a>
             </div>
         </section>
 
         <!-- PANEL 9: EVER -->
         <section class="project-section" id="project8">
             <div class="project-video-container" style="aspect-ratio: 344 / 240;">
-                <iframe src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="ever.html" class="project-client-link"><img src="assets/logos/client-logos/EVER_LOGO_hero_middle.png" class="project-logo" alt="ever"></a>
+                <a href="ever.html" class="project-client-link"><img src="assets/logos/client-logos/ever-logo.png" width="1067" height="239" class="project-logo" alt="ever"></a>
             </div>
         </section>
 
@@ -1496,25 +1503,49 @@ body.dark-mode .project-client {
 
     // ==================== //
     // LAZY LOADER
-    // Iframes with data-src load only when their section nears the viewport.
+    // Each project iframe holds its Vimeo URL in data-src and only swaps it into
+    // src as its panel enters the viewport — so on first load just the hero bg
+    // player fires a network chain, not all nine. Panels that scroll more than
+    // 400px past the viewport are unloaded again (src cleared) so off-screen
+    // background videos stop autoplaying. The panel keeps its background colour
+    // and aspect-ratio box throughout, so loading/unloading never shifts the
+    // layout (CLS stays 0).
     // ==================== //
     (function() {
         const sc = document.getElementById('scrollContainer');
-        const lazyObserver = new IntersectionObserver(function(entries) {
+
+        function load(iframe) {
+            if (iframe && !iframe.getAttribute('src') && iframe.dataset.src) {
+                iframe.src = iframe.dataset.src;
+            }
+        }
+        function unload(iframe) {
+            if (iframe && iframe.getAttribute('src')) {
+                iframe.dataset.src = iframe.getAttribute('src');
+                iframe.removeAttribute('src');
+            }
+        }
+
+        // Load a panel the moment it touches the viewport edge.
+        const loadObserver = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
-                if (!entry.isIntersecting) return;
-                const iframe = entry.target.querySelector('iframe[data-src]');
-                if (iframe) {
-                    iframe.src = iframe.dataset.src;
-                    iframe.removeAttribute('data-src');
-                }
-                lazyObserver.unobserve(entry.target);
+                if (entry.isIntersecting) load(entry.target.querySelector('iframe'));
             });
-        }, { root: sc, rootMargin: '0px 200% 0px 200%', threshold: 0 });
+        }, { root: sc, rootMargin: '0px 0px', threshold: 0 });
+
+        // Unload only once a panel sits more than 400px outside the viewport.
+        // The 0px/400px gap is hysteresis so a panel parked near the edge can't
+        // thrash between load and unload.
+        const unloadObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (!entry.isIntersecting) unload(entry.target.querySelector('iframe'));
+            });
+        }, { root: sc, rootMargin: '0px 400px', threshold: 0 });
 
         document.querySelectorAll('.project-section').forEach(function(section) {
             if (section.querySelector('iframe[data-src]')) {
-                lazyObserver.observe(section);
+                loadObserver.observe(section);
+                unloadObserver.observe(section);
             }
         });
     })();
@@ -1529,7 +1560,8 @@ body.dark-mode .project-client {
         const barFill    = document.getElementById('loadingBarFill');
         const content    = document.getElementById('loadingContent');
         const tagline    = document.getElementById('loadingTagline');
-        // Only the two eager iframes (hero bg + wabi) are tracked for progress
+        // Only the eager iframe (hero bg) is tracked for the progress bar;
+        // the project players load lazily and shouldn't gate the intro screen.
         const eagerIframes = document.querySelectorAll('iframe[src*="vimeo"]');
         const total      = eagerIframes.length;
         let iframesLoaded = 0;

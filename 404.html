@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" href="favicon.ico">
-    <meta name="description" content="The Lab is where Covalent Studios experiments with AI image and video generation tools internally.">
-    <link rel="canonical" href="https://covalentstudios.co/lab">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>the lab - covalent studios</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <title>page not found. covalent studios</title>
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
     <script>
@@ -20,10 +19,9 @@
         gtag('js', new Date());
         gtag('config', 'G-T14F8BVFLJ');
     </script>
-    <meta property="og:title" content="lab. covalent studios">
-    <meta property="og:description" content="where covalent experiments with ai image and video tools.">
+    <meta property="og:title" content="page not found. covalent studios">
+    <meta property="og:description" content="this page doesn't exist.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
-    <meta property="og:url" content="https://covalentstudios.co/lab">
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,12 +29,11 @@
     <style>
         @font-face {
             font-family: 'Satoshi';
-            src: url('assets/fonts/Satoshi-Variable.ttf') format('truetype');
+            src: url('/assets/fonts/Satoshi-Variable.ttf') format('truetype');
             font-weight: 300 900;
             font-display: swap;
         }
 
-        /* CSS Variables */
         :root {
             --ice: #FAFBFC;
             --bond-blue: #5979e9;
@@ -45,7 +42,6 @@
             --white: #FFFFFF;
         }
 
-        /* Reset */
         * {
             margin: 0;
             padding: 0;
@@ -59,17 +55,14 @@
             -webkit-text-fill-color: var(--black);
         }
 
-        html, body {
-            height: 100%;
-        }
+        html, body { height: 100%; }
 
-        /* Custom Cursor */
         .cursor {
             position: fixed;
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: #A6FF8E;
+            background: var(--white);
             pointer-events: none;
             z-index: 10001;
             mix-blend-mode: difference;
@@ -103,9 +96,7 @@
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .menu-toggle.active {
-            transform: rotate(45deg);
-        }
+        .menu-toggle.active { transform: rotate(45deg); }
 
         .plus-icon {
             width: 18px;
@@ -118,19 +109,14 @@
             position: absolute;
             width: 100%;
             height: 2px;
-            background: #A6FF8E;
+            background: var(--white);
             top: 50%;
             left: 0;
             transition: all 0.3s ease;
         }
 
-        .plus-icon span:first-child {
-            transform: translateY(-50%) rotate(90deg);
-        }
-
-        .plus-icon span:last-child {
-            transform: translateY(-50%);
-        }
+        .plus-icon span:first-child { transform: translateY(-50%) rotate(90deg); }
+        .plus-icon span:last-child { transform: translateY(-50%); }
 
         /* Expanded Menu */
         .menu-overlay {
@@ -155,7 +141,7 @@
             opacity: 1;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(10, 10, 10, 0.3);
         }
 
         .menu-links {
@@ -165,16 +151,12 @@
             gap: 0;
         }
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         .menu-link {
+            position: relative;
+            display: inline-block;
             font-size: clamp(3.5rem, 8vw, 7rem);
             font-weight: 500;
-            color: #A6FF8E;
+            color: var(--white);
             text-decoration: none;
             opacity: 0;
             transform: translateX(30px);
@@ -194,9 +176,16 @@
         .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.25s; }
         .menu-overlay.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
 
-        
-        .menu-spacer {
-            height: 0.8em;
+        .menu-link:hover { opacity: 1 !important; }
+
+        .menu-spacer { height: 0.8em; }
+
+        .menu-link-lab { color: #A6FF8E; }
+        .menu-link-bond {
+            font-family: 'Satoshi', sans-serif;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            color: var(--bond-blue);
         }
 
         .menu-socials {
@@ -215,202 +204,8 @@
             transition-delay: 0.3s;
         }
 
-        .menu-link-lab {
-            color: #A6FF8E;
-        }
-
-        .menu-overlay.active .menu-link-lab {
-            opacity: 0.5 !important;
-            transition: opacity 0.12s ease !important;
-        }
-
-        .menu-overlay.active .menu-link-lab:hover {
-            opacity: 1 !important;
-            transition: opacity 0.12s ease !important;
-        }
-
-        .menu-link-bond {
-            font-family: 'Satoshi', sans-serif;
-            font-weight: 500;
-            letter-spacing: -0.03em;
-            color: var(--bond-blue);
-        }
-
-        .menu-link:hover {
-            opacity: 1 !important;
-        }
-
-        .menu-link {
-            position: relative;
-            display: inline-block;
-        }
-
-        .menu-link-gradient {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 3s ease infinite;
-            pointer-events: none;
-            -webkit-mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
-            mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
-            opacity: 0;
-            transition: opacity 0s;
-        }
-
-        .menu-link:hover .menu-link-gradient {
-            opacity: 1;
-        }
-
-        .menu-link.current {
-            opacity: 1 !important;
-        }
-
-        /* Logo Bottom Right */
-        .logo-bottom {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            z-index: 1000;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo-bottom:hover {
-            opacity: 0.7;
-        }
-
-        .logo-bottom svg {
-            width: 40px;
-            height: 40px;
-        }
-
-        .logo-bottom svg path {
-            fill: #A6FF8E;
-        }
-
-        /* ==================== */
-        /* THE LAB PAGE */
-        /* ==================== */
-        .lab-page {
-            padding: 8rem 3.5rem 6rem;
-            margin: 0 auto;
-        }
-
-        /* Hero */
-        .lab-hero {
-            min-height: 70vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .lab-hero h1 {
-            font-size: clamp(6rem, 18vw, 20rem);
-            font-weight: 700;
-            line-height: 0.9;
-            letter-spacing: -0.07em;
-            color: #A6FF8E;
-            text-transform: lowercase;
-            width: 100%;
-        }
-
-        .lab-hero-sub {
-            font-size: clamp(1rem, 2vw, 1.5rem);
-            font-weight: 300;
-            color: #A6FF8E;
-            letter-spacing: -0.07em;
-            margin-top: 1rem;
-            opacity: 0.5;
-        }
-
-        .lab-hero-copy {
-            font-size: clamp(0.85rem, 1.2vw, 1rem);
-            font-weight: 400;
-            color: #A6FF8E;
-            line-height: 1.6;
-            max-width: 640px;
-            margin-top: 2rem;
-            opacity: 0.5;
-        }
-
-        /* Coming Soon */
-        .lab-coming-soon {
-            padding: 6rem 0 2rem;
-        }
-
-        .lab-coming-soon p {
-            font-size: clamp(1rem, 2vw, 1.5rem);
-            font-weight: 300;
-            color: #A6FF8E;
-            letter-spacing: -0.07em;
-            opacity: 0.3;
-        }
-
-        /* ==================== */
-        /* RESPONSIVE */
-        /* ==================== */
-        @media (max-width: 1024px) {
-            .nav {
-                padding: 1.5rem;
-            }
-
-            .logo-bottom {
-                top: 1.5rem;
-                left: 1.5rem;
-            }
-
-            .menu-overlay {
-                padding: 6rem 2.5rem 2.5rem;
-            }
-
-            .lab-page {
-                padding: 7rem 2.5rem 4rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav {
-                padding: 1.5rem 1.5rem;
-            }
-
-            .logo-bottom {
-                top: 1.5rem;
-                left: 1.5rem;
-            }
-
-            .logo-bottom svg {
-                width: 32px;
-                height: 32px;
-            }
-
-            .menu-overlay {
-                padding: 5rem 1.5rem 1.5rem;
-            }
-
-            .lab-page {
-                padding: 6rem 1.5rem 3rem;
-            }
-
-            .lab-hero {
-                min-height: 50vh;
-            }
-        }
-
-        /* Hide dot cursor on touch devices */
-        @media (pointer: coarse) {
-            .cursor { display: none !important; }
-            * { cursor: auto !important; }
-        }
-        /* SOCIAL ICON BRAND HOVER */
-        /* SOCIAL ICON BRAND HOVER — high-saturation feedback */
         .social-link {
+            color: var(--white);
             transition: color 0.18s ease, opacity 0.18s ease, transform 0.18s ease, filter 0.18s ease;
             transform-origin: center;
         }
@@ -432,35 +227,86 @@
             transform: scale(1.22);
             filter: drop-shadow(0 0 10px rgba(113, 75, 221, 0.6)) saturate(1.4);
         }
-        /* Lift the muted .menu-socials row so the hovered icon shows full color */
         .menu-overlay.active .menu-socials:hover { opacity: 1 !important; }
-        /* BRANDED SCROLLBAR — replaces the native macOS overlay scrollbar
-           with a thin Bond-Blue line on the right edge of the page. */
-        html {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(89, 121, 233, 0.45) transparent;
+
+        /* Logo Top Left */
+        .logo-bottom {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
-        html::-webkit-scrollbar {
-            width: 6px;
-        }
-        html::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        html::-webkit-scrollbar-thumb {
-            background: rgba(89, 121, 233, 0.35);
-            border-radius: 3px;
-            border: 1px solid transparent;
-            background-clip: padding-box;
-            transition: background-color 0.2s ease;
-        }
-        html::-webkit-scrollbar-thumb:hover {
-            background: var(--bond-blue, #5979e9);
+        .logo-bottom:hover { opacity: 0.7; }
+        .logo-bottom svg { width: 40px; height: 40px; }
+        .logo-bottom svg path { fill: var(--white); }
+
+        /* ==================== */
+        /* 404 PAGE */
+        /* ==================== */
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 3.5rem 6rem;
         }
 
+        .error-page h1 {
+            font-size: clamp(6rem, 18vw, 20rem);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.07em;
+            color: var(--white);
+        }
 
+        .error-sub {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            color: var(--white);
+            letter-spacing: -0.07em;
+            margin-top: 1rem;
+            opacity: 0.5;
+        }
 
+        .error-home {
+            display: inline-block;
+            width: fit-content;
+            margin-top: 2.5rem;
+            font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+            font-weight: 500;
+            color: var(--bond-blue);
+            text-decoration: none;
+            letter-spacing: -0.05em;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.25s ease, opacity 0.25s ease;
+            opacity: 0.85;
+        }
+        .error-home:hover {
+            opacity: 1;
+            border-bottom-color: var(--bond-blue);
+        }
 
+        @media (max-width: 1024px) {
+            .nav { padding: 1.5rem; }
+            .logo-bottom { top: 1.5rem; left: 1.5rem; }
+            .menu-overlay { padding: 6rem 2.5rem 2.5rem; }
+            .error-page { padding: 7rem 2.5rem 4rem; }
+        }
 
+        @media (max-width: 768px) {
+            .nav { padding: 1.5rem; }
+            .logo-bottom { top: 1.5rem; left: 1.5rem; }
+            .logo-bottom svg { width: 32px; height: 32px; }
+            .menu-overlay { padding: 5rem 1.5rem 1.5rem; }
+            .error-page { padding: 6rem 1.5rem 3rem; }
+        }
+
+        @media (pointer: coarse) {
+            .cursor { display: none !important; }
+            * { cursor: auto !important; }
+        }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -481,11 +327,11 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
-            <a href="directors.html" class="menu-link">directors</a>
-            <a href="about.html" class="menu-link">about</a>
-            <a href="contact.html" class="menu-link">contact</a>
+            <a href="/directors" class="menu-link">directors</a>
+            <a href="/about" class="menu-link">about</a>
+            <a href="/contact" class="menu-link">contact</a>
             <div class="menu-spacer"></div>
-            <a href="lab.html" class="menu-link menu-link-lab">lab</a>
+            <a href="/lab" class="menu-link menu-link-lab">lab</a>
             <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
         </div>
         <div class="menu-socials">
@@ -512,30 +358,19 @@
         </div>
     </div>
 
-    <!-- Logo Bottom Right -->
-    <a href="/" class="logo-bottom">
+    <!-- Logo Top Left -->
+    <a href="/" class="logo-bottom" aria-label="Covalent Studios home">
         <svg viewBox="0 0 160 160" fill="none">
             <path d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
         </svg>
     </a>
 
     <!-- Main Content -->
-    <main class="lab-page">
-
-        <!-- Section 1: Hero -->
-        <section class="lab-hero">
-            <h1>the lab.</h1>
-            <p class="lab-hero-sub">where we mess around.</p>
-            <p class="lab-hero-copy">We don't use AI generation in client work. This is us learning the tools anyway, because understanding something is different from endorsing it. Everything here is internal. None of it ships.</p>
-        </section>
-
-        <!-- Coming Soon -->
-        <section class="lab-coming-soon">
-            <p>coming soon.</p>
-        </section>
-
+    <main class="error-page">
+        <h1>404.</h1>
+        <p class="error-sub">this page doesn't exist.</p>
+        <a href="/" class="error-home">back to covalent studios</a>
     </main>
-
 
     <script>
         // ==================== //
@@ -587,38 +422,8 @@
                 menuOverlay.classList.remove('active');
             }
         });
-
-        // ==================== //
-        // MENU LINK GRADIENT SPREAD EFFECT
-        // ==================== //
-        // (menu hover handled by CSS only)
     </script>
 
-    <script src="scripts/analytics.js"></script>
-
-    <script>
-    // Re-enforce cursor:none via injected stylesheet (bfcache-safe)
-    (function() {
-        function enforceNoCursor() {
-            var existing = document.getElementById('no-native-cursor');
-            if (existing) existing.remove();
-            var style = document.createElement('style');
-            style.id = 'no-native-cursor';
-            style.textContent = 'html, html *, body, body * { cursor: none !important; }';
-            document.head.appendChild(style);
-        }
-        enforceNoCursor();
-        window.addEventListener('pageshow', function(e) {
-            enforceNoCursor();
-            var cursor = document.getElementById('cursor');
-            if (cursor && !('ontouchstart' in window)) {
-                cursor.style.display = 'block';
-            }
-        });
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) enforceNoCursor();
-        });
-    })();
-    </script>
+    <script src="/scripts/analytics.js"></script>
 </body>
 </html>
