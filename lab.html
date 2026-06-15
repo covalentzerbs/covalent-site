@@ -457,8 +457,27 @@
             background: var(--bond-blue, #5979e9);
         }
 
-
-
+        /* Minimal footer — quiet copyright + privacy link */
+        .lab-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 3.5rem;
+            z-index: 1001;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #A6FF8E;
+            opacity: 0.5;
+        }
+        .lab-footer .footer-link {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        .lab-footer .footer-link:hover { color: var(--white); }
+        @media (max-width: 1024px) { .lab-footer { padding: 1rem 2.5rem; } }
+        @media (max-width: 768px) { .lab-footer { padding: 1rem 1.5rem; } }
 
 
     </style>
@@ -535,6 +554,9 @@
         </section>
 
     </main>
+
+    <!-- Minimal Footer -->
+    <footer class="lab-footer">2026, covalent studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">privacy</a></footer>
 
 
     <script>

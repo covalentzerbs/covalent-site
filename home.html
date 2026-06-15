@@ -985,6 +985,13 @@ body.dark-mode .project-client {
             background: var(--bond-blue, #5979e9);
         }
 
+        /* Dark mode: paint the root element so the canvas stays dark while
+           scrolling. body height:100% means its background does not reach the
+           canvas once the page scrolls, leaving the root white. */
+        html:has(body.dark-mode) {
+            background-color: #0A0A0A;
+        }
+
 
 
 
@@ -1061,7 +1068,7 @@ body.dark-mode .project-client {
 
     <!-- Fixed background video (hero panel only — hidden on project panels) -->
     <div class="fixed-video-bg" id="fixedVideoBg">
-        <iframe src="https://player.vimeo.com/video/1170378022?h=1bb1658087&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://player.vimeo.com/video/1170378022?h=1bb1658087&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <!-- ============================= -->
@@ -1077,7 +1084,7 @@ body.dark-mode .project-client {
         <!-- PANEL 2: ONCO OPTIMA -->
         <section class="project-section" id="project1">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1184586128?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1184586128?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="onco-optima.html" class="project-client-link"><img src="assets/logos/client-logos/onco-optima-logo.png" width="2250" height="346" class="project-logo" alt="onco optima"></a>
@@ -1087,7 +1094,7 @@ body.dark-mode .project-client {
         <!-- PANEL 3: WABI -->
         <section class="project-section" id="project2">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="wabi.html" class="project-client-link"><img src="assets/logos/client-logos/wabi-logo-white.png" width="1008" height="354" class="project-logo" alt="wabi"></a>
@@ -1097,7 +1104,7 @@ body.dark-mode .project-client {
         <!-- PANEL 4: AESOP -->
         <section class="project-section" id="project3">
             <div class="project-video-container" style="aspect-ratio: 3 / 2;">
-                <iframe data-src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="aesop.html" class="project-client-link"><img src="assets/logos/client-logos/aesop-logo-white.png" width="2397" height="1257" class="project-logo" alt="aesop"></a>
@@ -1107,7 +1114,7 @@ body.dark-mode .project-client {
         <!-- PANEL 5: PINCH -->
         <section class="project-section" id="project4">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="pinch.html" class="project-client-link"><img src="assets/logos/client-logos/pinch.png" width="2000" height="564" class="project-logo" alt="pinch"></a>
@@ -1117,7 +1124,7 @@ body.dark-mode .project-client {
         <!-- PANEL 6: FARE -->
         <section class="project-section" id="project5">
             <div class="project-video-container project-video-crop">
-                <iframe data-src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="fare.html" class="project-client-link"><img src="assets/logos/client-logos/fare-logo-white.png" width="1893" height="801" class="project-logo" alt="fare"></a>
@@ -1127,7 +1134,7 @@ body.dark-mode .project-client {
         <!-- PANEL 7: ARCTERYX -->
         <section class="project-section" id="project6">
             <div class="project-video-container" style="aspect-ratio: 4 / 3;">
-                <iframe data-src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="arcteryx.html" class="project-client-link"><img src="assets/logos/client-logos/arcteryx-logo.png" width="2400" height="2400" class="project-logo" alt="arcteryx"></a>
@@ -1137,7 +1144,7 @@ body.dark-mode .project-client {
         <!-- PANEL 8: WORLD OF HYATT -->
         <section class="project-section" id="project7">
             <div class="project-video-container" style="aspect-ratio: 1 / 1;">
-                <iframe data-src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="hyatt.html" class="project-client-link"><img src="assets/logos/client-logos/woh-logo-white.png" width="600" height="600" class="project-logo" alt="world of hyatt"></a>
@@ -1147,7 +1154,7 @@ body.dark-mode .project-client {
         <!-- PANEL 9: EVER -->
         <section class="project-section" id="project8">
             <div class="project-video-container" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="ever.html" class="project-client-link"><img src="assets/logos/client-logos/ever-logo.png" width="1067" height="239" class="project-logo" alt="ever"></a>
@@ -1170,7 +1177,7 @@ body.dark-mode .project-client {
 
     <!-- Global Footer -->
     <footer class="site-footer">
-        <div class="site-footer-left">2026, covalent studios</div>
+        <div class="site-footer-left">2026, covalent studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">privacy</a></div>
         <div class="scroll-progress" id="scrollProgress">
             <div class="scroll-progress-line" id="progressLine"></div>
         </div>

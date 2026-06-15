@@ -8,10 +8,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" href="favicon.ico">
-    <meta name="description" content="Meet the directors at Covalent Studios. A roster of filmmakers creating commercials, branded content, and narrative work.">
-    <link rel="canonical" href="https://covalentstudios.co/directors">
+    <meta name="description" content="how covalent studios handles data: almost no collection, never any selling.">
+    <link rel="canonical" href="https://covalentstudios.co/privacy">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>directors.</title>
+    <title>privacy.</title>
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
     <script>
@@ -20,10 +20,10 @@
         gtag('js', new Date());
         gtag('config', 'G-T14F8BVFLJ');
     </script>
-    <meta property="og:title" content="directors.">
-    <meta property="og:description" content="jacob frost, wilbert cheng, benjamin gugick, jon schwartz, noah keckler.">
+    <meta property="og:title" content="privacy.">
+    <meta property="og:description" content="how covalent studios handles data: almost no collection, never any selling.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
-    <meta property="og:url" content="https://covalentstudios.co/directors">
+    <meta property="og:url" content="https://covalentstudios.co/privacy">
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -118,7 +118,7 @@
             position: absolute;
             width: 100%;
             height: 2px;
-            background: var(--white);
+            background: var(--black);
             top: 50%;
             left: 0;
             transition: all 0.3s ease;
@@ -174,7 +174,7 @@
         .menu-link {
             font-size: clamp(3.5rem, 8vw, 7rem);
             font-weight: 500;
-            color: var(--white);
+            color: var(--black);
             text-decoration: none;
             opacity: 0;
             transform: translateX(30px);
@@ -233,7 +233,6 @@
             font-family: 'Satoshi', sans-serif;
             font-weight: 500;
             letter-spacing: -0.03em;
-            color: var(--bond-blue);
         }
 
         .menu-link:hover {
@@ -272,12 +271,6 @@
             opacity: 1 !important;
         }
 
-        /* Content Area (contains everything except footer) */
-        .content-area {
-            flex: 1;
-            position: relative;
-        }
-
         /* Logo Bottom Right */
         .logo-bottom {
             position: fixed;
@@ -286,7 +279,10 @@
             z-index: 1000;
             opacity: 1;
             transition: opacity 0.3s ease;
-            pointer-events: auto;
+        }
+
+        .logo-bottom:hover {
+            opacity: 0.7;
         }
 
         .logo-bottom svg {
@@ -294,137 +290,158 @@
             height: 40px;
         }
 
-        /* Directors Page */
-        .directors-page {
+        .logo-bottom svg path {
+            fill: var(--black);
+        }
+
+        /* ==================== */
+        /* CONTACT PAGE */
+        /* ==================== */
+        .contact-page {
             min-height: 100vh;
-            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 2rem;
         }
 
-        /* Video Background */
-        .video-background {
+        .contact-email {
+            font-size: clamp(2rem, 7vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.07em;
+            line-height: 1.1;
+            color: var(--bond-blue);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-email:hover {
+            opacity: 0.7;
+        }
+
+        /* Copy toast */
+        .copy-toast {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
             background: var(--black);
-        }
-
-        .video-wrapper {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transform: scale(1.33);
-            transform-origin: center center;
-            border: none;
-            object-fit: cover;
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
             opacity: 0;
-            transition: opacity 0.4s ease;
             pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 20000;
+            white-space: nowrap;
+        }
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
-        .video-wrapper iframe.widescreen {
-            transform: scale(1);
-        }
-
-        .video-wrapper iframe.zoom-slight {
-            transform: scale(1.15);
-        }
-
-        .video-wrapper iframe.active {
+        /* ==================== */
+        /* ==================== */
+        /* GLOBAL FOOTER        */
+        /* ==================== */
+        .site-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1001;
             opacity: 1;
         }
-
-        .video-cursor-block {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: auto;
-            cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAAA1JREFUGFdj+P///38ACfsD/QjR0NMAAAAASUVORK5CYII=') 0 0, none;
+        .site-footer-left {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--black);
+            opacity: 0.5;
+        }
+        .site-footer-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            opacity: 0.5;
+        }
+        .site-footer-socials {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .social-link {
+            color: var(--black);
+            display: flex;
+            align-items: center;
         }
 
-        /* Directors List */
-        .directors-list {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            padding: 2.5rem 3.5rem;
-        }
-
-        .directors-container {
+        /* ==================== */
+        /* CLOCK */
+        /* ==================== */
+        .clock-widget {
+            position: fixed;
+            bottom: 5rem;
+            right: 3rem;
+            z-index: 100;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 0;
+            align-items: flex-end;
+            gap: 0.15rem;
+            font-family: 'Space Grotesk', monospace;
+            /* Hidden until JS fills the times, then fade in -
+               avoids a flash of the "--:--" placeholder. */
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
-        /* Director Row */
-        .director-row {
-            cursor: pointer;
-            padding: 0;
-            margin: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .director-name {
-            font-size: clamp(3rem, 9vw, 8rem);
-            font-weight: 500;
-            line-height: 1.0;
-            color: var(--white);
-            /* No transition on base — hover-off snaps instantly, no white flash */
-            transition: none;
-            opacity: 0.35;
-            letter-spacing: -0.07em;
-            text-transform: lowercase;
-        }
-
-        /* Only CSS :hover controls the blue highlight — no .active class here.
-           Keeps exactly one name highlighted at a time, no lingering state. */
-        .director-row:hover .director-name {
-            /* Transition only applies on hover-in (CSS one-way transition) */
-            transition: opacity 0.2s ease;
+        .clock-widget.ready {
             opacity: 1;
-            background: linear-gradient(90deg, #3A5BD4, #5979e9, #3A5BD4, #2845B0);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 3s ease infinite;
         }
 
-        /* No Video State */
-        /* Idle state - cursor stopped moving */
-        .directors-container.idle .director-name {
-            opacity: 0 !important;
-            -webkit-text-fill-color: transparent;
+        .clock-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--black);
+            letter-spacing: -0.07em;
         }
 
-        .director-row.no-video .director-name {
-            opacity: 0.15;
+        .clock-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: -0.07em;
+            min-width: 2rem;
+            text-align: right;
         }
 
-        .director-row.no-video:hover .director-name {
-            opacity: 0.3;
+        .clock-time {
+            font-variant-numeric: tabular-nums;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
-        /* Responsive */
+        .clock-colon {
+            opacity: 1;
+            transition: opacity 0.15s ease;
+        }
+
+        .clock-colon.blink {
+            opacity: 0;
+        }
+
+        /* ==================== */
+        /* RESPONSIVE */
+        /* ==================== */
         @media (max-width: 1024px) {
             .nav {
                 padding: 1.5rem;
@@ -435,12 +452,13 @@
                 left: 1.5rem;
             }
 
-            .directors-list {
-                padding: 2rem 2.5rem;
-            }
-
             .menu-overlay {
                 padding: 6rem 2.5rem 2.5rem;
+            }
+
+            .clock-widget {
+                bottom: 4.5rem;
+                right: 2.5rem;
             }
         }
 
@@ -459,71 +477,19 @@
                 height: 32px;
             }
 
-            .directors-list {
-                padding: 1.5rem 1.5rem;
-            }
-
-            .director-row {
-                margin: 0.2em 0;
-            }
-
             .menu-overlay {
                 padding: 5rem 1.5rem 1.5rem;
             }
 
-            /* Cursor block not needed on touch — remove so it can't block taps */
-            .video-cursor-block {
-                pointer-events: none;
+            .privacy-page {
+                padding: 7rem 1.5rem 2.5rem;
             }
+        }
 
-            /* Full-bleed video fix for portrait mobile — same as home.html */
-            .video-background {
-                overflow: hidden;
-            }
-            .video-wrapper iframe {
-                width: 177.78dvh !important;
-                height: 100dvh !important;
-                top: 50% !important;
-                left: 50% !important;
-                transform: translate(-50%, -50%) !important;
-            }
-        }
-        /* ==================== */
-        /* FOOTER */
-        /* ==================== */
-        .site-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1001;
-            opacity: 1;
-        }
-        .site-footer-left {
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: var(--white);
-            opacity: 0.5;
-        }
-        .site-footer-right {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            opacity: 0.5;
-        }
-        .site-footer-socials {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .social-link {
-            color: var(--white);
-            display: flex;
-            align-items: center;
+        /* Hide dot cursor on touch devices */
+        @media (pointer: coarse) {
+            .cursor { display: none !important; }
+            * { cursor: auto !important; }
         }
         /* ==================== */
         /* DARK MODE OVERRIDES */
@@ -555,21 +521,6 @@
 
         body.dark-mode .logo-bottom svg path {
             fill: #FF4500 !important;
-        }
-
-        body.dark-mode .footer {
-            background: #0A0A0A !important;
-        }
-
-        body.dark-mode .footer-left,
-        body.dark-mode .footer-link,
-        body.dark-mode .footer-link .char {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .footer-link::after {
-            background: #FF4500 !important;
         }
 
         body.dark-mode .social-link { color: #FF4500 !important; }
@@ -670,7 +621,7 @@
             background: #FF4500;
         }
         /* SOCIAL ICON BRAND HOVER */
-        /* SOCIAL ICON BRAND HOVER — high-saturation feedback */
+        /* SOCIAL ICON BRAND HOVER - high-saturation feedback */
         .social-link {
             transition: color 0.18s ease, opacity 0.18s ease, transform 0.18s ease, filter 0.18s ease;
             transform-origin: center;
@@ -695,7 +646,7 @@
         }
         /* Lift the muted .menu-socials row so the hovered icon shows full color */
         .menu-overlay.active .menu-socials:hover { opacity: 1 !important; }
-        /* BRANDED SCROLLBAR — replaces the native macOS overlay scrollbar
+        /* BRANDED SCROLLBAR - replaces the native macOS overlay scrollbar
            with a thin Bond-Blue line on the right edge of the page. */
         html {
             scrollbar-width: thin;
@@ -723,6 +674,53 @@
            canvas once the page scrolls, leaving the root white. */
         html:has(body.dark-mode) {
             background-color: #0A0A0A;
+        }
+
+        /* ==================== */
+        /* PRIVACY PAGE         */
+        /* ==================== */
+        /* This page scrolls (long copy), so the footer flows after the
+           content instead of being pinned like the single-screen pages. */
+        html, body { height: auto; min-height: 100%; }
+        .site-footer { position: static; margin-top: 4rem; }
+
+        .privacy-page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 9rem 2rem 4rem;
+        }
+        .privacy-heading {
+            font-size: clamp(3rem, 9vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.07em;
+            line-height: 0.95;
+            margin-bottom: 2.5rem;
+        }
+        .privacy-body p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--black);
+            margin-bottom: 1.4rem;
+            max-width: 60ch;
+        }
+        .privacy-body a {
+            color: var(--bond-blue);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        .privacy-body a:hover { opacity: 0.7; }
+        .privacy-legal {
+            margin-top: 2.5rem;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            opacity: 0.5;
+        }
+        .privacy-legal span { display: block; }
+
+        body.dark-mode .privacy-heading,
+        body.dark-mode .privacy-body p {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
         }
 
 
@@ -780,51 +778,40 @@
         </div>
     </div>
 
-    <!-- Content Area (logo stays within this, never enters footer) -->
-    <div class="content-area">
-
-    <!-- Main Content -->
-    <main class="directors-page">
-        <!-- Background Video Container -->
-        <div class="video-background">
-            <div class="video-wrapper" id="videoWrapper">
-                <!-- Videos loaded dynamically -->
-            </div>
-            <div class="video-cursor-block"></div>
-        </div>
-
-        <!-- Directors List -->
-        <div class="directors-list">
-            <div class="directors-container">
-                <div class="director-row" data-director="jacob" data-vimeo="1170741864">
-                    <span class="director-name">Jacob Frost</span>
-                </div>
-                <div class="director-row" data-director="wilbert" data-vimeo="1122231476">
-                    <span class="director-name">Wilbert Cheng</span>
-                </div>
-                <div class="director-row" data-director="benjamin" data-vimeo="1170747372">
-                    <span class="director-name">Benjamin Gugick</span>
-                </div>
-                <div class="director-row" data-director="jon" data-vimeo="1163390482">
-                    <span class="director-name">Jon Schwartz</span>
-                </div>
-                <div class="director-row" data-director="noah" data-vimeo="1164768847">
-                    <span class="director-name">Noah Keckler</span>
-                </div>
-            </div>
-        </div>
-    </main>
-
     <!-- Logo Bottom Right -->
     <a href="/" class="logo-bottom">
         <svg viewBox="0 0 160 160" fill="none">
-            <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+            <path d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
         </svg>
     </a>
 
-    </div> <!-- end content-area -->
+    <!-- Main Content -->
+    <main class="privacy-page">
+        <h1 class="privacy-heading">privacy.</h1>
+        <div class="privacy-body">
+            <p>covalent studios keeps this simple.</p>
 
-    <!-- Footer -->
+            <p>this website collects almost nothing. there are no accounts, no forms, no email capture, and no payments here. we never sell your data, we never share it with advertisers, and we never will.</p>
+
+            <p>here is the complete picture:</p>
+
+            <p>google analytics. we use it to see which pages get visited, roughly where visitors come from, and what kind of device they use. it is aggregate and anonymous to us. we look at it to make the site better, that is the whole story.</p>
+
+            <p>vimeo. our films are hosted on vimeo and load with do-not-track enabled, which tells vimeo not to collect viewing analytics on you.</p>
+
+            <p>fonts. type is served via google fonts, which involves google's servers receiving your ip address to deliver the files.</p>
+
+            <p>that is everything. if you have a question about any of it, email <a href="mailto:hello@covalentstudios.co">hello@covalentstudios.co</a> and a human will answer.</p>
+
+            <p class="privacy-legal">
+                <span>covalent creative productions and studio, llc</span>
+                <span>chicago, illinois</span>
+                <span>effective june 2026</span>
+            </p>
+        </div>
+    </main>
+
+    <!-- Global Footer -->
     <footer class="site-footer">
         <div class="site-footer-left">2026, covalent studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">privacy</a></div>
         <div class="site-footer-right">
@@ -858,170 +845,42 @@
     </footer>
 
     <script>
-        // Directors data
-        const directors = [
-            { id: 'jacob', name: 'Jacob Frost', vimeo: '1170741864', zoom: 'slight' },
-            { id: 'wilbert', name: 'Wilbert Cheng', vimeo: '1122231476' },
-            { id: 'benjamin', name: 'Benjamin Gugick', vimeo: '1170747372', widescreen: true },
-            { id: 'jon', name: 'Jon Schwartz', vimeo: '1163390482', widescreen: true },
-            { id: 'noah', name: 'Noah Keckler', vimeo: '1164768847', widescreen: true }
-        ];
+        // ==================== //
+        // CUSTOM CURSOR
+        // ==================== //
+        const cursor = document.getElementById('cursor');
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            cursor.style.display = 'none';
+        }
 
-        const videoWrapper = document.getElementById('videoWrapper');
-        const directorRows = document.querySelectorAll('.director-row');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.35;
+            cursorY += (mouseY - cursorY) * 0.35;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // ==================== //
+        // MENU TOGGLE
+        // ==================== //
         const menuToggle = document.getElementById('menuToggle');
         const menuOverlay = document.getElementById('menuOverlay');
 
-        // Mark directors without video
-        directorRows.forEach(row => {
-            const directorId = row.getAttribute('data-director');
-            const director = directors.find(d => d.id === directorId);
-            if (!director || (!director.vimeo && !director.youtube)) {
-                row.classList.add('no-video');
-            }
-        });
-
-        // Create video iframes lazily — only the first one upfront, others on demand
-        function createVideoElement(director) {
-            const iframe = document.createElement('iframe');
-            iframe.setAttribute('data-director', director.id);
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
-            iframe.setAttribute('allowfullscreen', '');
-            iframe.setAttribute('loading', 'eager');
-
-            if (director.vimeo) {
-                iframe.src = `https://player.vimeo.com/video/${director.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1`;
-            } else if (director.youtube) {
-                iframe.src = `https://www.youtube.com/embed/${director.youtube}?autoplay=1&loop=1&muted=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=${director.youtube}&playsinline=1`;
-            }
-
-            if (director.zoom) {
-                iframe.classList.add('zoom-' + director.zoom);
-            } else if (director.widescreen) {
-                iframe.classList.add('widescreen');
-            }
-
-            return iframe;
-        }
-
-        // Ensure an iframe exists for a given director — creates lazily, returns the iframe
-        function ensureVideo(directorId) {
-            let iframe = videoWrapper.querySelector(`iframe[data-director="${directorId}"]`);
-            if (iframe) return iframe;
-            const director = directors.find(d => d.id === directorId);
-            if (!director || (!director.vimeo && !director.youtube)) return null;
-            iframe = createVideoElement(director);
-            videoWrapper.appendChild(iframe);
-            return iframe;
-        }
-
-        // Eagerly load ONLY the first director with a video — others spin up on hover/tap
-        const firstWithVideo = directors.find(d => d.vimeo || d.youtube);
-        if (firstWithVideo) ensureVideo(firstWithVideo.id);
-
-        // Pre-warm the rest after the page is idle so hover is instant.
-        // Staggered so they don't all hit the network at once.
-        function prewarmRemaining() {
-            const remaining = directors.filter(d =>
-                (d.vimeo || d.youtube) && d.id !== firstWithVideo?.id
-            );
-            remaining.forEach((director, i) => {
-                setTimeout(() => ensureVideo(director.id), 600 * (i + 1));
-            });
-        }
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(prewarmRemaining, { timeout: 2500 });
-        } else {
-            setTimeout(prewarmRemaining, 1500);
-        }
-
-        // Switch video with crossfade
-        let currentVideoId = null;
-        let switchTimer = null;
-        let lastSwitchTime = 0;
-        const SWITCH_COOLDOWN = 350; // ms between switches to prevent thrashing
-
-        function switchVideo(directorId) {
-            const director = directors.find(d => d.id === directorId);
-
-            if (!director || (!director.vimeo && !director.youtube)) {
-                return;
-            }
-
-            if (directorId === currentVideoId) return;
-
-            // Cooldown: ignore if we just switched (prevents rapid oscillation)
-            const now = Date.now();
-            if (now - lastSwitchTime < SWITCH_COOLDOWN) return;
-            lastSwitchTime = now;
-
-            currentVideoId = directorId;
-
-            // Lazy-create the iframe on first hover (after that it's cached in the DOM)
-            const newIframe = ensureVideo(directorId);
-
-            // True crossfade: remove active from all, add to new one simultaneously
-            // CSS transition handles the fade — no black gap
-            const iframes = videoWrapper.querySelectorAll('iframe');
-            iframes.forEach(iframe => iframe.classList.remove('active'));
-            if (newIframe) {
-                newIframe.classList.add('active');
-            }
-
-            directorRows.forEach(row => row.classList.remove('active'));
-            const activeRow = document.querySelector(`.director-row[data-director="${directorId}"]`);
-            if (activeRow) {
-                activeRow.classList.add('active');
-            }
-        }
-
-        // Hover and click listeners with debounce
-        directorRows.forEach(row => {
-            // Touch: tap to switch video (mouseenter doesn't fire on mobile)
-            row.addEventListener('touchstart', (e) => {
-                const directorId = row.getAttribute('data-director');
-                switchVideo(directorId);
-            }, { passive: true });
-
-            row.addEventListener('mouseenter', () => {
-                const directorId = row.getAttribute('data-director');
-                clearTimeout(switchTimer);
-                switchTimer = setTimeout(() => {
-                    switchVideo(directorId);
-                }, 120);
-            });
-
-            row.addEventListener('mouseleave', () => {
-                clearTimeout(switchTimer);
-            });
-
-            row.addEventListener('click', () => {
-                const directorId = row.getAttribute('data-director');
-                const director = directors.find(d => d.id === directorId);
-
-                if (director) {
-                    // Navigate to director page (to be implemented)
-                    console.log(`Navigate to ${director.name}'s page`);
-                }
-            });
-        });
-
-        // Set initial video
-        const firstDirectorWithVideo = directors.find(d => d.vimeo || d.youtube);
-        if (firstDirectorWithVideo) {
-            setTimeout(() => {
-                switchVideo(firstDirectorWithVideo.id);
-            }, 500);
-        }
-
-        // Menu toggle
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
         });
 
-        // Close menu when clicking outside
         menuOverlay.addEventListener('click', (e) => {
             if (e.target === menuOverlay) {
                 menuToggle.classList.remove('active');
@@ -1029,7 +888,6 @@
             }
         });
 
-        // Close menu on escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && menuOverlay.classList.contains('active')) {
                 menuToggle.classList.remove('active');
@@ -1041,39 +899,6 @@
         // MENU LINK GRADIENT SPREAD EFFECT
         // ==================== //
         // (menu hover handled by CSS only)
-
-        // Custom cursor + idle detection
-        const cursor = document.getElementById('cursor');
-        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-            cursor.style.display = 'none';
-        }
-        const directorsContainer = document.querySelector('.directors-container');
-        let idleTimer;
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-
-            // Show text on mouse move
-            directorsContainer.classList.remove('idle');
-
-            // Reset idle timer
-            clearTimeout(idleTimer);
-            idleTimer = setTimeout(() => {
-                directorsContainer.classList.add('idle');
-            }, 3000);
-        });
-
-        function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.35;
-            cursorY += (mouseY - cursorY) * 0.35;
-            cursor.style.left = cursorX + 'px';
-            cursor.style.top = cursorY + 'px';
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
 
         // ==================== //
         // VIRUS SPREADING TEXT EFFECT (footer)

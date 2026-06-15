@@ -691,6 +691,13 @@
             background: var(--bond-blue, #5979e9);
         }
 
+        /* Dark mode: paint the root element so the canvas stays dark while
+           scrolling. body height:100% means its background does not reach the
+           canvas once the page scrolls, leaving the root white. */
+        html:has(body.dark-mode) {
+            background-color: #0A0A0A;
+        }
+
 
 
 
@@ -779,7 +786,7 @@
 
     <!-- Global Footer -->
     <footer class="site-footer">
-        <div class="site-footer-left">2026, covalent studios</div>
+        <div class="site-footer-left">2026, covalent studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">privacy</a></div>
         <div class="site-footer-right">
             <div class="site-footer-socials">
                 <label class="dark-mode-toggle">

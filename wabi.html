@@ -953,6 +953,36 @@
             background: var(--bond-blue, #5979e9);
         }
 
+        /* Dark mode: paint the root element so the canvas stays dark while
+           scrolling. body height:100% means its background does not reach the
+           canvas once the page scrolls, leaving the root white. */
+        html:has(body.dark-mode) {
+            background-color: #0A0A0A;
+        }
+
+        /* ---- project page polish ---- */
+        /* Smooth the progress bar between Vimeo's ~4x/sec timeupdate events
+           (was jumping in discrete steps). */
+        .cs-progress-fill { transition: width 0.25s linear; }
+
+        /* Dark mode: recolour the white player chrome to the orange accent. */
+        body.dark-mode .cs-progress-fill { background-color: #FF4500 !important; }
+        body.dark-mode .cs-progress-track { background-color: rgba(255, 69, 0, 0.35) !important; }
+        body.dark-mode .cs-ctrl-icon {
+            filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(1900%) hue-rotate(359deg) brightness(102%) contrast(105%);
+        }
+
+        /* Desktop: fit the entire project page in one viewport so the footer is
+           visible under the player with no scroll. The video derives its height
+           from its width, so we cap the width by the available height too. */
+        @media (min-width: 1025px) {
+            html, body { height: 100%; overflow: hidden; }
+            .page-wrapper { height: 100vh; }
+            .main-content { padding: 4.5rem 3rem 1.5rem; align-items: center; min-height: 0; }
+            .cs-video-hero { width: min(100%, calc((100vh - 12rem) * 16 / 9)); margin: 0 auto; }
+            .footer { padding: 1.25rem 3rem; }
+        }
+
 
 
 
@@ -1027,7 +1057,7 @@
                         <div style="padding:56.25% 0 0 0;position:relative;background:#0A0A0A;" id="vimeoWrapper">
                             <iframe
                                 id="vimeoPlayer"
-                                src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=vimeoPlayer&app_id=58479&controls=0"
+                                src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=vimeoPlayer&app_id=58479&controls=0&dnt=1"
                                 style="position:absolute;top:-2px;left:0;width:100%;height:calc(100% + 4px);"
                                 allow="autoplay; fullscreen; picture-in-picture"
                                 allowfullscreen>
@@ -1077,7 +1107,7 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="footer-left">
-                2026, covalent studios
+                2026, covalent studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">privacy</a>
             </div>
             <div class="footer-right">
                 <div class="social-links">
