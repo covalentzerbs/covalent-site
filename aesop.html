@@ -960,6 +960,11 @@
             background-color: #0A0A0A;
         }
 
+        /* Bulletproof dark bg: paint the page wrapper directly. A normal element's
+           background always paints, unlike body->canvas propagation which fails on
+           scrolling pages and was leaving the project page white in dark mode. */
+        body.dark-mode .page-wrapper { background-color: #0A0A0A; }
+
         /* ---- project page polish ---- */
         /* Smooth the progress bar between Vimeo's ~4x/sec timeupdate events
            (was jumping in discrete steps). */
