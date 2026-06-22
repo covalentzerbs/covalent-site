@@ -358,8 +358,6 @@
             background: var(--black);
             opacity: 1;
             border-radius: 2px;
-            transition: left 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-                        right 0.55s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* ==================== */
@@ -1021,7 +1019,7 @@ body.dark-mode .project-client {
 
     <!-- Navigation - Plus Menu -->
     <nav class="nav">
-        <div class="menu-toggle" id="menuToggle">
+        <div class="menu-toggle" id="menuToggle" data-cursor="menu">
             <div class="plus-icon">
                 <span></span>
                 <span></span>
@@ -1064,7 +1062,7 @@ body.dark-mode .project-client {
     </div>
 
     <!-- Logo top-left — scrolls back to start -->
-    <button type="button" class="logo-bottom" id="logoBottom" aria-label="back to start">
+    <button type="button" class="logo-bottom" id="logoBottom" aria-label="back to start" data-cursor="home">
         <svg viewBox="0 0 160 160" fill="none">
             <path fill="#0A0A0A" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
         </svg>
@@ -1329,19 +1327,26 @@ body.dark-mode .project-client {
         // Only intercept wheel on desktop — mobile touch handles its own scrolling
         const isTouchOnly = 'ontouchstart' in window && !window.matchMedia('(pointer: fine)').matches;
         let settleTimer = null;
+        let lastDir = 1;                        // +1 forward, -1 back
 
         window.addEventListener('wheel', (e) => {
             if (isTouchOnly) return; // let mobile handle natively
             e.preventDefault();
             isAnimating = false;               // a manual scroll interrupts a key-nav animation
+            if (e.deltaY) lastDir = e.deltaY > 0 ? 1 : -1;
             scrollContainer.scrollLeft += e.deltaY * 1.6;
 
-            // Gentle settle: a beat after scrolling stops, ease softly to the nearest
-            // project so the viewer lands centered. Subtle, not a hard snap.
+            // Gentle settle: a beat after scrolling stops, ease softly to a project so
+            // the viewer lands centered — but always in the direction of travel, so a
+            // forward scroll never gets yanked back to the previous project.
             clearTimeout(settleTimer);
             settleTimer = setTimeout(function() {
                 const vw = window.innerWidth;
-                animateScrollTo(Math.round(scrollContainer.scrollLeft / vw) * vw, 520);
+                let n = Math.round(scrollContainer.scrollLeft / vw);
+                const past = scrollContainer.scrollLeft - n * vw; // + = past the nearest panel
+                if (lastDir > 0 && past >  vw * 0.12) n += 1;      // forward & in the back half -> go forward
+                else if (lastDir < 0 && past < -vw * 0.12) n -= 1; // back & in the front half -> go back
+                animateScrollTo(n * vw, 520);
             }, 180);
         }, { passive: false });
 
@@ -1391,6 +1396,18 @@ body.dark-mode .project-client {
         window.addEventListener('resize', updateParallax);
         updateParallax(); // set initial positions
 
+        // Progress bar — continuous, tied directly to scroll position
+        function updateProgress() {
+            const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+            const pct  = maxScroll > 0 ? scrollContainer.scrollLeft / maxScroll * 100 : 0;
+            const half = pct / 2;
+            progressLine.style.left  = (50 - half) + '%';
+            progressLine.style.right = (50 - half) + '%';
+        }
+        scrollContainer.addEventListener('scroll', updateProgress, { passive: true });
+        window.addEventListener('resize', updateProgress);
+        updateProgress();
+
         // ==================== //
         // INTERSECTION OBSERVER (9 panels)
         // ==================== //
@@ -1406,12 +1423,6 @@ body.dark-mode .project-client {
 
                 if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
                     const idx = allSectionIds.indexOf(id);
-
-                    // Progress line — grows from center outward each panel
-                    const pct  = idx / (allSectionIds.length - 1) * 100;
-                    const half = pct / 2;
-                    progressLine.style.left  = (50 - half) + '%';
-                    progressLine.style.right = (50 - half) + '%';
 
                     // Logo + nav: hidden on hero, visible on projects
                     const onHero = id === 'heroSection';
@@ -1759,56 +1770,6 @@ body.dark-mode .project-client {
     })();
     </script>
 
-    <!-- Scroll affordance (landing panel only): the cursor cross-morphs between
-         the circle and a "SCROLL" box as the user moves — movement drives it. -->
-    <script>
-    (function(){
-        if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
-        var sc = document.getElementById('scrollContainer');
-        if (!sc) return;
-        var dot = document.getElementById('cursor');
-        var st = document.createElement('style');
-        st.textContent = '#scrollMorph{position:fixed;left:-300px;top:-300px;opacity:0;pointer-events:none;z-index:10049;mix-blend-mode:difference;will-change:transform,opacity}';
-        document.head.appendChild(st);
-        var morph = document.createElement('div');
-        morph.id = 'scrollMorph';
-        morph.setAttribute('aria-hidden','true');
-        morph.innerHTML = '<svg width="104" height="36" viewBox="0 0 104 36" xmlns="http://www.w3.org/2000/svg"><defs><mask id="scrollMorphMask"><rect width="104" height="36" rx="6" fill="#fff"/><text x="52" y="19" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="15" letter-spacing="-0.3" fill="#000">SCROLL</text></mask></defs><rect width="104" height="36" rx="6" fill="#fff" mask="url(#scrollMorphMask)"/></svg>';
-        document.body.appendChild(morph);
-
-        var phase = 0, dir = 1, lastX = null, lastY = null;
-        function onLanding(){ return sc.scrollLeft < window.innerWidth * 0.5; }
-        function clickActive(){ return document.body.classList.contains('click-cursor-active'); }
-        function apply(){
-            morph.style.opacity = phase;
-            morph.style.transform = 'translate(-50%, -50%) scale(' + (0.2 + 0.8 * phase) + ')';
-            if (dot) dot.style.opacity = (1 - phase);
-        }
-        // Reset to the plain circle the moment they scroll off the landing panel
-        // (even if the mouse isn't moving).
-        sc.addEventListener('scroll', function(){
-            if (!onLanding() && phase !== 0) { phase = 0; dir = 1; apply(); }
-        }, {passive:true});
-        document.addEventListener('mousemove', function(e){
-            morph.style.left = e.clientX + 'px';
-            morph.style.top  = e.clientY + 'px';
-            // Off the landing panel (or over a clickable) — settle back to the circle.
-            if (!onLanding() || clickActive()) {
-                if (phase !== 0) { phase = 0; dir = 1; apply(); }
-                lastX = e.clientX; lastY = e.clientY;
-                return;
-            }
-            if (lastX !== null) {
-                var d = Math.hypot(e.clientX - lastX, e.clientY - lastY);
-                phase += dir * d * 0.0045;     // ~220px of movement = one full morph
-                if (phase >= 1) { phase = 1; dir = -1; }
-                else if (phase <= 0) { phase = 0; dir = 1; }
-                apply();
-            }
-            lastX = e.clientX; lastY = e.clientY;
-        }, {passive:true});
-    })();
-    </script>
 
     <!-- Custom click cursor: knockout label box over clickable elements -->
     <script>
