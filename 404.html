@@ -451,7 +451,7 @@
       try {
         if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
         var st = document.createElement('style');
-        st.textContent = '#clickCursor{position:fixed;left:-200px;top:-200px;transform:translate(-50%,-50%) scale(.7);opacity:0;pointer-events:none;z-index:10050;mix-blend-mode:difference;transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.2,1);will-change:transform,left,top,opacity}#clickCursor.show{opacity:1;transform:translate(-50%,-50%) scale(1)}body.click-cursor-active .cursor{opacity:0 !important}';
+        st.textContent = '#clickCursor{position:fixed;text-transform:uppercase;left:-200px;top:-200px;transform:translate(-50%,-50%) scale(.7);opacity:0;pointer-events:none;z-index:10050;mix-blend-mode:difference;transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.2,1);will-change:transform,left,top,opacity}#clickCursor.show{opacity:1;transform:translate(-50%,-50%) scale(1)}body.click-cursor-active .cursor{opacity:0 !important}';
         document.head.appendChild(st);
         var box = document.createElement('div');
         box.id = 'clickCursor';
@@ -478,7 +478,7 @@
           if (menuOpen() && box.classList.contains('show')) hide();
         }, {passive:true});
         var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .dark-mode-toggle, .logo-bottom, .project-client-link, [data-cursor]';
-        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer, .cs-video-controls')) return null; return t.closest(sel); }
+        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; return t.closest(sel); }
         document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
         document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
       } catch(err){}
