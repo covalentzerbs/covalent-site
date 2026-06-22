@@ -103,8 +103,8 @@
             overflow-y: hidden;
             width: 100vw;
             height: 100vh;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
+            scroll-snap-type: none;
+            scroll-behavior: auto;
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none; /* IE/Edge */
             -webkit-overflow-scrolling: touch;
@@ -1300,18 +1300,12 @@ body.dark-mode .project-client {
         })();
 
         // ==================== //
-        // WHEEL → HORIZONTAL NAV
-        // Vertical trackpad/wheel scroll drives one panel change at a time.
-        // Uses a custom ~340ms eased animation instead of the browser's
-        // (slower, clunkier) smooth scroll, and snaps to exact panel edges.
+        // WHEEL → HORIZONTAL NAV (free / continuous)
+        // Vertical wheel maps straight to horizontal scroll — no panel snapping,
+        // so it flows endlessly through the projects instead of skipping/locking.
         // ==================== //
-        let wheelDelta = 0;
-        let wheelTimer = null;
         let isAnimating = false;
-        let coolUntil = 0;                 // absorb trackpad momentum after a snap
-        const WHEEL_THRESHOLD = 24;        // a bit more deliberate so one flick = one panel
-        const SNAP_MS = 340;
-        const COOLDOWN_MS = 260;
+        const SNAP_MS = 420;
 
         function animateScrollTo(target, duration) {
             duration = duration || SNAP_MS;
@@ -1324,10 +1318,10 @@ body.dark-mode .project-client {
             (function step(now) {
                 let t = (now - t0) / duration;
                 if (t > 1) t = 1;
-                const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic — quick start, soft landing
+                const eased = 1 - Math.pow(1 - t, 3);
                 scrollContainer.scrollLeft = start + dist * eased;
                 if (t < 1) { requestAnimationFrame(step); }
-                else { isAnimating = false; coolUntil = performance.now() + COOLDOWN_MS; wheelDelta = 0; }
+                else { isAnimating = false; }
             })(performance.now());
         }
         window.snapHome = animateScrollTo; // shared with keyboard nav
@@ -1338,26 +1332,8 @@ body.dark-mode .project-client {
         window.addEventListener('wheel', (e) => {
             if (isTouchOnly) return; // let mobile handle natively
             e.preventDefault();
-            // While snapping or cooling down, swallow momentum so it can't skip panels
-            if (isAnimating || performance.now() < coolUntil) { wheelDelta = 0; return; }
-
-            wheelDelta += e.deltaY;
-            clearTimeout(wheelTimer);
-            wheelTimer = setTimeout(() => { wheelDelta = 0; }, 150);
-
-            const vw = window.innerWidth;
-            const maxLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-            const idx = Math.round(scrollContainer.scrollLeft / vw);
-
-            if (wheelDelta > WHEEL_THRESHOLD) {
-                wheelDelta = 0;
-                if (scrollContainer.scrollLeft >= maxLeft - 1) return; // already at right edge
-                animateScrollTo(Math.min(maxLeft, (idx + 1) * vw));
-            } else if (wheelDelta < -WHEEL_THRESHOLD) {
-                wheelDelta = 0;
-                if (scrollContainer.scrollLeft <= 1) return; // already at left edge
-                animateScrollTo(Math.max(0, (idx - 1) * vw));
-            }
+            isAnimating = false;               // a manual scroll interrupts a key-nav animation
+            scrollContainer.scrollLeft += e.deltaY * 1.6;
         }, { passive: false });
 
         // ==================== //
@@ -1782,7 +1758,9 @@ body.dark-mode .project-client {
         var sc = document.getElementById('scrollContainer');
         if (!sc) return;
         var st = document.createElement('style');
-        st.textContent = '#scrollMorph{position:fixed;left:-300px;top:-300px;transform:translate(-50%,-50%) scale(.35);opacity:0;pointer-events:none;z-index:10049;mix-blend-mode:difference;filter:blur(7px);transition:opacity .55s ease,transform .55s cubic-bezier(.6,0,.25,1),filter .55s ease;will-change:transform,opacity,filter}#scrollMorph.show{opacity:1;transform:translate(-50%,-50%) scale(1);filter:blur(0)}body.scroll-morph-active .cursor{opacity:0 !important}';
+        // No filter here — a filter isolates the element and kills mix-blend-mode,
+        // which made the box invisible over white. Melt via scale + opacity instead.
+        st.textContent = '#scrollMorph{position:fixed;left:-300px;top:-300px;transform:translate(-50%,-50%) scale(.2);opacity:0;pointer-events:none;z-index:10049;mix-blend-mode:difference;transition:opacity .5s ease,transform .55s cubic-bezier(.34,1.4,.5,1);will-change:transform,opacity}#scrollMorph.show{opacity:1;transform:translate(-50%,-50%) scale(1)}body.scroll-morph-active .cursor{opacity:0 !important}';
         document.head.appendChild(st);
         var morph = document.createElement('div');
         morph.id = 'scrollMorph';
@@ -1792,14 +1770,13 @@ body.dark-mode .project-client {
 
         document.addEventListener('mousemove', function(e){ morph.style.left = e.clientX + 'px'; morph.style.top = e.clientY + 'px'; }, {passive:true});
 
-        var scrolled = false;
-        sc.addEventListener('scroll', function(){ if (sc.scrollLeft > 60) scrolled = true; }, {passive:true});
-
         var on = false;
         function off(){ if (on){ on = false; morph.classList.remove('show'); document.body.classList.remove('scroll-morph-active'); } }
         setInterval(function(){
-            // Don't morph while the CLICK cursor is active, or after the user scrolls.
-            if (scrolled || document.body.classList.contains('click-cursor-active')) { off(); return; }
+            // Only morph on the landing panel — once they've scrolled to a project
+            // they've figured out the scroll. Also pause while the CLICK cursor shows.
+            var onLanding = sc.scrollLeft < window.innerWidth * 0.5;
+            if (!onLanding || document.body.classList.contains('click-cursor-active')) { off(); return; }
             on = !on;
             if (on){ morph.classList.add('show'); document.body.classList.add('scroll-morph-active'); }
             else { off(); }

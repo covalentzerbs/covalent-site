@@ -9,7 +9,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="shortcut icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="wilbert cheng. director at covalent studios.">
+    <meta name="description" content="wilbert cheng. director at covalent studios. commercial and branded content with warmth, sentimentality, and real life in every frame.">
     <link rel="canonical" href="https://covalentstudios.co/directors/wilbert-cheng">
     <title>wilbert cheng.</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
@@ -145,7 +145,7 @@
         .bio-inner { max-width:960px; margin:0 auto; display:grid; grid-template-columns:1fr 280px; gap:4rem; align-items:start; }
         .bio-short { font-size:1rem; font-weight:400; line-height:1.65; color:rgba(255,255,255,0.75); letter-spacing:-0.04em; }
         .bio-expanded { overflow:hidden; max-height:0; transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease; opacity:0; }
-        .bio-expanded.open { max-height:600px; opacity:1; }
+        .bio-expanded.open { max-height:800px; opacity:1; }
         .bio-expanded p { margin-top:1.2rem; font-size:0.9rem; line-height:1.7; color:rgba(255,255,255,0.5); letter-spacing:-0.04em; }
         .bio-toggle {
             margin-top:1.25rem; background:none; border:none; color:rgba(255,255,255,0.4);
@@ -187,7 +187,6 @@
         .social-link[aria-label="Instagram"]:hover { color:#E1306C !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(225,48,108,0.55)) saturate(1.4); }
         .social-link[aria-label="LinkedIn"]:hover { color:#0A66C2 !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(10,102,194,0.6)) saturate(1.4); }
         .social-link.social-link-ionic:hover { color:#714BDD !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(113,75,221,0.6)) saturate(1.4); }
-        .menu-overlay.active .menu-socials:hover { opacity:1 !important; }
         .dark-mode-toggle { cursor:none; }
         .dark-mode-toggle input { display:none; }
         .toggle-track { width:28px; height:16px; background:rgba(0,0,0,0.15); border-radius:8px; position:relative; transition:background 0.3s ease; cursor:none; display:block; }
@@ -330,13 +329,24 @@
     <script>
     window.DIRECTOR = {
         name:      'Wilbert Cheng',
-        tagline:   'director. covalent studios.',
-        bio_short: 'wilbert cheng is a filmmaker working across commercial and branded content — bringing a careful, compositional eye and deep respect for the story behind every frame.',
-        bio_full:  [],
+        tagline:   'warmth, sentimentality, and real life in the frame',
+        bio_short: 'wilbert is drawn to the emotion people bring when they are truly present on camera — his work is often described as lived in and full of warmth.',
+        bio_full: [
+            'that is what he is always trying to find on set: the moment a subject forgets the crew is there, or the shot that feels like it was already happening before the camera started rolling. his aesthetic tends towards warmth with sentimentality — real environments, real people, real life in the frame.',
+            'wilbert thinks about every production as a system. it\'s not just a hero video, but a full ecosystem of assets that can live across platforms without losing what made them resonate in the first place. his process is built heavily in preparation — a calm, collaborative set is not a luxury. it\'s necessary to get the best performance and the most honest moments.',
+            'at the center of it all is a simple pursuit: to create space for something real to unfold, and capture it with honesty, care, and intention.'
+        ],
         hero_vimeo: '1122231476',
-        types:  [],
-        styles: [],
-        work:   []
+        types:  ['commercial', 'content'],
+        styles: ['lifestyle', 'home & living', 'branded'],
+        work: [
+            { client: 'kohler × studio mcgee', title: 'the collaboration',     vimeo: '1165024679', url: 'https://vimeo.com/1165024679', clip_start: 0 },
+            { client: 'kohler × studio mcgee', title: 'film ii',               vimeo: '1165024548', url: 'https://vimeo.com/1165024548', clip_start: 0 },
+            { client: 'arhaus',                title: 'home is a feeling',     vimeo: '1122231476', url: 'https://vimeo.com/1122231476', clip_start: 0 },
+            { client: 'shiranami by shun',     title: 'shiranami',             vimeo: '1176773655', url: 'https://vimeo.com/1176773655', clip_start: 0 },
+            { client: 'google',                title: 'spirit of individuality',vimeo: '884190439',  url: 'https://vimeo.com/884190439',  clip_start: 0 },
+            { client: 'uovo',                  title: 'brand launch',          vimeo: '1062199989', url: 'https://vimeo.com/1062199989', clip_start: 0 }
+        ]
     };
     </script>
 
@@ -367,9 +377,77 @@
                 tagsEl.appendChild(el);
             });
         }
+        var grid = document.getElementById('workGrid');
         if (!D.work || !D.work.length) {
             document.getElementById('workSection').style.display = 'none';
+            return;
         }
+        D.work.forEach(function(item, i) {
+            var card = document.createElement('a');
+            card.className = 'work-card';
+            card.href = item.url || '#';
+            if (item.url && item.url.indexOf('http') === 0) {
+                card.target = '_blank';
+                card.rel    = 'noopener';
+            }
+            var thumbId = 'cardThumb' + i;
+            card.innerHTML =
+                '<div class="card-thumb" id="' + thumbId + '" style="background:#1a1a1a;height:100%;width:100%;position:absolute;top:0;left:0;"></div>' +
+                '<div class="card-video" id="cardVideo' + i + '"></div>' +
+                '<div class="card-scrim"></div>' +
+                '<div class="card-text"><p class="card-client">' + item.client + '</p><p class="card-title">' + item.title + '</p></div>';
+            grid.appendChild(card);
+
+            // Fetch thumbnail from Vimeo oEmbed (CORS-safe public endpoint)
+            (function(vimeoId, elId) {
+                fetch('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' + vimeoId + '&width=1280')
+                    .then(function(r) { return r.json(); })
+                    .then(function(data) {
+                        var placeholder = document.getElementById(elId);
+                        if (!placeholder || !data.thumbnail_url) return;
+                        var img = document.createElement('img');
+                        img.className  = 'card-thumb';
+                        // bump to 1280px wide if oEmbed returns a smaller default
+                        img.src        = data.thumbnail_url.replace(/_\d+x\d+(\.\w+)$/, '_1280x720$1');
+                        img.width      = 1280;
+                        img.height     = 720;
+                        img.alt        = item.client + ', ' + item.title;
+                        img.loading    = 'lazy';
+                        placeholder.parentNode.replaceChild(img, placeholder);
+                    })
+                    .catch(function() {});
+            })(item.vimeo, thumbId);
+
+            // Hover-to-play (desktop / pointer:fine only)
+            if (item.vimeo && window.matchMedia('(pointer:fine)').matches) {
+                var hoverIframe = null, hoverPlayer = null;
+                var vl = card.querySelector('#cardVideo' + i);
+                var cs = item.clip_start || 0;
+                card.addEventListener('mouseenter', function() {
+                    vl.classList.add('playing');
+                    if (hoverIframe) return;
+                    hoverIframe = document.createElement('iframe');
+                    hoverIframe.src = 'https://player.vimeo.com/video/' + item.vimeo + '?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&controls=0&background=1&dnt=1';
+                    hoverIframe.setAttribute('allow', 'autoplay;fullscreen;picture-in-picture');
+                    vl.appendChild(hoverIframe);
+                    hoverPlayer = new Vimeo.Player(hoverIframe);
+                    hoverPlayer.ready().then(function() {
+                        if (!hoverIframe) return;
+                        hoverPlayer.setCurrentTime(cs);
+                        hoverPlayer.on('timeupdate', function(d) {
+                            if (d.seconds >= cs + 10) hoverPlayer.setCurrentTime(cs);
+                        });
+                    });
+                });
+                card.addEventListener('mouseleave', function() {
+                    vl.classList.remove('playing');
+                    setTimeout(function() {
+                        if (hoverPlayer) { hoverPlayer.destroy(); hoverPlayer = null; }
+                        if (hoverIframe) { hoverIframe.remove(); hoverIframe = null; }
+                    }, 2000);
+                });
+            }
+        });
     })();
 
     (function initReveal() {
@@ -378,99 +456,113 @@
         var workGrid = document.querySelector('.work-grid');
         var NUM_COLS, vh, gridDocTop, scrollPerRow;
         var spacer = document.createElement('div');
-        spacer.setAttribute('aria-hidden','true');
+        spacer.setAttribute('aria-hidden', 'true');
         document.body.appendChild(spacer);
         function measure() {
             NUM_COLS     = window.innerWidth <= 768 ? 1 : 2;
             vh           = window.innerHeight;
             gridDocTop   = workGrid.getBoundingClientRect().top + window.scrollY;
             scrollPerRow = vh * 0.55;
-            spacer.style.height = Math.round(Math.ceil(cards.length/NUM_COLS)*scrollPerRow)+'px';
+            spacer.style.height = Math.round(Math.ceil(cards.length / NUM_COLS) * scrollPerRow) + 'px';
         }
-        function easeOut(t){return 1-Math.pow(1-t,3);}
+        function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
         function update() {
-            var s = window.scrollY-(gridDocTop-vh);
-            cards.forEach(function(card,i){
-                var row=Math.floor(i/NUM_COLS), fullH=card.offsetWidth*9/16;
-                var thumb=card.querySelector('.card-thumb');
-                if(thumb) thumb.style.height=fullH+'px';
-                var prog=Math.max(0,Math.min(1,(s-row*scrollPerRow)/scrollPerRow));
-                card.style.height=Math.round(60+(fullH-60)*easeOut(prog))+'px';
-                if(prog>=0.88) card.classList.add('show-meta');
-                else           card.classList.remove('show-meta');
+            var s = window.scrollY - (gridDocTop - vh);
+            cards.forEach(function(card, i) {
+                var row   = Math.floor(i / NUM_COLS);
+                var fullH = card.offsetWidth * 9 / 16;
+                var thumb = card.querySelector('.card-thumb');
+                if (thumb) thumb.style.height = fullH + 'px';
+                var prog = Math.max(0, Math.min(1, (s - row * scrollPerRow) / scrollPerRow));
+                card.style.height = Math.round(60 + (fullH - 60) * easeOut(prog)) + 'px';
+                if (prog >= 0.88) card.classList.add('show-meta');
+                else              card.classList.remove('show-meta');
             });
         }
         measure(); update();
-        window.addEventListener('scroll',update,{passive:true});
-        window.addEventListener('resize',function(){measure();update();},{passive:true});
+        window.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', function() { measure(); update(); }, { passive: true });
     })();
 
     (function initBioToggle() {
-        var toggle=document.getElementById('bioToggle'), expanded=document.getElementById('bioExpanded');
-        if(!toggle) return;
-        toggle.addEventListener('click',function(){var o=expanded.classList.toggle('open');toggle.classList.toggle('open',o);});
+        var toggle = document.getElementById('bioToggle'), expanded = document.getElementById('bioExpanded');
+        if (!toggle) return;
+        toggle.addEventListener('click', function() {
+            var o = expanded.classList.toggle('open');
+            toggle.classList.toggle('open', o);
+        });
     })();
 
     (function initMenu() {
-        var mt=document.getElementById('menuToggle'), mo=document.getElementById('menuOverlay');
-        mt.addEventListener('click',function(){mt.classList.toggle('active');mo.classList.toggle('active');});
-        mo.addEventListener('click',function(e){if(e.target===mo){mt.classList.remove('active');mo.classList.remove('active');}});
-        document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mo.classList.contains('active')){mt.classList.remove('active');mo.classList.remove('active');}});
+        var mt = document.getElementById('menuToggle'), mo = document.getElementById('menuOverlay');
+        mt.addEventListener('click', function() { mt.classList.toggle('active'); mo.classList.toggle('active'); });
+        mo.addEventListener('click', function(e) { if (e.target === mo) { mt.classList.remove('active'); mo.classList.remove('active'); } });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && mo.classList.contains('active')) { mt.classList.remove('active'); mo.classList.remove('active'); } });
     })();
 
     (function initMenuGradient() {
         document.querySelectorAll('.menu-link').forEach(function(link) {
-            var g=document.createElement('span'); g.classList.add('menu-link-gradient'); g.textContent=link.textContent; g.style.setProperty('--spread','0%'); link.appendChild(g);
+            var g = document.createElement('span'); g.classList.add('menu-link-gradient'); g.textContent = link.textContent; g.style.setProperty('--spread', '0%'); link.appendChild(g);
             var af;
-            link.addEventListener('mouseenter',function(e){
-                var r=link.getBoundingClientRect(); g.style.setProperty('--mx',(e.clientX-r.left)+'px'); g.style.setProperty('--my',(e.clientY-r.top)+'px'); g.style.setProperty('--spread','0%');
-                var s=null; cancelAnimationFrame(af);
-                af=requestAnimationFrame(function run(ts){if(!s)s=ts;var p=Math.min((ts-s)/900,1);g.style.setProperty('--spread',((1-Math.pow(1-p,3))*200)+'%');if(p<1)af=requestAnimationFrame(run);});
+            link.addEventListener('mouseenter', function(e) {
+                var r = link.getBoundingClientRect(); g.style.setProperty('--mx', (e.clientX - r.left) + 'px'); g.style.setProperty('--my', (e.clientY - r.top) + 'px'); g.style.setProperty('--spread', '0%');
+                var s = null; cancelAnimationFrame(af);
+                af = requestAnimationFrame(function run(ts) { if (!s) s = ts; var p = Math.min((ts - s) / 900, 1); g.style.setProperty('--spread', ((1 - Math.pow(1 - p, 3)) * 200) + '%'); if (p < 1) af = requestAnimationFrame(run); });
             });
-            link.addEventListener('mouseleave',function(){
-                cancelAnimationFrame(af);var cur=parseFloat(g.style.getPropertyValue('--spread'))||200,s=null;
-                af=requestAnimationFrame(function run(ts){if(!s)s=ts;var p=Math.min((ts-s)/500,1);g.style.setProperty('--spread',(cur*(1-(1-Math.pow(1-p,3))))+'%');if(p<1)af=requestAnimationFrame(run);});
+            link.addEventListener('mouseleave', function() {
+                cancelAnimationFrame(af); var cur = parseFloat(g.style.getPropertyValue('--spread')) || 200, s = null;
+                af = requestAnimationFrame(function run(ts) { if (!s) s = ts; var p = Math.min((ts - s) / 500, 1); g.style.setProperty('--spread', (cur * (1 - (1 - Math.pow(1 - p, 3)))) + '%'); if (p < 1) af = requestAnimationFrame(run); });
             });
         });
     })();
 
     (function initCursor() {
-        var cursor=document.getElementById('cursor'); if(!cursor) return;
-        var mx=0,my=0,cx=0,cy=0,sc=1; window._cursorTargetScale=1;
-        document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
-        (function loop(){cx+=(mx-cx)*0.5;cy+=(my-cy)*0.5;sc+=(window._cursorTargetScale-sc)*0.15;cursor.style.transform='translate('+(cx-5)+'px,'+(cy-5)+'px) scale('+sc+')';requestAnimationFrame(loop);})();
-        document.querySelectorAll('a,button,.work-card,.bio-toggle,.menu-toggle,.dark-mode-toggle,.tag').forEach(function(el){
-            el.addEventListener('mouseenter',function(){window._cursorTargetScale=1.8;});
-            el.addEventListener('mouseleave',function(){window._cursorTargetScale=1;});
+        var cursor = document.getElementById('cursor'); if (!cursor) return;
+        var mx = 0, my = 0, cx = 0, cy = 0, sc = 1; window._cursorTargetScale = 1;
+        document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
+        (function loop() { cx += (mx - cx) * 0.5; cy += (my - cy) * 0.5; sc += (window._cursorTargetScale - sc) * 0.15; cursor.style.transform = 'translate(' + (cx - 5) + 'px,' + (cy - 5) + 'px) scale(' + sc + ')'; requestAnimationFrame(loop); })();
+        document.querySelectorAll('a,button,.work-card,.bio-toggle,.menu-toggle,.dark-mode-toggle,.tag').forEach(function(el) {
+            el.addEventListener('mouseenter', function() { window._cursorTargetScale = 1.8; });
+            el.addEventListener('mouseleave', function() { window._cursorTargetScale = 1; });
         });
     })();
 
     (function initDarkMode() {
-        var toggle=document.getElementById('darkModeToggle');
-        if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}
-        toggle.addEventListener('change',function(){document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});
-        var label=document.querySelector('.dark-mode-toggle');
-        label.addEventListener('mouseenter',function(){window._cursorTargetScale=1.8;});
-        label.addEventListener('mouseleave',function(){window._cursorTargetScale=1;});
+        var toggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'true') { document.body.classList.add('dark-mode'); toggle.checked = true; }
+        toggle.addEventListener('change', function() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); });
+        var label = document.querySelector('.dark-mode-toggle');
+        label.addEventListener('mouseenter', function() { window._cursorTargetScale = 1.8; });
+        label.addEventListener('mouseleave', function() { window._cursorTargetScale = 1; });
     })();
 
-    (function initPageGate(){
-        var shown=false;
-        function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}
-        var iframe=document.querySelector('.hero-video iframe');
-        if(iframe){iframe.addEventListener('load',show);setTimeout(show,3000);}else show();
+    (function initPageGate() {
+        var shown = false;
+        function show() { if (shown) return; shown = true; document.body.classList.add('page-ready'); }
+        var iframe = document.querySelector('.hero-video iframe');
+        if (iframe) { iframe.addEventListener('load', show); setTimeout(show, 3000); } else show();
     })();
     </script>
 
     <script src="/scripts/analytics.js"></script>
 
     <script>
-    (function(){
-        function enforceNoCursor(){var e=document.getElementById('no-native-cursor');if(e)e.remove();var s=document.createElement('style');s.id='no-native-cursor';s.textContent='html,html *,body,body *{cursor:none !important;}';document.head.appendChild(s);}
+    (function() {
+        function enforceNoCursor() {
+            var e = document.getElementById('no-native-cursor'); if (e) e.remove();
+            var s = document.createElement('style'); s.id = 'no-native-cursor';
+            s.textContent = 'html,html *,body,body *{cursor:none !important;}';
+            document.head.appendChild(s);
+        }
         enforceNoCursor();
-        window.addEventListener('pageshow',function(){enforceNoCursor();var c=document.getElementById('cursor');if(c&&!('ontouchstart'in window))c.style.display='block';});
-        document.addEventListener('visibilitychange',function(){if(!document.hidden)enforceNoCursor();});
+        window.addEventListener('pageshow', function() {
+            enforceNoCursor();
+            var c = document.getElementById('cursor');
+            if (c && !('ontouchstart' in window)) c.style.display = 'block';
+        });
+        document.addEventListener('visibilitychange', function() { if (!document.hidden) enforceNoCursor(); });
     })();
     </script>
+
 </body>
 </html>
