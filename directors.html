@@ -1220,12 +1220,12 @@
       try {
         if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
         var st = document.createElement('style');
-        st.textContent = '#clickCursor{position:fixed;left:-200px;top:-200px;transform:translate(-50%,-50%) scale(.85);opacity:0;pointer-events:none;z-index:10050;transition:opacity .14s ease,transform .14s ease;will-change:transform,left,top}#clickCursor.show{opacity:1;transform:translate(-50%,-50%) scale(1)}body.click-cursor-active .cursor{opacity:0 !important}';
+        st.textContent = '#clickCursor{position:fixed;left:-200px;top:-200px;transform:translate(-50%,-50%) scale(.7);opacity:0;pointer-events:none;z-index:10050;mix-blend-mode:difference;transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.2,1);will-change:transform,left,top,opacity}#clickCursor.show{opacity:1;transform:translate(-50%,-50%) scale(1)}body.click-cursor-active .cursor{opacity:0 !important}';
         document.head.appendChild(st);
         var box = document.createElement('div');
         box.id = 'clickCursor';
         box.setAttribute('aria-hidden','true');
-        box.innerHTML = '<svg width="76" height="34" viewBox="0 0 76 34" xmlns="http://www.w3.org/2000/svg"><defs><mask id="clickCursorMask"><rect width="76" height="34" rx="6" fill="#fff"/><text x="38" y="19" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="15" letter-spacing="-0.3" fill="#000">CLICK</text></mask></defs><rect width="76" height="34" rx="6" fill="rgba(214,214,214,0.95)" mask="url(#clickCursorMask)"/></svg>';
+        box.innerHTML = '<svg width="56" height="26" viewBox="0 0 56 26" xmlns="http://www.w3.org/2000/svg"><defs><mask id="clickCursorMask"><rect width="56" height="26" rx="5" fill="#fff"/><text x="28" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">CLICK</text></mask></defs><rect width="56" height="26" rx="5" fill="#fff" mask="url(#clickCursorMask)"/></svg>';
         document.body.appendChild(box);
         document.addEventListener('mousemove', function(e){ box.style.left = e.clientX + 'px'; box.style.top = e.clientY + 'px'; }, {passive:true});
         var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .menu-toggle, .dark-mode-toggle, .logo-bottom, .project-client-link';
