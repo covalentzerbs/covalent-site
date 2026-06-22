@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="jon schwartz. director at covalent studios.">
+    <link rel="canonical" href="https://covalentstudios.co/directors/jon-schwartz">
+    <title>jon schwartz.</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-T14F8BVFLJ');</script>
+    <meta property="og:title" content="jon schwartz.">
+    <meta property="og:description" content="director. covalent studios.">
+    <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
+    <meta property="og:url" content="https://covalentstudios.co/directors/jon-schwartz">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face { font-family:'Satoshi'; src:url('/assets/fonts/Satoshi-Variable.ttf') format('truetype'); font-weight:300 900; font-display:swap; }
+        :root { --black:#0A0A0A; --white:#FFFFFF; --gray:#6B7280; --bond-blue:#5979e9; --surface:#141414; --border:rgba(255,255,255,0.08); }
+        * { margin:0; padding:0; box-sizing:border-box; cursor:none; }
+        ::selection { background:var(--black); color:var(--white); -webkit-text-fill-color:var(--white); }
+        html, body { height:100%; overflow-x:hidden; }
+        body { font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,sans-serif; background-color:var(--black); color:var(--white); text-transform:lowercase; letter-spacing:-0.07em; }
+        .cursor { position:fixed; width:10px; height:10px; border-radius:50%; background:var(--white); pointer-events:none; z-index:99999; mix-blend-mode:difference; left:0; top:0; will-change:transform; }
+        @media (pointer:coarse) { .cursor { display:none; } }
+        .nav { position:fixed; top:0; right:0; padding:2rem; z-index:10000; }
+        .menu-toggle { width:40px; height:40px; display:flex; align-items:center; justify-content:center; transition:transform 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .menu-toggle.active { transform:rotate(45deg); }
+        .plus-icon { width:18px; height:18px; position:relative; }
+        .plus-icon span { display:block; position:absolute; width:100%; height:2px; background:var(--white); top:50%; left:0; }
+        .plus-icon span:first-child { transform:translateY(-50%) rotate(90deg); }
+        .plus-icon span:last-child  { transform:translateY(-50%); }
+        .menu-overlay { position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column; justify-content:center; align-items:flex-end; padding:3rem; pointer-events:none; opacity:0; transition:opacity 0.4s ease; }
+        .menu-overlay.active { pointer-events:auto; opacity:1; backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); background:rgba(255,255,255,0.3); }
+        .menu-links { display:flex; flex-direction:column; align-items:flex-end; gap:0; }
+        @keyframes gradientShift { 0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;} }
+        .menu-link { font-size:clamp(3.5rem,8vw,7rem); font-weight:500; color:var(--white); text-decoration:none; opacity:0; transform:translateX(30px); transition:all 0.4s cubic-bezier(0.4,0,0.2,1); letter-spacing:-0.07em; line-height:1.05; position:relative; display:inline-block; }
+        .menu-overlay.active .menu-link { opacity:0.6; transform:translateX(0); }
+        .menu-overlay.active .menu-link:nth-child(1){transition-delay:0.05s;} .menu-overlay.active .menu-link:nth-child(2){transition-delay:0.10s;} .menu-overlay.active .menu-link:nth-child(3){transition-delay:0.15s;} .menu-overlay.active .menu-link:nth-child(4){transition-delay:0.25s;} .menu-overlay.active .menu-link:nth-child(5){transition-delay:0.30s;}
+        .menu-spacer { height:0.8em; }
+        .menu-socials { display:flex; align-items:center; gap:1.2rem; margin-top:1.5rem; opacity:0; transform:translateX(30px); transition:all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .menu-overlay.active .menu-socials { opacity:0.5; transform:translateX(0); transition-delay:0.3s; }
+        .menu-link-lab { color:#A6FF8E; }
+        .menu-overlay.active .menu-link-lab { opacity:0.5 !important; transition:opacity 0.12s ease !important; }
+        .menu-overlay.active .menu-link-lab:hover { opacity:1 !important; }
+        .menu-link-bond { font-family:'Satoshi',sans-serif; font-weight:500; letter-spacing:-0.03em; color:var(--bond-blue); }
+        .menu-link:hover { opacity:1 !important; }
+        .menu-link-gradient { position:absolute; inset:0; background:linear-gradient(90deg,#5979e9,#7B93FF,#5979e9,#3A5BD4); background-size:300% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:gradientShift 3s ease infinite; pointer-events:none; -webkit-mask-image:radial-gradient(circle at var(--mx,0px) var(--my,0px),black var(--spread,0%),transparent var(--spread,0%)); mask-image:radial-gradient(circle at var(--mx,0px) var(--my,0px),black var(--spread,0%),transparent var(--spread,0%)); opacity:0; transition:opacity 0s; }
+        .menu-link:hover .menu-link-gradient { opacity:1; }
+        .menu-link.current { opacity:1 !important; }
+        .logo-top { position:fixed; top:2rem; left:2rem; z-index:10000; transition:opacity 0.3s ease; }
+        .logo-top:hover { opacity:0.7; }
+        .logo-top svg { width:40px; height:40px; }
+        .hero { position:relative; width:100%; height:100dvh; overflow:hidden; background:var(--black); }
+        .hero-video { position:absolute; inset:0; z-index:0; }
+        .hero-video iframe { position:absolute; top:50%; left:50%; width:177.78dvh; height:100dvh; min-width:100%; min-height:56.25vw; transform:translate(-50%,-50%); border:none; pointer-events:none; }
+        .hero-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(to bottom,rgba(10,10,10,0.2) 0%,rgba(10,10,10,0) 30%,rgba(10,10,10,0) 50%,rgba(10,10,10,0.75) 80%,rgba(10,10,10,0.95) 100%); }
+        .hero-breadcrumb { position:absolute; top:6rem; left:3rem; z-index:10; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s ease; }
+        .hero-breadcrumb:hover { color:rgba(255,255,255,0.85); }
+        .hero-content { position:absolute; bottom:3rem; left:3rem; z-index:10; }
+        .hero-name { font-size:clamp(2.5rem,8vw,5rem); font-weight:500; line-height:1.0; color:var(--white); letter-spacing:-0.07em; }
+        .hero-tagline { margin-top:0.5rem; font-size:clamp(0.85rem,1.5vw,1.1rem); font-weight:400; color:rgba(255,255,255,0.6); letter-spacing:-0.04em; max-width:480px; }
+        .bio-section { background:var(--black); padding:5rem 3rem; border-top:1px solid var(--border); }
+        .bio-inner { max-width:960px; margin:0 auto; display:grid; grid-template-columns:1fr 280px; gap:4rem; align-items:start; }
+        .bio-short { font-size:1rem; font-weight:400; line-height:1.65; color:rgba(255,255,255,0.75); letter-spacing:-0.04em; }
+        .bio-expanded { overflow:hidden; max-height:0; transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease; opacity:0; }
+        .bio-expanded.open { max-height:600px; opacity:1; }
+        .bio-expanded p { margin-top:1.2rem; font-size:0.9rem; line-height:1.7; color:rgba(255,255,255,0.5); letter-spacing:-0.04em; }
+        .bio-toggle { margin-top:1.25rem; background:none; border:none; color:rgba(255,255,255,0.4); font-family:'Space Grotesk',sans-serif; font-size:0.75rem; font-weight:500; letter-spacing:-0.04em; text-transform:lowercase; padding:0; transition:color 0.2s ease; display:flex; align-items:center; gap:0.3em; }
+        .bio-toggle:hover { color:rgba(255,255,255,0.9); }
+        .bio-toggle .toggle-icon { display:inline-block; transition:transform 0.3s ease; font-style:normal; }
+        .bio-toggle.open .toggle-icon { transform:rotate(45deg); }
+        .bio-tags { display:flex; flex-direction:column; gap:1.5rem; }
+        .tag-group { display:flex; flex-direction:column; gap:0.5rem; }
+        .tag-label { font-size:0.65rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,255,255,0.3); text-transform:uppercase; }
+        .tags { display:flex; flex-wrap:wrap; gap:0.4rem; }
+        .tag { display:inline-block; padding:0.3rem 0.7rem; border:1px solid var(--border); border-radius:999px; font-size:0.7rem; font-weight:500; color:rgba(255,255,255,0.55); letter-spacing:-0.02em; transition:border-color 0.2s ease,color 0.2s ease; }
+        .tag:hover { border-color:rgba(255,255,255,0.25); color:rgba(255,255,255,0.85); }
+        .work-section { background:var(--white); padding:0; padding-bottom:5rem; }
+        .work-section-header { padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
+        .work-section-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; color:rgba(0,0,0,0.35); text-transform:uppercase; }
+        .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; background:var(--white); }
+        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; height:60px; min-height:60px; }
+        .card-thumb { position:absolute; width:100%; left:0; top:50%; transform:translateY(-50%); object-fit:cover; }
+        .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; }
+        .card-video iframe { position:absolute; top:50%; left:50%; width:177.78%; height:100%; min-width:100%; transform:translate(-50%,-50%); border:none; pointer-events:none; }
+        .card-video.playing { opacity:1; }
+        .card-scrim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0) 55%); z-index:2; pointer-events:none; }
+        .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:0; transition:opacity 0.2s ease; }
+        .work-card.show-meta .card-text { opacity:1; transition:opacity 0.3s ease 0.75s; }
+        .card-client { font-size:0.65rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:0.2rem; }
+        .card-title { font-size:clamp(1rem,2vw,1.4rem); font-weight:500; color:var(--white); letter-spacing:-0.05em; line-height:1.1; }
+        .site-footer { position:fixed; bottom:0; left:0; right:0; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1001; }
+        .site-footer-left { font-size:0.7rem; font-weight:500; color:var(--white); opacity:0.5; }
+        .footer-link { color:inherit; text-decoration:none; transition:color 0.2s ease; }
+        .footer-link:hover { color:var(--bond-blue); }
+        .site-footer-right { display:flex; align-items:center; gap:1.5rem; opacity:0.5; }
+        .site-footer-socials { display:flex; align-items:center; gap:1rem; }
+        .social-link { color:var(--white); display:flex; align-items:center; transition:color 0.18s ease,opacity 0.18s ease,transform 0.18s ease,filter 0.18s ease; transform-origin:center; }
+        .social-link[aria-label="Instagram"]:hover { color:#E1306C !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(225,48,108,0.55)) saturate(1.4); }
+        .social-link[aria-label="LinkedIn"]:hover { color:#0A66C2 !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(10,102,194,0.6)) saturate(1.4); }
+        .social-link.social-link-ionic:hover { color:#714BDD !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(113,75,221,0.6)) saturate(1.4); }
+        .dark-mode-toggle { cursor:none; }
+        .dark-mode-toggle input { display:none; }
+        .toggle-track { width:28px; height:16px; background:rgba(0,0,0,0.15); border-radius:8px; position:relative; transition:background 0.3s ease; cursor:none; display:block; }
+        .toggle-track::after { content:''; position:absolute; top:2px; left:2px; width:12px; height:12px; background:rgba(0,0,0,0.4); border-radius:50%; transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .dark-mode-toggle input:checked + .toggle-track { background:rgba(255,69,0,0.8); }
+        .dark-mode-toggle input:checked + .toggle-track::after { transform:translateX(12px); background:#FF4500; }
+        body.dark-mode { background-color:#0A0A0A !important; color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode ::selection { background:#FF4500 !important; color:#0A0A0A !important; -webkit-text-fill-color:#0A0A0A !important; }
+        body.dark-mode .cursor { background:#FF4500 !important; }
+        body.dark-mode .plus-icon span { background:#FF4500 !important; }
+        body.dark-mode .menu-link { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .logo-top svg path { fill:#FF4500 !important; }
+        body.dark-mode .social-link { color:#FF4500 !important; }
+        body.dark-mode .site-footer-left { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .hero-name { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .card-title { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        html { scrollbar-width:thin; scrollbar-color:rgba(89,121,233,0.45) transparent; }
+        html::-webkit-scrollbar { width:6px; }
+        html::-webkit-scrollbar-track { background:transparent; }
+        html::-webkit-scrollbar-thumb { background:rgba(89,121,233,0.35); border-radius:3px; }
+        html::-webkit-scrollbar-thumb:hover { background:var(--bond-blue); }
+        html:has(body.dark-mode) { background-color:#0A0A0A; }
+        body:not(.page-ready) { opacity:0; }
+        body.page-ready { opacity:1; transition:opacity 0.4s ease; }
+        @media (max-width:1024px) { .bio-inner{grid-template-columns:1fr;gap:2.5rem;} .bio-tags{flex-direction:row;flex-wrap:wrap;gap:2rem;} }
+        @media (max-width:768px) { .nav{padding:1.5rem;} .logo-top{top:1.5rem;left:1.5rem;} .logo-top svg{width:32px;height:32px;} .hero-content{bottom:2rem;left:1.5rem;right:1.5rem;} .hero-breadcrumb{top:5rem;left:1.5rem;} .bio-section{padding:3rem 1.5rem;} .bio-inner{grid-template-columns:1fr;gap:2rem;} .work-section{padding:0;} .work-grid{grid-template-columns:1fr;gap:10px;} .work-section-header{padding:1.5rem;} .card-text{bottom:1rem;left:1rem;} .menu-overlay{padding:5rem 1.5rem 1.5rem;} body{padding-bottom:3.5rem;} }
+    </style>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+    <div class="cursor" id="cursor"></div>
+    <a href="/" class="logo-top">
+        <svg viewBox="0 0 160 160" fill="none"><path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/></svg>
+    </a>
+    <nav class="nav"><div class="menu-toggle" id="menuToggle"><div class="plus-icon"><span></span><span></span></div></div></nav>
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-links">
+            <a href="/directors" class="menu-link current">directors</a>
+            <a href="/about"     class="menu-link">about</a>
+            <a href="/contact"   class="menu-link">contact</a>
+            <div class="menu-spacer"></div>
+            <a href="/lab"       class="menu-link menu-link-lab">lab</a>
+            <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
+        </div>
+        <div class="menu-socials">
+            <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
+            <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg></a>
+            <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg></a>
+        </div>
+    </div>
+    <section class="hero">
+        <div class="hero-video"><iframe src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="hero-overlay"></div>
+        <a href="/directors" class="hero-breadcrumb">directors</a>
+        <div class="hero-content">
+            <h1 class="hero-name" id="heroName"></h1>
+            <p class="hero-tagline" id="heroTagline"></p>
+        </div>
+    </section>
+    <section class="bio-section">
+        <div class="bio-inner">
+            <div class="bio-text-col">
+                <p class="bio-short" id="bioShort"></p>
+                <div class="bio-expanded" id="bioExpanded"></div>
+                <button class="bio-toggle" id="bioToggle"><em class="toggle-icon">+</em> biography</button>
+            </div>
+            <div class="bio-tags" id="bioTags"></div>
+        </div>
+    </section>
+    <section class="work-section" id="workSection">
+        <div class="work-section-header"><span class="work-section-label">selected work</span></div>
+        <div class="work-grid" id="workGrid"></div>
+    </section>
+    <footer class="site-footer">
+        <div class="site-footer-left">2026, covalent studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">privacy</a></div>
+        <div class="site-footer-right">
+            <div class="site-footer-socials">
+                <label class="dark-mode-toggle"><input type="checkbox" id="darkModeToggle"><span class="toggle-track"></span></label>
+                <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
+                <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg></a>
+                <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg></a>
+            </div>
+        </div>
+    </footer>
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script>
+    window.DIRECTOR = {
+        name:      'Jon Schwartz',
+        tagline:   'director. covalent studios.',
+        bio_short: 'jon schwartz is a director whose work spans commercial and branded content — finding the human moment inside every brief.',
+        bio_full:  [],
+        hero_vimeo: '1163390482',
+        types:  [],
+        styles: [],
+        work:   []
+    };
+    </script>
+    <script>
+    (function populatePage(){var D=window.DIRECTOR;document.getElementById('heroName').textContent=D.name;document.getElementById('heroTagline').textContent=D.tagline;document.querySelector('.hero-video iframe').src='https://player.vimeo.com/video/'+D.hero_vimeo+'?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1';document.getElementById('bioShort').textContent=D.bio_short;if(!D.bio_full||!D.bio_full.length)document.getElementById('bioToggle').style.display='none';var tagsEl=document.getElementById('bioTags');var groups=[{label:'type',items:D.types||[]},{label:'style',items:D.styles||[]}].filter(function(g){return g.items.length;});if(!groups.length){tagsEl.style.display='none';document.querySelector('.bio-inner').style.gridTemplateColumns='1fr';}else groups.forEach(function(g){var el=document.createElement('div');el.className='tag-group';el.innerHTML='<span class="tag-label">'+g.label+'</span><div class="tags">'+g.items.map(function(t){return'<span class="tag">'+t+'</span>';}).join('')+'</div>';tagsEl.appendChild(el);});if(!D.work||!D.work.length)document.getElementById('workSection').style.display='none';})();
+    (function initReveal(){var cards=Array.prototype.slice.call(document.querySelectorAll('.work-card'));if(!cards.length)return;var wg=document.querySelector('.work-grid'),NUM_COLS,vh,gdt,spr;var sp=document.createElement('div');sp.setAttribute('aria-hidden','true');document.body.appendChild(sp);function measure(){NUM_COLS=window.innerWidth<=768?1:2;vh=window.innerHeight;gdt=wg.getBoundingClientRect().top+window.scrollY;spr=vh*0.55;sp.style.height=Math.round(Math.ceil(cards.length/NUM_COLS)*spr)+'px';}function easeOut(t){return 1-Math.pow(1-t,3);}function update(){var s=window.scrollY-(gdt-vh);cards.forEach(function(c,i){var row=Math.floor(i/NUM_COLS),fh=c.offsetWidth*9/16,th=c.querySelector('.card-thumb');if(th)th.style.height=fh+'px';var p=Math.max(0,Math.min(1,(s-row*spr)/spr));c.style.height=Math.round(60+(fh-60)*easeOut(p))+'px';if(p>=0.88)c.classList.add('show-meta');else c.classList.remove('show-meta');});}measure();update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',function(){measure();update();},{passive:true});})();
+    (function initBioToggle(){var t=document.getElementById('bioToggle'),e=document.getElementById('bioExpanded');if(!t)return;t.addEventListener('click',function(){var o=e.classList.toggle('open');t.classList.toggle('open',o);});})();
+    (function initMenu(){var mt=document.getElementById('menuToggle'),mo=document.getElementById('menuOverlay');mt.addEventListener('click',function(){mt.classList.toggle('active');mo.classList.toggle('active');});mo.addEventListener('click',function(e){if(e.target===mo){mt.classList.remove('active');mo.classList.remove('active');}});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mo.classList.contains('active')){mt.classList.remove('active');mo.classList.remove('active');}});})();
+    (function initMenuGradient(){document.querySelectorAll('.menu-link').forEach(function(link){var g=document.createElement('span');g.classList.add('menu-link-gradient');g.textContent=link.textContent;g.style.setProperty('--spread','0%');link.appendChild(g);var af;link.addEventListener('mouseenter',function(e){var r=link.getBoundingClientRect();g.style.setProperty('--mx',(e.clientX-r.left)+'px');g.style.setProperty('--my',(e.clientY-r.top)+'px');g.style.setProperty('--spread','0%');var s=null;cancelAnimationFrame(af);af=requestAnimationFrame(function run(ts){if(!s)s=ts;var p=Math.min((ts-s)/900,1);g.style.setProperty('--spread',((1-Math.pow(1-p,3))*200)+'%');if(p<1)af=requestAnimationFrame(run);});});link.addEventListener('mouseleave',function(){cancelAnimationFrame(af);var cur=parseFloat(g.style.getPropertyValue('--spread'))||200,s=null;af=requestAnimationFrame(function run(ts){if(!s)s=ts;var p=Math.min((ts-s)/500,1);g.style.setProperty('--spread',(cur*(1-(1-Math.pow(1-p,3))))+'%');if(p<1)af=requestAnimationFrame(run);});});});})();
+    (function initCursor(){var cursor=document.getElementById('cursor');if(!cursor)return;var mx=0,my=0,cx=0,cy=0,sc=1;window._cursorTargetScale=1;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});(function loop(){cx+=(mx-cx)*0.5;cy+=(my-cy)*0.5;sc+=(window._cursorTargetScale-sc)*0.15;cursor.style.transform='translate('+(cx-5)+'px,'+(cy-5)+'px) scale('+sc+')';requestAnimationFrame(loop);})();document.querySelectorAll('a,button,.work-card,.bio-toggle,.menu-toggle,.dark-mode-toggle,.tag').forEach(function(el){el.addEventListener('mouseenter',function(){window._cursorTargetScale=1.8;});el.addEventListener('mouseleave',function(){window._cursorTargetScale=1;});});})();
+    (function initDarkMode(){var toggle=document.getElementById('darkModeToggle');if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}toggle.addEventListener('change',function(){document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});var label=document.querySelector('.dark-mode-toggle');label.addEventListener('mouseenter',function(){window._cursorTargetScale=1.8;});label.addEventListener('mouseleave',function(){window._cursorTargetScale=1;});})();
+    (function initPageGate(){var shown=false;function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}var iframe=document.querySelector('.hero-video iframe');if(iframe){iframe.addEventListener('load',show);setTimeout(show,3000);}else show();})();
+    </script>
+    <script src="/scripts/analytics.js"></script>
+    <script>(function(){function enforceNoCursor(){var e=document.getElementById('no-native-cursor');if(e)e.remove();var s=document.createElement('style');s.id='no-native-cursor';s.textContent='html,html *,body,body *{cursor:none !important;}';document.head.appendChild(s);}enforceNoCursor();window.addEventListener('pageshow',function(){enforceNoCursor();var c=document.getElementById('cursor');if(c&&!('ontouchstart'in window))c.style.display='block';});document.addEventListener('visibilitychange',function(){if(!document.hidden)enforceNoCursor();});})();</script>
+</body>
+</html>

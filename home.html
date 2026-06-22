@@ -453,29 +453,29 @@
             background: #0A0A0A;
         }
 
+        /* Cover the frame with a 16:9 player sized off the container height, plus
+           ~10px overscan each edge so the editor's baked-in black borders get
+           cropped out instead of showing on the outskirts. */
         .project-video-container iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: calc(75vh + 20px);
+            width: calc((75vh + 20px) * 16 / 9);
             border: none;
             pointer-events: none;
         }
 
-        /* Crop 2px off each side for fare video edit artifact */
+        /* fare side artifact — base overscan already covers it */
         .project-video-crop iframe {
-            top: -2px;
-            left: -2px;
-            width: calc(100% + 4px);
-            height: calc(100% + 4px);
+            transform: translate(-50%, -50%);
         }
 
-        /* Crop ~6px off the top (black bar baked into the onco/wabi clips), 2px
-           off the bottom. */
+        /* onco/wabi/pinch — shift up so the bigger black bar baked into the top
+           of those clips is cropped off. */
         .project-video-crop-y iframe {
-            top: -6px;
-            height: calc(100% + 8px);
+            transform: translate(-50%, calc(-50% - 8px));
         }
 
         /* Text overlay — dead center of viewport */
@@ -1006,7 +1006,7 @@ body.dark-mode .project-client {
 <body>
 
     <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-overlay" id="loadingOverlay" style="display:none">
         <div class="loading-content" id="loadingContent">
             <p class="loading-label">loading...</p>
             <div class="loading-bar-track">
@@ -1088,7 +1088,7 @@ body.dark-mode .project-client {
         <!-- PANEL 2: ONCO OPTIMA -->
         <section class="project-section" id="project1">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1184586128?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=1080p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1184586128?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="onco-optima.html" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/onco-optima-logo.png" width="2250" height="346" class="project-logo" alt="onco optima"></a>
@@ -1098,7 +1098,7 @@ body.dark-mode .project-client {
         <!-- PANEL 3: WABI -->
         <section class="project-section" id="project2">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=1080p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="wabi.html" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/wabi-logo-white.png" width="1008" height="354" class="project-logo" alt="wabi"></a>
@@ -1108,7 +1108,7 @@ body.dark-mode .project-client {
         <!-- PANEL 4: AESOP -->
         <section class="project-section" id="project3">
             <div class="project-video-container" style="aspect-ratio: 3 / 2;">
-                <iframe data-src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=1080p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="aesop.html" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/aesop-logo-white.png" width="2397" height="1257" class="project-logo" alt="aesop"></a>
@@ -1118,7 +1118,7 @@ body.dark-mode .project-client {
         <!-- PANEL 5: PINCH -->
         <section class="project-section" id="project4">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=1080p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="pinch.html" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/pinch.png" width="2000" height="564" class="project-logo" alt="pinch"></a>
@@ -1128,7 +1128,7 @@ body.dark-mode .project-client {
         <!-- PANEL 6: FARE -->
         <section class="project-section" id="project5">
             <div class="project-video-container project-video-crop">
-                <iframe data-src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=1080p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="fare.html" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/fare-logo-white.png" width="1893" height="801" class="project-logo" alt="fare"></a>
@@ -1138,7 +1138,7 @@ body.dark-mode .project-client {
         <!-- PANEL 7: ARCTERYX -->
         <section class="project-section" id="project6">
             <div class="project-video-container" style="aspect-ratio: 4 / 3;">
-                <iframe data-src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=1080p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="arcteryx.html" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/arcteryx-logo.png" width="2400" height="2400" class="project-logo" alt="arcteryx"></a>
@@ -1148,7 +1148,7 @@ body.dark-mode .project-client {
         <!-- PANEL 8: WORLD OF HYATT -->
         <section class="project-section" id="project7">
             <div class="project-video-container" style="aspect-ratio: 1 / 1;">
-                <iframe data-src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=1080p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="hyatt.html" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/woh-logo-white.png" width="600" height="600" class="project-logo" alt="world of hyatt"></a>
@@ -1158,7 +1158,7 @@ body.dark-mode .project-client {
         <!-- PANEL 9: EVER -->
         <section class="project-section" id="project8">
             <div class="project-video-container" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=1080p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <iframe data-src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
                 <a href="ever.html" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/ever-logo.png" width="1067" height="239" class="project-logo" alt="ever"></a>
@@ -1308,8 +1308,10 @@ body.dark-mode .project-client {
         let wheelDelta = 0;
         let wheelTimer = null;
         let isAnimating = false;
-        const WHEEL_THRESHOLD = 10;
+        let coolUntil = 0;                 // absorb trackpad momentum after a snap
+        const WHEEL_THRESHOLD = 24;        // a bit more deliberate so one flick = one panel
         const SNAP_MS = 340;
+        const COOLDOWN_MS = 260;
 
         function animateScrollTo(target, duration) {
             duration = duration || SNAP_MS;
@@ -1325,7 +1327,7 @@ body.dark-mode .project-client {
                 const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic — quick start, soft landing
                 scrollContainer.scrollLeft = start + dist * eased;
                 if (t < 1) { requestAnimationFrame(step); }
-                else { isAnimating = false; }
+                else { isAnimating = false; coolUntil = performance.now() + COOLDOWN_MS; wheelDelta = 0; }
             })(performance.now());
         }
         window.snapHome = animateScrollTo; // shared with keyboard nav
@@ -1336,7 +1338,8 @@ body.dark-mode .project-client {
         window.addEventListener('wheel', (e) => {
             if (isTouchOnly) return; // let mobile handle natively
             e.preventDefault();
-            if (isAnimating) return;
+            // While snapping or cooling down, swallow momentum so it can't skip panels
+            if (isAnimating || performance.now() < coolUntil) { wheelDelta = 0; return; }
 
             wheelDelta += e.deltaY;
             clearTimeout(wheelTimer);
@@ -1554,7 +1557,7 @@ body.dark-mode .project-client {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) load(entry.target.querySelector('iframe'));
             });
-        }, { root: sc, rootMargin: '0px 0px', threshold: 0 });
+        }, { root: sc, rootMargin: '0px 200%', threshold: 0 });
 
         // Unload only once a panel sits more than 400px outside the viewport.
         // The 0px/400px gap is hysteresis so a panel parked near the edge can't
@@ -1563,7 +1566,7 @@ body.dark-mode .project-client {
             entries.forEach(function(entry) {
                 if (!entry.isIntersecting) unload(entry.target.querySelector('iframe'));
             });
-        }, { root: sc, rootMargin: '0px 400px', threshold: 0 });
+        }, { root: sc, rootMargin: '0px 300%', threshold: 0 });
 
         document.querySelectorAll('.project-section').forEach(function(section) {
             if (section.querySelector('iframe[data-src]')) {
@@ -1591,12 +1594,10 @@ body.dark-mode .project-client {
         let videoStarted  = false;
         let completed     = false;
 
-        // Skip loading screen on return visits within the same session
-        if (sessionStorage.getItem('covalent_visited')) {
-            overlay.style.display = 'none';
-            return;
-        }
-        sessionStorage.setItem('covalent_visited', '1');
+        // Loading screen removed — reveal the page immediately so projects show
+        // and load as fast as possible (no "relentlessly efficient" gate).
+        if (overlay) overlay.style.display = 'none';
+        return;
 
         function setProgress(pct) {
             barFill.style.width = pct + '%';
@@ -1773,34 +1774,36 @@ body.dark-mode .project-client {
     })();
     </script>
 
-    <!-- Scroll affordance: knockout "SCROLL" hint, fades out once the user scrolls -->
-    <div id="scrollHint" aria-hidden="true">
-        <svg width="106" height="38" viewBox="0 0 106 38" xmlns="http://www.w3.org/2000/svg">
-            <defs><mask id="scrollHintMask">
-                <rect width="106" height="38" rx="6" fill="#fff"/>
-                <text x="53" y="21" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="16" letter-spacing="-0.3" fill="#000">SCROLL</text>
-            </mask></defs>
-            <rect width="106" height="38" rx="6" fill="rgba(214,214,214,0.95)" mask="url(#scrollHintMask)"/>
-        </svg>
-    </div>
-    <style>
-        #scrollHint{ position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:9000; opacity:0; pointer-events:none; transition:opacity .6s ease; }
-        #scrollHint.show{ opacity:.92; }
-        #scrollHint svg{ display:block; animation:scrollHintNudge 1.6s ease-in-out infinite; }
-        @keyframes scrollHintNudge{ 0%,100%{ transform:translateX(-5px); } 50%{ transform:translateX(5px); } }
-        @media (max-width:768px){ #scrollHint{ bottom:1.4rem; } }
-    </style>
+    <!-- Scroll affordance: the circle cursor melts into a "SCROLL" box and back
+         every 2s (until the user scrolls), instead of a fixed hint at the bottom. -->
     <script>
     (function(){
-        var hint = document.getElementById('scrollHint');
+        if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
         var sc = document.getElementById('scrollContainer');
-        if (!hint || !sc) return;
-        var gone = false;
-        // Show once the intro has cleared; hide for good on first horizontal scroll.
-        setTimeout(function(){ if (!gone) hint.classList.add('show'); }, 2600);
-        sc.addEventListener('scroll', function(){
-            if (sc.scrollLeft > 40 && !gone){ gone = true; hint.classList.remove('show'); }
-        }, {passive:true});
+        if (!sc) return;
+        var st = document.createElement('style');
+        st.textContent = '#scrollMorph{position:fixed;left:-300px;top:-300px;transform:translate(-50%,-50%) scale(.35);opacity:0;pointer-events:none;z-index:10049;mix-blend-mode:difference;filter:blur(7px);transition:opacity .55s ease,transform .55s cubic-bezier(.6,0,.25,1),filter .55s ease;will-change:transform,opacity,filter}#scrollMorph.show{opacity:1;transform:translate(-50%,-50%) scale(1);filter:blur(0)}body.scroll-morph-active .cursor{opacity:0 !important}';
+        document.head.appendChild(st);
+        var morph = document.createElement('div');
+        morph.id = 'scrollMorph';
+        morph.setAttribute('aria-hidden','true');
+        morph.innerHTML = '<svg width="104" height="36" viewBox="0 0 104 36" xmlns="http://www.w3.org/2000/svg"><defs><mask id="scrollMorphMask"><rect width="104" height="36" rx="6" fill="#fff"/><text x="52" y="19" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="15" letter-spacing="-0.3" fill="#000">SCROLL</text></mask></defs><rect width="104" height="36" rx="6" fill="#fff" mask="url(#scrollMorphMask)"/></svg>';
+        document.body.appendChild(morph);
+
+        document.addEventListener('mousemove', function(e){ morph.style.left = e.clientX + 'px'; morph.style.top = e.clientY + 'px'; }, {passive:true});
+
+        var scrolled = false;
+        sc.addEventListener('scroll', function(){ if (sc.scrollLeft > 60) scrolled = true; }, {passive:true});
+
+        var on = false;
+        function off(){ if (on){ on = false; morph.classList.remove('show'); document.body.classList.remove('scroll-morph-active'); } }
+        setInterval(function(){
+            // Don't morph while the CLICK cursor is active, or after the user scrolls.
+            if (scrolled || document.body.classList.contains('click-cursor-active')) { off(); return; }
+            on = !on;
+            if (on){ morph.classList.add('show'); document.body.classList.add('scroll-morph-active'); }
+            else { off(); }
+        }, 2000);
     })();
     </script>
 

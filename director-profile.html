@@ -1138,49 +1138,46 @@
         var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
         if (!cards.length) return;
 
-        var NUM_COLS   = 2;
-        var workGrid   = document.querySelector('.work-grid');
-        var vh, gridDocTop, scrollPerRow;
+        var workGrid = document.querySelector('.work-grid');
+        var NUM_COLS, vh, gridDocTop, scrollPerRow;
+
+        var scrollSpacer = document.createElement('div');
+        scrollSpacer.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(scrollSpacer);
 
         function measure() {
-            vh          = window.innerHeight;
-            // gridDocTop is stable — hero + bio above it never change size
-            gridDocTop  = workGrid.getBoundingClientRect().top + window.scrollY;
-            scrollPerRow = vh * 0.55; // scroll px allocated per row to reach full height
+            NUM_COLS     = window.innerWidth <= 768 ? 1 : 2;
+            vh           = window.innerHeight;
+            gridDocTop   = workGrid.getBoundingClientRect().top + window.scrollY;
+            scrollPerRow = vh * 0.55;
+            var numRows  = Math.ceil(cards.length / NUM_COLS);
+            scrollSpacer.style.height = Math.round(numRows * scrollPerRow) + 'px';
         }
 
         function easeOut(t) {
-            // Cubic ease-out so the first pixels of scroll feel responsive
             return 1 - Math.pow(1 - t, 3);
         }
 
         function update() {
-            var scrollY = window.scrollY;
-            // s = 0 when the work grid top hits the bottom of the viewport
-            var s = scrollY - (gridDocTop - vh);
+            var s = window.scrollY - (gridDocTop - vh);
 
             cards.forEach(function(card, i) {
                 var row   = Math.floor(i / NUM_COLS);
                 var fullH = card.offsetWidth * 9 / 16;
 
-                // Set thumb to full 16:9 height so it's always centred inside card
                 var thumb = card.querySelector('.card-thumb');
                 if (thumb) thumb.style.height = fullH + 'px';
 
-                var raw   = (s - row * scrollPerRow) / scrollPerRow;
-                var prog  = Math.max(0, Math.min(1, raw));
-                var eased = easeOut(prog);
+                var prog  = Math.max(0, Math.min(1, (s - row * scrollPerRow) / scrollPerRow));
+                card.style.height = Math.round(60 + (fullH - 60) * easeOut(prog)) + 'px';
 
-                card.style.height = (60 + (fullH - 60) * eased) + 'px';
-
-                // Show/hide text overlay based on how open the card is
                 if (prog >= 0.88) card.classList.add('show-meta');
                 else              card.classList.remove('show-meta');
             });
         }
 
         measure();
-        update(); // set initial state
+        update();
 
         window.addEventListener('scroll', update, { passive: true });
         window.addEventListener('resize', function() { measure(); update(); }, { passive: true });

@@ -1003,8 +1003,7 @@
                 const director = directors.find(d => d.id === directorId);
 
                 if (director) {
-                    // Navigate to director page (to be implemented)
-                    console.log(`Navigate to ${director.name}'s page`);
+                    window.location.href = '/directors/' + directorId;
                 }
             });
         });

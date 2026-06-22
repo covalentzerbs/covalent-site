@@ -59,7 +59,8 @@
 
     // ── Director profile page: track which director was viewed ───────────────
     // director-profile.html exposes window.DIRECTOR from its inline script
-    if (window.location.pathname.indexOf('director-profile') !== -1) {
+    if (window.location.pathname.indexOf('director-profile') !== -1 ||
+        /^\/directors\/[^/]+/.test(window.location.pathname)) {
         var dirName = (window.DIRECTOR && window.DIRECTOR.name) ? window.DIRECTOR.name : 'unknown';
         track('director_profile_view', { director_name: dirName });
     }
