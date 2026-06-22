@@ -1328,12 +1328,21 @@ body.dark-mode .project-client {
 
         // Only intercept wheel on desktop — mobile touch handles its own scrolling
         const isTouchOnly = 'ontouchstart' in window && !window.matchMedia('(pointer: fine)').matches;
+        let settleTimer = null;
 
         window.addEventListener('wheel', (e) => {
             if (isTouchOnly) return; // let mobile handle natively
             e.preventDefault();
             isAnimating = false;               // a manual scroll interrupts a key-nav animation
             scrollContainer.scrollLeft += e.deltaY * 1.6;
+
+            // Gentle settle: a beat after scrolling stops, ease softly to the nearest
+            // project so the viewer lands centered. Subtle, not a hard snap.
+            clearTimeout(settleTimer);
+            settleTimer = setTimeout(function() {
+                const vw = window.innerWidth;
+                animateScrollTo(Math.round(scrollContainer.scrollLeft / vw) * vw, 520);
+            }, 180);
         }, { passive: false });
 
         // ==================== //
@@ -1750,17 +1759,16 @@ body.dark-mode .project-client {
     })();
     </script>
 
-    <!-- Scroll affordance: the circle cursor melts into a "SCROLL" box and back
-         every 2s (until the user scrolls), instead of a fixed hint at the bottom. -->
+    <!-- Scroll affordance (landing panel only): the cursor cross-morphs between
+         the circle and a "SCROLL" box as the user moves — movement drives it. -->
     <script>
     (function(){
         if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
         var sc = document.getElementById('scrollContainer');
         if (!sc) return;
+        var dot = document.getElementById('cursor');
         var st = document.createElement('style');
-        // No filter here — a filter isolates the element and kills mix-blend-mode,
-        // which made the box invisible over white. Melt via scale + opacity instead.
-        st.textContent = '#scrollMorph{position:fixed;left:-300px;top:-300px;transform:translate(-50%,-50%) scale(.2);opacity:0;pointer-events:none;z-index:10049;mix-blend-mode:difference;transition:opacity .5s ease,transform .55s cubic-bezier(.34,1.4,.5,1);will-change:transform,opacity}#scrollMorph.show{opacity:1;transform:translate(-50%,-50%) scale(1)}body.scroll-morph-active .cursor{opacity:0 !important}';
+        st.textContent = '#scrollMorph{position:fixed;left:-300px;top:-300px;opacity:0;pointer-events:none;z-index:10049;mix-blend-mode:difference;will-change:transform,opacity}';
         document.head.appendChild(st);
         var morph = document.createElement('div');
         morph.id = 'scrollMorph';
@@ -1768,19 +1776,37 @@ body.dark-mode .project-client {
         morph.innerHTML = '<svg width="104" height="36" viewBox="0 0 104 36" xmlns="http://www.w3.org/2000/svg"><defs><mask id="scrollMorphMask"><rect width="104" height="36" rx="6" fill="#fff"/><text x="52" y="19" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="15" letter-spacing="-0.3" fill="#000">SCROLL</text></mask></defs><rect width="104" height="36" rx="6" fill="#fff" mask="url(#scrollMorphMask)"/></svg>';
         document.body.appendChild(morph);
 
-        document.addEventListener('mousemove', function(e){ morph.style.left = e.clientX + 'px'; morph.style.top = e.clientY + 'px'; }, {passive:true});
-
-        var on = false;
-        function off(){ if (on){ on = false; morph.classList.remove('show'); document.body.classList.remove('scroll-morph-active'); } }
-        setInterval(function(){
-            // Only morph on the landing panel — once they've scrolled to a project
-            // they've figured out the scroll. Also pause while the CLICK cursor shows.
-            var onLanding = sc.scrollLeft < window.innerWidth * 0.5;
-            if (!onLanding || document.body.classList.contains('click-cursor-active')) { off(); return; }
-            on = !on;
-            if (on){ morph.classList.add('show'); document.body.classList.add('scroll-morph-active'); }
-            else { off(); }
-        }, 2000);
+        var phase = 0, dir = 1, lastX = null, lastY = null;
+        function onLanding(){ return sc.scrollLeft < window.innerWidth * 0.5; }
+        function clickActive(){ return document.body.classList.contains('click-cursor-active'); }
+        function apply(){
+            morph.style.opacity = phase;
+            morph.style.transform = 'translate(-50%, -50%) scale(' + (0.2 + 0.8 * phase) + ')';
+            if (dot) dot.style.opacity = (1 - phase);
+        }
+        // Reset to the plain circle the moment they scroll off the landing panel
+        // (even if the mouse isn't moving).
+        sc.addEventListener('scroll', function(){
+            if (!onLanding() && phase !== 0) { phase = 0; dir = 1; apply(); }
+        }, {passive:true});
+        document.addEventListener('mousemove', function(e){
+            morph.style.left = e.clientX + 'px';
+            morph.style.top  = e.clientY + 'px';
+            // Off the landing panel (or over a clickable) — settle back to the circle.
+            if (!onLanding() || clickActive()) {
+                if (phase !== 0) { phase = 0; dir = 1; apply(); }
+                lastX = e.clientX; lastY = e.clientY;
+                return;
+            }
+            if (lastX !== null) {
+                var d = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+                phase += dir * d * 0.0045;     // ~220px of movement = one full morph
+                if (phase >= 1) { phase = 1; dir = -1; }
+                else if (phase <= 0) { phase = 0; dir = 1; }
+                apply();
+            }
+            lastX = e.clientX; lastY = e.clientY;
+        }, {passive:true});
     })();
     </script>
 

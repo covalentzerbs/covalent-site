@@ -751,11 +751,11 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
-            <a href="directors.html" class="menu-link">directors</a>
-            <a href="about.html" class="menu-link">about</a>
-            <a href="contact.html" class="menu-link">contact</a>
+            <a href="/directors" class="menu-link current">directors</a>
+            <a href="/about"     class="menu-link">about</a>
+            <a href="/contact"   class="menu-link">contact</a>
             <div class="menu-spacer"></div>
-            <a href="lab.html" class="menu-link menu-link-lab">lab</a>
+            <a href="/lab"       class="menu-link menu-link-lab">lab</a>
             <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
         </div>
         <div class="menu-socials">
@@ -862,11 +862,11 @@
     <script>
         // Directors data
         const directors = [
-            { id: 'jacob', name: 'Jacob Frost', vimeo: '1170741864', zoom: 'slight' },
-            { id: 'wilbert', name: 'Wilbert Cheng', vimeo: '1122231476' },
-            { id: 'benjamin', name: 'Benjamin Gugick', vimeo: '1170747372', widescreen: true },
-            { id: 'jon', name: 'Jon Schwartz', vimeo: '1163390482', widescreen: true },
-            { id: 'noah', name: 'Noah Keckler', vimeo: '1164768847', widescreen: true }
+            { id: 'jacob',    slug: 'jacob-frost',    name: 'Jacob Frost',     vimeo: '1170741864', zoom: 'slight' },
+            { id: 'wilbert',  slug: 'wilbert-cheng',  name: 'Wilbert Cheng',   vimeo: '1122231476' },
+            { id: 'benjamin', slug: 'benjamin-gugick', name: 'Benjamin Gugick', vimeo: '1170747372', widescreen: true },
+            { id: 'jon',      slug: 'jon-schwartz',   name: 'Jon Schwartz',    vimeo: '1163390482', widescreen: true },
+            { id: 'noah',     slug: 'noah-keckler',   name: 'Noah Keckler',    vimeo: '1164768847', widescreen: true }
         ];
 
         const videoWrapper = document.getElementById('videoWrapper');
@@ -918,25 +918,10 @@
             return iframe;
         }
 
-        // Eagerly load ONLY the first director with a video — others spin up on hover/tap
-        const firstWithVideo = directors.find(d => d.vimeo || d.youtube);
-        if (firstWithVideo) ensureVideo(firstWithVideo.id);
-
-        // Pre-warm the rest after the page is idle so hover is instant.
-        // Staggered so they don't all hit the network at once.
-        function prewarmRemaining() {
-            const remaining = directors.filter(d =>
-                (d.vimeo || d.youtube) && d.id !== firstWithVideo?.id
-            );
-            remaining.forEach((director, i) => {
-                setTimeout(() => ensureVideo(director.id), 600 * (i + 1));
-            });
-        }
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(prewarmRemaining, { timeout: 2500 });
-        } else {
-            setTimeout(prewarmRemaining, 1500);
-        }
+        // Load all director videos immediately so hover switches are instant
+        directors.forEach(d => {
+            if (d.vimeo || d.youtube) ensureVideo(d.id);
+        });
 
         // Switch video with crossfade
         let currentVideoId = null;
@@ -1003,7 +988,7 @@
                 const director = directors.find(d => d.id === directorId);
 
                 if (director) {
-                    window.location.href = '/directors/' + directorId;
+                    window.location.href = '/directors/' + director.slug;
                 }
             });
         });
