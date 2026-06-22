@@ -1400,7 +1400,7 @@
           box.style.left = e.clientX + 'px'; box.style.top = e.clientY + 'px';
           if (menuOpen() && box.classList.contains('show')) hide();
         }, {passive:true});
-        var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .menu-toggle, .dark-mode-toggle, .logo-bottom, .project-client-link, [data-cursor]';
+        var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .dark-mode-toggle, .logo-bottom, .project-client-link, [data-cursor]';
         function hit(t){ return (t && t.closest) ? t.closest(sel) : null; }
         document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
         document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
