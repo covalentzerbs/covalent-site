@@ -9,7 +9,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="shortcut icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="benjamin gugick. director at covalent studios.">
+    <meta name="description" content="benjamin gugick. director at covalent studios. sharp editorial sensibility and instinctual sense of craft.">
     <link rel="canonical" href="https://covalentstudios.co/directors/benjamin-gugick">
     <title>benjamin gugick.</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
@@ -19,6 +19,9 @@
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co/directors/benjamin-gugick">
     <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://f.vimeocdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -47,33 +50,64 @@
             text-transform: lowercase;
             letter-spacing: -0.07em;
         }
-        .cursor { position:fixed; width:10px; height:10px; border-radius:50%; background:var(--white); pointer-events:none; z-index:99999; mix-blend-mode:difference; left:0; top:0; will-change:transform; }
+        .cursor {
+            position:fixed; width:10px; height:10px; border-radius:50%;
+            background:var(--white); pointer-events:none; z-index:99999;
+            mix-blend-mode:difference; left:0; top:0; will-change:transform;
+        }
         @media (pointer:coarse) { .cursor { display:none; } }
         .nav { position:fixed; top:0; right:0; padding:2rem; z-index:10000; }
-        .menu-toggle { width:40px; height:40px; display:flex; align-items:center; justify-content:center; transition:transform 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .menu-toggle {
+            width:40px; height:40px; display:flex; align-items:center; justify-content:center;
+            transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
         .menu-toggle.active { transform:rotate(45deg); }
         .plus-icon { width:18px; height:18px; position:relative; }
-        .plus-icon span { display:block; position:absolute; width:100%; height:2px; background:var(--white); top:50%; left:0; transition:all 0.3s ease; }
+        .plus-icon span {
+            display:block; position:absolute; width:100%; height:2px;
+            background:var(--white); top:50%; left:0; transition:all 0.3s ease;
+        }
         .plus-icon span:first-child { transform:translateY(-50%) rotate(90deg); }
         .plus-icon span:last-child  { transform:translateY(-50%); }
-        .menu-overlay { position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column; justify-content:center; align-items:flex-end; padding:3rem; pointer-events:none; opacity:0; transition:opacity 0.4s ease; }
-        .menu-overlay.active { pointer-events:auto; opacity:1; backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); background:rgba(255,255,255,0.3); }
+        .menu-overlay {
+            position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column;
+            justify-content:center; align-items:flex-end; padding:3rem;
+            pointer-events:none; opacity:0; transition:opacity 0.4s ease;
+        }
+        .menu-overlay.active {
+            pointer-events:auto; opacity:1;
+            backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+            background:rgba(255,255,255,0.3);
+        }
         .menu-links { display:flex; flex-direction:column; align-items:flex-end; gap:0; }
-        @keyframes gradientShift { 0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;} }
-        .menu-link { font-size:clamp(3.5rem,8vw,7rem); font-weight:500; color:var(--white); text-decoration:none; opacity:0; transform:translateX(30px); transition:all 0.4s cubic-bezier(0.4,0,0.2,1); letter-spacing:-0.07em; line-height:1.05; position:relative; display:inline-block; }
-        .menu-overlay.active .menu-link { opacity:0.6; transform:translateX(0); }
+        @keyframes gradientShift {
+            0%   { background-position:0% 50%; }
+            50%  { background-position:100% 50%; }
+            100% { background-position:0% 50%; }
+        }
+        .menu-link {
+            font-size:clamp(3.5rem,8vw,7rem); font-weight:500; color:var(--white);
+            text-decoration:none; opacity:0; transform:translateX(30px);
+            transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+            letter-spacing:-0.07em; line-height:1.05; position:relative; display:inline-block;
+        }
+        .menu-overlay.active .menu-link              { opacity:0.6; transform:translateX(0); }
         .menu-overlay.active .menu-link:nth-child(1) { transition-delay:0.05s; }
         .menu-overlay.active .menu-link:nth-child(2) { transition-delay:0.10s; }
         .menu-overlay.active .menu-link:nth-child(3) { transition-delay:0.15s; }
         .menu-overlay.active .menu-link:nth-child(4) { transition-delay:0.25s; }
         .menu-overlay.active .menu-link:nth-child(5) { transition-delay:0.30s; }
         .menu-spacer { height:0.8em; }
-        .menu-socials { display:flex; align-items:center; gap:1.2rem; margin-top:1.5rem; opacity:0; transform:translateX(30px); transition:all 0.4s cubic-bezier(0.4,0,0.2,1); }
+        .menu-socials {
+            display:flex; align-items:center; gap:1.2rem; margin-top:1.5rem;
+            opacity:0; transform:translateX(30px);
+            transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
         .menu-overlay.active .menu-socials { opacity:0.5; transform:translateX(0); transition-delay:0.3s; }
         .menu-link-lab { color:#A6FF8E; }
         .menu-overlay.active .menu-link-lab { opacity:0.5 !important; transition:opacity 0.12s ease !important; }
         .menu-overlay.active .menu-link-lab:hover { opacity:1 !important; }
-        .menu-link-bond { font-family:\'Satoshi\',sans-serif; font-weight:500; letter-spacing:-0.03em; color:var(--bond-blue); text-transform:none; }
+        .menu-link-bond { font-family:'Satoshi',sans-serif; font-weight:500; letter-spacing:-0.03em; color:var(--bond-blue); text-transform:none; }
         .menu-link:hover { opacity:1 !important; }
         .menu-link.current { opacity:1 !important; }
         .logo-top { position:fixed; top:2rem; left:2rem; z-index:10000; transition:opacity 0.3s ease; }
@@ -81,9 +115,20 @@
         .logo-top svg { width:40px; height:40px; }
         .hero { position:relative; width:100%; height:100dvh; overflow:hidden; background:var(--black); }
         .hero-video { position:absolute; inset:0; z-index:0; }
-        .hero-video iframe { position:absolute; top:50%; left:50%; width:177.78dvh; height:100dvh; min-width:100%; min-height:56.25vw; transform:translate(-50%,-50%); border:none; pointer-events:none; }
-        .hero-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(to bottom,rgba(10,10,10,0.2) 0%,rgba(10,10,10,0) 30%,rgba(10,10,10,0) 50%,rgba(10,10,10,0.75) 80%,rgba(10,10,10,0.95) 100%); }
-        .hero-breadcrumb { position:absolute; top:6rem; left:3rem; z-index:10; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s ease; }
+        .hero-video iframe {
+            position:absolute; top:50%; left:50%;
+            width:177.78dvh; height:100dvh; min-width:100%; min-height:56.25vw;
+            transform:translate(-50%,-50%); border:none; pointer-events:none;
+        }
+        .hero-overlay {
+            position:absolute; inset:0; z-index:1;
+            background:linear-gradient(to bottom,rgba(10,10,10,0.2) 0%,rgba(10,10,10,0) 30%,rgba(10,10,10,0) 50%,rgba(10,10,10,0.75) 80%,rgba(10,10,10,0.95) 100%);
+        }
+        .hero-breadcrumb {
+            position:absolute; top:6rem; left:3rem; z-index:10;
+            font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
+            color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s ease;
+        }
         .hero-breadcrumb:hover { color:rgba(255,255,255,0.85); }
         .hero-content { position:absolute; bottom:3rem; left:3rem; z-index:10; }
         .hero-name { font-size:clamp(2.5rem,8vw,5rem); font-weight:500; line-height:1.0; color:var(--white); letter-spacing:-0.07em; }
@@ -94,7 +139,12 @@
         .bio-expanded { overflow:hidden; max-height:0; transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease; opacity:0; }
         .bio-expanded.open { max-height:600px; opacity:1; }
         .bio-expanded p { margin-top:1.2rem; font-size:0.9rem; line-height:1.7; color:rgba(255,255,255,0.5); letter-spacing:-0.04em; }
-        .bio-toggle { margin-top:1.25rem; background:none; border:none; color:rgba(255,255,255,0.4); font-family:'Space Grotesk',sans-serif; font-size:0.75rem; font-weight:500; letter-spacing:-0.04em; text-transform:lowercase; padding:0; transition:color 0.2s ease; display:flex; align-items:center; gap:0.3em; }
+        .bio-toggle {
+            margin-top:1.25rem; background:none; border:none; color:rgba(255,255,255,0.4);
+            font-family:'Space Grotesk',sans-serif; font-size:0.75rem; font-weight:500;
+            letter-spacing:-0.04em; text-transform:lowercase; padding:0;
+            transition:color 0.2s ease; display:flex; align-items:center; gap:0.3em;
+        }
         .bio-toggle:hover { color:rgba(255,255,255,0.9); }
         .bio-toggle .toggle-icon { display:inline-block; transition:transform 0.3s ease; font-style:normal; }
         .bio-toggle.open .toggle-icon { transform:rotate(45deg); }
@@ -108,16 +158,16 @@
         .work-section-header { padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
         .work-section-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; color:rgba(0,0,0,0.35); text-transform:uppercase; }
         .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; width:100%; background:var(--white); }
-        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; height:60px; min-height:60px; }
-        .card-thumb { position:absolute; width:100%; left:0; top:50%; transform:translateY(-50%); object-fit:cover; }
+        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; aspect-ratio:16/9; }
+        .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+        .work-card:hover .card-thumb { filter:brightness(0.88); transition:filter 0.4s ease; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; }
-        .card-video iframe { position:absolute; top:50%; left:50%; width:177.78%; height:100%; min-width:100%; transform:translate(-50%,-50%); border:none; pointer-events:none; }
+        .card-video iframe { position:absolute; top:50%; left:50%; width:132%; height:132%; min-width:100%; min-height:100%; transform:translate(-50%,-50%); border:none; pointer-events:none; }
         .card-video.playing { opacity:1; }
         .card-scrim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0) 55%); z-index:2; pointer-events:none; }
-        .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:0; transition:opacity 0.2s ease; }
-        .work-card.show-meta .card-text { opacity:1; transition:opacity 0.3s ease 0.75s; }
+        .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:1; }
         .card-client { font-size:0.65rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:0.2rem; }
-        .card-title { font-size:clamp(1rem,2vw,1.4rem); font-weight:500; color:var(--white); letter-spacing:-0.05em; line-height:1.1; }
+        .card-title { font-size:clamp(1rem,2vw,1.4rem); font-weight:300; color:var(--white); letter-spacing:-0.05em; line-height:1.1; }
         .site-footer { position:fixed; bottom:0; left:0; right:0; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1001; }
         .site-footer-left { font-size:0.7rem; font-weight:500; color:var(--white); opacity:0.5; }
         .footer-link { color:inherit; text-decoration:none; transition:color 0.2s ease; }
@@ -128,6 +178,7 @@
         .social-link[aria-label="Instagram"]:hover { color:#E1306C !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(225,48,108,0.55)) saturate(1.4); }
         .social-link[aria-label="LinkedIn"]:hover { color:#0A66C2 !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(10,102,194,0.6)) saturate(1.4); }
         .social-link.social-link-ionic:hover { color:#714BDD !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(113,75,221,0.6)) saturate(1.4); }
+        .menu-overlay.active .menu-socials:hover { opacity:1 !important; }
         .dark-mode-toggle { cursor:none; }
         .dark-mode-toggle input { display:none; }
         .toggle-track { width:28px; height:16px; background:rgba(0,0,0,0.15); border-radius:8px; position:relative; transition:background 0.3s ease; cursor:none; display:block; }
@@ -154,17 +205,72 @@
         html:has(body.dark-mode) { background-color:#0A0A0A; }
         body:not(.page-ready) { opacity:0; }
         body.page-ready { opacity:1; transition:opacity 0.4s ease; }
-        @media (max-width:1024px) { .bio-inner { grid-template-columns:1fr; gap:2.5rem; } .bio-tags { flex-direction:row; flex-wrap:wrap; gap:2rem; } }
-        @media (max-width:768px) { .nav{padding:1.5rem;} .logo-top{top:1.5rem;left:1.5rem;} .logo-top svg{width:32px;height:32px;} .hero-content{bottom:2rem;left:1.5rem;right:1.5rem;} .hero-breadcrumb{top:5rem;left:1.5rem;} .bio-section{padding:3rem 1.5rem;} .bio-inner{grid-template-columns:1fr;gap:2rem;} .work-section{padding:0;} .work-grid{grid-template-columns:1fr;gap:0;} .work-section-header{padding:1.5rem;} .card-text{bottom:1rem;left:1rem;} .menu-overlay{padding:5rem 1.5rem 1.5rem;} body{padding-bottom:3.5rem;} }
+        @media (max-width:1024px) {
+            .bio-inner { grid-template-columns:1fr; gap:2.5rem; }
+            .bio-tags { flex-direction:row; flex-wrap:wrap; gap:2rem; }
+        }
+        @media (max-width:768px) {
+            .nav { padding:1.5rem; }
+            .logo-top { top:1.5rem; left:1.5rem; }
+            .logo-top svg { width:32px; height:32px; }
+            .hero-content { bottom:2rem; left:1.5rem; right:1.5rem; }
+            .hero-breadcrumb { top:5rem; left:1.5rem; }
+            .bio-section { padding:3rem 1.5rem; }
+            .bio-inner { grid-template-columns:1fr; gap:2rem; }
+            .work-section { padding:0; }
+            .work-grid { grid-template-columns:1fr; gap:0; }
+            .work-section-header { padding:1.5rem; }
+            .card-text { bottom:1rem; left:1rem; }
+            .menu-overlay { padding:5rem 1.5rem 1.5rem; }
+            body { padding-bottom:3.5rem; }
+        }
+        /* ── Work Viewer ──────────────────────────────────── */
+        .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+        .work-viewer.active { opacity:1; pointer-events:all; }
+        .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); aspect-ratio:16/9; }
+        .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+        .viewer-video-hero { position:absolute; inset:0; }
+        .viewer-click-layer { position:absolute; inset:0; z-index:2; }
+        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 20px 16px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
+        .viewer-video-hero.cs-playing .viewer-controls { opacity:0; transform:translateY(6px); pointer-events:none; }
+        .viewer-video-hero.cs-playing.cs-hover .viewer-controls { opacity:1; transform:translateY(0); pointer-events:auto; }
+        .viewer-ctrl-btn { background:none; border:none; padding:4px 6px; flex-shrink:0; cursor:none; }
+        .viewer-ctrl-btn .cs-ctrl-icon { display:none; width:14px; height:14px; object-fit:contain; }
+        .viewer-ctrl-btn .cs-icon-play { display:block; }
+        .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-play { display:none; }
+        .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-pause { display:block; }
+        .viewer-progress { flex:1; padding:8px 0; cursor:none; }
+        .viewer-progress .cs-progress-track { width:100%; height:2px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; overflow:hidden; }
+        .viewer-progress .cs-progress-fill { position:absolute; left:0; top:0; bottom:0; width:0%; background:#fff; border-radius:999px; }
+        .viewer-time { font-size:11px; color:rgba(255,255,255,0.7); white-space:nowrap; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.04em; }
+        .viewer-close { position:absolute; top:1.5rem; right:1.5rem; z-index:10; background:none; border:none; cursor:none; padding:0.5rem; opacity:0.5; transition:opacity 0.2s; line-height:0; }
+        .viewer-close:hover { opacity:1; }
+        .viewer-meta { position:absolute; bottom:2rem; left:3rem; display:flex; flex-direction:column; gap:0.2rem; pointer-events:none; }
+        .viewer-client-label { font-size:0.6rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); }
+        .viewer-title-label { font-size:0.95rem; font-weight:400; color:rgba(255,255,255,0.85); text-transform:lowercase; }
+        .viewer-nav { position:absolute; top:50%; transform:translateY(-50%); background:none; border:none; cursor:none; padding:1.2rem; opacity:0.4; transition:opacity 0.2s; line-height:0; }
+        .viewer-nav:hover { opacity:1; }
+        .viewer-prev { left:0.5rem; }
+        .viewer-next { right:0.5rem; }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
+
     <div class="cursor" id="cursor"></div>
+
     <a href="/" class="logo-top" data-cursor="home">
-        <svg viewBox="0 0 160 160" fill="none"><path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/></svg>
+        <svg viewBox="0 0 160 160" fill="none">
+            <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+        </svg>
     </a>
-    <nav class="nav"><div class="menu-toggle" id="menuToggle" data-cursor="menu"><div class="plus-icon"><span></span><span></span></div></div></nav>
+
+    <nav class="nav">
+        <div class="menu-toggle" id="menuToggle" data-cursor="menu">
+            <div class="plus-icon"><span></span><span></span></div>
+        </div>
+    </nav>
+
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
             <a href="/directors" class="menu-link current">directors</a>
@@ -175,45 +281,105 @@
             <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
         </div>
         <div class="menu-socials">
-            <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
-            <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg></a>
-            <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg></a>
+            <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            </a>
+            <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg>
+            </a>
         </div>
     </div>
-    <section class="hero">
-        <div class="hero-video"><iframe src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+
+    <section class="hero" id="hero">
+        <div class="hero-video">
+            <iframe src="https://player.vimeo.com/video/1170747372?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-name" id="heroName"></h1>
             <p class="hero-tagline" id="heroTagline"></p>
         </div>
     </section>
+
     <section class="bio-section">
         <div class="bio-inner">
             <div class="bio-text-col">
                 <p class="bio-short" id="bioShort"></p>
                 <div class="bio-expanded" id="bioExpanded"></div>
-                <button class="bio-toggle" id="bioToggle"><em class="toggle-icon">+</em> biography</button>
+                <button class="bio-toggle" id="bioToggle">
+                    <em class="toggle-icon">+</em> biography
+                </button>
             </div>
             <div class="bio-tags" id="bioTags"></div>
         </div>
     </section>
+
     <section class="work-section" id="workSection">
-        <div class="work-section-header"><span class="work-section-label">selected work</span></div>
         <div class="work-grid" id="workGrid"></div>
     </section>
+
     <footer class="site-footer">
         <div class="site-footer-left">2026, covalent studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">privacy</a></div>
         <div class="site-footer-right">
             <div class="site-footer-socials">
-                <label class="dark-mode-toggle"><input type="checkbox" id="darkModeToggle"><span class="toggle-track"></span></label>
-                <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
-                <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg></a>
-                <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg></a>
+                <label class="dark-mode-toggle">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="toggle-track"></span>
+                </label>
+                <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                </a>
+                <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg>
+                </a>
             </div>
         </div>
     </footer>
+
+    <!-- Work Viewer -->
+    <div id="workViewer" class="work-viewer">
+        <div class="viewer-frame" id="viewerFrame">
+            <div class="viewer-video-hero" id="viewerVideoHero">
+                <iframe id="viewerIframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <div class="viewer-click-layer" id="viewerClickLayer"></div>
+                <div class="viewer-controls" id="viewerControls">
+                    <button class="viewer-ctrl-btn" id="viewerPlayPause">
+                        <img src="/assets/logos/covalent_white_play_button.png" width="128" height="128" alt="Play" class="cs-ctrl-icon cs-icon-play">
+                        <img src="/assets/logos/pause_button.png" width="128" height="128" alt="Pause" class="cs-ctrl-icon cs-icon-pause">
+                    </button>
+                    <div class="viewer-progress" id="viewerProgress">
+                        <div class="cs-progress-track"><div class="cs-progress-fill" id="viewerFill"></div></div>
+                    </div>
+                    <div class="viewer-time" id="viewerTime">00:00 / 00:00</div>
+                    <button class="viewer-ctrl-btn" id="viewerFsBtn">
+                        <img src="/assets/logos/fullscreen_button.png" width="128" height="128" alt="Fullscreen" class="cs-ctrl-icon">
+                    </button>
+                </div>
+            </div>
+        </div>
+        <button class="viewer-close" id="viewerClose" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="2" y1="2" x2="16" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="2" x2="2" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="viewer-meta">
+            <span class="viewer-client-label" id="viewerClient"></span>
+            <span class="viewer-title-label" id="viewerTitleText"></span>
+        </div>
+        <button class="viewer-nav viewer-prev" id="viewerPrev" aria-label="Previous">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none"><polyline points="13,2 3,14 13,26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="viewer-nav viewer-next" id="viewerNext" aria-label="Next">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none"><polyline points="3,2 13,14 3,26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+    </div>
+
     <script src="https://player.vimeo.com/api/player.js"></script>
+
     <script>
     window.DIRECTOR = {
         name:      'Benjamin Gugick',
@@ -223,32 +389,265 @@
         hero_vimeo: '1170747372',
         types:  [],
         styles: [],
-        work:   []
+        work: [
+            { client:'nhl',          title:'the stanley cup finals', thumbnail:'https://i.vimeocdn.com/video/2118896020-02f7d90b4ac86f5dac744bc3b70a7c39f49ff537c00ec335f4f5823fa5796be0-d_1280x720', url:'', vimeo:'1162898083', clip_start:0 },
+            { client:'nike running', title:'chicago',                thumbnail:'https://i.vimeocdn.com/video/2119530776-cfa5d4c330b41c5e2cc68fd3b90728d9861435defc351349254446a65c8de459-d_1280x720', url:'', vimeo:'1163356207', clip_start:0 },
+            { client:'flow',         title:'hydrate up',             thumbnail:'https://i.vimeocdn.com/video/2171883915-aa0080e3b2416ef327c76b29b6b0e95a3b4f2fd3494c180c0f5ceab54688dd9f-d_1280x720', url:'', vimeo:'1163356092', clip_start:0 },
+            { client:'wynn',         title:'xs sundays',             thumbnail:'https://i.vimeocdn.com/video/2118869148-f60e87b2a715c7a17d841ff542e98826c55a9fde1b6e72d11a813abbd24c17af-d_1280x720', url:'', vimeo:'1162897491', clip_start:0 },
+            { client:'tao group',    title:'alesso',                 thumbnail:'https://i.vimeocdn.com/video/2119534627-4c0e2017e13b02e2268094fea066989e91a1a2c13920b6904f93dc4fe5237ae0-d_1280x720', url:'', vimeo:'1163356376', clip_start:0 },
+            { client:'liquid liner', title:'liquid liner launch',    thumbnail:'https://i.vimeocdn.com/video/2119106068-f21cd08f5c1718231caada5111805d3297236a4b05a77c93dfc1c7f8c6e106db-d_1280x720', url:'', vimeo:'1163062391', clip_start:0 }
+        ]
     };
     </script>
+
     <script>
     (function populatePage() {
-        var D=window.DIRECTOR;
-        document.getElementById('heroName').textContent=D.name;
-        document.getElementById('heroTagline').textContent=D.tagline;
-        document.querySelector('.hero-video iframe').src='https://player.vimeo.com/video/'+D.hero_vimeo+'?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1';
-        document.getElementById('bioShort').textContent=D.bio_short;
-        if(!D.bio_full||!D.bio_full.length) document.getElementById('bioToggle').style.display='none';
-        var tagsEl=document.getElementById('bioTags');
-        var groups=[{label:'type',items:D.types||[]},{label:'style',items:D.styles||[]}].filter(function(g){return g.items.length;});
-        if(!groups.length){tagsEl.style.display='none';document.querySelector('.bio-inner').style.gridTemplateColumns='1fr';}
-        else groups.forEach(function(g){var el=document.createElement('div');el.className='tag-group';el.innerHTML='<span class="tag-label">'+g.label+'</span><div class="tags">'+g.items.map(function(t){return'<span class="tag">'+t+'</span>';}).join('')+'</div>';tagsEl.appendChild(el);});
-        if(!D.work||!D.work.length) document.getElementById('workSection').style.display='none';
+        var D = window.DIRECTOR;
+        document.getElementById('heroName').textContent    = D.name;
+        document.getElementById('heroTagline').textContent = D.tagline;
+        document.getElementById('bioShort').textContent = D.bio_short;
+        var bioExpanded = document.getElementById('bioExpanded');
+        if (D.bio_full && D.bio_full.length) {
+            bioExpanded.innerHTML = D.bio_full.map(function(p){return'<p>'+p+'</p>';}).join('');
+        } else {
+            document.getElementById('bioToggle').style.display = 'none';
+        }
+        var tagsEl = document.getElementById('bioTags');
+        var groups = [{label:'type',items:D.types||[]},{label:'style',items:D.styles||[]}].filter(function(g){return g.items.length;});
+        if (!groups.length) {
+            tagsEl.style.display = 'none';
+            document.querySelector('.bio-inner').style.gridTemplateColumns = '1fr';
+        } else {
+            groups.forEach(function(g) {
+                var el = document.createElement('div');
+                el.className = 'tag-group';
+                el.innerHTML = '<span class="tag-label">'+g.label+'</span><div class="tags">'+g.items.map(function(t){return'<span class="tag">'+t+'</span>';}).join('')+'</div>';
+                tagsEl.appendChild(el);
+            });
+        }
+        var grid = document.getElementById('workGrid');
+        if (!D.work || !D.work.length) {
+            document.getElementById('workSection').style.display = 'none';
+            return;
+        }
+        D.work.forEach(function(item, i) {
+            var card = document.createElement('a');
+            card.className = 'work-card';
+            card.href = '#';
+            card.setAttribute('data-vimeo',  item.vimeo  || '');
+            card.setAttribute('data-hash',   item.hash   || '');
+            card.setAttribute('data-client', item.client || '');
+            card.setAttribute('data-title',  item.title  || '');
+            card.innerHTML = (item.thumbnail
+                ? '<img class="card-thumb" src="'+item.thumbnail+'" width="1280" height="720" alt="'+item.client+', '+item.title+'" loading="lazy">'
+                : '<div class="card-thumb" style="background:#1a1a1a;"></div>') +
+                '<div class="card-video" id="cardVideo'+i+'"></div>' +
+                '<div class="card-scrim"></div>' +
+                '<div class="card-text"><p class="card-client">'+item.client+'</p><p class="card-title">'+item.title+'</p></div>';
+            grid.appendChild(card);
+            if (!item.thumbnail && item.vimeo) {
+                (function(vimeoId, hash, cardEl, client, title) {
+                    var vUrl = 'https://vimeo.com/' + vimeoId + (hash ? '/' + hash : '');
+                    fetch('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent(vUrl) + '&width=1280')
+                        .then(function(r){return r.json();})
+                        .then(function(data){
+                            if(!data.thumbnail_url) return;
+                            var placeholder = cardEl.querySelector('.card-thumb');
+                            if(!placeholder) return;
+                            var img = document.createElement('img');
+                            img.className = 'card-thumb';
+                            img.src = data.thumbnail_url.replace(/_\d+x\d+(\.\w+)$/, '_1280x720$1');
+                            img.width = 1280; img.height = 720;
+                            img.alt = client + ', ' + title; img.loading = 'lazy';
+                            placeholder.parentNode.replaceChild(img, placeholder);
+                        })
+                        .catch(function(){});
+                })(item.vimeo, item.hash||'', card, item.client, item.title);
+            }
+            card.setAttribute('data-zoom', String(item.zoom || 1.32));
+            if (item.vimeo && window.matchMedia('(pointer:fine)').matches) {
+                var vl = card.querySelector('#cardVideo'+i);
+                if (vl) {
+                    card.addEventListener('mouseenter', function() { vl.classList.add('playing'); });
+                    card.addEventListener('mouseleave', function() { vl.classList.remove('playing'); });
+                }
+            }
+        });
     })();
-    (function initReveal(){var cards=Array.prototype.slice.call(document.querySelectorAll('.work-card'));if(!cards.length)return;var wg=document.querySelector('.work-grid'),NUM_COLS,vh,gdt,spr;var sp=document.createElement('div');sp.setAttribute('aria-hidden','true');document.body.appendChild(sp);function measure(){NUM_COLS=window.innerWidth<=768?1:2;vh=window.innerHeight;gdt=wg.getBoundingClientRect().top+window.scrollY;spr=vh*0.55;sp.style.height=Math.round(Math.ceil(cards.length/NUM_COLS)*spr)+'px';}function easeOut(t){return 1-Math.pow(1-t,3);}function update(){var s=window.scrollY-(gdt-vh);cards.forEach(function(c,i){var row=Math.floor(i/NUM_COLS),fh=c.offsetWidth*9/16,th=c.querySelector('.card-thumb');if(th)th.style.height=fh+'px';var p=Math.max(0,Math.min(1,(s-row*spr)/spr));c.style.height=Math.round(60+(fh-60)*easeOut(p))+'px';if(p>=0.88)c.classList.add('show-meta');else c.classList.remove('show-meta');});}measure();update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',function(){measure();update();},{passive:true});})();
-    (function initBioToggle(){var t=document.getElementById('bioToggle'),e=document.getElementById('bioExpanded');if(!t)return;t.addEventListener('click',function(){var o=e.classList.toggle('open');t.classList.toggle('open',o);});})();
-    (function initMenu(){var mt=document.getElementById('menuToggle'),mo=document.getElementById('menuOverlay');mt.addEventListener('click',function(){mt.classList.toggle('active');mo.classList.toggle('active');});mo.addEventListener('click',function(e){if(e.target===mo){mt.classList.remove('active');mo.classList.remove('active');}});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mo.classList.contains('active')){mt.classList.remove('active');mo.classList.remove('active');}});})();
-    (function initCursor(){var cursor=document.getElementById('cursor');if(!cursor)return;var mx=0,my=0,cx=0,cy=0,sc=1;window._cursorTargetScale=1;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});(function loop(){cx+=(mx-cx)*0.5;cy+=(my-cy)*0.5;sc+=(window._cursorTargetScale-sc)*0.15;cursor.style.transform='translate('+(cx-5)+'px,'+(cy-5)+'px) scale('+sc+')';requestAnimationFrame(loop);})();document.querySelectorAll('a,button,.work-card,.bio-toggle,.menu-toggle,.dark-mode-toggle,.tag').forEach(function(el){el.addEventListener('mouseenter',function(){window._cursorTargetScale=1.8;});el.addEventListener('mouseleave',function(){window._cursorTargetScale=1;});});})();
-    (function initDarkMode(){var toggle=document.getElementById('darkModeToggle');if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}toggle.addEventListener('change',function(){document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});})();
-    (function initPageGate(){var shown=false;function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}var iframe=document.querySelector('.hero-video iframe');if(iframe){iframe.addEventListener('load',show);setTimeout(show,1200);}else show();})();
+
+    window.addEventListener('load', function() {
+        try {
+            if (!window.matchMedia('(pointer:fine)').matches) return;
+            document.querySelectorAll('.work-card').forEach(function(card) {
+                var vimeo = card.getAttribute('data-vimeo');
+                if (!vimeo) return;
+                var vl = card.querySelector('.card-video');
+                if (!vl) return;
+                var hash = card.getAttribute('data-hash') || '';
+                var zoom = parseFloat(card.getAttribute('data-zoom') || '1.32');
+                var iframe = document.createElement('iframe');
+                iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+                iframe.style.width = (zoom * 100) + '%';
+                iframe.style.height = (zoom * 100) + '%';
+                iframe.src = 'https://player.vimeo.com/video/' + vimeo
+                    + '?' + (hash ? 'h=' + hash + '&' : '')
+                    + 'autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
+                vl.appendChild(iframe);
+            });
+        } catch(e) {}
+    }, {once: true});
+
+    (function initWorkViewer() {
+        var viewerItems = [];
+        document.querySelectorAll('.work-card').forEach(function(card, i) {
+            viewerItems.push({ vimeo:card.getAttribute('data-vimeo'), hash:card.getAttribute('data-hash')||'', client:card.getAttribute('data-client'), title:card.getAttribute('data-title') });
+            card.addEventListener('click', function(e) { e.preventDefault(); openViewer(i); });
+        });
+        var viewer   = document.getElementById('workViewer');
+        var frame    = document.getElementById('viewerFrame');
+        var vHero    = document.getElementById('viewerVideoHero');
+        var iframe   = document.getElementById('viewerIframe');
+        var clientEl = document.getElementById('viewerClient');
+        var titleEl  = document.getElementById('viewerTitleText');
+        var closeBtn = document.getElementById('viewerClose');
+        var prevBtn  = document.getElementById('viewerPrev');
+        var nextBtn  = document.getElementById('viewerNext');
+        var ppBtn    = document.getElementById('viewerPlayPause');
+        var progEl   = document.getElementById('viewerProgress');
+        var fillEl   = document.getElementById('viewerFill');
+        var timeEl   = document.getElementById('viewerTime');
+        var fsBtn    = document.getElementById('viewerFsBtn');
+        var clickLayer = document.getElementById('viewerClickLayer');
+        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null;
+        function fmt(s) { var m=Math.floor(s/60),sec=Math.floor(s%60); return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec; }
+        function setPlaying(p) { vPlaying=p; vHero.classList.toggle('cs-playing',p); }
+        function resetPlayer() {
+            if (vPlayer) { try { vPlayer.destroy(); } catch(e){} vPlayer=null; }
+            vPlaying=false; vDuration=0;
+            vHero.classList.remove('cs-playing','cs-hover');
+            if (fillEl) fillEl.style.width='0%';
+            if (timeEl) timeEl.textContent='00:00 / 00:00';
+        }
+        function bindPlayer(p) {
+            p.getDuration().then(function(d){ vDuration=d; if(timeEl&&d) timeEl.textContent='00:00 / '+fmt(d); }).catch(function(){});
+            p.on('play',  function(){ setPlaying(true); });
+            p.on('pause', function(){ setPlaying(false); });
+            p.on('ended', function(){ setPlaying(false); });
+            p.on('timeupdate', function(data){ if(!vDuration||!fillEl)return; fillEl.style.width=(data.seconds/vDuration*100)+'%'; if(timeEl) timeEl.textContent=fmt(data.seconds)+' / '+fmt(vDuration); });
+        }
+        function openViewer(idx) {
+            current=idx; var item=viewerItems[idx];
+            resetPlayer();
+            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&controls=0&dnt=1';
+            clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
+            viewer.classList.add('active'); document.body.style.overflow='hidden';
+            prevBtn.style.opacity=idx>0?'0.6':'0.15';
+            nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
+            iframe.onload=function(){ try{ if(!window.Vimeo)return; vPlayer=new Vimeo.Player(iframe); bindPlayer(vPlayer); }catch(e){} };
+        }
+        function closeViewer() {
+            viewer.classList.remove('active'); clearTimeout(idleTimer); resetPlayer();
+            setTimeout(function(){ iframe.src=''; },300); document.body.style.overflow='';
+        }
+        function togglePlay() { if(!vPlayer)return; if(vPlaying) vPlayer.pause(); else vPlayer.play(); }
+        clickLayer.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
+        ppBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
+        progEl.addEventListener('click', function(e){
+            e.stopPropagation();
+            if(!vPlayer||!vDuration)return;
+            var rect=progEl.getBoundingClientRect();
+            vPlayer.setCurrentTime(((e.clientX-rect.left)/rect.width)*vDuration).catch(function(){});
+        });
+        fsBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            var target=frame||viewer;
+            if(document.fullscreenElement) document.exitFullscreen().catch(function(){});
+            else target.requestFullscreen().catch(function(){});
+        });
+        vHero.addEventListener('mouseenter', function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
+        vHero.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
+        vHero.addEventListener('mousemove',  function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
+        closeBtn.addEventListener('click',closeViewer);
+        viewer.addEventListener('click',function(e){if(e.target===viewer)closeViewer();});
+        prevBtn.addEventListener('click',function(){if(current>0)openViewer(current-1);});
+        nextBtn.addEventListener('click',function(){if(current<viewerItems.length-1)openViewer(current+1);});
+        document.addEventListener('keydown',function(e){
+            if(!viewer.classList.contains('active'))return;
+            if(e.key==='Escape')closeViewer();
+            if(e.key==='ArrowLeft'&&current>0)openViewer(current-1);
+            if(e.key==='ArrowRight'&&current<viewerItems.length-1)openViewer(current+1);
+            if(e.key===' '){e.preventDefault();togglePlay();}
+        });
+    })();
+
+    (function initBioToggle() {
+        var toggle=document.getElementById('bioToggle'), expanded=document.getElementById('bioExpanded');
+        if(!toggle) return;
+        toggle.addEventListener('click',function(){var o=expanded.classList.toggle('open');toggle.classList.toggle('open',o);});
+    })();
+
+    (function initMenu() {
+        var mt=document.getElementById('menuToggle'), mo=document.getElementById('menuOverlay');
+        mt.addEventListener('click',function(){mt.classList.toggle('active');mo.classList.toggle('active');});
+        mo.addEventListener('click',function(e){if(e.target===mo){mt.classList.remove('active');mo.classList.remove('active');}});
+        document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mo.classList.contains('active')){mt.classList.remove('active');mo.classList.remove('active');}});
+    })();
+
+    (function initReveal() {
+        var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
+        if (!cards.length) return;
+        var COLLAPSED = 80;
+        function fullH(card) { return card.offsetWidth * 9 / 16; }
+        function smooth(t) { return t * t * (3 - 2 * t); }
+        cards.forEach(function(card) { card.style.height = COLLAPSED + 'px'; card.style.width = '100%'; });
+        var raf = null;
+        function doUpdate() {
+            var vh = window.innerHeight;
+            var zone = vh * 0.85;
+            cards.forEach(function(card) {
+                var top = card.getBoundingClientRect().top;
+                var p = smooth(Math.max(0, Math.min(1, (vh - top) / zone)));
+                card.style.height = Math.round(COLLAPSED + (fullH(card) - COLLAPSED) * p) + 'px';
+            });
+        }
+        function onScroll() { if (!raf) raf = requestAnimationFrame(function() { doUpdate(); raf = null; }); }
+        window.addEventListener('scroll', onScroll, {passive: true});
+        window.addEventListener('resize', onScroll, {passive: true});
+        doUpdate();
+    })();
+
+    (function initCursor() {
+        var cursor=document.getElementById('cursor'); if(!cursor) return;
+        var mx=0,my=0,cx=0,cy=0,sc=1; window._cursorTargetScale=1;
+        document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+        (function loop(){cx+=(mx-cx)*0.5;cy+=(my-cy)*0.5;sc+=(window._cursorTargetScale-sc)*0.15;cursor.style.transform='translate('+(cx-5)+'px,'+(cy-5)+'px) scale('+sc+')';requestAnimationFrame(loop);})();
+    })();
+
+    (function initDarkMode() {
+        var toggle=document.getElementById('darkModeToggle');
+        if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}
+        toggle.addEventListener('change',function(){document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});
+    })();
+
+    (function initPageGate(){
+        var shown=false;
+        function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}
+        var iframe=document.querySelector('.hero-video iframe');
+        if(iframe){iframe.addEventListener('load',show);setTimeout(show,1200);}else show();
+    })();
     </script>
+
     <script src="/scripts/analytics.js"></script>
-    <script>(function(){function enforceNoCursor(){var e=document.getElementById('no-native-cursor');if(e)e.remove();var s=document.createElement('style');s.id='no-native-cursor';s.textContent='html,html *,body,body *{cursor:none !important;}';document.head.appendChild(s);}enforceNoCursor();window.addEventListener('pageshow',function(){enforceNoCursor();var c=document.getElementById('cursor');if(c&&!('ontouchstart'in window))c.style.display='block';});document.addEventListener('visibilitychange',function(){if(!document.hidden)enforceNoCursor();});})();</script>
+
+    <script>
+    (function(){
+        function enforceNoCursor(){var e=document.getElementById('no-native-cursor');if(e)e.remove();var s=document.createElement('style');s.id='no-native-cursor';s.textContent='html,html *,body,body *{cursor:none !important;}';document.head.appendChild(s);}
+        enforceNoCursor();
+        window.addEventListener('pageshow',function(){enforceNoCursor();var c=document.getElementById('cursor');if(c&&!('ontouchstart'in window))c.style.display='block';});
+        document.addEventListener('visibilitychange',function(){if(!document.hidden)enforceNoCursor();});
+    })();
+    </script>
+
     <!-- Custom click cursor: knockout label box over clickable elements -->
     <script>
     (function(){
@@ -282,7 +681,7 @@
           if (menuOpen() && box.classList.contains('show')) hide();
         }, {passive:true});
         var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .dark-mode-toggle, .logo-bottom, .project-client-link, [data-cursor]';
-        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; if (t.closest('.bio-toggle')) return null; return t.closest(sel); }
+        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; if (t.closest('.work-card')) return null; if (t.closest('.bio-toggle')) return null; return t.closest(sel); }
         document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
         document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
       } catch(err){}
