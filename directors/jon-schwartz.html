@@ -599,31 +599,23 @@
         var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
         if (!cards.length) return;
         var COLLAPSED = 80;
-        function fullH(card) { return Math.round(card.offsetWidth * 9 / 16); }
-        var vh = window.innerHeight;
-        cards.forEach(function(card) {
-            if (card.getBoundingClientRect().top > vh) { card.style.height = COLLAPSED + 'px'; card.style.width = '100%'; }
-        });
-        var observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (!entry.isIntersecting) return;
-                var card = entry.target;
-                observer.unobserve(card);
-                if (!card.style.height) return;
-                requestAnimationFrame(function() {
-                    card.style.transition = 'height 0.9s cubic-bezier(0.16,1,0.3,1)';
-                    card.style.height = fullH(card) + 'px';
-                    setTimeout(function() { card.style.transition = ''; card.style.height = ''; card.style.width = ''; }, 950);
-                });
-            });
-        }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
-        cards.forEach(function(card) { observer.observe(card); });
-        window.addEventListener('resize', function() {
+        function fullH(card) { return card.offsetWidth * 9 / 16; }
+        function smooth(t) { return t * t * (3 - 2 * t); }
+        cards.forEach(function(card) { card.style.height = COLLAPSED + 'px'; card.style.width = '100%'; });
+        var raf = null;
+        function doUpdate() {
+            var vh = window.innerHeight;
+            var zone = vh * 0.85;
             cards.forEach(function(card) {
-                var h = parseFloat(card.style.height);
-                if (h > COLLAPSED) { card.style.transition = 'none'; card.style.height = fullH(card) + 'px'; }
+                var top = card.getBoundingClientRect().top;
+                var p = smooth(Math.max(0, Math.min(1, (vh - top) / zone)));
+                card.style.height = Math.round(COLLAPSED + (fullH(card) - COLLAPSED) * p) + 'px';
             });
-        }, {passive: true});
+        }
+        function onScroll() { if (!raf) raf = requestAnimationFrame(function() { doUpdate(); raf = null; }); }
+        window.addEventListener('scroll', onScroll, {passive: true});
+        window.addEventListener('resize', onScroll, {passive: true});
+        doUpdate();
     })();
 
     (function initCursor() {
@@ -641,15 +633,7 @@
 
     (function initPageGate(){
         var shown=false;
-        function show(){
-            if(shown)return;shown=true;document.body.classList.add('page-ready');
-            document.querySelectorAll('.work-card').forEach(function(card){
-                var r=card.getBoundingClientRect();
-                if(r.top<window.innerHeight&&r.bottom>0&&card.style.height){
-                    card.style.transition='none';card.style.height='';card.style.width='';
-                }
-            });
-        }
+        function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}
         var iframe=document.querySelector('.hero-video iframe');
         if(iframe){iframe.addEventListener('load',show);setTimeout(show,1200);}else show();
     })();
