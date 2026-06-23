@@ -246,7 +246,7 @@
           if (menuOpen() && box.classList.contains('show')) hide();
         }, {passive:true});
         var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .dark-mode-toggle, .logo-bottom, .project-client-link, [data-cursor]';
-        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; return t.closest(sel); }
+        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; if (t.closest('.bio-toggle')) return null; return t.closest(sel); }
         document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
         document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
       } catch(err){}

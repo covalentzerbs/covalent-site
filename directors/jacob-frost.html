@@ -227,6 +227,20 @@
         .work-viewer.active { opacity:1; pointer-events:all; }
         .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); aspect-ratio:16/9; }
         .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+        .viewer-video-hero { position:absolute; inset:0; }
+        .viewer-click-layer { position:absolute; inset:0; z-index:2; }
+        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 20px 16px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
+        .viewer-video-hero.cs-playing .viewer-controls { opacity:0; transform:translateY(6px); pointer-events:none; }
+        .viewer-video-hero.cs-playing.cs-hover .viewer-controls { opacity:1; transform:translateY(0); pointer-events:auto; }
+        .viewer-ctrl-btn { background:none; border:none; padding:4px 6px; flex-shrink:0; cursor:none; }
+        .viewer-ctrl-btn .cs-ctrl-icon { display:none; width:14px; height:14px; object-fit:contain; }
+        .viewer-ctrl-btn .cs-icon-play { display:block; }
+        .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-play { display:none; }
+        .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-pause { display:block; }
+        .viewer-progress { flex:1; padding:8px 0; cursor:none; }
+        .viewer-progress .cs-progress-track { width:100%; height:2px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; overflow:hidden; }
+        .viewer-progress .cs-progress-fill { position:absolute; left:0; top:0; bottom:0; width:0%; background:#fff; border-radius:999px; }
+        .viewer-time { font-size:11px; color:rgba(255,255,255,0.7); white-space:nowrap; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.04em; }
         .viewer-close { position:absolute; top:1.5rem; right:1.5rem; z-index:10; background:none; border:none; cursor:none; padding:0.5rem; opacity:0.5; transition:opacity 0.2s; line-height:0; }
         .viewer-close:hover { opacity:1; }
         .viewer-meta { position:absolute; bottom:2rem; left:3rem; display:flex; flex-direction:column; gap:0.2rem; pointer-events:none; }
@@ -328,8 +342,24 @@
 
     <!-- Work Viewer -->
     <div id="workViewer" class="work-viewer">
-        <div class="viewer-frame">
-            <iframe id="viewerIframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        <div class="viewer-frame" id="viewerFrame">
+            <div class="viewer-video-hero" id="viewerVideoHero">
+                <iframe id="viewerIframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <div class="viewer-click-layer" id="viewerClickLayer"></div>
+                <div class="viewer-controls" id="viewerControls">
+                    <button class="viewer-ctrl-btn" id="viewerPlayPause">
+                        <img src="/assets/logos/covalent_white_play_button.png" width="128" height="128" alt="Play" class="cs-ctrl-icon cs-icon-play">
+                        <img src="/assets/logos/pause_button.png" width="128" height="128" alt="Pause" class="cs-ctrl-icon cs-icon-pause">
+                    </button>
+                    <div class="viewer-progress" id="viewerProgress">
+                        <div class="cs-progress-track"><div class="cs-progress-fill" id="viewerFill"></div></div>
+                    </div>
+                    <div class="viewer-time" id="viewerTime">00:00 / 00:00</div>
+                    <button class="viewer-ctrl-btn" id="viewerFsBtn">
+                        <img src="/assets/logos/fullscreen_button.png" width="128" height="128" alt="Fullscreen" class="cs-ctrl-icon">
+                    </button>
+                </div>
+            </div>
         </div>
         <button class="viewer-close" id="viewerClose" aria-label="Close">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="2" y1="2" x2="16" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="2" x2="2" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -361,13 +391,13 @@
         types:  ['commercial', 'content', 'entertainment'],
         styles: ['beauty & lifestyle', 'documentary', 'celebrity', 'food'],
         work: [
-            { client:'archer money',  title:'launch',                   thumbnail:'https://i.vimeocdn.com/video/2167332209-2e6e17f30b93c08b842d27b71c059107ec92ba441d1f37f630c59ddbab7e6362-d_1280x720', url:'', vimeo:'1200282915', hash:'ffeabc1665', clip_start:0, zoom:1.0 },
-            { client:'fare',          title:'beyond the bowl',          thumbnail:'https://i.vimeocdn.com/video/2136430771-f53c21717a7bbd356033553598ee8ab44587fc7bfb1f902567c96ef2ccf98eb5-d_1280x720', url:'/fare',    vimeo:'1175563835', clip_start:0 },
+            { client:'archer money',  title:'launch',                   thumbnail:'https://i.vimeocdn.com/video/2167332209-2e6e17f30b93c08b842d27b71c059107ec92ba441d1f37f630c59ddbab7e6362-d_1280x720', url:'', vimeo:'1200282915', hash:'ffeabc1665', clip_start:0, zoom:1.03 },
+            { client:'fare',          title:'beyond the bowl',          thumbnail:'https://i.vimeocdn.com/video/2136430771-f53c21717a7bbd356033553598ee8ab44587fc7bfb1f902567c96ef2ccf98eb5-d_1280x720', url:'/fare',    vimeo:'1175563835', clip_start:0, zoom:1.0 },
             { client:'pocket',        title:'launch',                   thumbnail:'https://i.vimeocdn.com/video/2129030620-e34b7e0c8001f6efcbcb482157f38106e4e2d3c1037a7a1a0a6c7c923f294342-d_1280x720', url:'', vimeo:'1170047221', hash:'6ac82c19db', clip_start:0, zoom:1.0 },
             { client:'aesop',         title:'skin',                     thumbnail:'https://i.vimeocdn.com/video/2126179638-f6c354c75518a1be78a136a9d2531222a8d363f2f1dec81d60727825d123bc01-d_1280x720', url:'/aesop',   vimeo:'1167988129', clip_start:0 },
             { client:'wabi',          title:'when did we stop playing', thumbnail:'https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280x720', url:'/wabi',    vimeo:'1161268499', clip_start:0 },
             { client:'world of hyatt',title:'jess pegula × us open',    thumbnail:'https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280x720', url:'/hyatt',   vimeo:'1149097153', clip_start:0 },
-            { client:"arc'teryx",     title:'a city to summit',         thumbnail:'https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280x720', url:'/arcteryx',vimeo:'1141586908', clip_start:0 },
+            { client:"arc'teryx",     title:'a city to summit',         thumbnail:'https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280x720', url:'/arcteryx',vimeo:'1141586908', clip_start:0, zoom:1.6 },
             { client:'pinch',         title:'a holiday campaign',       thumbnail:'https://i.vimeocdn.com/video/2089993227-e000ed9b7ef428ebf6588769ae040780042629649a7118b7c81199783dabe96a-d_1280x720', url:'/pinch',   vimeo:'1140543709', clip_start:0 }
         ]
     };
@@ -476,24 +506,70 @@
             viewerItems.push({ vimeo:card.getAttribute('data-vimeo'), hash:card.getAttribute('data-hash')||'', client:card.getAttribute('data-client'), title:card.getAttribute('data-title') });
             card.addEventListener('click', function(e) { e.preventDefault(); openViewer(i); });
         });
-        var viewer=document.getElementById('workViewer'), iframe=document.getElementById('viewerIframe');
-        var clientEl=document.getElementById('viewerClient'), titleEl=document.getElementById('viewerTitleText');
-        var closeBtn=document.getElementById('viewerClose'), prevBtn=document.getElementById('viewerPrev'), nextBtn=document.getElementById('viewerNext');
-        var current=-1;
+        var viewer   = document.getElementById('workViewer');
+        var frame    = document.getElementById('viewerFrame');
+        var vHero    = document.getElementById('viewerVideoHero');
+        var iframe   = document.getElementById('viewerIframe');
+        var clientEl = document.getElementById('viewerClient');
+        var titleEl  = document.getElementById('viewerTitleText');
+        var closeBtn = document.getElementById('viewerClose');
+        var prevBtn  = document.getElementById('viewerPrev');
+        var nextBtn  = document.getElementById('viewerNext');
+        var ppBtn    = document.getElementById('viewerPlayPause');
+        var progEl   = document.getElementById('viewerProgress');
+        var fillEl   = document.getElementById('viewerFill');
+        var timeEl   = document.getElementById('viewerTime');
+        var fsBtn    = document.getElementById('viewerFsBtn');
+        var clickLayer = document.getElementById('viewerClickLayer');
+        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null;
+        function fmt(s) { var m=Math.floor(s/60),sec=Math.floor(s%60); return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec; }
+        function setPlaying(p) { vPlaying=p; vHero.classList.toggle('cs-playing',p); }
+        function resetPlayer() {
+            if (vPlayer) { try { vPlayer.destroy(); } catch(e){} vPlayer=null; }
+            vPlaying=false; vDuration=0;
+            vHero.classList.remove('cs-playing','cs-hover');
+            if (fillEl) fillEl.style.width='0%';
+            if (timeEl) timeEl.textContent='00:00 / 00:00';
+        }
+        function bindPlayer(p) {
+            p.getDuration().then(function(d){ vDuration=d; if(timeEl&&d) timeEl.textContent='00:00 / '+fmt(d); }).catch(function(){});
+            p.on('play',  function(){ setPlaying(true); });
+            p.on('pause', function(){ setPlaying(false); });
+            p.on('ended', function(){ setPlaying(false); });
+            p.on('timeupdate', function(data){ if(!vDuration||!fillEl)return; fillEl.style.width=(data.seconds/vDuration*100)+'%'; if(timeEl) timeEl.textContent=fmt(data.seconds)+' / '+fmt(vDuration); });
+        }
         function openViewer(idx) {
-            current=idx;
-            var item=viewerItems[idx];
-            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&color=ffffff&title=0&byline=0&portrait=0&dnt=1';
+            current=idx; var item=viewerItems[idx];
+            resetPlayer();
+            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&controls=0&dnt=1';
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
             viewer.classList.add('active'); document.body.style.overflow='hidden';
             prevBtn.style.opacity=idx>0?'0.6':'0.15';
             nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
+            iframe.onload=function(){ try{ if(!window.Vimeo)return; vPlayer=new Vimeo.Player(iframe); bindPlayer(vPlayer); }catch(e){} };
         }
         function closeViewer() {
-            viewer.classList.remove('active');
-            setTimeout(function(){iframe.src='';},300);
-            document.body.style.overflow='';
+            viewer.classList.remove('active'); clearTimeout(idleTimer); resetPlayer();
+            setTimeout(function(){ iframe.src=''; },300); document.body.style.overflow='';
         }
+        function togglePlay() { if(!vPlayer)return; if(vPlaying) vPlayer.pause(); else vPlayer.play(); }
+        clickLayer.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
+        ppBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
+        progEl.addEventListener('click', function(e){
+            e.stopPropagation();
+            if(!vPlayer||!vDuration)return;
+            var rect=progEl.getBoundingClientRect();
+            vPlayer.setCurrentTime(((e.clientX-rect.left)/rect.width)*vDuration).catch(function(){});
+        });
+        fsBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            var target=frame||viewer;
+            if(document.fullscreenElement) document.exitFullscreen().catch(function(){});
+            else target.requestFullscreen().catch(function(){});
+        });
+        vHero.addEventListener('mouseenter', function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
+        vHero.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
+        vHero.addEventListener('mousemove',  function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
         closeBtn.addEventListener('click',closeViewer);
         viewer.addEventListener('click',function(e){if(e.target===viewer)closeViewer();});
         prevBtn.addEventListener('click',function(){if(current>0)openViewer(current-1);});
@@ -503,6 +579,7 @@
             if(e.key==='Escape')closeViewer();
             if(e.key==='ArrowLeft'&&current>0)openViewer(current-1);
             if(e.key==='ArrowRight'&&current<viewerItems.length-1)openViewer(current+1);
+            if(e.key===' '){e.preventDefault();togglePlay();}
         });
     })();
 
@@ -612,7 +689,7 @@
           if (menuOpen() && box.classList.contains('show')) hide();
         }, {passive:true});
         var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .dark-mode-toggle, .logo-bottom, .project-client-link, [data-cursor]';
-        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; if (t.closest('.work-card')) return null; return t.closest(sel); }
+        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; if (t.closest('.work-card')) return null; if (t.closest('.bio-toggle')) return null; return t.closest(sel); }
         document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
         document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
       } catch(err){}
