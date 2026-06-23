@@ -158,7 +158,7 @@
         .work-section-header { padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
         .work-section-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; color:rgba(0,0,0,0.35); text-transform:uppercase; }
         .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; width:100%; background:var(--white); }
-        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; }
+        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; transition:height 0.45s cubic-bezier(0.16,1,0.3,1); }
         .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
         .work-card:hover .card-thumb { filter:brightness(0.88); transition:filter 0.4s ease; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; }
@@ -596,7 +596,7 @@
     (function initReveal() {
         var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
         if (!cards.length) return;
-        var COLLAPSED = 80;
+        var COLLAPSED = 0;
         function fullH(card) { return card.offsetWidth * 9 / 16; }
         function smooth(t) { return t * t * (3 - 2 * t); }
         cards.forEach(function(card) { card.style.height = COLLAPSED + 'px'; card.style.width = '100%'; });
