@@ -165,7 +165,7 @@
         .card-video iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); border:none; pointer-events:none; width:calc(100cqw * var(--zoom,1.32)); height:calc(56.25cqw * var(--zoom,1.32)); min-width:calc(177.78cqh * var(--zoom,1.32)); min-height:calc(100cqh * var(--zoom,1.32)); }
         .card-video.playing { opacity:1; }
         .card-scrim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0) 55%); z-index:2; pointer-events:none; }
-        .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:1; }
+        .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:0; transition:opacity 0.3s ease; }
         .card-client { font-size:clamp(1.05rem,2.1vw,1.5rem); font-weight:400; color:var(--white); letter-spacing:-0.04em; line-height:1.05; margin-bottom:0.25rem; }
         .card-title { font-size:0.65rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.55); line-height:1.1; }
         .site-footer { position:fixed; bottom:0; left:0; right:0; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1001; }
@@ -630,6 +630,8 @@
                 var top = card.getBoundingClientRect().top;
                 var p = smooth(Math.max(0, Math.min(1, (vh - top) / zone)));
                 card.style.height = Math.round(COLLAPSED + (fullH(card) - COLLAPSED) * p) + "px";
+                var txt = card.querySelector(".card-text");
+                if (txt) txt.style.opacity = Math.max(0, Math.min(1, (p - 0.9) / 0.1));
             });
         }
         function onScroll() { if (!raf) raf = requestAnimationFrame(function() { update(); raf = null; }); }
