@@ -358,9 +358,9 @@
         types:  ['commercial', 'content', 'entertainment'],
         styles: ['beauty & lifestyle', 'documentary', 'celebrity', 'food'],
         work: [
-            { client:'archer money',  title:'launch',                   thumbnail:'', url:'', vimeo:'1200282915', hash:'ffeabc1665', clip_start:0 },
+            { client:'archer money',  title:'launch',                   thumbnail:'https://i.vimeocdn.com/video/2167332209-2e6e17f30b93c08b842d27b71c059107ec92ba441d1f37f630c59ddbab7e6362-d_1280x720', url:'', vimeo:'1200282915', hash:'ffeabc1665', clip_start:0 },
             { client:'fare',          title:'beyond the bowl',          thumbnail:'https://i.vimeocdn.com/video/2136430771-f53c21717a7bbd356033553598ee8ab44587fc7bfb1f902567c96ef2ccf98eb5-d_1280x720', url:'/fare',    vimeo:'1175563835', clip_start:0 },
-            { client:'pocket',        title:'launch',                   thumbnail:'', url:'', vimeo:'1170047221', hash:'6ac82c19db', clip_start:0 },
+            { client:'pocket',        title:'launch',                   thumbnail:'https://i.vimeocdn.com/video/2129030620-e34b7e0c8001f6efcbcb482157f38106e4e2d3c1037a7a1a0a6c7c923f294342-d_1280x720', url:'', vimeo:'1170047221', hash:'6ac82c19db', clip_start:0 },
             { client:'aesop',         title:'skin',                     thumbnail:'https://i.vimeocdn.com/video/2126179638-f6c354c75518a1be78a136a9d2531222a8d363f2f1dec81d60727825d123bc01-d_1280x720', url:'/aesop',   vimeo:'1167988129', clip_start:0 },
             { client:'wabi',          title:'when did we stop playing', thumbnail:'https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280x720', url:'/wabi',    vimeo:'1161268499', clip_start:0 },
             { client:'world of hyatt',title:'jess pegula × us open',    thumbnail:'https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280x720', url:'/hyatt',   vimeo:'1149097153', clip_start:0 },
@@ -437,26 +437,23 @@
                 })(item.vimeo, item.hash||'', card, item.client, item.title);
             }
             if (item.vimeo && window.matchMedia('(pointer:fine)').matches) {
-                var hoverIframe=null, hoverPlayer=null;
+                var hoverIframe = null;
                 var vl = card.querySelector('#cardVideo'+i);
-                var cs = item.clip_start||0;
                 card.addEventListener('mouseenter', function() {
                     vl.classList.add('playing');
                     if (hoverIframe) return;
                     hoverIframe = document.createElement('iframe');
-                    hoverIframe.src = 'https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&controls=0&background=1&dnt=1';
-                    hoverIframe.setAttribute('allow','autoplay;fullscreen;picture-in-picture');
+                    hoverIframe.allow = 'autoplay; fullscreen; picture-in-picture';
+                    hoverIframe.src = 'https://player.vimeo.com/video/'+item.vimeo
+                        +'?'+(item.hash?'h='+item.hash+'&':'')
+                        +'autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
                     vl.appendChild(hoverIframe);
-                    hoverPlayer = new Vimeo.Player(hoverIframe);
-                    hoverPlayer.ready().then(function(){
-                        if (!hoverIframe) return;
-                        hoverPlayer.setCurrentTime(cs);
-                        hoverPlayer.on('timeupdate',function(d){if(d.seconds>=cs+10)hoverPlayer.setCurrentTime(cs);});
-                    });
                 });
                 card.addEventListener('mouseleave', function() {
                     vl.classList.remove('playing');
-                    setTimeout(function(){if(hoverPlayer){hoverPlayer.destroy();hoverPlayer=null;}if(hoverIframe){hoverIframe.remove();hoverIframe=null;}},2000);
+                    setTimeout(function(){
+                        if(!vl.classList.contains('playing')&&hoverIframe){hoverIframe.remove();hoverIframe=null;}
+                    },2000);
                 });
             }
         });
