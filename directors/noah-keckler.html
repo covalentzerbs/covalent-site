@@ -19,6 +19,9 @@
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co/directors/noah-keckler">
     <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://f.vimeocdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -83,19 +86,17 @@
         .tag { display:inline-block; padding:0.3rem 0.7rem; border:1px solid var(--border); border-radius:999px; font-size:0.7rem; font-weight:500; color:rgba(255,255,255,0.55); letter-spacing:-0.02em; transition:border-color 0.2s ease,color 0.2s ease; }
         .tag:hover { border-color:rgba(255,255,255,0.25); color:rgba(255,255,255,0.85); }
         .work-section { background:var(--white); padding:0; padding-bottom:5rem; }
-        .work-section-header { padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
-        .work-section-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; color:rgba(0,0,0,0.35); text-transform:uppercase; }
         .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; background:var(--white); }
-        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; height:60px; min-height:60px; }
-        .card-thumb { position:absolute; width:100%; left:0; top:50%; transform:translateY(-50%); object-fit:cover; }
+        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; aspect-ratio:16/9; }
+        .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+        .work-card:hover .card-thumb { filter:brightness(0.88); transition:filter 0.4s ease; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; }
-        .card-video iframe { position:absolute; top:50%; left:50%; width:177.78%; height:100%; min-width:100%; transform:translate(-50%,-50%); border:none; pointer-events:none; }
+        .card-video iframe { position:absolute; top:50%; left:50%; width:132%; height:132%; min-width:100%; min-height:100%; transform:translate(-50%,-50%); border:none; pointer-events:none; }
         .card-video.playing { opacity:1; }
         .card-scrim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0) 55%); z-index:2; pointer-events:none; }
-        .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:0; transition:opacity 0.2s ease; }
-        .work-card.show-meta .card-text { opacity:1; transition:opacity 0.3s ease 0.75s; }
+        .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:1; }
         .card-client { font-size:0.65rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:0.2rem; }
-        .card-title { font-size:clamp(1rem,2vw,1.4rem); font-weight:500; color:var(--white); letter-spacing:-0.05em; line-height:1.1; }
+        .card-title { font-size:clamp(1rem,2vw,1.4rem); font-weight:300; color:var(--white); letter-spacing:-0.05em; line-height:1.1; }
         .site-footer { position:fixed; bottom:0; left:0; right:0; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1001; }
         .site-footer-left { font-size:0.7rem; font-weight:500; color:var(--white); opacity:0.5; }
         .footer-link { color:inherit; text-decoration:none; transition:color 0.2s ease; }
@@ -131,7 +132,21 @@
         body:not(.page-ready) { opacity:0; }
         body.page-ready { opacity:1; transition:opacity 0.4s ease; }
         @media (max-width:1024px) { .bio-inner{grid-template-columns:1fr;gap:2.5rem;} .bio-tags{flex-direction:row;flex-wrap:wrap;gap:2rem;} }
-        @media (max-width:768px) { .nav{padding:1.5rem;} .logo-top{top:1.5rem;left:1.5rem;} .logo-top svg{width:32px;height:32px;} .hero-content{bottom:2rem;left:1.5rem;right:1.5rem;} .hero-breadcrumb{top:5rem;left:1.5rem;} .bio-section{padding:3rem 1.5rem;} .bio-inner{grid-template-columns:1fr;gap:2rem;} .work-section{padding:0;} .work-grid{grid-template-columns:1fr;gap:10px;} .work-section-header{padding:1.5rem;} .card-text{bottom:1rem;left:1rem;} .menu-overlay{padding:5rem 1.5rem 1.5rem;} body{padding-bottom:3.5rem;} }
+        @media (max-width:768px) { .nav{padding:1.5rem;} .logo-top{top:1.5rem;left:1.5rem;} .logo-top svg{width:32px;height:32px;} .hero-content{bottom:2rem;left:1.5rem;right:1.5rem;} .hero-breadcrumb{top:5rem;left:1.5rem;} .bio-section{padding:3rem 1.5rem;} .bio-inner{grid-template-columns:1fr;gap:2rem;} .work-section{padding:0;} .work-grid{grid-template-columns:1fr;gap:10px;} .card-text{bottom:1rem;left:1rem;} .menu-overlay{padding:5rem 1.5rem 1.5rem;} body{padding-bottom:3.5rem;} }
+        /* ── Work Viewer ──────────────────────────────────── */
+        .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+        .work-viewer.active { opacity:1; pointer-events:all; }
+        .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); aspect-ratio:16/9; }
+        .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+        .viewer-close { position:absolute; top:1.5rem; right:1.5rem; z-index:10; background:none; border:none; cursor:none; padding:0.5rem; opacity:0.5; transition:opacity 0.2s; line-height:0; }
+        .viewer-close:hover { opacity:1; }
+        .viewer-meta { position:absolute; bottom:2rem; left:3rem; display:flex; flex-direction:column; gap:0.2rem; pointer-events:none; }
+        .viewer-client-label { font-size:0.6rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); }
+        .viewer-title-label { font-size:0.95rem; font-weight:400; color:rgba(255,255,255,0.85); text-transform:lowercase; }
+        .viewer-nav { position:absolute; top:50%; transform:translateY(-50%); background:none; border:none; cursor:none; padding:1.2rem; opacity:0.4; transition:opacity 0.2s; line-height:0; }
+        .viewer-nav:hover { opacity:1; }
+        .viewer-prev { left:0.5rem; }
+        .viewer-next { right:0.5rem; }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -157,7 +172,7 @@
         </div>
     </div>
     <section class="hero">
-        <div class="hero-video"><iframe src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="hero-video"><iframe src="https://player.vimeo.com/video/1164768847?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-name" id="heroName"></h1>
@@ -175,7 +190,6 @@
         </div>
     </section>
     <section class="work-section" id="workSection">
-        <div class="work-section-header"><span class="work-section-label">selected work</span></div>
         <div class="work-grid" id="workGrid"></div>
     </section>
     <footer class="site-footer">
@@ -189,7 +203,27 @@
             </div>
         </div>
     </footer>
-    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <!-- Work Viewer -->
+    <div id="workViewer" class="work-viewer">
+        <div class="viewer-frame">
+            <iframe id="viewerIframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <button class="viewer-close" id="viewerClose" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="2" y1="2" x2="16" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="2" x2="2" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="viewer-meta">
+            <span class="viewer-client-label" id="viewerClient"></span>
+            <span class="viewer-title-label" id="viewerTitleText"></span>
+        </div>
+        <button class="viewer-nav viewer-prev" id="viewerPrev" aria-label="Previous">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none"><polyline points="13,2 3,14 13,26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="viewer-nav viewer-next" id="viewerNext" aria-label="Next">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none"><polyline points="3,2 13,14 3,26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+    </div>
+
     <script>
     window.DIRECTOR = {
         name:      'Noah Keckler',
@@ -199,17 +233,164 @@
         hero_vimeo: '1164768847',
         types:  [],
         styles: [],
-        work:   []
+        work: [
+            { client:'2025 summer smash',               title:'official commercial',   thumbnail:'https://i.vimeocdn.com/video/2120792016-491ec444d739543bf2941b228a2a50b41ff89c9edd9be80e3cb8afb06780f85b-d_1280x720', vimeo:'1164236894', clip_start:0 },
+            { client:'chicago cubs × lyrical lemonade', title:'launch',                thumbnail:'https://i.vimeocdn.com/video/2120793664-c5e6350c0e88174f6acebe48e2a135ed34e5aa4a2c5898507e0134e952889c86-d_1280x720', vimeo:'1164237797', clip_start:0 },
+            { client:'sour boss',                       title:'elevator pitch',        thumbnail:'https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_1280x720', vimeo:'1164239118', clip_start:0 },
+            { client:'raw',                             title:'anything but ordinary', thumbnail:'https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_1280x720', vimeo:'1164237342', clip_start:0 },
+            { client:'7-eleven',                        title:'the summer smash',      thumbnail:'https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_1280x720', vimeo:'1164238677', clip_start:0 },
+            { client:'2024 summer smash',               title:'official commercial',   thumbnail:'https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_1280x720', vimeo:'1164237076', clip_start:0 },
+            { client:'',                                title:"let's go on a trip",    thumbnail:'https://i.vimeocdn.com/video/2120791753-73b95cb3ea3a368180f6f8793d22d7dcfe1fba8d7325635ae1dca4a3628aa6f9-d_1280x720', vimeo:'1164236741', clip_start:0 }
+        ]
     };
     </script>
     <script>
-    (function populatePage(){var D=window.DIRECTOR;document.getElementById('heroName').textContent=D.name;document.getElementById('heroTagline').textContent=D.tagline;document.querySelector('.hero-video iframe').src='https://player.vimeo.com/video/'+D.hero_vimeo+'?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1';document.getElementById('bioShort').textContent=D.bio_short;if(!D.bio_full||!D.bio_full.length)document.getElementById('bioToggle').style.display='none';var tagsEl=document.getElementById('bioTags');var groups=[{label:'type',items:D.types||[]},{label:'style',items:D.styles||[]}].filter(function(g){return g.items.length;});if(!groups.length){tagsEl.style.display='none';document.querySelector('.bio-inner').style.gridTemplateColumns='1fr';}else groups.forEach(function(g){var el=document.createElement('div');el.className='tag-group';el.innerHTML='<span class="tag-label">'+g.label+'</span><div class="tags">'+g.items.map(function(t){return'<span class="tag">'+t+'</span>';}).join('')+'</div>';tagsEl.appendChild(el);});if(!D.work||!D.work.length)document.getElementById('workSection').style.display='none';})();
-    (function initReveal(){var cards=Array.prototype.slice.call(document.querySelectorAll('.work-card'));if(!cards.length)return;var wg=document.querySelector('.work-grid'),NUM_COLS,vh,gdt,spr;var sp=document.createElement('div');sp.setAttribute('aria-hidden','true');document.body.appendChild(sp);function measure(){NUM_COLS=window.innerWidth<=768?1:2;vh=window.innerHeight;gdt=wg.getBoundingClientRect().top+window.scrollY;spr=vh*0.55;sp.style.height=Math.round(Math.ceil(cards.length/NUM_COLS)*spr)+'px';}function easeOut(t){return 1-Math.pow(1-t,3);}function update(){var s=window.scrollY-(gdt-vh);cards.forEach(function(c,i){var row=Math.floor(i/NUM_COLS),fh=c.offsetWidth*9/16,th=c.querySelector('.card-thumb');if(th)th.style.height=fh+'px';var p=Math.max(0,Math.min(1,(s-row*spr)/spr));c.style.height=Math.round(60+(fh-60)*easeOut(p))+'px';if(p>=0.88)c.classList.add('show-meta');else c.classList.remove('show-meta');});}measure();update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',function(){measure();update();},{passive:true});})();
+    (function populatePage() {
+        var D = window.DIRECTOR;
+        document.getElementById('heroName').textContent    = D.name;
+        document.getElementById('heroTagline').textContent = D.tagline;
+        document.getElementById('bioShort').textContent = D.bio_short;
+        var bioExpanded = document.getElementById('bioExpanded');
+        if (D.bio_full && D.bio_full.length) {
+            bioExpanded.innerHTML = D.bio_full.map(function(p){return'<p>'+p+'</p>';}).join('');
+        } else {
+            document.getElementById('bioToggle').style.display = 'none';
+        }
+        var tagsEl = document.getElementById('bioTags');
+        var groups = [{label:'type',items:D.types||[]},{label:'style',items:D.styles||[]}].filter(function(g){return g.items.length;});
+        if (!groups.length) {
+            tagsEl.style.display = 'none';
+            document.querySelector('.bio-inner').style.gridTemplateColumns = '1fr';
+        } else {
+            groups.forEach(function(g) {
+                var el = document.createElement('div');
+                el.className = 'tag-group';
+                el.innerHTML = '<span class="tag-label">'+g.label+'</span><div class="tags">'+g.items.map(function(t){return'<span class="tag">'+t+'</span>';}).join('')+'</div>';
+                tagsEl.appendChild(el);
+            });
+        }
+        var grid = document.getElementById('workGrid');
+        if (!D.work || !D.work.length) {
+            document.getElementById('workSection').style.display = 'none';
+            return;
+        }
+        D.work.forEach(function(item, i) {
+            var card = document.createElement('a');
+            card.className = 'work-card';
+            card.href = '#';
+            card.setAttribute('data-vimeo',  item.vimeo  || '');
+            card.setAttribute('data-hash',   item.hash   || '');
+            card.setAttribute('data-client', item.client || '');
+            card.setAttribute('data-title',  item.title  || '');
+            card.innerHTML = (item.thumbnail
+                ? '<img class="card-thumb" src="'+item.thumbnail+'" width="1280" height="720" alt="'+item.client+', '+item.title+'" loading="lazy">'
+                : '<div class="card-thumb" style="background:#1a1a1a;"></div>') +
+                '<div class="card-video" id="cardVideo'+i+'"></div>' +
+                '<div class="card-scrim"></div>' +
+                '<div class="card-text"><p class="card-client">'+item.client+'</p><p class="card-title">'+item.title+'</p></div>';
+            grid.appendChild(card);
+            card.setAttribute('data-zoom', String(item.zoom || 1.32));
+            if (item.vimeo && window.matchMedia('(pointer:fine)').matches) {
+                var vl = card.querySelector('#cardVideo'+i);
+                if (vl) {
+                    card.addEventListener('mouseenter', function() { vl.classList.add('playing'); });
+                    card.addEventListener('mouseleave', function() { vl.classList.remove('playing'); });
+                }
+            }
+        });
+    })();
+
+    window.addEventListener('load', function() {
+        try {
+            if (!window.matchMedia('(pointer:fine)').matches) return;
+            document.querySelectorAll('.work-card').forEach(function(card) {
+                var vimeo = card.getAttribute('data-vimeo');
+                if (!vimeo) return;
+                var vl = card.querySelector('.card-video');
+                if (!vl) return;
+                var hash = card.getAttribute('data-hash') || '';
+                var zoom = parseFloat(card.getAttribute('data-zoom') || '1.32');
+                var iframe = document.createElement('iframe');
+                iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+                iframe.style.width = (zoom * 100) + '%';
+                iframe.style.height = (zoom * 100) + '%';
+                iframe.src = 'https://player.vimeo.com/video/' + vimeo
+                    + '?' + (hash ? 'h=' + hash + '&' : '')
+                    + 'autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
+                vl.appendChild(iframe);
+            });
+        } catch(e) {}
+    }, {once: true});
+
+    (function initWorkViewer() {
+        var viewerItems = [];
+        document.querySelectorAll('.work-card').forEach(function(card, i) {
+            viewerItems.push({ vimeo:card.getAttribute('data-vimeo'), hash:card.getAttribute('data-hash')||'', client:card.getAttribute('data-client'), title:card.getAttribute('data-title') });
+            card.addEventListener('click', function(e) { e.preventDefault(); openViewer(i); });
+        });
+        var viewer=document.getElementById('workViewer'), iframe=document.getElementById('viewerIframe');
+        var clientEl=document.getElementById('viewerClient'), titleEl=document.getElementById('viewerTitleText');
+        var closeBtn=document.getElementById('viewerClose'), prevBtn=document.getElementById('viewerPrev'), nextBtn=document.getElementById('viewerNext');
+        var current=-1;
+        function openViewer(idx) {
+            current=idx;
+            var item=viewerItems[idx];
+            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&color=ffffff&title=0&byline=0&portrait=0&dnt=1';
+            clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
+            viewer.classList.add('active'); document.body.style.overflow='hidden';
+            prevBtn.style.opacity=idx>0?'0.6':'0.15';
+            nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
+        }
+        function closeViewer() {
+            viewer.classList.remove('active');
+            setTimeout(function(){iframe.src='';},300);
+            document.body.style.overflow='';
+        }
+        closeBtn.addEventListener('click',closeViewer);
+        viewer.addEventListener('click',function(e){if(e.target===viewer)closeViewer();});
+        prevBtn.addEventListener('click',function(){if(current>0)openViewer(current-1);});
+        nextBtn.addEventListener('click',function(){if(current<viewerItems.length-1)openViewer(current+1);});
+        document.addEventListener('keydown',function(e){
+            if(!viewer.classList.contains('active'))return;
+            if(e.key==='Escape')closeViewer();
+            if(e.key==='ArrowLeft'&&current>0)openViewer(current-1);
+            if(e.key==='ArrowRight'&&current<viewerItems.length-1)openViewer(current+1);
+        });
+    })();
+
+    (function initReveal() {
+        var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
+        if (!cards.length) return;
+        var COLLAPSED = 80;
+        function fullH(card) { return Math.round(card.offsetWidth * 9 / 16); }
+        cards.forEach(function(card) { card.style.height = COLLAPSED + 'px'; });
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (!entry.isIntersecting) return;
+                var card = entry.target;
+                observer.unobserve(card);
+                requestAnimationFrame(function() {
+                    card.style.transition = 'height 0.9s cubic-bezier(0.16,1,0.3,1)';
+                    card.style.height = fullH(card) + 'px';
+                    setTimeout(function() { card.style.transition = ''; card.style.height = ''; }, 950);
+                });
+            });
+        }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
+        cards.forEach(function(card) { observer.observe(card); });
+        window.addEventListener('resize', function() {
+            cards.forEach(function(card) {
+                if (!card.style.height || parseFloat(card.style.height) > COLLAPSED) {
+                    card.style.transition = 'none'; card.style.height = fullH(card) + 'px';
+                }
+            });
+        }, {passive: true});
+    })();
+
     (function initBioToggle(){var t=document.getElementById('bioToggle'),e=document.getElementById('bioExpanded');if(!t)return;t.addEventListener('click',function(){var o=e.classList.toggle('open');t.classList.toggle('open',o);});})();
     (function initMenu(){var mt=document.getElementById('menuToggle'),mo=document.getElementById('menuOverlay');mt.addEventListener('click',function(){mt.classList.toggle('active');mo.classList.toggle('active');});mo.addEventListener('click',function(e){if(e.target===mo){mt.classList.remove('active');mo.classList.remove('active');}});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mo.classList.contains('active')){mt.classList.remove('active');mo.classList.remove('active');}});})();
     (function initCursor(){var cursor=document.getElementById('cursor');if(!cursor)return;var mx=0,my=0,cx=0,cy=0,sc=1;window._cursorTargetScale=1;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});(function loop(){cx+=(mx-cx)*0.5;cy+=(my-cy)*0.5;sc+=(window._cursorTargetScale-sc)*0.15;cursor.style.transform='translate('+(cx-5)+'px,'+(cy-5)+'px) scale('+sc+')';requestAnimationFrame(loop);})();document.querySelectorAll('a,button,.work-card,.bio-toggle,.menu-toggle,.dark-mode-toggle,.tag').forEach(function(el){el.addEventListener('mouseenter',function(){window._cursorTargetScale=1.8;});el.addEventListener('mouseleave',function(){window._cursorTargetScale=1;});});})();
     (function initDarkMode(){var toggle=document.getElementById('darkModeToggle');if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}toggle.addEventListener('change',function(){document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});})();
-    (function initPageGate(){var shown=false;function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}var iframe=document.querySelector('.hero-video iframe');if(iframe){iframe.addEventListener('load',show);setTimeout(show,3000);}else show();})();
+    (function initPageGate(){var shown=false;function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}var iframe=document.querySelector('.hero-video iframe');if(iframe){iframe.addEventListener('load',show);setTimeout(show,1200);}else show();})();
     </script>
     <script src="/scripts/analytics.js"></script>
     <script>(function(){function enforceNoCursor(){var e=document.getElementById('no-native-cursor');if(e)e.remove();var s=document.createElement('style');s.id='no-native-cursor';s.textContent='html,html *,body,body *{cursor:none !important;}';document.head.appendChild(s);}enforceNoCursor();window.addEventListener('pageshow',function(){enforceNoCursor();var c=document.getElementById('cursor');if(c&&!('ontouchstart'in window))c.style.display='block';});document.addEventListener('visibilitychange',function(){if(!document.hidden)enforceNoCursor();});})();</script>
