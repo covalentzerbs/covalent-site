@@ -53,8 +53,6 @@
         .menu-overlay.active .menu-link-lab:hover { opacity:1 !important; }
         .menu-link-bond { font-family:'Satoshi',sans-serif; font-weight:500; letter-spacing:-0.03em; color:var(--bond-blue); }
         .menu-link:hover { opacity:1 !important; }
-        .menu-link-gradient { position:absolute; inset:0; background:linear-gradient(90deg,#5979e9,#7B93FF,#5979e9,#3A5BD4); background-size:300% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:gradientShift 3s ease infinite; pointer-events:none; -webkit-mask-image:radial-gradient(circle at var(--mx,0px) var(--my,0px),black var(--spread,0%),transparent var(--spread,0%)); mask-image:radial-gradient(circle at var(--mx,0px) var(--my,0px),black var(--spread,0%),transparent var(--spread,0%)); opacity:0; transition:opacity 0s; }
-        .menu-link:hover .menu-link-gradient { opacity:1; }
         .menu-link.current { opacity:1 !important; }
         .logo-top { position:fixed; top:2rem; left:2rem; z-index:10000; transition:opacity 0.3s ease; }
         .logo-top:hover { opacity:0.7; }
@@ -139,10 +137,10 @@
 </head>
 <body>
     <div class="cursor" id="cursor"></div>
-    <a href="/" class="logo-top">
+    <a href="/" class="logo-top" data-cursor="home">
         <svg viewBox="0 0 160 160" fill="none"><path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/></svg>
     </a>
-    <nav class="nav"><div class="menu-toggle" id="menuToggle"><div class="plus-icon"><span></span><span></span></div></div></nav>
+    <nav class="nav"><div class="menu-toggle" id="menuToggle" data-cursor="menu"><div class="plus-icon"><span></span><span></span></div></div></nav>
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
             <a href="/directors" class="menu-link current">directors</a>
@@ -209,12 +207,50 @@
     (function initReveal(){var cards=Array.prototype.slice.call(document.querySelectorAll('.work-card'));if(!cards.length)return;var wg=document.querySelector('.work-grid'),NUM_COLS,vh,gdt,spr;var sp=document.createElement('div');sp.setAttribute('aria-hidden','true');document.body.appendChild(sp);function measure(){NUM_COLS=window.innerWidth<=768?1:2;vh=window.innerHeight;gdt=wg.getBoundingClientRect().top+window.scrollY;spr=vh*0.55;sp.style.height=Math.round(Math.ceil(cards.length/NUM_COLS)*spr)+'px';}function easeOut(t){return 1-Math.pow(1-t,3);}function update(){var s=window.scrollY-(gdt-vh);cards.forEach(function(c,i){var row=Math.floor(i/NUM_COLS),fh=c.offsetWidth*9/16,th=c.querySelector('.card-thumb');if(th)th.style.height=fh+'px';var p=Math.max(0,Math.min(1,(s-row*spr)/spr));c.style.height=Math.round(60+(fh-60)*easeOut(p))+'px';if(p>=0.88)c.classList.add('show-meta');else c.classList.remove('show-meta');});}measure();update();window.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',function(){measure();update();},{passive:true});})();
     (function initBioToggle(){var t=document.getElementById('bioToggle'),e=document.getElementById('bioExpanded');if(!t)return;t.addEventListener('click',function(){var o=e.classList.toggle('open');t.classList.toggle('open',o);});})();
     (function initMenu(){var mt=document.getElementById('menuToggle'),mo=document.getElementById('menuOverlay');mt.addEventListener('click',function(){mt.classList.toggle('active');mo.classList.toggle('active');});mo.addEventListener('click',function(e){if(e.target===mo){mt.classList.remove('active');mo.classList.remove('active');}});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mo.classList.contains('active')){mt.classList.remove('active');mo.classList.remove('active');}});})();
-    (function initMenuGradient(){document.querySelectorAll('.menu-link').forEach(function(link){var g=document.createElement('span');g.classList.add('menu-link-gradient');g.textContent=link.textContent;g.style.setProperty('--spread','0%');link.appendChild(g);var af;link.addEventListener('mouseenter',function(e){var r=link.getBoundingClientRect();g.style.setProperty('--mx',(e.clientX-r.left)+'px');g.style.setProperty('--my',(e.clientY-r.top)+'px');g.style.setProperty('--spread','0%');var s=null;cancelAnimationFrame(af);af=requestAnimationFrame(function run(ts){if(!s)s=ts;var p=Math.min((ts-s)/900,1);g.style.setProperty('--spread',((1-Math.pow(1-p,3))*200)+'%');if(p<1)af=requestAnimationFrame(run);});});link.addEventListener('mouseleave',function(){cancelAnimationFrame(af);var cur=parseFloat(g.style.getPropertyValue('--spread'))||200,s=null;af=requestAnimationFrame(function run(ts){if(!s)s=ts;var p=Math.min((ts-s)/500,1);g.style.setProperty('--spread',(cur*(1-(1-Math.pow(1-p,3))))+'%');if(p<1)af=requestAnimationFrame(run);});});});})();
     (function initCursor(){var cursor=document.getElementById('cursor');if(!cursor)return;var mx=0,my=0,cx=0,cy=0,sc=1;window._cursorTargetScale=1;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});(function loop(){cx+=(mx-cx)*0.5;cy+=(my-cy)*0.5;sc+=(window._cursorTargetScale-sc)*0.15;cursor.style.transform='translate('+(cx-5)+'px,'+(cy-5)+'px) scale('+sc+')';requestAnimationFrame(loop);})();document.querySelectorAll('a,button,.work-card,.bio-toggle,.menu-toggle,.dark-mode-toggle,.tag').forEach(function(el){el.addEventListener('mouseenter',function(){window._cursorTargetScale=1.8;});el.addEventListener('mouseleave',function(){window._cursorTargetScale=1;});});})();
-    (function initDarkMode(){var toggle=document.getElementById('darkModeToggle');if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}toggle.addEventListener('change',function(){document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});var label=document.querySelector('.dark-mode-toggle');label.addEventListener('mouseenter',function(){window._cursorTargetScale=1.8;});label.addEventListener('mouseleave',function(){window._cursorTargetScale=1;});})();
+    (function initDarkMode(){var toggle=document.getElementById('darkModeToggle');if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}toggle.addEventListener('change',function(){document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});})();
     (function initPageGate(){var shown=false;function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}var iframe=document.querySelector('.hero-video iframe');if(iframe){iframe.addEventListener('load',show);setTimeout(show,3000);}else show();})();
     </script>
     <script src="/scripts/analytics.js"></script>
     <script>(function(){function enforceNoCursor(){var e=document.getElementById('no-native-cursor');if(e)e.remove();var s=document.createElement('style');s.id='no-native-cursor';s.textContent='html,html *,body,body *{cursor:none !important;}';document.head.appendChild(s);}enforceNoCursor();window.addEventListener('pageshow',function(){enforceNoCursor();var c=document.getElementById('cursor');if(c&&!('ontouchstart'in window))c.style.display='block';});document.addEventListener('visibilitychange',function(){if(!document.hidden)enforceNoCursor();});})();</script>
+    <!-- Custom click cursor: knockout label box over clickable elements -->
+    <script>
+    (function(){
+      try {
+        if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
+        var st = document.createElement('style');
+        st.textContent = '#clickCursor{position:fixed;text-transform:uppercase;left:-200px;top:-200px;transform:translate(-50%,-50%) scale(.7);opacity:0;pointer-events:none;z-index:10050;mix-blend-mode:difference;transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.2,1);will-change:transform,left,top,opacity}#clickCursor.show{opacity:1;transform:translate(-50%,-50%) scale(1)}body.click-cursor-active .cursor{opacity:0 !important}';
+        document.head.appendChild(st);
+        var box = document.createElement('div');
+        box.id = 'clickCursor';
+        box.setAttribute('aria-hidden','true');
+        document.body.appendChild(box);
+        function makeBox(label){
+          var w = Math.max(56, Math.round(label.length * 8.6 + 28)), h = 26;
+          return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="clickCursorMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">'+label+'</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#clickCursorMask)"/></svg>';
+        }
+        var current = '';
+        function setLabel(l){ if (l === current) return; current = l; box.innerHTML = makeBox(l); }
+        setLabel('CLICK');
+        function menuOpen(){ return !!document.querySelector('.menu-overlay.active'); }
+        function hide(){ box.classList.remove('show'); document.body.classList.remove('click-cursor-active'); }
+        function show(el){
+          if (menuOpen()) { hide(); return; }
+          var lbl = (el.getAttribute && el.getAttribute('data-cursor')) || 'CLICK';
+          setLabel(String(lbl).toUpperCase());
+          box.classList.add('show');
+          document.body.classList.add('click-cursor-active');
+        }
+        document.addEventListener('mousemove', function(e){
+          box.style.left = e.clientX + 'px'; box.style.top = e.clientY + 'px';
+          if (menuOpen() && box.classList.contains('show')) hide();
+        }, {passive:true});
+        var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .dark-mode-toggle, .logo-bottom, .project-client-link, [data-cursor]';
+        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; return t.closest(sel); }
+        document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
+        document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
+      } catch(err){}
+    })();
+    </script>
 </body>
 </html>
