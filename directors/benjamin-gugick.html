@@ -107,7 +107,7 @@
         .work-section { background:var(--white); padding:0; padding-bottom:5rem; }
         .work-section-header { padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
         .work-section-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; color:rgba(0,0,0,0.35); text-transform:uppercase; }
-        .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; background:var(--white); }
+        .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; width:100%; background:var(--white); }
         .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; height:60px; min-height:60px; }
         .card-thumb { position:absolute; width:100%; left:0; top:50%; transform:translateY(-50%); object-fit:cover; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; }
@@ -155,7 +155,7 @@
         body:not(.page-ready) { opacity:0; }
         body.page-ready { opacity:1; transition:opacity 0.4s ease; }
         @media (max-width:1024px) { .bio-inner { grid-template-columns:1fr; gap:2.5rem; } .bio-tags { flex-direction:row; flex-wrap:wrap; gap:2rem; } }
-        @media (max-width:768px) { .nav{padding:1.5rem;} .logo-top{top:1.5rem;left:1.5rem;} .logo-top svg{width:32px;height:32px;} .hero-content{bottom:2rem;left:1.5rem;right:1.5rem;} .hero-breadcrumb{top:5rem;left:1.5rem;} .bio-section{padding:3rem 1.5rem;} .bio-inner{grid-template-columns:1fr;gap:2rem;} .work-section{padding:0;} .work-grid{grid-template-columns:1fr;gap:10px;} .work-section-header{padding:1.5rem;} .card-text{bottom:1rem;left:1rem;} .menu-overlay{padding:5rem 1.5rem 1.5rem;} body{padding-bottom:3.5rem;} }
+        @media (max-width:768px) { .nav{padding:1.5rem;} .logo-top{top:1.5rem;left:1.5rem;} .logo-top svg{width:32px;height:32px;} .hero-content{bottom:2rem;left:1.5rem;right:1.5rem;} .hero-breadcrumb{top:5rem;left:1.5rem;} .bio-section{padding:3rem 1.5rem;} .bio-inner{grid-template-columns:1fr;gap:2rem;} .work-section{padding:0;} .work-grid{grid-template-columns:1fr;gap:0;} .work-section-header{padding:1.5rem;} .card-text{bottom:1rem;left:1rem;} .menu-overlay{padding:5rem 1.5rem 1.5rem;} body{padding-bottom:3.5rem;} }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
