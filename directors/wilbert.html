@@ -19,6 +19,9 @@
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co/directors/wilbert">
     <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://f.vimeocdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -104,7 +107,7 @@
         .menu-link-lab { color:#A6FF8E; }
         .menu-overlay.active .menu-link-lab { opacity:0.5 !important; transition:opacity 0.12s ease !important; }
         .menu-overlay.active .menu-link-lab:hover { opacity:1 !important; }
-        .menu-link-bond { font-family:\'Satoshi\',sans-serif; font-weight:500; letter-spacing:-0.03em; color:var(--bond-blue); text-transform:none; }
+        .menu-link-bond { font-family:'Satoshi',sans-serif; font-weight:500; letter-spacing:-0.03em; color:var(--bond-blue); text-transform:none; }
         .menu-link:hover { opacity:1 !important; }
         .menu-link.current { opacity:1 !important; }
         .logo-top { position:fixed; top:2rem; left:2rem; z-index:10000; transition:opacity 0.3s ease; }
@@ -117,7 +120,7 @@
         .hero-tagline { margin-top:0.75rem; font-size:clamp(0.85rem,1.5vw,1.1rem); font-weight:400; color:rgba(255,255,255,0.55); letter-spacing:-0.04em; max-width:480px; }
         .bio-short { font-size:1rem; font-weight:400; line-height:1.65; color:rgba(255,255,255,0.75); letter-spacing:-0.04em; }
         .bio-expanded { overflow:hidden; max-height:0; transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease; opacity:0; }
-        .bio-expanded.open { max-height:800px; opacity:1; }
+        .bio-expanded.open { max-height:600px; opacity:1; }
         .bio-expanded p { margin-top:1.2rem; font-size:0.9rem; line-height:1.7; color:rgba(255,255,255,0.5); letter-spacing:-0.04em; }
         .bio-toggle {
             margin-top:1.25rem; background:none; border:none; color:rgba(255,255,255,0.4);
@@ -140,7 +143,7 @@
         .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; width:100%; background:var(--white); }
         .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; height:6px; }
         .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-        .work-card:hover .card-thumb { filter:brightness(0.92); transition:filter 0.4s ease; }
+        .work-card:hover .card-thumb { filter:brightness(0.88); transition:filter 0.4s ease; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; container-type:size; }
         .card-video iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); border:none; pointer-events:none; width:calc(100cqw * var(--zoom,1.32)); height:calc(56.25cqw * var(--zoom,1.32)); min-width:calc(177.78cqh * var(--zoom,1.32)); min-height:calc(100cqh * var(--zoom,1.32)); }
         .card-video.playing { opacity:1; }
@@ -160,6 +163,7 @@
         .social-link[aria-label="Instagram"]:hover { color:#E1306C !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(225,48,108,0.55)) saturate(1.4); }
         .social-link[aria-label="LinkedIn"]:hover { color:#0A66C2 !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(10,102,194,0.6)) saturate(1.4); }
         .social-link.social-link-ionic:hover { color:#714BDD !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(113,75,221,0.6)) saturate(1.4); }
+        .menu-overlay.active .menu-socials:hover { opacity:1 !important; }
         .dark-mode-toggle { cursor:none; }
         .dark-mode-toggle input { display:none; }
         .toggle-track { width:28px; height:16px; background:rgba(0,0,0,0.15); border-radius:8px; position:relative; transition:background 0.3s ease; cursor:none; display:block; }
@@ -380,8 +384,6 @@
         var D = window.DIRECTOR;
         document.getElementById('heroName').textContent    = D.name;
         document.getElementById('heroTagline').textContent = D.tagline;
-        document.querySelector('.hero-video iframe').src   =
-            'https://player.vimeo.com/video/' + D.hero_vimeo + '?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1';
         document.getElementById('bioShort').textContent = D.bio_short;
         var bioExpanded = document.getElementById('bioExpanded');
         if (D.bio_full && D.bio_full.length) {
@@ -411,20 +413,38 @@
             card.className = 'work-card';
             card.href = '#';
             card.setAttribute('data-vimeo',  item.vimeo  || '');
+            card.setAttribute('data-hash',   item.hash   || '');
             card.setAttribute('data-client', item.client || '');
             card.setAttribute('data-title',  item.title  || '');
-            card.innerHTML =
-                (item.thumbnail
-                    ? '<img class="card-thumb" src="' + item.thumbnail + '" width="1280" height="720" alt="' + item.client + ', ' + item.title + '" loading="lazy">'
-                    : '<div class="card-thumb" style="background:#1a1a1a;"></div>') +
-                '<div class="card-video" id="cardVideo' + i + '"></div>' +
+            card.innerHTML = (item.thumbnail
+                ? '<img class="card-thumb" src="'+item.thumbnail+'" width="1280" height="720" alt="'+item.client+', '+item.title+'" loading="lazy">'
+                : '<div class="card-thumb" style="background:#1a1a1a;"></div>') +
+                '<div class="card-video" id="cardVideo'+i+'"></div>' +
                 '<div class="card-scrim"></div>' +
-                '<div class="card-text"><p class="card-client">' + item.client + '</p><p class="card-title">' + item.title + '</p></div>';
+                '<div class="card-text"><p class="card-client">'+item.client+'</p><p class="card-title">'+item.title+'</p></div>';
             grid.appendChild(card);
-
-            card.setAttribute('data-zoom', '1.32');
+            if (!item.thumbnail && item.vimeo) {
+                (function(vimeoId, hash, cardEl, client, title) {
+                    var vUrl = 'https://vimeo.com/' + vimeoId + (hash ? '/' + hash : '');
+                    fetch('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent(vUrl) + '&width=1280')
+                        .then(function(r){return r.json();})
+                        .then(function(data){
+                            if(!data.thumbnail_url) return;
+                            var placeholder = cardEl.querySelector('.card-thumb');
+                            if(!placeholder) return;
+                            var img = document.createElement('img');
+                            img.className = 'card-thumb';
+                            img.src = data.thumbnail_url.replace(/_\d+x\d+(\.\w+)$/, '_1280x720$1');
+                            img.width = 1280; img.height = 720;
+                            img.alt = client + ', ' + title; img.loading = 'lazy';
+                            placeholder.parentNode.replaceChild(img, placeholder);
+                        })
+                        .catch(function(){});
+                })(item.vimeo, item.hash||'', card, item.client, item.title);
+            }
+            card.setAttribute('data-zoom', String(item.zoom || 1.32));
             if (item.vimeo && window.matchMedia('(pointer:fine)').matches) {
-                var vl = card.querySelector('#cardVideo' + i);
+                var vl = card.querySelector('#cardVideo'+i);
                 if (vl) {
                     card.addEventListener('mouseenter', function() { vl.classList.add('playing'); });
                     card.addEventListener('mouseleave', function() { vl.classList.remove('playing'); });
@@ -441,12 +461,14 @@
                 if (!vimeo) return;
                 var vl = card.querySelector('.card-video');
                 if (!vl) return;
+                var hash = card.getAttribute('data-hash') || '';
                 var zoom = parseFloat(card.getAttribute('data-zoom') || '1.32');
                 var iframe = document.createElement('iframe');
                 iframe.allow = 'autoplay; fullscreen; picture-in-picture';
                 vl.style.setProperty('--zoom', zoom);
                 iframe.src = 'https://player.vimeo.com/video/' + vimeo
-                    + '?autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
+                    + '?' + (hash ? 'h=' + hash + '&' : '')
+                    + 'autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
                 vl.appendChild(iframe);
             });
         } catch(e) {}
@@ -536,19 +558,16 @@
     })();
 
     (function initBioToggle() {
-        var toggle = document.getElementById('bioToggle'), expanded = document.getElementById('bioExpanded');
-        if (!toggle) return;
-        toggle.addEventListener('click', function() {
-            var o = expanded.classList.toggle('open');
-            toggle.classList.toggle('open', o);
-        });
+        var toggle=document.getElementById('bioToggle'), expanded=document.getElementById('bioExpanded');
+        if(!toggle) return;
+        toggle.addEventListener('click',function(){var o=expanded.classList.toggle('open');toggle.classList.toggle('open',o);});
     })();
 
     (function initMenu() {
-        var mt = document.getElementById('menuToggle'), mo = document.getElementById('menuOverlay');
-        mt.addEventListener('click', function() { mt.classList.toggle('active'); mo.classList.toggle('active'); });
-        mo.addEventListener('click', function(e) { if (e.target === mo) { mt.classList.remove('active'); mo.classList.remove('active'); } });
-        document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && mo.classList.contains('active')) { mt.classList.remove('active'); mo.classList.remove('active'); } });
+        var mt=document.getElementById('menuToggle'), mo=document.getElementById('menuOverlay');
+        mt.addEventListener('click',function(){mt.classList.toggle('active');mo.classList.toggle('active');});
+        mo.addEventListener('click',function(e){if(e.target===mo){mt.classList.remove('active');mo.classList.remove('active');}});
+        document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mo.classList.contains('active')){mt.classList.remove('active');mo.classList.remove('active');}});
     })();
 
     (function initFooterContrast(){
@@ -597,43 +616,34 @@
     })();
 
     (function initCursor() {
-        var cursor = document.getElementById('cursor'); if (!cursor) return;
-        var mx = 0, my = 0, cx = 0, cy = 0, sc = 1; window._cursorTargetScale = 1;
-        document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
-        (function loop() { cx += (mx - cx) * 0.5; cy += (my - cy) * 0.5; sc += (window._cursorTargetScale - sc) * 0.15; cursor.style.transform = 'translate(' + (cx - 5) + 'px,' + (cy - 5) + 'px) scale(' + sc + ')'; requestAnimationFrame(loop); })();
+        var cursor=document.getElementById('cursor'); if(!cursor) return;
+        var mx=0,my=0,cx=0,cy=0,sc=1; window._cursorTargetScale=1;
+        document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+        (function loop(){cx+=(mx-cx)*0.5;cy+=(my-cy)*0.5;sc+=(window._cursorTargetScale-sc)*0.15;cursor.style.transform='translate('+(cx-5)+'px,'+(cy-5)+'px) scale('+sc+')';requestAnimationFrame(loop);})();
     })();
 
     (function initDarkMode() {
-        var toggle = document.getElementById('darkModeToggle');
-        if (localStorage.getItem('darkMode') === 'true') { document.body.classList.add('dark-mode'); toggle.checked = true; }
-        toggle.addEventListener('change', function() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); });
+        var toggle=document.getElementById('darkModeToggle');
+        if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}
+        toggle.addEventListener('change',function(){document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});
     })();
 
-    (function initPageGate() {
-        var shown = false;
-        function show() { if (shown) return; shown = true; document.body.classList.add('page-ready'); }
-        var iframe = document.querySelector('.hero-video iframe');
-        if (iframe) { iframe.addEventListener('load', show); setTimeout(show, 3000); } else show();
+    (function initPageGate(){
+        var shown=false;
+        function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}
+        var iframe=document.querySelector('.hero-video iframe');
+        if(iframe){iframe.addEventListener('load',show);setTimeout(show,1200);}else show();
     })();
     </script>
 
     <script src="/scripts/analytics.js"></script>
 
     <script>
-    (function() {
-        function enforceNoCursor() {
-            var e = document.getElementById('no-native-cursor'); if (e) e.remove();
-            var s = document.createElement('style'); s.id = 'no-native-cursor';
-            s.textContent = 'html,html *,body,body *{cursor:none !important;}';
-            document.head.appendChild(s);
-        }
+    (function(){
+        function enforceNoCursor(){var e=document.getElementById('no-native-cursor');if(e)e.remove();var s=document.createElement('style');s.id='no-native-cursor';s.textContent='html,html *,body,body *{cursor:none !important;}';document.head.appendChild(s);}
         enforceNoCursor();
-        window.addEventListener('pageshow', function() {
-            enforceNoCursor();
-            var c = document.getElementById('cursor');
-            if (c && !('ontouchstart' in window)) c.style.display = 'block';
-        });
-        document.addEventListener('visibilitychange', function() { if (!document.hidden) enforceNoCursor(); });
+        window.addEventListener('pageshow',function(){enforceNoCursor();var c=document.getElementById('cursor');if(c&&!('ontouchstart'in window))c.style.display='block';});
+        document.addEventListener('visibilitychange',function(){if(!document.hidden)enforceNoCursor();});
     })();
     </script>
 
@@ -676,6 +686,5 @@
       } catch(err){}
     })();
     </script>
-
 </body>
 </html>
