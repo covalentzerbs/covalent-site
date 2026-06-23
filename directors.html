@@ -25,6 +25,9 @@
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co/directors">
     <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://f.vimeocdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -329,6 +332,8 @@
             position: absolute; inset: 0; width: 100%; height: 100%;
             object-fit: cover; opacity: 0; pointer-events: none; z-index: 1;
             transition: opacity 0.15s ease;
+            filter: blur(14px);
+            transform: scale(1.08);
         }
 
         .video-cursor-block {
@@ -845,11 +850,11 @@
     <script>
         // Directors data
         const directors = [
-            { id: 'jacob',    slug: 'jacob-frost',    name: 'Jacob Frost',     vimeo: '1170741864', zoom: 'slight' },
-            { id: 'wilbert',  slug: 'wilbert-cheng',  name: 'Wilbert Cheng',   vimeo: '1122231476' },
-            { id: 'benjamin', slug: 'benjamin-gugick', name: 'Benjamin Gugick', vimeo: '1170747372', widescreen: true },
-            { id: 'jon',      slug: 'jon-schwartz',   name: 'Jon Schwartz',    vimeo: '1163390482', widescreen: true },
-            { id: 'noah',     slug: 'noah-keckler',   name: 'Noah Keckler',    vimeo: '1164768847', widescreen: true }
+            { id: 'jacob',    slug: 'jacob-frost',    name: 'Jacob Frost',     vimeo: '1170741864', zoom: 'slight',    thumbnail: 'https://i.vimeocdn.com/video/2129989125-7bcea3f611dc90b29683cb79b07503543d01abd6db34091368cc53005941e0e5-d_1280x720' },
+            { id: 'wilbert',  slug: 'wilbert-cheng',  name: 'Wilbert Cheng',   vimeo: '1122231476',                   thumbnail: 'https://i.vimeocdn.com/video/2063512119-ff88dce3f6ffff1eaee087dff25574c950eb6bdb44d18e05e6777416ee6bda81-d_1280x720' },
+            { id: 'benjamin', slug: 'benjamin-gugick', name: 'Benjamin Gugick', vimeo: '1170747372', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2129996959-f2ac7c3d5c611ab65be91616235857915f17c53bdfe06b3db27d573ed00df7c7-d_1280x720' },
+            { id: 'jon',      slug: 'jon-schwartz',   name: 'Jon Schwartz',    vimeo: '1163390482', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_1280x720' },
+            { id: 'noah',     slug: 'noah-keckler',   name: 'Noah Keckler',    vimeo: '1164768847', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2121554252-a7004843031d0a0efd0bbbf00cf82995c6b3caf2edaa5224a6466ed1c6918a0c-d_1280x720' }
         ];
 
         const videoWrapper = document.getElementById('videoWrapper');
@@ -906,31 +911,16 @@
             if (d.vimeo || d.youtube) ensureVideo(d.id);
         });
 
-        // Load poster thumbnails from oEmbed and inject into videoWrapper
+        // Create poster thumbnails synchronously from hardcoded URLs
         let posterTimer = null;
         directors.forEach(d => {
-            if (!d.vimeo) return;
-            fetch('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' + d.vimeo + '&width=1280')
-                .then(r => r.json())
-                .then(data => {
-                    if (!data.thumbnail_url) return;
-                    const img = document.createElement('img');
-                    img.className = 'director-poster';
-                    img.setAttribute('data-director', d.id);
-                    img.src = data.thumbnail_url.replace(/_\d+x\d+(\.\w+)$/, '_1280x720$1');
-                    img.width = 1280; img.height = 720; img.alt = '';
-                    videoWrapper.appendChild(img);
-                    // If this director is already active when the poster arrives, show it now
-                    if (d.id === currentVideoId) {
-                        img.style.transition = 'opacity 0.15s ease';
-                        img.style.opacity = '1';
-                        posterTimer = setTimeout(() => {
-                            img.style.transition = 'opacity 0.8s ease';
-                            img.style.opacity = '0';
-                        }, 1500);
-                    }
-                })
-                .catch(() => {});
+            if (!d.thumbnail) return;
+            const img = document.createElement('img');
+            img.className = 'director-poster';
+            img.setAttribute('data-director', d.id);
+            img.src = d.thumbnail;
+            img.width = 1280; img.height = 720; img.alt = '';
+            videoWrapper.appendChild(img);
         });
 
         // Switch video with crossfade

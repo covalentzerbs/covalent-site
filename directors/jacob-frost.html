@@ -19,6 +19,9 @@
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co/directors/jacob-frost">
     <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://f.vimeocdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -276,7 +279,7 @@
 
     <section class="hero" id="hero">
         <div class="hero-video">
-            <iframe src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://player.vimeo.com/video/1170741864?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -375,8 +378,6 @@
         var D = window.DIRECTOR;
         document.getElementById('heroName').textContent    = D.name;
         document.getElementById('heroTagline').textContent = D.tagline;
-        document.querySelector('.hero-video iframe').src   =
-            'https://player.vimeo.com/video/' + D.hero_vimeo + '?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1';
         document.getElementById('bioShort').textContent = D.bio_short;
         var bioExpanded = document.getElementById('bioExpanded');
         if (D.bio_full && D.bio_full.length) {
@@ -563,7 +564,7 @@
         var shown=false;
         function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}
         var iframe=document.querySelector('.hero-video iframe');
-        if(iframe){iframe.addEventListener('load',show);setTimeout(show,3000);}else show();
+        if(iframe){iframe.addEventListener('load',show);setTimeout(show,1200);}else show();
     })();
     </script>
 
