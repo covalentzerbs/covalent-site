@@ -159,7 +159,7 @@
         .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
         .work-card:hover .card-thumb { filter:brightness(0.88); transition:filter 0.4s ease; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; }
-        .card-video iframe { position:absolute; top:50%; left:50%; width:130%; height:130%; min-width:100%; min-height:100%; transform:translate(-50%,-50%); border:none; pointer-events:none; }
+        .card-video iframe { position:absolute; top:50%; left:50%; width:132%; height:132%; min-width:100%; min-height:100%; transform:translate(-50%,-50%); border:none; pointer-events:none; }
         .card-video.playing { opacity:1; }
         .card-scrim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0) 55%); z-index:2; pointer-events:none; }
         .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:1; }
@@ -358,9 +358,9 @@
         types:  ['commercial', 'content', 'entertainment'],
         styles: ['beauty & lifestyle', 'documentary', 'celebrity', 'food'],
         work: [
-            { client:'archer money',  title:'launch',                   thumbnail:'https://i.vimeocdn.com/video/2167332209-2e6e17f30b93c08b842d27b71c059107ec92ba441d1f37f630c59ddbab7e6362-d_1280x720', url:'', vimeo:'1200282915', hash:'ffeabc1665', clip_start:0 },
+            { client:'archer money',  title:'launch',                   thumbnail:'https://i.vimeocdn.com/video/2167332209-2e6e17f30b93c08b842d27b71c059107ec92ba441d1f37f630c59ddbab7e6362-d_1280x720', url:'', vimeo:'1200282915', hash:'ffeabc1665', clip_start:0, zoom:1.0 },
             { client:'fare',          title:'beyond the bowl',          thumbnail:'https://i.vimeocdn.com/video/2136430771-f53c21717a7bbd356033553598ee8ab44587fc7bfb1f902567c96ef2ccf98eb5-d_1280x720', url:'/fare',    vimeo:'1175563835', clip_start:0 },
-            { client:'pocket',        title:'launch',                   thumbnail:'https://i.vimeocdn.com/video/2129030620-e34b7e0c8001f6efcbcb482157f38106e4e2d3c1037a7a1a0a6c7c923f294342-d_1280x720', url:'', vimeo:'1170047221', hash:'6ac82c19db', clip_start:0 },
+            { client:'pocket',        title:'launch',                   thumbnail:'https://i.vimeocdn.com/video/2129030620-e34b7e0c8001f6efcbcb482157f38106e4e2d3c1037a7a1a0a6c7c923f294342-d_1280x720', url:'', vimeo:'1170047221', hash:'6ac82c19db', clip_start:0, zoom:1.0 },
             { client:'aesop',         title:'skin',                     thumbnail:'https://i.vimeocdn.com/video/2126179638-f6c354c75518a1be78a136a9d2531222a8d363f2f1dec81d60727825d123bc01-d_1280x720', url:'/aesop',   vimeo:'1167988129', clip_start:0 },
             { client:'wabi',          title:'when did we stop playing', thumbnail:'https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280x720', url:'/wabi',    vimeo:'1161268499', clip_start:0 },
             { client:'world of hyatt',title:'jess pegula × us open',    thumbnail:'https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280x720', url:'/hyatt',   vimeo:'1149097153', clip_start:0 },
@@ -436,19 +436,38 @@
                         .catch(function(){});
                 })(item.vimeo, item.hash||'', card, item.client, item.title);
             }
+            card.setAttribute('data-zoom', String(item.zoom || 1.32));
             if (item.vimeo && window.matchMedia('(pointer:fine)').matches) {
                 var vl = card.querySelector('#cardVideo'+i);
-                var hoverIframe = document.createElement('iframe');
-                hoverIframe.allow = 'autoplay; fullscreen; picture-in-picture';
-                hoverIframe.src = 'https://player.vimeo.com/video/'+item.vimeo
-                    +'?'+(item.hash?'h='+item.hash+'&':'')
-                    +'autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
-                vl.appendChild(hoverIframe);
-                card.addEventListener('mouseenter', function() { vl.classList.add('playing'); });
-                card.addEventListener('mouseleave', function() { vl.classList.remove('playing'); });
+                if (vl) {
+                    card.addEventListener('mouseenter', function() { vl.classList.add('playing'); });
+                    card.addEventListener('mouseleave', function() { vl.classList.remove('playing'); });
+                }
             }
         });
     })();
+
+    window.addEventListener('load', function() {
+        try {
+            if (!window.matchMedia('(pointer:fine)').matches) return;
+            document.querySelectorAll('.work-card').forEach(function(card) {
+                var vimeo = card.getAttribute('data-vimeo');
+                if (!vimeo) return;
+                var vl = card.querySelector('.card-video');
+                if (!vl) return;
+                var hash = card.getAttribute('data-hash') || '';
+                var zoom = parseFloat(card.getAttribute('data-zoom') || '1.32');
+                var iframe = document.createElement('iframe');
+                iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+                iframe.style.width = (zoom * 100) + '%';
+                iframe.style.height = (zoom * 100) + '%';
+                iframe.src = 'https://player.vimeo.com/video/' + vimeo
+                    + '?' + (hash ? 'h=' + hash + '&' : '')
+                    + 'autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
+                vl.appendChild(iframe);
+            });
+        } catch(e) {}
+    }, {once: true});
 
     (function initWorkViewer() {
         var viewerItems = [];
