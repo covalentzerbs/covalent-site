@@ -155,7 +155,7 @@
         .work-section-header { padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
         .work-section-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; color:rgba(0,0,0,0.35); text-transform:uppercase; }
         .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; width:100%; background:var(--white); }
-        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; aspect-ratio:16/9; }
+        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; }
         .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
         .work-card:hover .card-thumb { filter:brightness(0.92); transition:filter 0.4s ease; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; }
@@ -223,7 +223,7 @@
         /* ── Work Viewer ──────────────────────────────────── */
         .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
         .work-viewer.active { opacity:1; pointer-events:all; }
-        .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); aspect-ratio:16/9; }
+        .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); }
         .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
         .viewer-video-hero { position:absolute; inset:0; }
         .viewer-click-layer { position:absolute; inset:0; z-index:2; }
