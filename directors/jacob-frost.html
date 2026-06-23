@@ -170,12 +170,14 @@
         .card-client { font-size:0.65rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:0.2rem; }
         .card-title { font-size:clamp(1rem,2vw,1.4rem); font-weight:300; color:var(--white); letter-spacing:-0.05em; line-height:1.1; }
         .site-footer { position:fixed; bottom:0; left:0; right:0; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1001; }
-        .site-footer-left { font-size:0.7rem; font-weight:500; color:var(--white); opacity:0.5; }
+        .site-footer-left { font-size:0.7rem; font-weight:500; color:var(--white); opacity:0.5; transition:color 0.3s ease; }
         .footer-link { color:inherit; text-decoration:none; transition:color 0.2s ease; }
         .footer-link:hover { color:var(--bond-blue); }
         .site-footer-right { display:flex; align-items:center; gap:1.5rem; opacity:0.5; }
         .site-footer-socials { display:flex; align-items:center; gap:1rem; }
         .social-link { color:var(--white); display:flex; align-items:center; transition:color 0.18s ease,opacity 0.18s ease,transform 0.18s ease,filter 0.18s ease; transform-origin:center; }
+        .site-footer.on-light .site-footer-left { color:#0A0A0A !important; -webkit-text-fill-color:#0A0A0A; }
+        .site-footer.on-light .social-link { color:#0A0A0A !important; -webkit-text-fill-color:#0A0A0A; transition:color 0.3s ease,-webkit-text-fill-color 0.3s ease; }
         .social-link[aria-label="Instagram"]:hover { color:#E1306C !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(225,48,108,0.55)) saturate(1.4); }
         .social-link[aria-label="LinkedIn"]:hover { color:#0A66C2 !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(10,102,194,0.6)) saturate(1.4); }
         .social-link.social-link-ionic:hover { color:#714BDD !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(113,75,221,0.6)) saturate(1.4); }
@@ -597,6 +599,23 @@
         mt.addEventListener('click',function(){mt.classList.toggle('active');mo.classList.toggle('active');});
         mo.addEventListener('click',function(e){if(e.target===mo){mt.classList.remove('active');mo.classList.remove('active');}});
         document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mo.classList.contains('active')){mt.classList.remove('active');mo.classList.remove('active');}});
+    })();
+
+    (function initFooterContrast(){
+        var footer = document.querySelector('.site-footer');
+        var light = document.querySelector('.work-section');
+        if (!footer || !light) return;
+        var raf = null;
+        function update(){
+            var fr = footer.getBoundingClientRect();
+            var fcy = fr.top + fr.height / 2;
+            var lr = light.getBoundingClientRect();
+            footer.classList.toggle('on-light', lr.top <= fcy && lr.bottom >= fcy);
+        }
+        function onScroll(){ if (!raf) raf = requestAnimationFrame(function(){ update(); raf = null; }); }
+        window.addEventListener('scroll', onScroll, {passive:true});
+        window.addEventListener('resize', onScroll, {passive:true});
+        update();
     })();
 
     (function initReveal() {
