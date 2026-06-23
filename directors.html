@@ -943,6 +943,15 @@
                     img.src = data.thumbnail_url.replace(/_\d+x\d+(\.\w+)$/, '_1280x720$1');
                     img.width = 1280; img.height = 720; img.alt = '';
                     videoWrapper.appendChild(img);
+                    // If this director is already active when the poster arrives, show it now
+                    if (d.id === currentVideoId) {
+                        img.style.transition = 'opacity 0.15s ease';
+                        img.style.opacity = '1';
+                        posterTimer = setTimeout(() => {
+                            img.style.transition = 'opacity 0.8s ease';
+                            img.style.opacity = '0';
+                        }, 1500);
+                    }
                 })
                 .catch(() => {});
         });
@@ -1033,12 +1042,10 @@
             });
         });
 
-        // Set initial video
+        // Set initial video immediately
         const firstDirectorWithVideo = directors.find(d => d.vimeo || d.youtube);
         if (firstDirectorWithVideo) {
-            setTimeout(() => {
-                switchVideo(firstDirectorWithVideo.id);
-            }, 500);
+            switchVideo(firstDirectorWithVideo.id);
         }
 
         // Menu toggle
