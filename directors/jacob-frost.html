@@ -605,7 +605,7 @@
         function fullH(card) { return Math.round(card.offsetWidth * 9 / 16); }
         var vh = window.innerHeight;
         cards.forEach(function(card) {
-            if (card.getBoundingClientRect().top > vh) { card.style.height = COLLAPSED + 'px'; }
+            if (card.getBoundingClientRect().top > vh) { card.style.height = COLLAPSED + 'px'; card.style.width = '100%'; }
         });
         var observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
@@ -616,7 +616,7 @@
                 requestAnimationFrame(function() {
                     card.style.transition = 'height 0.9s cubic-bezier(0.16,1,0.3,1)';
                     card.style.height = fullH(card) + 'px';
-                    setTimeout(function() { card.style.transition = ''; card.style.height = ''; }, 950);
+                    setTimeout(function() { card.style.transition = ''; card.style.height = ''; card.style.width = ''; }, 950);
                 });
             });
         }, { threshold: 0, rootMargin: '0px 0px -5% 0px' });
@@ -649,7 +649,7 @@
             document.querySelectorAll('.work-card').forEach(function(card){
                 var r=card.getBoundingClientRect();
                 if(r.top<window.innerHeight&&r.bottom>0&&card.style.height){
-                    card.style.transition='none';card.style.height='';
+                    card.style.transition='none';card.style.height='';card.style.width='';
                 }
             });
         }
