@@ -240,7 +240,7 @@
             { client:'raw',                             title:'anything but ordinary', thumbnail:'https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_1280x720', vimeo:'1164237342', clip_start:0 },
             { client:'7-eleven',                        title:'the summer smash',      thumbnail:'https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_1280x720', vimeo:'1164238677', clip_start:0 },
             { client:'2024 summer smash',               title:'official commercial',   thumbnail:'https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_1280x720', vimeo:'1164237076', clip_start:0 },
-            { client:'',                                title:"let's go on a trip",    thumbnail:'https://i.vimeocdn.com/video/2120791753-73b95cb3ea3a368180f6f8793d22d7dcfe1fba8d7325635ae1dca4a3628aa6f9-d_1280x720', vimeo:'1164236741', clip_start:0 }
+            { client:'',                                title:"let's go on a trip",    thumbnail:'https://i.vimeocdn.com/video/2120791753-73b95cb3ea3a368180f6f8793d26d7dcfe1fba8d7325635ae1dca4a3628aa6f9-d_1280x720', vimeo:'1164236741', clip_start:0 }
         ]
     };
     </script>
@@ -289,7 +289,7 @@
                 '<div class="card-scrim"></div>' +
                 '<div class="card-text"><p class="card-client">'+item.client+'</p><p class="card-title">'+item.title+'</p></div>';
             grid.appendChild(card);
-            card.setAttribute('data-zoom', String(item.zoom || 1.32));
+            card.setAttribute('data-zoom', String(item.zoom || 1.5));
             if (item.vimeo && window.matchMedia('(pointer:fine)').matches) {
                 var vl = card.querySelector('#cardVideo'+i);
                 if (vl) {
@@ -309,7 +309,7 @@
                 var vl = card.querySelector('.card-video');
                 if (!vl) return;
                 var hash = card.getAttribute('data-hash') || '';
-                var zoom = parseFloat(card.getAttribute('data-zoom') || '1.32');
+                var zoom = parseFloat(card.getAttribute('data-zoom') || '1.5');
                 var iframe = document.createElement('iframe');
                 iframe.allow = 'autoplay; fullscreen; picture-in-picture';
                 iframe.style.width = (zoom * 100) + '%';
@@ -427,7 +427,7 @@
           if (menuOpen() && box.classList.contains('show')) hide();
         }, {passive:true});
         var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .dark-mode-toggle, .logo-bottom, .project-client-link, [data-cursor]';
-        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; return t.closest(sel); }
+        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; if (t.closest('.work-card')) return null; return t.closest(sel); }
         document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
         document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
       } catch(err){}
