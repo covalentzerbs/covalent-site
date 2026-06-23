@@ -9,19 +9,16 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="shortcut icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="jon schwartz. director at covalent studios. finding the human moment inside every brief.">
-    <link rel="canonical" href="https://covalentstudios.co/directors/jon-schwartz">
-    <title>jon schwartz.</title>
+    <meta name="description" content="wilbert cheng. director at covalent studios. commercial and branded content with warmth, sentimentality, and real life in every frame.">
+    <link rel="canonical" href="https://covalentstudios.co/directors/wilbert">
+    <title>wilbert cheng.</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-T14F8BVFLJ');</script>
-    <meta property="og:title" content="jon schwartz.">
+    <meta property="og:title" content="wilbert cheng.">
     <meta property="og:description" content="director. covalent studios.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
-    <meta property="og:url" content="https://covalentstudios.co/directors/jon-schwartz">
+    <meta property="og:url" content="https://covalentstudios.co/directors/wilbert">
     <meta property="og:type" content="website">
-    <link rel="preconnect" href="https://player.vimeo.com">
-    <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
-    <link rel="dns-prefetch" href="https://f.vimeocdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -113,31 +110,14 @@
         .logo-top { position:fixed; top:2rem; left:2rem; z-index:10000; transition:opacity 0.3s ease; }
         .logo-top:hover { opacity:0.7; }
         .logo-top svg { width:40px; height:40px; }
-        .hero { position:relative; width:100%; height:100dvh; overflow:hidden; background:var(--black); }
-        .hero-video { position:absolute; inset:0; z-index:0; }
-        .hero-video iframe {
-            position:absolute; top:50%; left:50%;
-            width:177.78dvh; height:100dvh; min-width:100%; min-height:56.25vw;
-            transform:translate(-50%,-50%); border:none; pointer-events:none;
-        }
-        .hero-overlay {
-            position:absolute; inset:0; z-index:1;
-            background:linear-gradient(to bottom,rgba(10,10,10,0.2) 0%,rgba(10,10,10,0) 30%,rgba(10,10,10,0) 50%,rgba(10,10,10,0.75) 80%,rgba(10,10,10,0.95) 100%);
-        }
-        .hero-breadcrumb {
-            position:absolute; top:6rem; left:3rem; z-index:10;
-            font-size:0.7rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
-            color:rgba(255,255,255,0.4); text-decoration:none; transition:color 0.2s ease;
-        }
-        .hero-breadcrumb:hover { color:rgba(255,255,255,0.85); }
-        .hero-content { position:absolute; bottom:3rem; left:3rem; z-index:10; }
-        .hero-name { font-size:clamp(2.5rem,8vw,5rem); font-weight:500; line-height:1.0; color:var(--white); letter-spacing:-0.07em; }
-        .hero-tagline { margin-top:0.5rem; font-size:clamp(0.85rem,1.5vw,1.1rem); font-weight:400; color:rgba(255,255,255,0.6); letter-spacing:-0.04em; max-width:480px; }
-        .bio-section { background:var(--black); padding:5rem 3rem; border-top:1px solid var(--border); }
-        .bio-inner { max-width:960px; margin:0 auto; display:grid; grid-template-columns:1fr 280px; gap:4rem; align-items:start; }
+        .dir-header { background:var(--black); padding:7.5rem 3rem 4rem; border-bottom:1px solid var(--border); }
+        .dir-header-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+        .dir-desc-col { display:flex; flex-direction:column; align-items:flex-start; }
+        .hero-name { font-size:clamp(2.5rem,7vw,5rem); font-weight:500; line-height:0.95; color:var(--white); letter-spacing:-0.07em; }
+        .hero-tagline { margin-top:0.75rem; font-size:clamp(0.85rem,1.5vw,1.1rem); font-weight:400; color:rgba(255,255,255,0.55); letter-spacing:-0.04em; max-width:480px; }
         .bio-short { font-size:1rem; font-weight:400; line-height:1.65; color:rgba(255,255,255,0.75); letter-spacing:-0.04em; }
         .bio-expanded { overflow:hidden; max-height:0; transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease; opacity:0; }
-        .bio-expanded.open { max-height:600px; opacity:1; }
+        .bio-expanded.open { max-height:800px; opacity:1; }
         .bio-expanded p { margin-top:1.2rem; font-size:0.9rem; line-height:1.7; color:rgba(255,255,255,0.5); letter-spacing:-0.04em; }
         .bio-toggle {
             margin-top:1.25rem; background:none; border:none; color:rgba(255,255,255,0.4);
@@ -148,7 +128,7 @@
         .bio-toggle:hover { color:rgba(255,255,255,0.9); }
         .bio-toggle .toggle-icon { display:inline-block; transition:transform 0.3s ease; font-style:normal; }
         .bio-toggle.open .toggle-icon { transform:rotate(45deg); }
-        .bio-tags { display:flex; flex-direction:column; gap:1.5rem; }
+        .bio-tags { display:flex; flex-direction:row; flex-wrap:wrap; gap:1.5rem 2.5rem; margin-top:2rem; }
         .tag-group { display:flex; flex-direction:column; gap:0.5rem; }
         .tag-label { font-size:0.65rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,255,255,0.3); text-transform:uppercase; }
         .tags { display:flex; flex-wrap:wrap; gap:0.4rem; }
@@ -160,7 +140,7 @@
         .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; width:100%; background:var(--white); }
         .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; height:6px; }
         .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-        .work-card:hover .card-thumb { filter:brightness(0.88); transition:filter 0.4s ease; }
+        .work-card:hover .card-thumb { filter:brightness(0.92); transition:filter 0.4s ease; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; container-type:size; }
         .card-video iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); border:none; pointer-events:none; width:calc(100cqw * var(--zoom,1.32)); height:calc(56.25cqw * var(--zoom,1.32)); min-width:calc(177.78cqh * var(--zoom,1.32)); min-height:calc(100cqh * var(--zoom,1.32)); }
         .card-video.playing { opacity:1; }
@@ -180,7 +160,6 @@
         .social-link[aria-label="Instagram"]:hover { color:#E1306C !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(225,48,108,0.55)) saturate(1.4); }
         .social-link[aria-label="LinkedIn"]:hover { color:#0A66C2 !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(10,102,194,0.6)) saturate(1.4); }
         .social-link.social-link-ionic:hover { color:#714BDD !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(113,75,221,0.6)) saturate(1.4); }
-        .menu-overlay.active .menu-socials:hover { opacity:1 !important; }
         .dark-mode-toggle { cursor:none; }
         .dark-mode-toggle input { display:none; }
         .toggle-track { width:28px; height:16px; background:rgba(0,0,0,0.15); border-radius:8px; position:relative; transition:background 0.3s ease; cursor:none; display:block; }
@@ -208,17 +187,14 @@
         body:not(.page-ready) { opacity:0; }
         body.page-ready { opacity:1; transition:opacity 0.4s ease; }
         @media (max-width:1024px) {
-            .bio-inner { grid-template-columns:1fr; gap:2.5rem; }
-            .bio-tags { flex-direction:row; flex-wrap:wrap; gap:2rem; }
+            .dir-header-inner { grid-template-columns:1fr; gap:2.5rem; align-items:start; }
         }
         @media (max-width:768px) {
             .nav { padding:1.5rem; }
             .logo-top { top:1.5rem; left:1.5rem; }
             .logo-top svg { width:32px; height:32px; }
-            .hero-content { bottom:2rem; left:1.5rem; right:1.5rem; }
-            .hero-breadcrumb { top:5rem; left:1.5rem; }
-            .bio-section { padding:3rem 1.5rem; }
-            .bio-inner { grid-template-columns:1fr; gap:2rem; }
+            .dir-header { padding:7rem 1.5rem 3rem; }
+            .dir-header-inner { grid-template-columns:1fr; gap:2rem; }
             .work-section { padding:0; }
             .work-grid { grid-template-columns:1fr; gap:0; }
             .work-section-header { padding:1.5rem; }
@@ -295,29 +271,22 @@
         </div>
     </div>
 
-    <section class="hero" id="hero">
-        <div class="hero-video">
-            <iframe src="https://player.vimeo.com/video/1163390482?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-name" id="heroName"></h1>
-            <p class="hero-tagline" id="heroTagline"></p>
-        </div>
-    </section>
-
-    <section class="bio-section">
-        <div class="bio-inner">
-            <div class="bio-text-col">
+    <header class="dir-header">
+        <div class="dir-header-inner">
+            <div class="dir-name-col">
+                <h1 class="hero-name" id="heroName"></h1>
+                <p class="hero-tagline" id="heroTagline"></p>
+            </div>
+            <div class="dir-desc-col">
                 <p class="bio-short" id="bioShort"></p>
                 <div class="bio-expanded" id="bioExpanded"></div>
                 <button class="bio-toggle" id="bioToggle">
                     <em class="toggle-icon">+</em> biography
                 </button>
+                <div class="bio-tags" id="bioTags"></div>
             </div>
-            <div class="bio-tags" id="bioTags"></div>
         </div>
-    </section>
+    </header>
 
     <section class="work-section" id="workSection">
         <div class="work-grid" id="workGrid"></div>
@@ -384,22 +353,24 @@
 
     <script>
     window.DIRECTOR = {
-        name:      'Jon Schwartz',
-        tagline:   'director. covalent studios.',
-        bio_short: 'jon schwartz is a director whose work spans commercial and branded content — finding the human moment inside every brief.',
-        bio_full:  [],
-        hero_vimeo: '1163390482',
-        types:  [],
-        styles: [],
+        name:      'Wilbert Cheng',
+        tagline:   'warmth, sentimentality, and real life in the frame',
+        bio_short: 'wilbert is drawn to the emotion people bring when they are truly present on camera — his work is often described as lived in and full of warmth.',
+        bio_full: [
+            'that is what he is always trying to find on set: the moment a subject forgets the crew is there, or the shot that feels like it was already happening before the camera started rolling. his aesthetic tends towards warmth with sentimentality — real environments, real people, real life in the frame.',
+            'wilbert thinks about every production as a system. it\'s not just a hero video, but a full ecosystem of assets that can live across platforms without losing what made them resonate in the first place. his process is built heavily in preparation — a calm, collaborative set is not a luxury. it\'s necessary to get the best performance and the most honest moments.',
+            'at the center of it all is a simple pursuit: to create space for something real to unfold, and capture it with honesty, care, and intention.'
+        ],
+        hero_vimeo: '1122231476',
+        types:  ['commercial', 'content'],
+        styles: ['lifestyle', 'home & living', 'branded'],
         work: [
-            { client:'airbnb',      title:'getways',              thumbnail:'https://i.vimeocdn.com/video/2119568926-449d11f54e69995fe60be558e93a5316d31e524ad5ed703f4b1e2edaf69614af-d_1280x720', url:'', vimeo:'1163382779', clip_start:0 },
-            { client:'true value',  title:'your project. your way.', thumbnail:'https://i.vimeocdn.com/video/2119570906-c191ad8675c99b45728e724ac00dc772a34e45a3820500e713935496ecfe6625-d_1280x720', url:'', vimeo:'1163383108', clip_start:0 },
-            { client:'aria vegas',  title:'juice',                thumbnail:'https://i.vimeocdn.com/video/2119569095-caa3be122e450d4f5128c3f3909a67066f543708e66e71a5e76a95c9e8484a0b-d_1280x720', url:'', vimeo:'1163382833', clip_start:0 },
-            { client:'joybird',     title:'dialed in',            thumbnail:'https://i.vimeocdn.com/video/2119572983-69df01103d13ebd094d13d900c46811a6593cd216e062a110c8db70e9876d76f-d_1280x720', url:'', vimeo:'1163384182', clip_start:0 },
-            { client:'walmart',     title:'summer entertaining',  thumbnail:'https://i.vimeocdn.com/video/2119581202-7150d90091578a27562849f1b74999c89a63fe464202aea20afc39a7f299f579-d_1280x720', url:'', vimeo:'1163390792', clip_start:0 },
-            { client:'sega',        title:'sonic superstars',     thumbnail:'https://i.vimeocdn.com/video/2119577353-942d64d6f8964afdba6883390465eb850a5b07393beb004f6381815fc8bbe2ca-d_1280x720', url:'', vimeo:'1163388385', clip_start:0 },
-            { client:'tide',        title:'to go!',               thumbnail:'https://i.vimeocdn.com/video/2119580177-f33ffeb54cff5cbec02a302fe264adb5bdf13c8fadac51677cece6cca61b1b5d-d_1280x720', url:'', vimeo:'1163388488', clip_start:0 },
-            { client:'ross',        title:'serve looks',          thumbnail:'https://i.vimeocdn.com/video/2119577148-bafc881967c9a2c4e5614bda3610364387d508e105c36d62442d483cc5ffaef9-d_1280x720', url:'', vimeo:'1163386417', clip_start:0 }
+            { client: 'arhaus',                title: 'home is a feeling',      vimeo: '1122231476', thumbnail: 'https://i.vimeocdn.com/video/2063512119-ff88dce3f6ffff1eaee087dff25574c950eb6bdb44d18e05e6777416ee6bda81-d_1280x720',  clip_start: 0 },
+            { client: 'kohler × studio mcgee', title: 'the collaboration',      vimeo: '1165024679', thumbnail: 'https://i.vimeocdn.com/video/2122044293-bc44e798cd9f91249f3f2125a0cda4a3d5f0efd8ead5d3b2c2a0c81f6e1bf8f4-d_1280x720', clip_start: 0 },
+            { client: 'google',                title: 'spirit of individuality', vimeo: '884190439',  thumbnail: 'https://i.vimeocdn.com/video/1753169776-e188a83a952d961e5f103030c9fcc060b3ce42b1df726a0ff1eeae07a88ad0b6-d_1280x720',  clip_start: 0 },
+            { client: 'shun',                  title: 'shiranami',              vimeo: '1176773655', thumbnail: 'https://i.vimeocdn.com/video/2137939574-b89c9cf8538b7d85e0afd98e249fc07601f2bbebb0e9ca4abc9add8e40c88625-d_1280x720',  clip_start: 0 },
+            { client: 'uovo',                  title: 'brand launch',           vimeo: '1062199989', thumbnail: 'https://i.vimeocdn.com/video/1989076343-f2704e5c1d3c287622a44821fbe91b32c93c7af213c7606f49625e8cde41512d-d_1280x720',  clip_start: 0 },
+            { client: 'kohler × studio mcgee', title: 'the launch film',        vimeo: '1165024548', thumbnail: 'https://i.vimeocdn.com/video/2122044023-885b07eba0515ef04c1af1e99ff4617ee7693909f6bf6013d740d781211ea9fd-d_1280x720',  clip_start: 0 }
         ]
     };
     </script>
@@ -409,6 +380,8 @@
         var D = window.DIRECTOR;
         document.getElementById('heroName').textContent    = D.name;
         document.getElementById('heroTagline').textContent = D.tagline;
+        document.querySelector('.hero-video iframe').src   =
+            'https://player.vimeo.com/video/' + D.hero_vimeo + '?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1';
         document.getElementById('bioShort').textContent = D.bio_short;
         var bioExpanded = document.getElementById('bioExpanded');
         if (D.bio_full && D.bio_full.length) {
@@ -420,7 +393,6 @@
         var groups = [{label:'type',items:D.types||[]},{label:'style',items:D.styles||[]}].filter(function(g){return g.items.length;});
         if (!groups.length) {
             tagsEl.style.display = 'none';
-            document.querySelector('.bio-inner').style.gridTemplateColumns = '1fr';
         } else {
             groups.forEach(function(g) {
                 var el = document.createElement('div');
@@ -439,38 +411,20 @@
             card.className = 'work-card';
             card.href = '#';
             card.setAttribute('data-vimeo',  item.vimeo  || '');
-            card.setAttribute('data-hash',   item.hash   || '');
             card.setAttribute('data-client', item.client || '');
             card.setAttribute('data-title',  item.title  || '');
-            card.innerHTML = (item.thumbnail
-                ? '<img class="card-thumb" src="'+item.thumbnail+'" width="1280" height="720" alt="'+item.client+', '+item.title+'" loading="lazy">'
-                : '<div class="card-thumb" style="background:#1a1a1a;"></div>') +
-                '<div class="card-video" id="cardVideo'+i+'"></div>' +
+            card.innerHTML =
+                (item.thumbnail
+                    ? '<img class="card-thumb" src="' + item.thumbnail + '" width="1280" height="720" alt="' + item.client + ', ' + item.title + '" loading="lazy">'
+                    : '<div class="card-thumb" style="background:#1a1a1a;"></div>') +
+                '<div class="card-video" id="cardVideo' + i + '"></div>' +
                 '<div class="card-scrim"></div>' +
-                '<div class="card-text"><p class="card-client">'+item.client+'</p><p class="card-title">'+item.title+'</p></div>';
+                '<div class="card-text"><p class="card-client">' + item.client + '</p><p class="card-title">' + item.title + '</p></div>';
             grid.appendChild(card);
-            if (!item.thumbnail && item.vimeo) {
-                (function(vimeoId, hash, cardEl, client, title) {
-                    var vUrl = 'https://vimeo.com/' + vimeoId + (hash ? '/' + hash : '');
-                    fetch('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent(vUrl) + '&width=1280')
-                        .then(function(r){return r.json();})
-                        .then(function(data){
-                            if(!data.thumbnail_url) return;
-                            var placeholder = cardEl.querySelector('.card-thumb');
-                            if(!placeholder) return;
-                            var img = document.createElement('img');
-                            img.className = 'card-thumb';
-                            img.src = data.thumbnail_url.replace(/_\d+x\d+(\.\w+)$/, '_1280x720$1');
-                            img.width = 1280; img.height = 720;
-                            img.alt = client + ', ' + title; img.loading = 'lazy';
-                            placeholder.parentNode.replaceChild(img, placeholder);
-                        })
-                        .catch(function(){});
-                })(item.vimeo, item.hash||'', card, item.client, item.title);
-            }
-            card.setAttribute('data-zoom', String(item.zoom || 1.32));
+
+            card.setAttribute('data-zoom', '1.32');
             if (item.vimeo && window.matchMedia('(pointer:fine)').matches) {
-                var vl = card.querySelector('#cardVideo'+i);
+                var vl = card.querySelector('#cardVideo' + i);
                 if (vl) {
                     card.addEventListener('mouseenter', function() { vl.classList.add('playing'); });
                     card.addEventListener('mouseleave', function() { vl.classList.remove('playing'); });
@@ -487,14 +441,12 @@
                 if (!vimeo) return;
                 var vl = card.querySelector('.card-video');
                 if (!vl) return;
-                var hash = card.getAttribute('data-hash') || '';
                 var zoom = parseFloat(card.getAttribute('data-zoom') || '1.32');
                 var iframe = document.createElement('iframe');
                 iframe.allow = 'autoplay; fullscreen; picture-in-picture';
                 vl.style.setProperty('--zoom', zoom);
                 iframe.src = 'https://player.vimeo.com/video/' + vimeo
-                    + '?' + (hash ? 'h=' + hash + '&' : '')
-                    + 'autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
+                    + '?autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
                 vl.appendChild(iframe);
             });
         } catch(e) {}
@@ -584,16 +536,19 @@
     })();
 
     (function initBioToggle() {
-        var toggle=document.getElementById('bioToggle'), expanded=document.getElementById('bioExpanded');
-        if(!toggle) return;
-        toggle.addEventListener('click',function(){var o=expanded.classList.toggle('open');toggle.classList.toggle('open',o);});
+        var toggle = document.getElementById('bioToggle'), expanded = document.getElementById('bioExpanded');
+        if (!toggle) return;
+        toggle.addEventListener('click', function() {
+            var o = expanded.classList.toggle('open');
+            toggle.classList.toggle('open', o);
+        });
     })();
 
     (function initMenu() {
-        var mt=document.getElementById('menuToggle'), mo=document.getElementById('menuOverlay');
-        mt.addEventListener('click',function(){mt.classList.toggle('active');mo.classList.toggle('active');});
-        mo.addEventListener('click',function(e){if(e.target===mo){mt.classList.remove('active');mo.classList.remove('active');}});
-        document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mo.classList.contains('active')){mt.classList.remove('active');mo.classList.remove('active');}});
+        var mt = document.getElementById('menuToggle'), mo = document.getElementById('menuOverlay');
+        mt.addEventListener('click', function() { mt.classList.toggle('active'); mo.classList.toggle('active'); });
+        mo.addEventListener('click', function(e) { if (e.target === mo) { mt.classList.remove('active'); mo.classList.remove('active'); } });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && mo.classList.contains('active')) { mt.classList.remove('active'); mo.classList.remove('active'); } });
     })();
 
     (function initFooterContrast(){
@@ -642,34 +597,43 @@
     })();
 
     (function initCursor() {
-        var cursor=document.getElementById('cursor'); if(!cursor) return;
-        var mx=0,my=0,cx=0,cy=0,sc=1; window._cursorTargetScale=1;
-        document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
-        (function loop(){cx+=(mx-cx)*0.5;cy+=(my-cy)*0.5;sc+=(window._cursorTargetScale-sc)*0.15;cursor.style.transform='translate('+(cx-5)+'px,'+(cy-5)+'px) scale('+sc+')';requestAnimationFrame(loop);})();
+        var cursor = document.getElementById('cursor'); if (!cursor) return;
+        var mx = 0, my = 0, cx = 0, cy = 0, sc = 1; window._cursorTargetScale = 1;
+        document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
+        (function loop() { cx += (mx - cx) * 0.5; cy += (my - cy) * 0.5; sc += (window._cursorTargetScale - sc) * 0.15; cursor.style.transform = 'translate(' + (cx - 5) + 'px,' + (cy - 5) + 'px) scale(' + sc + ')'; requestAnimationFrame(loop); })();
     })();
 
     (function initDarkMode() {
-        var toggle=document.getElementById('darkModeToggle');
-        if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}
-        toggle.addEventListener('change',function(){document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});
+        var toggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'true') { document.body.classList.add('dark-mode'); toggle.checked = true; }
+        toggle.addEventListener('change', function() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); });
     })();
 
-    (function initPageGate(){
-        var shown=false;
-        function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}
-        var iframe=document.querySelector('.hero-video iframe');
-        if(iframe){iframe.addEventListener('load',show);setTimeout(show,1200);}else show();
+    (function initPageGate() {
+        var shown = false;
+        function show() { if (shown) return; shown = true; document.body.classList.add('page-ready'); }
+        var iframe = document.querySelector('.hero-video iframe');
+        if (iframe) { iframe.addEventListener('load', show); setTimeout(show, 3000); } else show();
     })();
     </script>
 
     <script src="/scripts/analytics.js"></script>
 
     <script>
-    (function(){
-        function enforceNoCursor(){var e=document.getElementById('no-native-cursor');if(e)e.remove();var s=document.createElement('style');s.id='no-native-cursor';s.textContent='html,html *,body,body *{cursor:none !important;}';document.head.appendChild(s);}
+    (function() {
+        function enforceNoCursor() {
+            var e = document.getElementById('no-native-cursor'); if (e) e.remove();
+            var s = document.createElement('style'); s.id = 'no-native-cursor';
+            s.textContent = 'html,html *,body,body *{cursor:none !important;}';
+            document.head.appendChild(s);
+        }
         enforceNoCursor();
-        window.addEventListener('pageshow',function(){enforceNoCursor();var c=document.getElementById('cursor');if(c&&!('ontouchstart'in window))c.style.display='block';});
-        document.addEventListener('visibilitychange',function(){if(!document.hidden)enforceNoCursor();});
+        window.addEventListener('pageshow', function() {
+            enforceNoCursor();
+            var c = document.getElementById('cursor');
+            if (c && !('ontouchstart' in window)) c.style.display = 'block';
+        });
+        document.addEventListener('visibilitychange', function() { if (!document.hidden) enforceNoCursor(); });
     })();
     </script>
 
@@ -712,5 +676,6 @@
       } catch(err){}
     })();
     </script>
+
 </body>
 </html>

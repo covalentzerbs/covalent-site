@@ -3,6 +3,13 @@
   "rewrites": [
     { "source": "/", "destination": "/home" }
   ],
+  "redirects": [
+    { "source": "/directors/jacob-frost", "destination": "/directors/jacob", "permanent": true },
+    { "source": "/directors/noah-keckler", "destination": "/directors/noah", "permanent": true },
+    { "source": "/directors/wilbert-cheng", "destination": "/directors/wilbert", "permanent": true },
+    { "source": "/directors/jon-schwartz", "destination": "/directors/jon", "permanent": true },
+    { "source": "/directors/benjamin-gugick", "destination": "/directors/benjamin", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
