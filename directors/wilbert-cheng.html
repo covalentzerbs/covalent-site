@@ -159,7 +159,7 @@
         .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
         .work-card:hover .card-thumb { filter:brightness(0.92); transition:filter 0.4s ease; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; }
-        .card-video iframe { position:absolute; top:50%; left:50%; width:300%; height:300%; min-width:100%; min-height:100%; transform:translate(-50%,-50%); border:none; pointer-events:none; }
+        .card-video iframe { position:absolute; top:50%; left:50%; width:130%; height:130%; min-width:100%; min-height:100%; transform:translate(-50%,-50%); border:none; pointer-events:none; }
         .card-video.playing { opacity:1; }
         .card-scrim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0) 55%); z-index:2; pointer-events:none; }
         .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:1; }
@@ -436,23 +436,14 @@
             })(item.vimeo, thumbId);
 
             if (item.vimeo && window.matchMedia('(pointer:fine)').matches) {
-                var hoverIframe = null;
                 var vl = card.querySelector('#cardVideo' + i);
-                card.addEventListener('mouseenter', function() {
-                    vl.classList.add('playing');
-                    if (hoverIframe) return;
-                    hoverIframe = document.createElement('iframe');
-                    hoverIframe.allow = 'autoplay; fullscreen; picture-in-picture';
-                    hoverIframe.src = 'https://player.vimeo.com/video/' + item.vimeo
-                        + '?autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
-                    vl.appendChild(hoverIframe);
-                });
-                card.addEventListener('mouseleave', function() {
-                    vl.classList.remove('playing');
-                    setTimeout(function() {
-                        if (!vl.classList.contains('playing') && hoverIframe) { hoverIframe.remove(); hoverIframe = null; }
-                    }, 2000);
-                });
+                var hoverIframe = document.createElement('iframe');
+                hoverIframe.allow = 'autoplay; fullscreen; picture-in-picture';
+                hoverIframe.src = 'https://player.vimeo.com/video/' + item.vimeo
+                    + '?autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
+                vl.appendChild(hoverIframe);
+                card.addEventListener('mouseenter', function() { vl.classList.add('playing'); });
+                card.addEventListener('mouseleave', function() { vl.classList.remove('playing'); });
             }
         });
     })();
