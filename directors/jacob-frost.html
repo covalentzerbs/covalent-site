@@ -158,8 +158,7 @@
         .work-section-header { padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
         .work-section-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; color:rgba(0,0,0,0.35); text-transform:uppercase; }
         .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; width:100%; background:var(--white); }
-        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; aspect-ratio:16/9; opacity:0; transform:translateY(48px); transition:opacity 0.8s ease,transform 0.8s cubic-bezier(0.16,1,0.3,1); }
-        .work-card.revealed { opacity:1; transform:none; }
+        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; height:6px; }
         .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
         .work-card:hover .card-thumb { filter:brightness(0.88); transition:filter 0.4s ease; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; }
@@ -167,8 +166,8 @@
         .card-video.playing { opacity:1; }
         .card-scrim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0) 55%); z-index:2; pointer-events:none; }
         .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:1; }
-        .card-client { font-size:0.65rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:0.2rem; }
-        .card-title { font-size:clamp(1rem,2vw,1.4rem); font-weight:300; color:var(--white); letter-spacing:-0.05em; line-height:1.1; }
+        .card-client { font-size:clamp(1.05rem,2.1vw,1.5rem); font-weight:400; color:var(--white); letter-spacing:-0.04em; line-height:1.05; margin-bottom:0.25rem; }
+        .card-title { font-size:0.65rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.55); line-height:1.1; }
         .site-footer { position:fixed; bottom:0; left:0; right:0; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1001; }
         .site-footer-left { font-size:0.7rem; font-weight:500; color:var(--white); opacity:0.5; transition:color 0.3s ease; }
         .footer-link { color:inherit; text-decoration:none; transition:color 0.2s ease; }
@@ -199,7 +198,7 @@
         body.dark-mode .social-link { color:#FF4500 !important; }
         body.dark-mode .site-footer-left { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
         body.dark-mode .hero-name { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
-        body.dark-mode .card-title { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .card-title, body.dark-mode .card-client { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
         html { scrollbar-width:thin; scrollbar-color:rgba(89,121,233,0.45) transparent; }
         html::-webkit-scrollbar { width:6px; }
         html::-webkit-scrollbar-track { background:transparent; }
@@ -622,13 +621,26 @@
     (function initReveal() {
         var cards = Array.prototype.slice.call(document.querySelectorAll(".work-card"));
         if (!cards.length) return;
-        if (!("IntersectionObserver" in window)) { cards.forEach(function(c){ c.classList.add("revealed"); }); return; }
-        var io = new IntersectionObserver(function(entries) {
-            entries.forEach(function(e) {
-                if (e.isIntersecting) { e.target.classList.add("revealed"); io.unobserve(e.target); }
+        var COLLAPSED = 6;
+        function fullH(card) { return card.offsetWidth * 9 / 16; }
+        function smooth(t) { return t * t * (3 - 2 * t); }
+        cards.forEach(function(card) { card.style.height = COLLAPSED + "px"; });
+        var raf = null;
+        function update() {
+            var vh = window.innerHeight;
+            var trigger = vh * 0.55;   // fully expanded once the card top rises to 55% of viewport
+            var zone = vh - trigger;   // it starts expanding the instant it enters at the bottom
+            cards.forEach(function(card) {
+                var top = card.getBoundingClientRect().top;
+                var p = smooth(Math.max(0, Math.min(1, (vh - top) / zone)));
+                card.style.height = Math.round(COLLAPSED + (fullH(card) - COLLAPSED) * p) + "px";
             });
-        }, { threshold: 0.15, rootMargin: "0px 0px -10% 0px" });
-        cards.forEach(function(card) { io.observe(card); });
+        }
+        function onScroll() { if (!raf) raf = requestAnimationFrame(function() { update(); raf = null; }); }
+        window.addEventListener("scroll", onScroll, {passive:true, capture:true});
+        document.body.addEventListener("scroll", onScroll, {passive:true});
+        window.addEventListener("resize", onScroll, {passive:true});
+        update();
     })();
 
     (function initCursor() {
