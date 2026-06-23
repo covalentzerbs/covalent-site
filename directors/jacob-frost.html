@@ -166,15 +166,14 @@
         .work-section-header { padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
         .work-section-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; color:rgba(0,0,0,0.35); text-transform:uppercase; }
         .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; background:var(--white); }
-        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; height:60px; min-height:60px; }
-        .card-thumb { position:absolute; width:100%; left:0; top:50%; transform:translateY(-50%); object-fit:cover; }
-        .work-card:hover .card-thumb { filter:brightness(0.92); transition:filter 0.4s ease; }
+        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; aspect-ratio:16/9; }
+        .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+        .work-card:hover .card-thumb { filter:brightness(0.88); transition:filter 0.4s ease; }
         .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; }
         .card-video iframe { position:absolute; top:50%; left:50%; width:177.78%; height:100%; min-width:100%; transform:translate(-50%,-50%); border:none; pointer-events:none; }
         .card-video.playing { opacity:1; }
         .card-scrim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0) 55%); z-index:2; pointer-events:none; }
         .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:1; }
-        .work-card.show-meta .card-text { opacity:1; }
         .card-client { font-size:0.65rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:0.2rem; }
         .card-title { font-size:clamp(1rem,2vw,1.4rem); font-weight:500; color:var(--white); letter-spacing:-0.05em; line-height:1.1; }
         .site-footer { position:fixed; bottom:0; left:0; right:0; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1001; }
@@ -358,7 +357,8 @@
             { client:'wabi',          title:'when did we stop playing', thumbnail:'https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280x720', url:'/wabi',    vimeo:'1161268499', clip_start:0 },
             { client:'pinch',         title:'a holiday campaign',       thumbnail:'https://i.vimeocdn.com/video/2089993227-e000ed9b7ef428ebf6588769ae040780042629649a7118b7c81199783dabe96a-d_1280x720', url:'/pinch',   vimeo:'1140543709', clip_start:0 },
             { client:"arc'teryx",     title:'a city to summit',         thumbnail:'https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280x720', url:'/arcteryx',vimeo:'1141586908', clip_start:0 },
-            { client:'world of hyatt',title:'jess pegula × us open',    thumbnail:'https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280x720', url:'/hyatt',   vimeo:'1149097153', clip_start:0 }
+            { client:'world of hyatt',title:'jess pegula × us open',    thumbnail:'https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280x720', url:'/hyatt',   vimeo:'1149097153', clip_start:0 },
+            { client:'',              title:'',                         thumbnail:'',                                                                                                                          url:'',         vimeo:'1200282915', hash:'ffeabc1665', clip_start:0 }
         ]
     };
     </script>
@@ -400,6 +400,7 @@
             card.className = 'work-card';
             card.href = '#';
             card.setAttribute('data-vimeo',  item.vimeo  || '');
+            card.setAttribute('data-hash',   item.hash   || '');
             card.setAttribute('data-client', item.client || '');
             card.setAttribute('data-title',  item.title  || '');
             card.innerHTML = (item.thumbnail
@@ -417,7 +418,7 @@
                     vl.classList.add('playing');
                     if (hoverIframe) return;
                     hoverIframe = document.createElement('iframe');
-                    hoverIframe.src = 'https://player.vimeo.com/video/'+item.vimeo+'?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&controls=0&background=1&dnt=1';
+                    hoverIframe.src = 'https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&controls=0&background=1&dnt=1';
                     hoverIframe.setAttribute('allow','autoplay;fullscreen;picture-in-picture');
                     vl.appendChild(hoverIframe);
                     hoverPlayer = new Vimeo.Player(hoverIframe);
@@ -435,44 +436,10 @@
         });
     })();
 
-    (function initReveal() {
-        var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
-        if (!cards.length) return;
-        var workGrid = document.querySelector('.work-grid');
-        var NUM_COLS, vh, scrollPerRow;
-        var spacer = document.createElement('div');
-        spacer.setAttribute('aria-hidden','true');
-        document.body.appendChild(spacer);
-        function measure() {
-            NUM_COLS     = window.innerWidth <= 768 ? 1 : 2;
-            vh           = window.innerHeight;
-            scrollPerRow = vh * 0.55;
-            spacer.style.height = Math.round(Math.ceil(cards.length/NUM_COLS)*scrollPerRow)+'px';
-        }
-        function easeOut(t){return 1-Math.pow(1-t,3);}
-        function update() {
-            var gridDocTop = workGrid.getBoundingClientRect().top + window.scrollY;
-            var s = window.scrollY-(gridDocTop-vh);
-            cards.forEach(function(card,i){
-                var row=Math.floor(i/NUM_COLS), fullH=card.offsetWidth*9/16;
-                var thumb=card.querySelector('.card-thumb');
-                if(thumb) thumb.style.height=fullH+'px';
-                var prog=Math.max(0,Math.min(1,(s-row*scrollPerRow)/scrollPerRow));
-                card.style.height=Math.round(60+(fullH-60)*easeOut(prog))+'px';
-                if(prog>=0.88) card.classList.add('show-meta');
-                else           card.classList.remove('show-meta');
-            });
-        }
-        requestAnimationFrame(function(){ measure(); update(); });
-        window.addEventListener('load',function(){ measure(); update(); });
-        window.addEventListener('scroll',update,{passive:true});
-        window.addEventListener('resize',function(){measure();update();},{passive:true});
-    })();
-
     (function initWorkViewer() {
         var viewerItems = [];
         document.querySelectorAll('.work-card').forEach(function(card, i) {
-            viewerItems.push({ vimeo:card.getAttribute('data-vimeo'), client:card.getAttribute('data-client'), title:card.getAttribute('data-title') });
+            viewerItems.push({ vimeo:card.getAttribute('data-vimeo'), hash:card.getAttribute('data-hash')||'', client:card.getAttribute('data-client'), title:card.getAttribute('data-title') });
             card.addEventListener('click', function(e) { e.preventDefault(); openViewer(i); });
         });
         var viewer=document.getElementById('workViewer'), iframe=document.getElementById('viewerIframe');
@@ -482,7 +449,7 @@
         function openViewer(idx) {
             current=idx;
             var item=viewerItems[idx];
-            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?autoplay=1&color=ffffff&title=0&byline=0&portrait=0&dnt=1';
+            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&color=ffffff&title=0&byline=0&portrait=0&dnt=1';
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
             viewer.classList.add('active'); document.body.style.overflow='hidden';
             prevBtn.style.opacity=idx>0?'0.6':'0.15';
@@ -539,10 +506,6 @@
         var mx=0,my=0,cx=0,cy=0,sc=1; window._cursorTargetScale=1;
         document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
         (function loop(){cx+=(mx-cx)*0.5;cy+=(my-cy)*0.5;sc+=(window._cursorTargetScale-sc)*0.15;cursor.style.transform='translate('+(cx-5)+'px,'+(cy-5)+'px) scale('+sc+')';requestAnimationFrame(loop);})();
-        document.querySelectorAll('a,button,.work-card,.bio-toggle,.menu-toggle,.dark-mode-toggle,.tag').forEach(function(el){
-            el.addEventListener('mouseenter',function(){window._cursorTargetScale=1.8;});
-            el.addEventListener('mouseleave',function(){window._cursorTargetScale=1;});
-        });
     })();
 
     (function initDarkMode() {

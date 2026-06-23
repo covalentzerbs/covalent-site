@@ -1487,15 +1487,6 @@ body.dark-mode .project-client {
                 localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
             });
 
-            // Cursor inflate on toggle hover
-            const cursorEl = document.getElementById('cursor');
-            const label = document.querySelector('.dark-mode-toggle');
-            label.addEventListener('mouseenter', () => {
-                window._cursorTargetScale = 1.8;
-            });
-            label.addEventListener('mouseleave', () => {
-                window._cursorTargetScale = 1;
-            });
         })();
     </script>
 

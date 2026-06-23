@@ -348,6 +348,12 @@
             opacity: 1;
         }
 
+        .video-wrapper .director-poster {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; pointer-events: none; z-index: 1;
+            transition: opacity 0.15s ease;
+        }
+
         .video-cursor-block {
             position: absolute;
             top: 0;
@@ -923,6 +929,24 @@
             if (d.vimeo || d.youtube) ensureVideo(d.id);
         });
 
+        // Load poster thumbnails from oEmbed and inject into videoWrapper
+        let posterTimer = null;
+        directors.forEach(d => {
+            if (!d.vimeo) return;
+            fetch('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' + d.vimeo + '&width=1280')
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.thumbnail_url) return;
+                    const img = document.createElement('img');
+                    img.className = 'director-poster';
+                    img.setAttribute('data-director', d.id);
+                    img.src = data.thumbnail_url.replace(/_\d+x\d+(\.\w+)$/, '_1280x720$1');
+                    img.width = 1280; img.height = 720; img.alt = '';
+                    videoWrapper.appendChild(img);
+                })
+                .catch(() => {});
+        });
+
         // Switch video with crossfade
         let currentVideoId = null;
         let switchTimer = null;
@@ -947,6 +971,22 @@
 
             // Lazy-create the iframe on first hover (after that it's cached in the DOM)
             const newIframe = ensureVideo(directorId);
+
+            // Show poster immediately to cover black frames while video loads
+            clearTimeout(posterTimer);
+            videoWrapper.querySelectorAll('.director-poster').forEach(p => {
+                p.style.transition = 'opacity 0.3s ease';
+                p.style.opacity = '0';
+            });
+            const newPoster = videoWrapper.querySelector(`.director-poster[data-director="${directorId}"]`);
+            if (newPoster) {
+                newPoster.style.transition = 'opacity 0.15s ease';
+                newPoster.style.opacity = '1';
+                posterTimer = setTimeout(() => {
+                    newPoster.style.transition = 'opacity 0.8s ease';
+                    newPoster.style.opacity = '0';
+                }, 1500);
+            }
 
             // True crossfade: remove active from all, add to new one simultaneously
             // CSS transition handles the fade — no black gap
@@ -1159,17 +1199,6 @@
                 localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
             });
 
-            // Cursor inflate on toggle hover
-            const cursorEl = document.getElementById('cursor');
-            const toggleLabel = document.querySelector('.dark-mode-toggle');
-            toggleLabel.addEventListener('mouseenter', () => {
-                cursorEl.style.transform = 'translate(-50%, -50%) scale(1.8)';
-                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
-            });
-            toggleLabel.addEventListener('mouseleave', () => {
-                cursorEl.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
-            });
         })();
     </script>
     <script src="scripts/analytics.js"></script>
