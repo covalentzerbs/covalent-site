@@ -1143,12 +1143,16 @@
             background: var(--black);
             color: var(--white);
         }
+        /* !important + text-fill-color:currentColor so the per-word reveal beats
+           the global `body.dark-mode { color:#FF4500 !important; -webkit-text-fill-color }`
+           override (which was forcing every word fully orange — no reveal). */
         body.dark-mode .about-page .reveal-text .word {
-            color: rgba(250, 250, 250, 0.025);
+            color: rgba(250, 250, 250, 0.05) !important;
+            -webkit-text-fill-color: currentColor !important;
         }
         body.dark-mode .about-page .reveal-text .word.lit,
         body.dark-mode .about-page .reveal-text .word.always-lit {
-            color: var(--white);
+            color: var(--white) !important;
         }
         body.dark-mode .about-page .row-name,
         body.dark-mode .about-page .tagline-text {
