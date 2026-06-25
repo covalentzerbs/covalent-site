@@ -248,9 +248,12 @@
         .viewer-ctrl-btn .cs-icon-play { display:block; }
         .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-play { display:none; }
         .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-pause { display:block; }
-        .viewer-progress { flex:1; padding:8px 0; cursor:none; }
-        .viewer-progress .cs-progress-track { width:100%; height:2px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; overflow:hidden; }
+        .viewer-progress { flex:1; padding:8px 0; cursor:none; position:relative; }
+        .viewer-progress .cs-progress-track { width:100%; height:2px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; overflow:hidden; transition:height 0.15s ease; }
         .viewer-progress .cs-progress-fill { position:absolute; left:0; top:0; bottom:0; width:0%; background:#fff; border-radius:999px; }
+        .viewer-progress .cs-progress-thumb { position:absolute; top:50%; left:0; width:11px; height:11px; border-radius:50%; background:#fff; transform:translate(-50%,-50%); opacity:0; transition:opacity 0.15s ease; pointer-events:none; box-shadow:0 1px 5px rgba(0,0,0,0.5); }
+        .viewer-progress:hover .cs-progress-thumb, .viewer-progress.dragging .cs-progress-thumb { opacity:1; }
+        .viewer-progress:hover .cs-progress-track, .viewer-progress.dragging .cs-progress-track { height:4px; }
         .viewer-time { font-size:11px; color:rgba(255,255,255,0.7); white-space:nowrap; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.04em; }
         .viewer-close { position:absolute; top:1.5rem; right:1.5rem; z-index:10; background:none; border:none; cursor:none; padding:0.5rem; opacity:0.5; transition:opacity 0.2s; line-height:0; }
         .viewer-close:hover { opacity:1; }
@@ -266,6 +269,9 @@
         /* fullscreen: let the native cursor show (the custom cursor can't render outside the fullscreen element) */
         :fullscreen, :fullscreen * { cursor:auto !important; }
         :-webkit-full-screen, :-webkit-full-screen * { cursor:auto !important; }
+        /* fullscreen idle: hide cursor + controls + expand button after 1s of no movement */
+        #viewerFrame.fs-idle, #viewerFrame.fs-idle * { cursor:none !important; }
+        #viewerFrame.fs-idle .viewer-controls, #viewerFrame.fs-idle .viewer-fs-corner { opacity:0 !important; pointer-events:none !important; }
         .viewer-close { display:none; }
         /* EXIT cursor: knockout label shown when the pointer leaves the video bounds */
         #viewerExitCursor { position:fixed; left:-200px; top:-200px; text-transform:uppercase;
@@ -372,6 +378,7 @@
                     </button>
                     <div class="viewer-progress" id="viewerProgress">
                         <div class="cs-progress-track"><div class="cs-progress-fill" id="viewerFill"></div></div>
+                        <div class="cs-progress-thumb" id="viewerThumb"></div>
                     </div>
                     <div class="viewer-time" id="viewerTime">00:00 / 00:00</div>
                 </div>
@@ -520,10 +527,11 @@
         var ppBtn    = document.getElementById('viewerPlayPause');
         var progEl   = document.getElementById('viewerProgress');
         var fillEl   = document.getElementById('viewerFill');
+        var thumb    = document.getElementById('viewerThumb');
         var timeEl   = document.getElementById('viewerTime');
         var fsBtn    = document.getElementById('viewerFsBtn');
         var clickLayer = document.getElementById('viewerClickLayer');
-        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null;
+        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false;
         // EXIT cursor: knockout "EXIT" label shown over the margin around the video
         var exitCur = document.createElement('div');
         exitCur.id='viewerExitCursor'; exitCur.setAttribute('aria-hidden','true');
@@ -546,6 +554,7 @@
             vPlaying=false; vDuration=0;
             vHero.classList.remove('cs-playing','cs-hover');
             if (fillEl) fillEl.style.width='0%';
+            if (thumb) thumb.style.left='0%';
             if (timeEl) timeEl.textContent='00:00 / 00:00';
         }
         function bindPlayer(p) {
@@ -553,7 +562,7 @@
             p.on('play',  function(){ setPlaying(true); });
             p.on('pause', function(){ setPlaying(false); });
             p.on('ended', function(){ setPlaying(false); });
-            p.on('timeupdate', function(data){ if(!vDuration||!fillEl)return; fillEl.style.width=(data.seconds/vDuration*100)+'%'; if(timeEl) timeEl.textContent=fmt(data.seconds)+' / '+fmt(vDuration); });
+            p.on('timeupdate', function(data){ if(!vDuration||!fillEl||dragging)return; var pc=data.seconds/vDuration*100; fillEl.style.width=pc+'%'; if(thumb) thumb.style.left=pc+'%'; if(timeEl) timeEl.textContent=fmt(data.seconds)+' / '+fmt(vDuration); });
         }
         function whenVimeoReady(cb){
             if(window.Vimeo){ cb(); return; }
@@ -595,11 +604,19 @@
         function togglePlay() { if(!vPlayer)return; if(vPlaying) vPlayer.pause(); else vPlayer.play(); }
         clickLayer.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
         ppBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
-        progEl.addEventListener('click', function(e){
-            e.stopPropagation();
+        // scrubber: click + drag with a visible thumb that tracks the cursor
+        function scrubPct(e){ var r=progEl.getBoundingClientRect(); return Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)); }
+        function scrubPreview(p){ if(fillEl) fillEl.style.width=(p*100)+'%'; if(thumb) thumb.style.left=(p*100)+'%'; if(timeEl&&vDuration) timeEl.textContent=fmt(p*vDuration)+' / '+fmt(vDuration); }
+        progEl.addEventListener('mousedown', function(e){
             if(!vPlayer||!vDuration)return;
-            var rect=progEl.getBoundingClientRect();
-            vPlayer.setCurrentTime(((e.clientX-rect.left)/rect.width)*vDuration).catch(function(){});
+            e.preventDefault(); e.stopPropagation();
+            dragging=true; progEl.classList.add('dragging'); scrubPreview(scrubPct(e));
+        });
+        document.addEventListener('mousemove', function(e){ if(dragging) scrubPreview(scrubPct(e)); }, {passive:true});
+        document.addEventListener('mouseup', function(e){
+            if(!dragging)return;
+            dragging=false; progEl.classList.remove('dragging');
+            var p=scrubPct(e); if(vPlayer&&vDuration) vPlayer.setCurrentTime(p*vDuration).catch(function(){});
         });
         fsBtn.addEventListener('click', function(e){
             e.stopPropagation();
@@ -607,6 +624,15 @@
             if(document.fullscreenElement) document.exitFullscreen().catch(function(){});
             else target.requestFullscreen().catch(function(){});
         });
+        // fullscreen: hide cursor + controls + expand button after 1s of no movement
+        var fsIdleTimer=null;
+        function inFs(){ return document.fullscreenElement||document.webkitFullscreenElement; }
+        function fsIdleHide(){ if(inFs()) frame.classList.add('fs-idle'); }
+        function fsPoke(){ if(fsIdleTimer)clearTimeout(fsIdleTimer); frame.classList.remove('fs-idle'); if(inFs()) fsIdleTimer=setTimeout(fsIdleHide,1000); }
+        function fsLeave(){ frame.classList.remove('fs-idle'); if(fsIdleTimer){clearTimeout(fsIdleTimer);fsIdleTimer=null;} }
+        document.addEventListener('mousemove', function(){ if(inFs()) fsPoke(); }, {passive:true});
+        document.addEventListener('fullscreenchange', function(){ inFs()?fsPoke():fsLeave(); });
+        document.addEventListener('webkitfullscreenchange', function(){ inFs()?fsPoke():fsLeave(); });
         vHero.addEventListener('mouseenter', function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
         vHero.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
         vHero.addEventListener('mousemove',  function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
