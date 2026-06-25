@@ -386,16 +386,17 @@
 
         /* Only CSS :hover controls the blue highlight — no .active class here.
            Keeps exactly one name highlighted at a time, no lingering state. */
+        /* Light mode: hover just brightens the name to full-opacity white (subtle). */
         .director-row:hover .director-name {
             /* Transition only applies on hover-in (CSS one-way transition) */
             transition: opacity 0.2s ease;
             opacity: 1;
-            background: linear-gradient(90deg, #3A5BD4, #5979e9, #3A5BD4, #2845B0);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 3s ease infinite;
+            background: none;
+            -webkit-background-clip: border-box;
+            background-clip: border-box;
+            -webkit-text-fill-color: var(--white);
+            color: var(--white);
+            animation: none;
         }
 
         /* No Video State */
@@ -598,6 +599,12 @@
         body.dark-mode .director-name {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
+        }
+
+        /* Dark mode: hover deepens to a darker orange instead of turning blue. */
+        body.dark-mode .director-row:hover .director-name {
+            color: #C2410C !important;
+            -webkit-text-fill-color: #C2410C !important;
         }
 
         body.dark-mode .director-credit {
