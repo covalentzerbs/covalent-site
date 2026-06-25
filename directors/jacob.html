@@ -221,7 +221,7 @@
         /* ── Work Viewer ──────────────────────────────────── */
         .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
         .work-viewer.active { opacity:1; pointer-events:all; }
-        .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); }
+        .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); height:calc(90vw * 9 / 16); max-height:90vh; }
         .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
         .viewer-video-hero { position:absolute; inset:0; }
         .viewer-click-layer { position:absolute; inset:0; z-index:2; }
@@ -557,7 +557,7 @@
             iframe.setAttribute('frameborder','0');
             iframe.setAttribute('allow','autoplay; fullscreen; picture-in-picture');
             iframe.setAttribute('allowfullscreen','');
-            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&controls=0&dnt=1&playsinline=1';
+            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&muted=1&controls=0&dnt=1&playsinline=1';
             vHero.insertBefore(iframe, vHero.firstChild);
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
             viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.style.overflow='hidden';
