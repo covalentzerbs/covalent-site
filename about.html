@@ -730,7 +730,8 @@
 
         .about-page .manifesto-scroll-container {
             position: relative;
-            height: 200vh;
+            /* 250vh - 100vh pinned = 150vh reveal runway (~3 scrolls, was 2). */
+            height: 250vh;
         }
 
         .about-page .manifesto-sticky {
@@ -1675,7 +1676,14 @@ Call us old fashioned, or call us luxury. It's up for interpretation.</p>
             function update() {
                 if (isMobile()) {
                     inner.style.transform = '';
-                    for (let i = 0; i < total; i++) words[i].classList.add('lit');
+                    // Mobile flows naturally (no pin) — light each word as it scrolls
+                    // up past ~70% of the viewport, so the reveal happens on mobile too.
+                    const line = window.innerHeight * 0.7;
+                    for (let i = 0; i < total; i++) {
+                        const lit = words[i].getBoundingClientRect().top < line;
+                        words[i].classList.toggle('lit', lit);
+                        if (!lit) { for (let j = i + 1; j < total; j++) words[j].classList.remove('lit'); break; }
+                    }
                     return;
                 }
                 const rect = container.getBoundingClientRect();
