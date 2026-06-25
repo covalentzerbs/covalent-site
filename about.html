@@ -862,6 +862,8 @@
         .about-page .company-logo[alt="Covalent Studios"] { height: 56px; }
         .about-page .company-logo[alt="ionicpost."]       { height: 44px; }
         .about-page .company-logo[alt="Bond."]            { height: 50px; }
+        /* dark mode: the Covalent wordmark PNG is black — render it white so it reads on the dark card */
+        body.dark-mode .about-page .company-logo[alt="Covalent Studios"] { filter: brightness(0) invert(1); }
 
         .about-page .company-desc {
             display: block;

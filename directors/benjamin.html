@@ -114,7 +114,7 @@
         .logo-top:hover { opacity:0.7; }
         .logo-top svg { width:40px; height:40px; }
         .dir-header { background:var(--black); padding:7.5rem 3rem 4rem; border-bottom:1px solid var(--border); }
-        .dir-header-inner { max-width:900px; margin:0 auto; display:block; }
+        .dir-header-inner { max-width:1320px; margin:0 auto; display:block; }
         .hero-name { font-size:clamp(2.5rem,7vw,5rem); font-weight:500; line-height:0.95; color:var(--white); letter-spacing:-0.07em; display:inline-block; }
         .hero-tagline { margin-top:0.75rem; font-size:clamp(0.85rem,1.5vw,1.1rem); font-weight:400; color:rgba(255,255,255,0.55); letter-spacing:-0.04em; max-width:480px; }
         .bio-block { margin-top:1.75rem; }
@@ -130,7 +130,7 @@
             transform:translateY(-2px) rotate(45deg); transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); display:inline-block;
         }
         .bio-toggle.open .toggle-icon { transform:translateY(1px) rotate(-135deg); }
-        .bio-expanded { overflow:hidden; max-height:0; transition:max-height 0.55s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease; opacity:0; max-width:620px; }
+        .bio-expanded { overflow:hidden; max-height:0; transition:max-height 0.55s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease; opacity:0; max-width:1120px; }
         .bio-expanded.open { max-height:600px; opacity:1; }
         .bio-expanded p { margin-top:1.2rem; font-size:0.95rem; line-height:1.7; color:rgba(255,255,255,0.6); letter-spacing:-0.04em; }
         .bio-expanded p:first-child { margin-top:1.4rem; }
@@ -182,6 +182,19 @@
         .toggle-track::after { content:''; position:absolute; top:2px; left:2px; width:12px; height:12px; background:rgba(0,0,0,0.4); border-radius:50%; transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); }
         .dark-mode-toggle input:checked + .toggle-track { background:rgba(255,69,0,0.8); }
         .dark-mode-toggle input:checked + .toggle-track::after { transform:translateX(12px); background:#FF4500; }
+        /* ── light mode: white background + dark text (dark mode keeps black/orange) ── */
+        body:not(.dark-mode) { background-color:var(--white); color:var(--black); }
+        body:not(.dark-mode) .dir-header { background:var(--white); border-bottom-color:rgba(0,0,0,0.08); }
+        body:not(.dark-mode) .hero-name { color:var(--black); }
+        body:not(.dark-mode) .hero-tagline { color:rgba(0,0,0,0.55); }
+        body:not(.dark-mode) .bio-toggle { color:rgba(0,0,0,0.45); }
+        body:not(.dark-mode) .bio-toggle:hover, body:not(.dark-mode) .bio-toggle.open { color:rgba(0,0,0,0.9); }
+        body:not(.dark-mode) .bio-expanded p { color:rgba(0,0,0,0.6); }
+        body:not(.dark-mode) .menu-link { color:var(--black); }
+        body:not(.dark-mode) .plus-icon span { background:var(--black); }
+        body:not(.dark-mode) .logo-top svg path { fill:var(--black); }
+        body:not(.dark-mode) .site-footer-left { color:var(--black); }
+        body:not(.dark-mode) .social-link { color:var(--black); }
         body.dark-mode { background-color:#0A0A0A !important; color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
         body.dark-mode ::selection { background:#FF4500 !important; color:#0A0A0A !important; -webkit-text-fill-color:#0A0A0A !important; }
         body.dark-mode .cursor { background:#FF4500 !important; }
@@ -635,7 +648,7 @@
         // ── donut-fill cursor: hover 'biography' ~0.5s to reveal ──
         var ring=document.getElementById('bioRing');
         var fill=ring && ring.querySelector('.ring-fill');
-        var C=2*Math.PI*4, MS=500, raf=null, active=false;
+        var C=2*Math.PI*4, MS=250, raf=null, active=false;
         if(fill){ fill.style.strokeDasharray=C.toFixed(2); fill.style.strokeDashoffset=C.toFixed(2); }
         function setProg(p){ if(fill) fill.style.strokeDashoffset=(C*(1-p)).toFixed(2); }
         function stopRing(){ active=false; if(raf)cancelAnimationFrame(raf); raf=null; if(ring)ring.classList.remove('show'); document.body.classList.remove('bio-ring-active'); setProg(0); }
@@ -644,10 +657,10 @@
             document.body.classList.add('bio-ring-active'); ring.classList.add('show');
             var t0=Date.now();
             (function step(){ if(!active)return; var p=Math.min(1,(Date.now()-t0)/MS); setProg(p);
-                if(p<1){ raf=requestAnimationFrame(step); } else { active=false; openBio(); stopRing(); } })();
+                if(p<1){ raf=requestAnimationFrame(step); } else { active=false; toggleBio(); stopRing(); } })();
         }
         document.addEventListener('mousemove', function(e){ if(ring){ ring.style.left=e.clientX+'px'; ring.style.top=e.clientY+'px'; } }, {passive:true});
-        toggle.addEventListener('mouseenter', function(){ if(!expanded.classList.contains('open')) startRing(); });
+        toggle.addEventListener('mouseenter', function(){ startRing(); });
         toggle.addEventListener('mouseleave', stopRing);
 
         // ── director-image cursor on name hover (gated on D.cursor_image) ──
