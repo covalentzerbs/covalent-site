@@ -263,7 +263,9 @@
         .viewer-next { right:0.5rem; }
         /* viewer open: hide page chrome (menu +) and the corner close; clicking the margin closes */
         body.viewer-open .nav { opacity:0 !important; pointer-events:none !important; }
-        body.viewer-open #clickCursor { display:none !important; }
+        /* fullscreen: let the native cursor show (the custom cursor can't render outside the fullscreen element) */
+        :fullscreen, :fullscreen * { cursor:auto !important; }
+        :-webkit-full-screen, :-webkit-full-screen * { cursor:auto !important; }
         .viewer-close { display:none; }
         /* EXIT cursor: knockout label shown when the pointer leaves the video bounds */
         #viewerExitCursor { position:fixed; left:-200px; top:-200px; text-transform:uppercase;
@@ -364,7 +366,7 @@
                 <iframe id="viewerIframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                 <div class="viewer-click-layer" id="viewerClickLayer"></div>
                 <div class="viewer-controls" id="viewerControls">
-                    <button class="viewer-ctrl-btn" id="viewerPlayPause">
+                    <button class="viewer-ctrl-btn" id="viewerPlayPause" data-cursor="play">
                         <img src="/assets/logos/covalent_white_play_button.png" width="128" height="128" alt="Play" class="cs-ctrl-icon cs-icon-play">
                         <img src="/assets/logos/pause_button.png" width="128" height="128" alt="Pause" class="cs-ctrl-icon cs-icon-pause">
                     </button>
@@ -374,7 +376,7 @@
                     <div class="viewer-time" id="viewerTime">00:00 / 00:00</div>
                 </div>
             </div>
-            <button class="viewer-fs-corner" id="viewerFsBtn" aria-label="Fullscreen">
+            <button class="viewer-fs-corner" id="viewerFsBtn" aria-label="Fullscreen" data-cursor="expand">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
         </div>
@@ -541,7 +543,7 @@
             else { exitCur.style.left=e.clientX+'px'; exitCur.style.top=e.clientY+'px'; exitCur.classList.add('show'); document.body.classList.add('viewer-exit-active'); }
         }, {passive:true});
         function fmt(s) { var m=Math.floor(s/60),sec=Math.floor(s%60); return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec; }
-        function setPlaying(p) { vPlaying=p; vHero.classList.toggle('cs-playing',p); }
+        function setPlaying(p) { vPlaying=p; vHero.classList.toggle('cs-playing',p); if(ppBtn) ppBtn.setAttribute('data-cursor', p?'pause':'play'); }
         function resetPlayer() {
             if (vPlayer) { try { vPlayer.destroy(); } catch(e){} vPlayer=null; }
             var stray=vHero.querySelector('iframe'); if(stray) stray.remove();
@@ -758,6 +760,9 @@
         enforceNoCursor();
         window.addEventListener('pageshow',function(){enforceNoCursor();var c=document.getElementById('cursor');if(c&&!('ontouchstart'in window))c.style.display='block';});
         document.addEventListener('visibilitychange',function(){if(!document.hidden)enforceNoCursor();});
+        // re-assert cursor:none after leaving fullscreen so the native cursor doesn't linger alongside the custom one
+        document.addEventListener('fullscreenchange',function(){ if(!document.fullscreenElement) enforceNoCursor(); });
+        document.addEventListener('webkitfullscreenchange',function(){ if(!document.webkitFullscreenElement) enforceNoCursor(); });
     })();
     </script>
 
@@ -783,7 +788,8 @@
         function menuOpen(){ return !!document.querySelector('.menu-overlay.active'); }
         function hide(){ box.classList.remove('show'); document.body.classList.remove('click-cursor-active'); }
         function show(el){
-          if (menuOpen() || document.body.classList.contains('viewer-open')) { hide(); return; }
+          var vctrl = el.closest && el.closest('.viewer-ctrl-btn, .viewer-fs-corner');
+          if (menuOpen() || (document.body.classList.contains('viewer-open') && !vctrl)) { hide(); return; }
           var lbl = (el.getAttribute && el.getAttribute('data-cursor')) || 'CLICK';
           setLabel(String(lbl).toUpperCase());
           box.classList.add('show');
