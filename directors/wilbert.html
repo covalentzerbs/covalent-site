@@ -239,9 +239,21 @@
         .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
         .viewer-video-hero { position:absolute; inset:0; }
         .viewer-click-layer { position:absolute; inset:0; z-index:2; }
-        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 64px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
+        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 96px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
         .viewer-fs-corner { position:absolute; bottom:14px; right:18px; z-index:5; background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
         .viewer-fs-corner:hover { opacity:1; }
+        /* volume control: corner button left of the expand button, with a pop-up gauge */
+        .viewer-vol { position:absolute; bottom:14px; right:54px; z-index:5; display:flex; align-items:center; justify-content:center; line-height:0; }
+        .viewer-vol-btn { background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
+        .viewer-vol-btn:hover { opacity:1; }
+        .viewer-vol-btn .vol-ic { display:none; }
+        .viewer-vol-btn .vol-on { display:block; }
+        .viewer-vol.muted .vol-on { display:none; }
+        .viewer-vol.muted .vol-off { display:block; }
+        .viewer-vol-gauge { position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); opacity:0; pointer-events:none; transition:opacity 0.18s ease; background:rgba(20,20,20,0.72); border-radius:999px; padding:12px 0; }
+        .viewer-vol.show-gauge .viewer-vol-gauge { opacity:1; pointer-events:auto; }
+        .viewer-vol-track { width:4px; height:70px; margin:0 13px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; cursor:none; }
+        .viewer-vol-fill { position:absolute; left:0; right:0; bottom:0; height:0%; background:#fff; border-radius:999px; }
         .viewer-video-hero.cs-playing .viewer-controls { opacity:0; transform:translateY(6px); pointer-events:none; }
         .viewer-video-hero.cs-playing.cs-hover .viewer-controls { opacity:1; transform:translateY(0); pointer-events:auto; }
         .viewer-ctrl-btn { background:none; border:none; padding:4px 6px; flex-shrink:0; cursor:none; }
@@ -272,7 +284,7 @@
         :-webkit-full-screen, :-webkit-full-screen * { cursor:auto !important; }
         /* fullscreen idle: hide cursor + controls + expand button after 1s of no movement */
         #viewerFrame.fs-idle, #viewerFrame.fs-idle * { cursor:none !important; }
-        #viewerFrame.fs-idle .viewer-controls, #viewerFrame.fs-idle .viewer-fs-corner { opacity:0 !important; pointer-events:none !important; }
+        #viewerFrame.fs-idle .viewer-controls, #viewerFrame.fs-idle .viewer-fs-corner, #viewerFrame.fs-idle .viewer-vol { opacity:0 !important; pointer-events:none !important; }
         .viewer-close { display:none; }
         /* EXIT cursor: knockout label shown when the pointer leaves the video bounds */
         #viewerExitCursor { position:fixed; left:-200px; top:-200px; text-transform:uppercase;
@@ -383,6 +395,15 @@
                     </div>
                     <div class="viewer-time" id="viewerTime">00:00 / 00:00</div>
                 </div>
+            </div>
+            <div class="viewer-vol muted" id="viewerVol">
+                <div class="viewer-vol-gauge" id="viewerVolGauge">
+                    <div class="viewer-vol-track" id="viewerVolTrack"><div class="viewer-vol-fill" id="viewerVolFill"></div></div>
+                </div>
+                <button class="viewer-vol-btn" id="viewerVolBtn" data-cursor="unmute" aria-label="Volume">
+                    <svg class="vol-ic vol-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+                    <svg class="vol-ic vol-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
+                </button>
             </div>
             <button class="viewer-fs-corner" id="viewerFsBtn" aria-label="Fullscreen" data-cursor="expand">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -536,7 +557,7 @@
         var timeEl   = document.getElementById('viewerTime');
         var fsBtn    = document.getElementById('viewerFsBtn');
         var clickLayer = document.getElementById('viewerClickLayer');
-        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false;
+        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false, vVolume = 1, vMuted = true, volDragging = false;
         // EXIT cursor: knockout "EXIT" label shown over the margin around the video
         var exitCur = document.createElement('div');
         exitCur.id='viewerExitCursor'; exitCur.setAttribute('aria-hidden','true');
@@ -595,7 +616,7 @@
                 try{
                     vPlayer=new Vimeo.Player(iframe);
                     bindPlayer(vPlayer);
-                    vPlayer.ready().then(function(){ vPlayer.play().catch(function(){}); }).catch(function(){});
+                    vPlayer.ready().then(function(){ vPlayer.play().catch(function(){}); applyVol(); }).catch(function(){});
                 }catch(e){}
             });
         }
@@ -638,6 +659,21 @@
         document.addEventListener('mousemove', function(){ if(inFs()) fsPoke(); }, {passive:true});
         document.addEventListener('fullscreenchange', function(){ inFs()?fsPoke():fsLeave(); });
         document.addEventListener('webkitfullscreenchange', function(){ inFs()?fsPoke():fsLeave(); });
+        // volume: mute toggle + draggable gauge (videos autoplay muted, so this is how sound comes on)
+        var volWrap=document.getElementById('viewerVol'), volBtn=document.getElementById('viewerVolBtn'),
+            volTrack=document.getElementById('viewerVolTrack'), volFill=document.getElementById('viewerVolFill'), volHideT=null;
+        function renderVol(){ var off=(vMuted||vVolume===0); volWrap.classList.toggle('muted',off); volFill.style.height=((off?0:vVolume)*100)+'%'; volBtn.setAttribute('data-cursor',off?'unmute':'mute'); }
+        function applyVol(){ if(!vPlayer)return; var off=(vMuted||vVolume===0); try{ if(vPlayer.setMuted) vPlayer.setMuted(off); }catch(e){} try{ vPlayer.setVolume(off?0:vVolume).catch(function(){}); }catch(e){} renderVol(); }
+        function showGauge(){ clearTimeout(volHideT); volWrap.classList.add('show-gauge'); }
+        function hideGaugeSoon(){ clearTimeout(volHideT); volHideT=setTimeout(function(){ if(!volDragging) volWrap.classList.remove('show-gauge'); },500); }
+        function volFromY(e){ var r=volTrack.getBoundingClientRect(); return Math.max(0,Math.min(1, 1-(e.clientY-r.top)/r.height)); }
+        volBtn.addEventListener('click', function(e){ e.stopPropagation(); vMuted=!vMuted; if(!vMuted&&vVolume===0) vVolume=1; applyVol(); showGauge(); });
+        volWrap.addEventListener('mouseenter', showGauge);
+        volWrap.addEventListener('mouseleave', hideGaugeSoon);
+        volTrack.addEventListener('mousedown', function(e){ e.preventDefault(); e.stopPropagation(); volDragging=true; var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); });
+        document.addEventListener('mousemove', function(e){ if(volDragging){ var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); } }, {passive:true});
+        document.addEventListener('mouseup', function(){ volDragging=false; });
+        renderVol();
         vHero.addEventListener('mouseenter', function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
         vHero.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
         vHero.addEventListener('mousemove',  function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
@@ -815,7 +851,7 @@
         function menuOpen(){ return !!document.querySelector('.menu-overlay.active'); }
         function hide(){ box.classList.remove('show'); document.body.classList.remove('click-cursor-active'); }
         function show(el){
-          var vctrl = el.closest && el.closest('.viewer-ctrl-btn, .viewer-fs-corner');
+          var vctrl = el.closest && el.closest('.viewer-ctrl-btn, .viewer-fs-corner, .viewer-vol-btn');
           if (menuOpen() || (document.body.classList.contains('viewer-open') && !vctrl)) { hide(); return; }
           var lbl = (el.getAttribute && el.getAttribute('data-cursor')) || 'CLICK';
           setLabel(String(lbl).toUpperCase());
