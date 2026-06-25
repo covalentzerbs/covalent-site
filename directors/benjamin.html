@@ -246,6 +246,17 @@
         .viewer-nav:hover { opacity:1; }
         .viewer-prev { left:0.5rem; }
         .viewer-next { right:0.5rem; }
+        /* viewer open: hide page chrome (menu +) and the corner close; clicking the margin closes */
+        body.viewer-open .nav { opacity:0 !important; pointer-events:none !important; }
+        body.viewer-open #clickCursor { display:none !important; }
+        .viewer-close { display:none; }
+        /* EXIT cursor: knockout label shown when the pointer leaves the video bounds */
+        #viewerExitCursor { position:fixed; left:-200px; top:-200px; text-transform:uppercase;
+            transform:translate(-50%,-50%) scale(.85); opacity:0; pointer-events:none; z-index:10080;
+            mix-blend-mode:difference; transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1);
+            will-change:transform,left,top,opacity; }
+        #viewerExitCursor.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
+        body.viewer-exit-active .cursor { opacity:0 !important; }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -496,10 +507,25 @@
         var fsBtn    = document.getElementById('viewerFsBtn');
         var clickLayer = document.getElementById('viewerClickLayer');
         var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null;
+        // EXIT cursor: knockout "EXIT" label shown over the margin around the video
+        var exitCur = document.createElement('div');
+        exitCur.id='viewerExitCursor'; exitCur.setAttribute('aria-hidden','true');
+        (function(){ var w=Math.round('EXIT'.length*8.6+28), h=26;
+            exitCur.innerHTML='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="exitCurMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">EXIT</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#exitCurMask)"/></svg>';
+        })();
+        document.body.appendChild(exitCur);
+        function ptrInsideFrame(e){ var r=frame.getBoundingClientRect(); return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
+        viewer.addEventListener('mousemove', function(e){
+            if(!viewer.classList.contains('active')) return;
+            var overNav = e.target && e.target.closest && e.target.closest('.viewer-nav');
+            if(ptrInsideFrame(e) || overNav){ exitCur.classList.remove('show'); document.body.classList.remove('viewer-exit-active'); }
+            else { exitCur.style.left=e.clientX+'px'; exitCur.style.top=e.clientY+'px'; exitCur.classList.add('show'); document.body.classList.add('viewer-exit-active'); }
+        }, {passive:true});
         function fmt(s) { var m=Math.floor(s/60),sec=Math.floor(s%60); return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec; }
         function setPlaying(p) { vPlaying=p; vHero.classList.toggle('cs-playing',p); }
         function resetPlayer() {
             if (vPlayer) { try { vPlayer.destroy(); } catch(e){} vPlayer=null; }
+            var stray=vHero.querySelector('iframe'); if(stray) stray.remove();
             vPlaying=false; vDuration=0;
             vHero.classList.remove('cs-playing','cs-hover');
             if (fillEl) fillEl.style.width='0%';
@@ -512,19 +538,42 @@
             p.on('ended', function(){ setPlaying(false); });
             p.on('timeupdate', function(data){ if(!vDuration||!fillEl)return; fillEl.style.width=(data.seconds/vDuration*100)+'%'; if(timeEl) timeEl.textContent=fmt(data.seconds)+' / '+fmt(vDuration); });
         }
+        function whenVimeoReady(cb){
+            if(window.Vimeo){ cb(); return; }
+            var n=0; (function poll(){ if(window.Vimeo) return cb(); if(n++>120) return; setTimeout(poll,50); })();
+        }
         function openViewer(idx) {
             current=idx; var item=viewerItems[idx];
             resetPlayer();
-            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&controls=0&dnt=1';
+            // Build a fresh iframe each open — Vimeo's player.destroy() removes the
+            // iframe from the DOM, so reusing one breaks every reopen (the prod bug).
+            iframe=document.createElement('iframe');
+            iframe.id='viewerIframe';
+            iframe.setAttribute('frameborder','0');
+            iframe.setAttribute('allow','autoplay; fullscreen; picture-in-picture');
+            iframe.setAttribute('allowfullscreen','');
+            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&controls=0&dnt=1&playsinline=1';
+            vHero.insertBefore(iframe, vHero.firstChild);
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
-            viewer.classList.add('active'); document.body.style.overflow='hidden';
+            viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.style.overflow='hidden';
             prevBtn.style.opacity=idx>0?'0.6':'0.15';
             nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
-            iframe.onload=function(){ try{ if(!window.Vimeo)return; vPlayer=new Vimeo.Player(iframe); bindPlayer(vPlayer); }catch(e){} };
+            // Bind the player as soon as the SDK is ready — don't depend on iframe.onload
+            // (the onload+SDK race is what left the controls dead in production).
+            whenVimeoReady(function(){
+                try{
+                    vPlayer=new Vimeo.Player(iframe);
+                    bindPlayer(vPlayer);
+                    vPlayer.ready().then(function(){ vPlayer.play().catch(function(){}); }).catch(function(){});
+                }catch(e){}
+            });
         }
         function closeViewer() {
-            viewer.classList.remove('active'); clearTimeout(idleTimer); resetPlayer();
-            setTimeout(function(){ iframe.src=''; },300); document.body.style.overflow='';
+            viewer.classList.remove('active');
+            document.body.classList.remove('viewer-open','viewer-exit-active');
+            if(exitCur) exitCur.classList.remove('show');
+            clearTimeout(idleTimer); resetPlayer();
+            document.body.style.overflow='';
         }
         function togglePlay() { if(!vPlayer)return; if(vPlaying) vPlayer.pause(); else vPlayer.play(); }
         clickLayer.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
@@ -544,10 +593,15 @@
         vHero.addEventListener('mouseenter', function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
         vHero.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
         vHero.addEventListener('mousemove',  function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
-        closeBtn.addEventListener('click',closeViewer);
-        viewer.addEventListener('click',function(e){if(e.target===viewer)closeViewer();});
-        prevBtn.addEventListener('click',function(){if(current>0)openViewer(current-1);});
-        nextBtn.addEventListener('click',function(){if(current<viewerItems.length-1)openViewer(current+1);});
+        if(closeBtn) closeBtn.addEventListener('click',closeViewer);
+        // click anywhere outside the video bounds closes (the EXIT cursor signals this)
+        viewer.addEventListener('click',function(e){
+            if(!viewer.classList.contains('active'))return;
+            if(e.target && e.target.closest && e.target.closest('.viewer-nav')) return;
+            if(!ptrInsideFrame(e)) closeViewer();
+        });
+        prevBtn.addEventListener('click',function(e){e.stopPropagation();if(current>0)openViewer(current-1);});
+        nextBtn.addEventListener('click',function(e){e.stopPropagation();if(current<viewerItems.length-1)openViewer(current+1);});
         document.addEventListener('keydown',function(e){
             if(!viewer.classList.contains('active'))return;
             if(e.key==='Escape')closeViewer();
