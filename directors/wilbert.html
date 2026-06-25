@@ -122,8 +122,9 @@
             background:none; border:none; color:rgba(255,255,255,0.45);
             font-family:'Space Grotesk',sans-serif; font-size:0.8rem; font-weight:500;
             letter-spacing:-0.04em; text-transform:lowercase; padding:0;
-            transition:color 0.25s ease; display:inline-flex; align-items:center; gap:0.45em;
+            transition:color 0.25s ease; display:inline-flex; align-items:center; gap:0.45em; position:relative;
         }
+        .bio-toggle::before { content:''; position:absolute; inset:-18px -28px; }
         .bio-toggle:hover, .bio-toggle.open { color:rgba(255,255,255,0.9); }
         .bio-toggle .toggle-icon {
             width:6px; height:6px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor;
