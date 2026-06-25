@@ -225,7 +225,9 @@
         .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
         .viewer-video-hero { position:absolute; inset:0; }
         .viewer-click-layer { position:absolute; inset:0; z-index:2; }
-        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 20px 16px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
+        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 64px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
+        .viewer-fs-corner { position:absolute; bottom:14px; right:18px; z-index:5; background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
+        .viewer-fs-corner:hover { opacity:1; }
         .viewer-video-hero.cs-playing .viewer-controls { opacity:0; transform:translateY(6px); pointer-events:none; }
         .viewer-video-hero.cs-playing.cs-hover .viewer-controls { opacity:1; transform:translateY(0); pointer-events:auto; }
         .viewer-ctrl-btn { background:none; border:none; padding:4px 6px; flex-shrink:0; cursor:none; }
@@ -239,10 +241,10 @@
         .viewer-time { font-size:11px; color:rgba(255,255,255,0.7); white-space:nowrap; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.04em; }
         .viewer-close { position:absolute; top:1.5rem; right:1.5rem; z-index:10; background:none; border:none; cursor:none; padding:0.5rem; opacity:0.5; transition:opacity 0.2s; line-height:0; }
         .viewer-close:hover { opacity:1; }
-        .viewer-meta { position:absolute; bottom:2rem; left:3rem; display:flex; flex-direction:column; gap:0.2rem; pointer-events:none; }
+        .viewer-meta { position:absolute; bottom:2rem; left:3rem; display:none; flex-direction:column; gap:0.2rem; pointer-events:none; }
         .viewer-client-label { font-size:0.6rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); }
         .viewer-title-label { font-size:0.95rem; font-weight:400; color:rgba(255,255,255,0.85); text-transform:lowercase; }
-        .viewer-nav { position:absolute; top:50%; transform:translateY(-50%); background:none; border:none; cursor:none; padding:1.2rem; opacity:0.4; transition:opacity 0.2s; line-height:0; }
+        .viewer-nav { display:none; position:absolute; top:50%; transform:translateY(-50%); background:none; border:none; cursor:none; padding:1.2rem; opacity:0.4; transition:opacity 0.2s; line-height:0; }
         .viewer-nav:hover { opacity:1; }
         .viewer-prev { left:0.5rem; }
         .viewer-next { right:0.5rem; }
@@ -357,11 +359,11 @@
                         <div class="cs-progress-track"><div class="cs-progress-fill" id="viewerFill"></div></div>
                     </div>
                     <div class="viewer-time" id="viewerTime">00:00 / 00:00</div>
-                    <button class="viewer-ctrl-btn" id="viewerFsBtn">
-                        <img src="/assets/logos/fullscreen_button.png" width="128" height="128" alt="Fullscreen" class="cs-ctrl-icon">
-                    </button>
                 </div>
             </div>
+            <button class="viewer-fs-corner" id="viewerFsBtn" aria-label="Fullscreen">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
         </div>
         <button class="viewer-close" id="viewerClose" aria-label="Close">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="2" y1="2" x2="16" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="2" x2="2" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -555,7 +557,7 @@
             iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&muted=1&controls=0&dnt=1&playsinline=1';
             vHero.insertBefore(iframe, vHero.firstChild);
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
-            viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.style.overflow='hidden';
+            viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
             prevBtn.style.opacity=idx>0?'0.6':'0.15';
             nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
             // Bind the player as soon as the SDK is ready — don't depend on iframe.onload
@@ -764,7 +766,7 @@
         function menuOpen(){ return !!document.querySelector('.menu-overlay.active'); }
         function hide(){ box.classList.remove('show'); document.body.classList.remove('click-cursor-active'); }
         function show(el){
-          if (menuOpen()) { hide(); return; }
+          if (menuOpen() || document.body.classList.contains('viewer-open')) { hide(); return; }
           var lbl = (el.getAttribute && el.getAttribute('data-cursor')) || 'CLICK';
           setLabel(String(lbl).toUpperCase());
           box.classList.add('show');
