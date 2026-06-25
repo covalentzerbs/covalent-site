@@ -135,12 +135,12 @@
         .bio-expanded p { margin-top:1.2rem; font-size:0.95rem; line-height:1.7; color:rgba(255,255,255,0.6); letter-spacing:-0.04em; }
         .bio-expanded p:first-child { margin-top:1.4rem; }
         /* ── hover-fill donut cursor for the biography reveal ── */
-        #bioRing { position:fixed; left:0; top:0; width:44px; height:44px; transform:translate(-50%,-50%);
+        #bioRing { position:fixed; left:0; top:0; width:12px; height:12px; transform:translate(-50%,-50%);
             pointer-events:none; z-index:10055; opacity:0; mix-blend-mode:difference; transition:opacity 0.18s ease; }
         #bioRing.show { opacity:1; }
         #bioRing circle { fill:none; }
-        #bioRing .ring-track { stroke:rgba(255,255,255,0.22); stroke-width:2; }
-        #bioRing .ring-fill { stroke:#fff; stroke-width:2.5; stroke-linecap:round; transform:rotate(-90deg); transform-origin:50% 50%; }
+        #bioRing .ring-track { stroke:rgba(255,255,255,0.22); stroke-width:2.4; }
+        #bioRing .ring-fill { stroke:#fff; stroke-width:2.8; stroke-linecap:round; transform:rotate(-90deg); transform-origin:50% 50%; }
         body.bio-ring-active .cursor { opacity:0 !important; }
         /* ── director-image cursor on name hover ── */
         #dirImgCursor { position:fixed; left:0; top:0; transform:translate(-50%,-50%) scale(0.85);
@@ -252,9 +252,9 @@
 <body>
 
     <div class="cursor" id="cursor"></div>
-    <svg id="bioRing" viewBox="0 0 44 44" aria-hidden="true">
-        <circle class="ring-track" cx="22" cy="22" r="18"></circle>
-        <circle class="ring-fill" cx="22" cy="22" r="18"></circle>
+    <svg id="bioRing" viewBox="0 0 12 12" aria-hidden="true">
+        <circle class="ring-track" cx="6" cy="6" r="4"></circle>
+        <circle class="ring-fill" cx="6" cy="6" r="4"></circle>
     </svg>
     <img id="dirImgCursor" alt="" aria-hidden="true">
 
@@ -580,7 +580,7 @@
         // ── donut-fill cursor: hover 'biography' ~0.5s to reveal ──
         var ring=document.getElementById('bioRing');
         var fill=ring && ring.querySelector('.ring-fill');
-        var C=2*Math.PI*18, MS=500, raf=null, active=false;
+        var C=2*Math.PI*4, MS=500, raf=null, active=false;
         if(fill){ fill.style.strokeDasharray=C.toFixed(2); fill.style.strokeDashoffset=C.toFixed(2); }
         function setProg(p){ if(fill) fill.style.strokeDashoffset=(C*(1-p)).toFixed(2); }
         function stopRing(){ active=false; if(raf)cancelAnimationFrame(raf); raf=null; if(ring)ring.classList.remove('show'); document.body.classList.remove('bio-ring-active'); setProg(0); }
