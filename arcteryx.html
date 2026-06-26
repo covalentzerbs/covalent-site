@@ -983,6 +983,19 @@
         body.dark-mode .cs-ctrl-icon {
             filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(1900%) hue-rotate(359deg) brightness(102%) contrast(105%);
         }
+        /* volume control: mute toggle + pop-up gauge, left of the fullscreen button */
+        .cs-vol { position: relative; display: flex; align-items: center; }
+        .cs-vol-btn .cs-vol-ic { display: none; width: 16px; height: 16px; }
+        .cs-vol-btn .cs-vol-on { display: block; }
+        .cs-vol.muted .cs-vol-on { display: none; }
+        .cs-vol.muted .cs-vol-off { display: block; }
+        .cs-vol-gauge { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); opacity: 0; pointer-events: none; transition: opacity 0.18s ease; background: rgba(20,20,20,0.72); border-radius: 999px; padding: 12px 0; }
+        .cs-vol.show-gauge .cs-vol-gauge { opacity: 1; pointer-events: auto; }
+        .cs-vol-track { width: 4px; height: 70px; margin: 0 13px; background: rgba(255,255,255,0.3); border-radius: 999px; position: relative; cursor: none; }
+        .cs-vol-fill { position: absolute; left: 0; right: 0; bottom: 0; height: 100%; background: #fff; border-radius: 999px; }
+        body.dark-mode .cs-vol-ic { filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(1900%) hue-rotate(359deg) brightness(102%) contrast(105%); }
+        body.dark-mode .cs-vol-fill { background-color: #FF4500; }
+        body.dark-mode .cs-vol-track { background-color: rgba(255,69,0,0.35); }
 
         /* Desktop: fit the entire project page in one viewport so the footer is
            visible under the player with no scroll. The video derives its height
@@ -1097,6 +1110,17 @@
                             <!-- Time Display -->
                             <div class="cs-time">
                                 <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
+                            </div>
+
+                            <!-- Volume -->
+                            <div class="cs-vol" id="csVol">
+                                <div class="cs-vol-gauge" id="csVolGauge">
+                                    <div class="cs-vol-track" id="csVolTrack"><div class="cs-vol-fill" id="csVolFill"></div></div>
+                                </div>
+                                <button class="cs-ctrl cs-vol-btn" id="csVolBtn" data-cursor="mute" aria-label="Volume">
+                                    <svg class="cs-vol-ic cs-vol-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+                                    <svg class="cs-vol-ic cs-vol-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
+                                </button>
                             </div>
 
                             <!-- Fullscreen Button -->
@@ -1298,6 +1322,26 @@
                 videoRatio.requestFullscreen();
             }
         });
+
+        // Volume control: mute toggle + draggable pop-up gauge
+        const csVol = document.getElementById('csVol');
+        const csVolBtn = document.getElementById('csVolBtn');
+        const csVolTrack = document.getElementById('csVolTrack');
+        const csVolFill = document.getElementById('csVolFill');
+        let csVolume = 1, csMuted = false, csVolDragging = false, csVolHideT = null;
+        function csRenderVol() { const off = csMuted || csVolume === 0; csVol.classList.toggle('muted', off); csVolFill.style.height = ((off ? 0 : csVolume) * 100) + '%'; csVolBtn.setAttribute('data-cursor', off ? 'unmute' : 'mute'); }
+        function csApplyVol() { const off = csMuted || csVolume === 0; try { if (player.setMuted) player.setMuted(off); } catch (e) {} try { player.setVolume(off ? 0 : csVolume).catch(() => {}); } catch (e) {} csRenderVol(); }
+        function csShowGauge() { clearTimeout(csVolHideT); csVol.classList.add('show-gauge'); }
+        function csHideGaugeSoon() { clearTimeout(csVolHideT); csVolHideT = setTimeout(() => { if (!csVolDragging) csVol.classList.remove('show-gauge'); }, 500); }
+        function csVolFromY(e) { const r = csVolTrack.getBoundingClientRect(); return Math.max(0, Math.min(1, 1 - (e.clientY - r.top) / r.height)); }
+        csVolBtn.addEventListener('click', (e) => { e.stopPropagation(); csMuted = !csMuted; if (!csMuted && csVolume === 0) csVolume = 1; csApplyVol(); csShowGauge(); });
+        csVol.addEventListener('mouseenter', csShowGauge);
+        csVol.addEventListener('mouseleave', csHideGaugeSoon);
+        csVolTrack.addEventListener('mousedown', (e) => { e.preventDefault(); e.stopPropagation(); csVolDragging = true; const v = csVolFromY(e); csVolume = v; csMuted = (v === 0); csApplyVol(); });
+        document.addEventListener('mousemove', (e) => { if (csVolDragging) { const v = csVolFromY(e); csVolume = v; csMuted = (v === 0); csApplyVol(); } });
+        document.addEventListener('mouseup', () => { csVolDragging = false; });
+        player.ready().then(() => player.getVolume()).then((v) => { if (typeof v === 'number') { csVolume = v > 0 ? v : 1; csMuted = (v === 0); } csRenderVol(); }).catch(() => {});
+        csRenderVol();
 
         // Hover detection for controls visibility
         videoHero.addEventListener('mouseenter', () => {

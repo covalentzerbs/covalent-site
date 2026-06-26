@@ -243,7 +243,7 @@
         .viewer-fs-corner { position:absolute; bottom:14px; right:18px; z-index:5; background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
         .viewer-fs-corner:hover { opacity:1; }
         /* volume control: corner button left of the expand button, with a pop-up gauge */
-        .viewer-vol { position:absolute; bottom:14px; right:54px; z-index:5; display:flex; align-items:center; justify-content:center; line-height:0; }
+        .viewer-vol { position:absolute; bottom:14px; right:54px; z-index:5; display:flex; align-items:center; justify-content:center; line-height:0; transition:opacity 0.3s ease; }
         .viewer-vol-btn { background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
         .viewer-vol-btn:hover { opacity:1; }
         .viewer-vol-btn .vol-ic { display:none; }
@@ -256,6 +256,10 @@
         .viewer-vol-fill { position:absolute; left:0; right:0; bottom:0; height:0%; background:#fff; border-radius:999px; }
         .viewer-video-hero.cs-playing .viewer-controls { opacity:0; transform:translateY(6px); pointer-events:none; }
         .viewer-video-hero.cs-playing.cs-hover .viewer-controls { opacity:1; transform:translateY(0); pointer-events:auto; }
+        /* corner buttons (volume + expand) fade out with the controls when the video isn't being hovered */
+        .viewer-video-hero.cs-playing ~ .viewer-fs-corner, .viewer-video-hero.cs-playing ~ .viewer-vol { opacity:0; pointer-events:none; }
+        .viewer-video-hero.cs-playing.cs-hover ~ .viewer-fs-corner { opacity:0.65; pointer-events:auto; }
+        .viewer-video-hero.cs-playing.cs-hover ~ .viewer-vol { opacity:1; pointer-events:auto; }
         .viewer-ctrl-btn { background:none; border:none; padding:4px 6px; flex-shrink:0; cursor:none; }
         .viewer-ctrl-btn .cs-ctrl-icon { display:none; width:14px; height:14px; object-fit:contain; }
         .viewer-ctrl-btn .cs-icon-play { display:block; }
