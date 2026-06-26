@@ -273,6 +273,12 @@
         .viewer-progress .cs-progress-thumb { position:absolute; top:50%; left:0; width:11px; height:11px; border-radius:50%; background:#fff; transform:translate(-50%,-50%); opacity:0; transition:opacity 0.15s ease; pointer-events:none; box-shadow:0 1px 5px rgba(0,0,0,0.5); }
         .viewer-progress:hover .cs-progress-thumb, .viewer-progress.dragging .cs-progress-thumb { opacity:1; }
         .viewer-progress:hover .cs-progress-track, .viewer-progress.dragging .cs-progress-track { height:4px; }
+        /* scrubber frame preview (mini player seeked to the cursor time) */
+        .scrub-preview { position:absolute; bottom:calc(100% + 14px); left:0; transform:translateX(-50%); width:168px; opacity:0; pointer-events:none; transition:opacity 0.12s ease; z-index:6; }
+        .scrub-preview.show { opacity:1; }
+        .scrub-preview-frame { width:168px; height:95px; border-radius:6px; overflow:hidden; background:#000; box-shadow:0 10px 34px rgba(0,0,0,0.55); position:relative; }
+        .scrub-preview-frame iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100%; height:100%; min-width:169px; min-height:95px; border:none; pointer-events:none; }
+        .scrub-preview-time { display:block; text-align:center; margin-top:5px; font-size:11px; color:#fff; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.03em; text-shadow:0 1px 3px rgba(0,0,0,0.65); }
         .viewer-time { font-size:11px; color:rgba(255,255,255,0.7); white-space:nowrap; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.04em; }
         .viewer-close { position:absolute; top:1.5rem; right:1.5rem; z-index:10; background:none; border:none; cursor:none; padding:0.5rem; opacity:0.5; transition:opacity 0.2s; line-height:0; }
         .viewer-close:hover { opacity:1; }
@@ -396,6 +402,7 @@
                         <img src="/assets/logos/pause_button.png" width="128" height="128" alt="Pause" class="cs-ctrl-icon cs-icon-pause">
                     </button>
                     <div class="viewer-progress" id="viewerProgress">
+                        <div class="scrub-preview" id="scrubPreview"><div class="scrub-preview-frame" id="scrubPreviewFrame"></div><span class="scrub-preview-time" id="scrubPreviewTime">0:00</span></div>
                         <div class="cs-progress-track"><div class="cs-progress-fill" id="viewerFill"></div></div>
                         <div class="cs-progress-thumb" id="viewerThumb"></div>
                     </div>
@@ -588,6 +595,7 @@
             if (fillEl) fillEl.style.width='0%';
             if (thumb) thumb.style.left='0%';
             if (timeEl) timeEl.textContent='00:00 / 00:00';
+            hidePrev(); teardownPrev();
         }
         function bindPlayer(p) {
             p.getDuration().then(function(d){ vDuration=d; if(timeEl&&d) timeEl.textContent='00:00 / '+fmt(d); }).catch(function(){});
@@ -639,16 +647,49 @@
         // scrubber: click + drag with a visible thumb that tracks the cursor
         function scrubPct(e){ var r=progEl.getBoundingClientRect(); return Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)); }
         function scrubPreview(p){ if(fillEl) fillEl.style.width=(p*100)+'%'; if(thumb) thumb.style.left=(p*100)+'%'; if(timeEl&&vDuration) timeEl.textContent=fmt(p*vDuration)+' / '+fmt(vDuration); }
+        // frame preview: a 2nd hidden Vimeo player seeked to the cursor time (Vimeo is
+        // cross-origin, so a seeked mini-player is the only way to show the actual frame)
+        var scrubPrev=document.getElementById('scrubPreview'), scrubPrevFrame=document.getElementById('scrubPreviewFrame'), scrubPrevTime=document.getElementById('scrubPreviewTime');
+        var prevPlayer=null, prevReady=false, prevVimeo=null, prevSeeking=false, prevPending=null;
+        function teardownPrev(){ if(prevPlayer){ try{prevPlayer.destroy();}catch(e){} } prevPlayer=null; prevReady=false; prevVimeo=null; prevSeeking=false; prevPending=null; if(scrubPrevFrame) scrubPrevFrame.innerHTML=''; }
+        function buildPrev(){
+            var item=viewerItems[current]; if(!item||!item.vimeo||!scrubPrevFrame) return;
+            if(prevVimeo===item.vimeo && prevPlayer) return;
+            teardownPrev(); prevVimeo=item.vimeo;
+            var pf=document.createElement('iframe'); pf.setAttribute('frameborder','0'); pf.setAttribute('allow','autoplay');
+            pf.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'background=1&muted=1&controls=0&dnt=1';
+            scrubPrevFrame.appendChild(pf);
+            whenVimeoReady(function(){ try{ prevPlayer=new Vimeo.Player(pf); prevPlayer.ready().then(function(){ prevReady=true; if(prevPending!=null){ var t=prevPending; prevPending=null; seekPrev(t); } }).catch(function(){}); }catch(e){} });
+        }
+        function seekPrev(t){
+            if(!prevReady||!prevPlayer){ prevPending=t; return; }
+            if(prevSeeking){ prevPending=t; return; }
+            prevSeeking=true;
+            prevPlayer.setCurrentTime(t).then(function(){ prevSeeking=false; if(prevPending!=null){ var n=prevPending; prevPending=null; seekPrev(n); } }).catch(function(){ prevSeeking=false; });
+        }
+        function showPrev(e){
+            if(!vDuration||!scrubPrev) return;
+            buildPrev();
+            var p=scrubPct(e), r=progEl.getBoundingClientRect();
+            scrubPrev.style.left=Math.max(84, Math.min(r.width-84, e.clientX-r.left))+'px';
+            if(scrubPrevTime) scrubPrevTime.textContent=fmt(p*vDuration);
+            scrubPrev.classList.add('show');
+            seekPrev(p*vDuration);
+        }
+        function hidePrev(){ if(scrubPrev) scrubPrev.classList.remove('show'); }
         progEl.addEventListener('mousedown', function(e){
             if(!vPlayer||!vDuration)return;
             e.preventDefault(); e.stopPropagation();
-            dragging=true; progEl.classList.add('dragging'); scrubPreview(scrubPct(e));
+            dragging=true; progEl.classList.add('dragging'); scrubPreview(scrubPct(e)); showPrev(e);
         });
-        document.addEventListener('mousemove', function(e){ if(dragging) scrubPreview(scrubPct(e)); }, {passive:true});
+        progEl.addEventListener('mousemove', function(e){ if(!dragging) showPrev(e); }, {passive:true});
+        progEl.addEventListener('mouseleave', function(){ if(!dragging) hidePrev(); }, {passive:true});
+        document.addEventListener('mousemove', function(e){ if(dragging){ scrubPreview(scrubPct(e)); showPrev(e); } }, {passive:true});
         document.addEventListener('mouseup', function(e){
             if(!dragging)return;
             dragging=false; progEl.classList.remove('dragging');
             var p=scrubPct(e); if(vPlayer&&vDuration) vPlayer.setCurrentTime(p*vDuration).catch(function(){});
+            hidePrev();
         });
         fsBtn.addEventListener('click', function(e){
             e.stopPropagation();
