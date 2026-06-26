@@ -682,9 +682,14 @@
         document.addEventListener('mousemove', function(e){ if(volDragging){ var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); } }, {passive:true});
         document.addEventListener('mouseup', function(){ volDragging=false; });
         renderVol();
-        vHero.addEventListener('mouseenter', function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
-        vHero.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
-        vHero.addEventListener('mousemove',  function(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(function(){ vHero.classList.remove('cs-hover'); },2000); });
+        // Keep the controls + corner buttons alive while the cursor is anywhere in the
+        // frame (incl. the volume/expand buttons, which are siblings of the video-hero).
+        // Don't auto-hide while the volume gauge is open or being dragged.
+        function csIdleHide(){ if(!volWrap.classList.contains('show-gauge') && !volDragging) vHero.classList.remove('cs-hover'); }
+        function csPoke(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(csIdleHide,2000); }
+        frame.addEventListener('mouseenter', csPoke);
+        frame.addEventListener('mousemove',  csPoke);
+        frame.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
         if(closeBtn) closeBtn.addEventListener('click',closeViewer);
         // click anywhere outside the video bounds closes (the EXIT cursor signals this)
         viewer.addEventListener('click',function(e){
