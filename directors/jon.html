@@ -241,6 +241,12 @@
         .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
         .viewer-video-hero { position:absolute; inset:0; }
         .viewer-click-layer { position:absolute; inset:0; z-index:2; }
+        .viewer-center-icon { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.7); width:84px; height:84px; border-radius:50%; background:rgba(0,0,0,0.42); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; z-index:4; }
+        .viewer-center-icon .cc-ic { width:38px; height:38px; display:none; }
+        .viewer-center-icon.show-play .cc-play { display:block; }
+        .viewer-center-icon.show-pause .cc-pause { display:block; }
+        .viewer-center-icon.flash { animation:ccFlash 0.6s ease-out; }
+        @keyframes ccFlash { 0%{opacity:0;transform:translate(-50%,-50%) scale(0.7);} 18%{opacity:1;transform:translate(-50%,-50%) scale(1);} 100%{opacity:0;transform:translate(-50%,-50%) scale(1.3);} }
         .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 96px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
         .viewer-fs-corner { position:absolute; bottom:14px; right:18px; z-index:5; background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
         .viewer-fs-corner:hover { opacity:1; }
@@ -396,6 +402,10 @@
             <div class="viewer-video-hero" id="viewerVideoHero">
                 <iframe id="viewerIframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                 <div class="viewer-click-layer" id="viewerClickLayer"></div>
+                <div class="viewer-center-icon" id="viewerCenterIcon" aria-hidden="true">
+                    <svg class="cc-ic cc-play" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="cc-ic cc-pause" viewBox="0 0 24 24" fill="#fff"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                </div>
                 <div class="viewer-controls" id="viewerControls">
                     <button class="viewer-ctrl-btn" id="viewerPlayPause" data-cursor="play">
                         <img src="/assets/logos/covalent_white_play_button.png" width="128" height="128" alt="Play" class="cs-ctrl-icon cs-icon-play">
@@ -639,9 +649,11 @@
             clearTimeout(idleTimer); resetPlayer();
             document.body.style.overflow='';
         }
-        function togglePlay() { if(!vPlayer)return; if(vPlaying) vPlayer.pause(); else vPlayer.play(); }
-        clickLayer.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
-        ppBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(); });
+        var centerIcon=document.getElementById('viewerCenterIcon');
+        function flashCenter(playing){ if(!centerIcon)return; centerIcon.classList.remove('flash','show-play','show-pause'); void centerIcon.offsetWidth; centerIcon.classList.add(playing?'show-play':'show-pause','flash'); }
+        function togglePlay(flash) { if(!vPlayer)return; var willPlay=!vPlaying; if(vPlaying) vPlayer.pause(); else vPlayer.play(); if(flash) flashCenter(willPlay); }
+        clickLayer.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(true); });
+        ppBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(false); });
         // scrubber: click + drag with a visible thumb that tracks the cursor
         function scrubPct(e){ var r=progEl.getBoundingClientRect(); return Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)); }
         function scrubPreview(p){ if(fillEl) fillEl.style.width=(p*100)+'%'; if(thumb) thumb.style.left=(p*100)+'%'; if(timeEl&&vDuration) timeEl.textContent=fmt(p*vDuration)+' / '+fmt(vDuration); }
@@ -741,7 +753,7 @@
             if(e.key==='Escape')closeViewer();
             if(e.key==='ArrowLeft'&&current>0)openViewer(current-1);
             if(e.key==='ArrowRight'&&current<viewerItems.length-1)openViewer(current+1);
-            if(e.key===' '){e.preventDefault();togglePlay();}
+            if(e.key===' '){e.preventDefault();togglePlay(true);}
         });
     })();
 
