@@ -26,6 +26,7 @@
     <meta property="og:url" content="https://covalentstudios.co">
     <meta property="og:type" content="website">
     <!-- Preload client logos so they're ready before loading screen ends -->
+    <link rel="preload" as="image" href="assets/logos/client-logos/bo-house-logo-white.png">
     <link rel="preload" as="image" href="assets/logos/client-logos/onco-optima-logo.png">
     <link rel="preload" as="image" href="assets/logos/client-logos/wabi-logo-white.png">
     <link rel="preload" as="image" href="assets/logos/client-logos/aesop-logo-white.png">
@@ -1089,6 +1090,16 @@ body.dark-mode .project-client {
             <img src="assets/logos/WORDMARK_FINAL_WHITE.png" width="1920" height="1080" class="hero-wordmark" alt="Covalent Studios">
         </section>
 
+        <!-- BO HOUSE — VILLA PENINSULA -->
+        <section class="project-section" id="projectBo">
+            <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
+                <iframe data-src="https://player.vimeo.com/video/1205559620?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <a href="https://vimeo.com/1205559620" target="_blank" rel="noopener" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/bo-house-logo-white.png" width="2048" height="2048" class="project-logo" alt="bo house"></a>
+            </div>
+        </section>
+
         <!-- PANEL 2: ONCO OPTIMA -->
         <section class="project-section" id="project1">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
@@ -1419,6 +1430,7 @@ body.dark-mode .project-client {
         // ==================== //
         const allSectionIds = [
             'heroSection',
+            'projectBo',
             'project1', 'project2', 'project3', 'project4',
             'project5', 'project6', 'project7', 'project8'
         ];
@@ -1758,6 +1770,8 @@ body.dark-mode .project-client {
             if (!href) return;
             var a = document.createElement('a');
             a.href = href;
+            if (link.getAttribute('target')) a.setAttribute('target', link.getAttribute('target'));
+            if (link.getAttribute('rel'))    a.setAttribute('rel', link.getAttribute('rel'));
             a.className = 'project-video-link';
             var img = link.querySelector('img');
             a.setAttribute('aria-label', (img && img.alt) ? img.alt : 'view project');
