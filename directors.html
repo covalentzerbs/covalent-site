@@ -85,6 +85,10 @@
             background-color: var(--white);
             color: var(--black);
             overflow: hidden;
+            /* Lock the page — iOS ignores overflow:hidden, so fix the body to the viewport */
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
             letter-spacing: -0.07em;
         }
 
@@ -278,8 +282,8 @@
 
         /* Directors Page */
         .directors-page {
-            min-height: 100dvh;
-            height: 100dvh;
+            min-height: 100%;
+            height: 100%;
             position: relative;
             display: flex;
             align-items: center;
