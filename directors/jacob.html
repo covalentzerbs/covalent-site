@@ -239,6 +239,12 @@
             .menu-overlay { padding:5rem 1.5rem 1.5rem; }
             body { padding-bottom:3.5rem; }
         }
+        @media (pointer:coarse) {
+            /* touch: the scroll-scrub height morph is disabled in JS (it scrambles with
+               momentum scrolling + address-bar resize). Show full-height cards instead. */
+            .work-card { height:auto !important; aspect-ratio:16/9; }
+            .work-card .card-text { opacity:1 !important; }
+        }
         /* ── Work Viewer ──────────────────────────────────── */
         .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
         .work-viewer.active { opacity:1; pointer-events:all; }
@@ -847,6 +853,12 @@
     (function initReveal() {
         var cards = Array.prototype.slice.call(document.querySelectorAll(".work-card"));
         if (!cards.length) return;
+        // Touch: skip the scroll-scrub height morph — it fights momentum scrolling + the
+        // address-bar resize and scrambles the grid. Show full-height cards (CSS aspect-ratio).
+        if (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) {
+            cards.forEach(function(card){ card.style.height=''; var t=card.querySelector('.card-text'); if(t) t.style.opacity='1'; });
+            return;
+        }
         var COLLAPSED = 6;
         function fullH(card) { return card.offsetWidth * 9 / 16; }
         function smooth(t) { return t * t * (3 - 2 * t); }
