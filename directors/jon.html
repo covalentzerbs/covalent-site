@@ -116,6 +116,9 @@
         .dir-header { background:var(--black); padding:7.5rem 3rem 4rem; border-bottom:1px solid var(--border); }
         .dir-header-inner { max-width:1320px; margin:0 auto; display:block; }
         .hero-name { font-size:clamp(2.5rem,7vw,5rem); font-weight:500; line-height:0.95; color:var(--white); letter-spacing:-0.07em; display:inline-block; }
+        .dir-header-top { display:flex; align-items:baseline; justify-content:space-between; gap:1rem 2.5rem; flex-wrap:wrap; }
+        .hero-location { font-size:clamp(0.8rem,1.3vw,1rem); font-weight:500; letter-spacing:0.01em; color:rgba(255,255,255,0.5); white-space:nowrap; }
+        .hero-location:empty { display:none; }
         .hero-tagline { margin-top:0.75rem; font-size:clamp(0.85rem,1.5vw,1.1rem); font-weight:400; color:rgba(255,255,255,0.55); letter-spacing:-0.04em; max-width:480px; }
         .bio-block { margin-top:1.75rem; }
         .bio-toggle {
@@ -132,7 +135,7 @@
         }
         .bio-toggle.open .toggle-icon { transform:translateY(1px) rotate(-135deg); }
         .bio-expanded { overflow:hidden; max-height:0; transition:max-height 0.55s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease; opacity:0; max-width:1120px; }
-        .bio-expanded.open { max-height:600px; opacity:1; }
+        .bio-expanded.open { max-height:900px; opacity:1; }
         .bio-expanded p { margin-top:1.2rem; font-size:0.95rem; line-height:1.7; color:rgba(255,255,255,0.6); letter-spacing:-0.04em; }
         .bio-expanded p:first-child { margin-top:1.4rem; }
         /* ── hover-fill donut cursor for the biography reveal ── */
@@ -188,6 +191,7 @@
         body:not(.dark-mode) .dir-header { background:var(--white); border-bottom-color:rgba(0,0,0,0.08); }
         body:not(.dark-mode) .hero-name { color:var(--black); }
         body:not(.dark-mode) .hero-tagline { color:rgba(0,0,0,0.55); }
+        body:not(.dark-mode) .hero-location { color:rgba(0,0,0,0.45); }
         body:not(.dark-mode) .bio-toggle { color:rgba(0,0,0,0.45); }
         body:not(.dark-mode) .bio-toggle:hover, body:not(.dark-mode) .bio-toggle.open { color:rgba(0,0,0,0.9); }
         body:not(.dark-mode) .bio-expanded p { color:rgba(0,0,0,0.6); }
@@ -209,6 +213,7 @@
         body.dark-mode .social-link { color:#FF4500 !important; }
         body.dark-mode .site-footer-left { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
         body.dark-mode .hero-name { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .hero-location { color:rgba(255,69,0,0.7) !important; -webkit-text-fill-color:rgba(255,69,0,0.7); }
         body.dark-mode .card-title, body.dark-mode .card-client { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
         html { scrollbar-width:thin; scrollbar-color:rgba(89,121,233,0.45) transparent; }
         html::-webkit-scrollbar { width:6px; }
@@ -360,7 +365,10 @@
 
     <header class="dir-header">
         <div class="dir-header-inner">
-            <h1 class="hero-name" id="heroName"></h1>
+            <div class="dir-header-top">
+                <h1 class="hero-name" id="heroName"></h1>
+                <span class="hero-location" id="heroLocation"></span>
+            </div>
             <p class="hero-tagline" id="heroTagline"></p>
             <div class="bio-block">
                 <button class="bio-toggle" id="bioToggle">
@@ -453,6 +461,7 @@
     window.DIRECTOR = {
         name:      'Jon Schwartz',
         tagline:   'director. covalent studios.',
+        location:  'chicago',
         bio_short: 'jon schwartz is a director whose work spans commercial and branded content — finding the human moment inside every brief.',
         bio_full:  [],
         hero_vimeo: '1163390482',
@@ -476,6 +485,7 @@
         var D = window.DIRECTOR;
         document.getElementById('heroName').textContent    = D.name;
         document.getElementById('heroTagline').textContent = D.tagline;
+        document.getElementById('heroLocation').textContent = D.location || '';
         var bioExpanded = document.getElementById('bioExpanded');
         var bioParas = [];
         if (D.bio_short) bioParas.push(D.bio_short);
