@@ -509,6 +509,9 @@
             opacity: 1;
         }
 
+        /* Bo House emblem is square — render it smaller than the wordmark logos */
+        .project-logo-bo { width: clamp(80px, 9vw, 140px); }
+
         .project-client-link {
             text-decoration: none;
             color: inherit;
@@ -1096,7 +1099,7 @@ body.dark-mode .project-client {
                 <iframe data-src="https://player.vimeo.com/video/1205559620?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <a href="https://vimeo.com/1205559620" target="_blank" rel="noopener" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/bo-house-logo-white.png" width="2048" height="2048" class="project-logo" alt="bo house"></a>
+                <a href="bo-house.html" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/bo-house-logo-white.png" width="2048" height="2048" class="project-logo project-logo-bo" alt="bo house"></a>
             </div>
         </section>
 
