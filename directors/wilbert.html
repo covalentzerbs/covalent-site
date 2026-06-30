@@ -502,6 +502,7 @@
             bioExpanded.innerHTML = bioParas.map(function(p){return'<p>'+p+'</p>';}).join('');
         } else {
             document.getElementById('bioToggle').style.display = 'none';
+            var bb = document.querySelector('.bio-block'); if (bb) bb.style.display = 'none';
         }
         var grid = document.getElementById('workGrid');
         if (!D.work || !D.work.length) {

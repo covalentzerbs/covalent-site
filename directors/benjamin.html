@@ -468,7 +468,7 @@
         name:      'Benjamin Gugick',
         tagline:   'director. covalent studios.',
         location:  'chicago, illinois',
-        bio_short: 'benjamin gugick is a director and visual storyteller — bringing a sharp editorial sensibility and instinctual sense of craft to every frame.',
+        bio_short: '',
         bio_full:  [],
         hero_vimeo: '1170747372',
         types:  [],
@@ -498,6 +498,7 @@
             bioExpanded.innerHTML = bioParas.map(function(p){return'<p>'+p+'</p>';}).join('');
         } else {
             document.getElementById('bioToggle').style.display = 'none';
+            var bb = document.querySelector('.bio-block'); if (bb) bb.style.display = 'none';
         }
         var grid = document.getElementById('workGrid');
         if (!D.work || !D.work.length) {
