@@ -1667,15 +1667,8 @@
             f.setAttribute('tabindex', '-1');
             cell.appendChild(f);
         }
-        // Lazy-load so a long grid doesn't fire every stream at once; each plays as it nears view.
-        if ('IntersectionObserver' in window) {
-            var io = new IntersectionObserver(function(entries){
-                entries.forEach(function(e){ if (e.isIntersecting) { load(e.target); io.unobserve(e.target); } });
-            }, { rootMargin: '600px 0px' });
-            cells.forEach(function(c){ io.observe(c); });
-        } else {
-            cells.forEach(load);
-        }
+        // All clips play at once (per spec) — load them all up front.
+        cells.forEach(load);
     })();
     </script>
 </body>
