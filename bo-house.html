@@ -1666,6 +1666,9 @@
             f.setAttribute('frameborder', '0');
             f.setAttribute('tabindex', '-1');
             cell.appendChild(f);
+            // background=1 autoplays muted, but nudge playback via the API too so all
+            // 15 reliably start when they fire at once.
+            if (window.Vimeo) { try { var p = new Vimeo.Player(f); p.setMuted(true).catch(function(){}); p.play().catch(function(){}); } catch(e){} }
         }
         // All clips play at once (per spec) — load them all up front.
         cells.forEach(load);
