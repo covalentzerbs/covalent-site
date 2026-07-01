@@ -1732,6 +1732,11 @@ People + product = boutique.</p>
                 measureVisible();
                 update();
             });
+            // Re-fit once the web font loads — its metrics differ from the fallback,
+            // so an early fit would measure the wrong height and skip shrinking.
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => { fitFont(); measureVisible(); update(); });
+            }
             window.addEventListener('scroll', update, { passive: true });
             window.addEventListener('resize', () => {
                 fitFont();
