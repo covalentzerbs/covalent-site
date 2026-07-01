@@ -739,7 +739,7 @@
             top: 0;
             height: 100vh;
             overflow: hidden;
-            padding: 96px 96px 96px 96px;
+            padding: 72px 96px 72px 96px;
             display: flex;
             align-items: flex-start;
             box-sizing: border-box;
@@ -1294,13 +1294,18 @@
         <div class="manifesto-scroll-container" id="manifestoScroll">
             <div class="manifesto-sticky">
                 <div class="manifesto-inner" id="manifestoInner">
-                    <p class="reveal-text" id="manifesto-text">Film is f***king cool. We don't want to create AI videos — we think those are lame. What's more human than struggle. What's more human than emotion. AI takes away all of that. What's more human than perfect imperfections. What's more human than working on set with 20 other people exuding their physical and mental strength for the same goal. Everyone with different abilities, tasks, and talents. Not a water-cooled computer plant in the middle of some rural town in Arizona stealing from real artists so that a suit can buy another lake house.
+                    <p class="reveal-text" id="manifesto-text">Film is cool. We don't want to make AI videos. We think they're lame.
 
-New age production companies are trying to replace their current workflows with AI-generated content that is high margin and low effort. That's not what Covalent wants to be. We started Covalent in 2024 because we wanted to bridge the gap between traditional production — film school knowledge — and AI slop. We continue to see how things can be more efficient and we're constantly striving for that. We integrate AI agents into our workflow, we create systems that make us more time efficient, allowing us more time to focus on the human experience.
+What's more human than struggle? What's more human than emotion? What's more human than a perfect imperfection? AI takes all of that away. It trades twenty people on a set, exuding their physical and mental strength for the same goal, for a water-cooled computer plant in the middle of Arizona, stealing from real artists so a suit can buy another lake house.
 
-Our goal is to minimize the clicks that a client has to make. No, that's not a metaphor or hidden message — we genuinely want to decrease the amount of times our collaborators need to type a key on their laptop, push their mousepad, or touch their iPhone. A commercial production company that values speed and tech without discrediting the ability of artificial intelligence. We're merely too snobby to be using that shit to recreate human emotion.
+New age production companies are racing to swap their workflows for AI-generated content because it's high margin and low effort. That's not what Covalent wants to be. We started Covalent in 2024 to bridge the gap between traditional production knowledge and AI slop. We use AI where it makes us faster, smarter, more efficient, so we have more time for the part that actually matters: the human experience. We're not anti-technology. We're just too snobby to let it try and recreate human emotion.
+Call us old fashioned, or call us luxury. Up for interpretation.
 
-Call us old fashioned, or call us luxury. It's up for interpretation.</p>
+And while we're at it: who decided "we're the new age production company, we're fresh, we're fast, we're different" was a pitch? That's the bare minimum. Not us.
+
+We're artists. We make art. But we're not going to sell you on our creativity, we believe we're in the service business, and we believe this should be a good experience. Our work speaks for itself. You already know we're creative. We don't have to convince you.
+We get your favorite food on set. We send handwritten thank-you notes. We make sure there's wifi. We keep the day on schedule so you're not late to your daughter's volleyball practice.
+People + product = boutique.</p>
                 </div>
             </div>
         </div>
@@ -1661,6 +1666,20 @@ Call us old fashioned, or call us luxury. It's up for interpretation.</p>
             const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
             let visibleWordCount = 0;
 
+            // Desktop is a pinned, static reveal (no scroll-translate), so the whole
+            // manifesto must fit the 100vh window or the bottom clips. Auto-shrink the
+            // font until it fits (taller viewports keep the CSS max size).
+            function fitFont() {
+                el.style.fontSize = '';
+                if (isMobile()) return;
+                const sticky = container.querySelector('.manifesto-sticky');
+                if (!sticky) return;
+                const cs = getComputedStyle(sticky);
+                const avail = sticky.clientHeight - (parseFloat(cs.paddingTop) || 0) - (parseFloat(cs.paddingBottom) || 0);
+                let fs = parseFloat(getComputedStyle(el).fontSize), guard = 0;
+                while (el.scrollHeight > avail && fs > 12 && guard++ < 60) { fs -= 0.5; el.style.fontSize = fs + 'px'; }
+            }
+
             function measureVisible() {
                 const sticky = container.querySelector('.manifesto-sticky');
                 if (!sticky) return;
@@ -1709,11 +1728,13 @@ Call us old fashioned, or call us luxury. It's up for interpretation.</p>
 
             // Defer first measure until layout settles
             requestAnimationFrame(() => {
+                fitFont();
                 measureVisible();
                 update();
             });
             window.addEventListener('scroll', update, { passive: true });
             window.addEventListener('resize', () => {
+                fitFont();
                 measureVisible();
                 update();
             }, { passive: true });
