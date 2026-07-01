@@ -1010,6 +1010,20 @@
 
         /* Footer link inherits footer colour (kills default visited-link purple) */
         .footer-link, .footer-link:link, .footer-link:visited { color: inherit; }
+        /* ── Bo House social clips grid + case study ── */
+        .social-section { max-width: 1200px; margin: 0 auto; padding: 3.5rem 2rem 6rem; }
+        .social-case { max-width: 680px; margin: 0 0 2.75rem; }
+        .social-case-title { font-size: clamp(1.4rem, 3vw, 2.1rem); font-weight: 500; letter-spacing: -0.05em; margin: 0 0 1rem; color: var(--black, #0A0A0A); text-transform: lowercase; }
+        .social-case-body { font-size: 1rem; line-height: 1.7; letter-spacing: -0.03em; color: rgba(10,10,10,0.6); max-width: 640px; }
+        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .social-clip { position: relative; aspect-ratio: 9 / 16; background: #0A0A0A; border-radius: 6px; overflow: hidden; }
+        .social-clip iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none; }
+        body.dark-mode .social-case-title { color: #FF4500; }
+        body.dark-mode .social-case-body { color: rgba(255,255,255,0.55); }
+        @media (max-width: 768px) {
+            .social-section { padding: 2.25rem 1.25rem 4rem; }
+            .social-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+        }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -1137,6 +1151,15 @@
 
                 </div>
             </div>
+
+            <!-- Bo House social clips: 3-up grid, all autoplay muted + loop, no interaction -->
+            <section class="social-section" id="socialSection">
+                <div class="social-case">
+                    <h2 class="social-case-title">the social cut</h2>
+                    <p class="social-case-body">[ placeholder — your case-study write-up goes here. this block is reserved for the paragraph you'll send: the brief, the approach, and the run of social clips produced for bo house. ]</p>
+                </div>
+                <div class="social-grid" id="socialGrid"></div>
+            </section>
         </main>
 
         <!-- Footer -->
@@ -1614,6 +1637,41 @@
         document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
         document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
       } catch(err){}
+    })();
+    </script>
+    <!-- Bo House social clips grid -->
+    <script>
+    (function initSocialGrid(){
+        var grid = document.getElementById('socialGrid');
+        if (!grid) return;
+        // ⬇️ PLACEHOLDER IDs — replace with the Bo House social folder clips (one Vimeo ID per clip).
+        var clips = ['1205559620','1205559620','1205559620','1205559620','1205559620','1205559620'];
+        var cells = clips.map(function(id){
+            var cell = document.createElement('div');
+            cell.className = 'social-clip';
+            cell.setAttribute('data-vimeo', id);
+            grid.appendChild(cell);
+            return cell;
+        });
+        function load(cell){
+            if (cell.dataset.loaded) return;
+            cell.dataset.loaded = '1';
+            var f = document.createElement('iframe');
+            f.src = 'https://player.vimeo.com/video/' + cell.getAttribute('data-vimeo') + '?background=1&muted=1&loop=1&autoplay=1&dnt=1';
+            f.setAttribute('allow', 'autoplay');
+            f.setAttribute('frameborder', '0');
+            f.setAttribute('tabindex', '-1');
+            cell.appendChild(f);
+        }
+        // Lazy-load so a long grid doesn't fire every stream at once; each plays as it nears view.
+        if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){ if (e.isIntersecting) { load(e.target); io.unobserve(e.target); } });
+            }, { rootMargin: '600px 0px' });
+            cells.forEach(function(c){ io.observe(c); });
+        } else {
+            cells.forEach(load);
+        }
     })();
     </script>
 </body>
