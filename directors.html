@@ -381,7 +381,8 @@
         }
 
         .director-name {
-            font-size: clamp(3rem, 9vw, 8rem);
+            /* sized to fit 6 names in the locked (no-scroll) viewport, width- and height-capped */
+            font-size: clamp(2.25rem, min(7.5vw, 11.5vh), 6.25rem);
             font-weight: 500;
             line-height: 1.0;
             color: var(--white);
@@ -807,17 +808,20 @@
                 <div class="director-row" data-director="jacob" data-vimeo="1170741864">
                     <span class="director-name">Jacob Frost</span>
                 </div>
+                <div class="director-row" data-director="jon" data-vimeo="1163390482">
+                    <span class="director-name">Jon Schwartz</span>
+                </div>
+                <div class="director-row" data-director="noah" data-vimeo="1164768847">
+                    <span class="director-name">Noah Keckler</span>
+                </div>
                 <div class="director-row" data-director="wilbert" data-vimeo="1122231476">
                     <span class="director-name">Wilbert Cheng</span>
                 </div>
                 <div class="director-row" data-director="benjamin" data-vimeo="1170747372">
                     <span class="director-name">Benjamin Gugick</span>
                 </div>
-                <div class="director-row" data-director="jon" data-vimeo="1163390482">
-                    <span class="director-name">Jon Schwartz</span>
-                </div>
-                <div class="director-row" data-director="noah" data-vimeo="1164768847">
-                    <span class="director-name">Noah Keckler</span>
+                <div class="director-row" data-director="justin" data-vimeo="1163945342">
+                    <span class="director-name">Justin Kaminuma</span>
                 </div>
             </div>
         </div>
@@ -869,10 +873,11 @@
         // Directors data
         const directors = [
             { id: 'jacob',    slug: 'jacob-frost',    name: 'Jacob Frost',     vimeo: '1170741864', zoom: 'slight',    thumbnail: 'https://i.vimeocdn.com/video/2129989125-7bcea3f611dc90b29683cb79b07503543d01abd6db34091368cc53005941e0e5-d_1280x720' },
+            { id: 'jon',      slug: 'jon-schwartz',   name: 'Jon Schwartz',    vimeo: '1163390482', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_1280x720' },
+            { id: 'noah',     slug: 'noah-keckler',   name: 'Noah Keckler',    vimeo: '1164768847', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2121554252-a7004843031d0a0efd0bbbf00cf82995c6b3caf2edaa5224a6466ed1c6918a0c-d_1280x720' },
             { id: 'wilbert',  slug: 'wilbert-cheng',  name: 'Wilbert Cheng',   vimeo: '1122231476',                   thumbnail: 'https://i.vimeocdn.com/video/2063512119-ff88dce3f6ffff1eaee087dff25574c950eb6bdb44d18e05e6777416ee6bda81-d_1280x720' },
             { id: 'benjamin', slug: 'benjamin-gugick', name: 'Benjamin Gugick', vimeo: '1170747372', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2129996959-f2ac7c3d5c611ab65be91616235857915f17c53bdfe06b3db27d573ed00df7c7-d_1280x720' },
-            { id: 'jon',      slug: 'jon-schwartz',   name: 'Jon Schwartz',    vimeo: '1163390482', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_1280x720' },
-            { id: 'noah',     slug: 'noah-keckler',   name: 'Noah Keckler',    vimeo: '1164768847', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2121554252-a7004843031d0a0efd0bbbf00cf82995c6b3caf2edaa5224a6466ed1c6918a0c-d_1280x720' }
+            { id: 'justin',   slug: 'justin-kaminuma', name: 'Justin Kaminuma', vimeo: '1163945342', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2121364377-308f63c9cb52df3d75bcc5a2f10a40cdbfa2b0ae8ddff9cfad3ce04ba92f552d-d_1280x720' }
         ];
 
         const videoWrapper = document.getElementById('videoWrapper');
