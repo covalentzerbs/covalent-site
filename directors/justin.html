@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="justin kaminuma. japanese-american filmmaker based in brooklyn — nostalgia, mixed-media, and internet-born aesthetics.">
+    <link rel="canonical" href="https://covalentstudios.co/directors/justin">
+    <title>justin kaminuma.</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-T14F8BVFLJ');</script>
+    <meta property="og:title" content="justin kaminuma.">
+    <meta property="og:description" content="filmmaker. brooklyn, new york.">
+    <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
+    <meta property="og:url" content="https://covalentstudios.co/directors/justin">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
+    <link rel="dns-prefetch" href="https://f.vimeocdn.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Satoshi';
+            src: url('/assets/fonts/Satoshi-Variable.ttf') format('truetype');
+            font-weight: 300 900;
+            font-display: swap;
+        }
+        :root {
+            --black:     #0A0A0A;
+            --white:     #FFFFFF;
+            --gray:      #6B7280;
+            --bond-blue: #5979e9;
+            --surface:   #141414;
+            --border:    rgba(255,255,255,0.08);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; cursor:none; }
+        ::selection { background:var(--black); color:var(--white); -webkit-text-fill-color:var(--white); }
+        html, body { height:100%; overflow-x:hidden; overscroll-behavior-y:contain; }
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            text-transform: lowercase;
+            letter-spacing: -0.07em;
+        }
+        .cursor {
+            position:fixed; width:10px; height:10px; border-radius:50%;
+            background:var(--white); pointer-events:none; z-index:99999;
+            mix-blend-mode:difference; left:0; top:0; will-change:transform;
+        }
+        @media (pointer:coarse) { .cursor { display:none; } }
+        .nav { position:fixed; top:0; right:0; padding:2rem; z-index:10000; }
+        .menu-toggle {
+            width:40px; height:40px; display:flex; align-items:center; justify-content:center;
+            transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .menu-toggle.active { transform:rotate(45deg); }
+        .plus-icon { width:18px; height:18px; position:relative; }
+        .plus-icon span {
+            display:block; position:absolute; width:100%; height:2px;
+            background:var(--white); top:50%; left:0; transition:all 0.3s ease;
+        }
+        .plus-icon span:first-child { transform:translateY(-50%) rotate(90deg); }
+        .plus-icon span:last-child  { transform:translateY(-50%); }
+        .menu-overlay {
+            position:fixed; inset:0; z-index:9999; display:flex; flex-direction:column;
+            justify-content:center; align-items:flex-end; padding:3rem;
+            pointer-events:none; opacity:0; transition:opacity 0.4s ease;
+        }
+        .menu-overlay.active {
+            pointer-events:auto; opacity:1;
+            backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+            background:rgba(255,255,255,0.3);
+        }
+        .menu-links { display:flex; flex-direction:column; align-items:flex-end; gap:0; }
+        @keyframes gradientShift {
+            0%   { background-position:0% 50%; }
+            50%  { background-position:100% 50%; }
+            100% { background-position:0% 50%; }
+        }
+        .menu-link {
+            font-size:clamp(3.5rem,8vw,7rem); font-weight:500; color:var(--white);
+            text-decoration:none; opacity:0; transform:translateX(30px);
+            transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+            letter-spacing:-0.07em; line-height:1.05; position:relative; display:inline-block;
+        }
+        .menu-overlay.active .menu-link              { opacity:0.6; transform:translateX(0); }
+        .menu-overlay.active .menu-link:nth-child(1) { transition-delay:0.05s; }
+        .menu-overlay.active .menu-link:nth-child(2) { transition-delay:0.10s; }
+        .menu-overlay.active .menu-link:nth-child(3) { transition-delay:0.15s; }
+        .menu-overlay.active .menu-link:nth-child(4) { transition-delay:0.25s; }
+        .menu-overlay.active .menu-link:nth-child(5) { transition-delay:0.30s; }
+        .menu-spacer { height:0.8em; }
+        .menu-socials {
+            display:flex; align-items:center; gap:1.2rem; margin-top:1.5rem;
+            opacity:0; transform:translateX(30px);
+            transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
+        }
+        .menu-overlay.active .menu-socials { opacity:0.5; transform:translateX(0); transition-delay:0.3s; }
+        .menu-link-lab { color:#A6FF8E; }
+        .menu-overlay.active .menu-link-lab { opacity:0.5 !important; transition:opacity 0.12s ease !important; }
+        .menu-overlay.active .menu-link-lab:hover { opacity:1 !important; }
+        .menu-link-bond { font-family:'Satoshi',sans-serif; font-weight:500; letter-spacing:-0.03em; color:var(--bond-blue); text-transform:none; }
+        .menu-link:hover { opacity:1 !important; }
+        .menu-link.current { opacity:1 !important; }
+        .logo-top { position:fixed; top:2rem; left:2rem; z-index:10000; transition:opacity 0.3s ease; }
+        .logo-top:hover { opacity:0.7; }
+        .logo-top svg { width:40px; height:40px; }
+        .dir-header { background:var(--black); padding:7.5rem 3rem 4rem; border-bottom:1px solid var(--border); }
+        .dir-header-inner { max-width:1320px; margin:0 auto; display:block; }
+        .hero-name { font-size:clamp(2.5rem,7vw,5rem); font-weight:500; line-height:0.95; color:var(--white); letter-spacing:-0.07em; display:inline-block; }
+        .dir-header-top { display:flex; align-items:baseline; justify-content:space-between; gap:1rem 2.5rem; flex-wrap:wrap; }
+        .hero-location { font-size:clamp(0.8rem,1.3vw,1rem); font-weight:500; letter-spacing:0.01em; color:rgba(255,255,255,0.5); white-space:nowrap; }
+        .hero-location:empty { display:none; }
+        .hero-tagline { margin-top:0.75rem; font-size:clamp(0.85rem,1.5vw,1.1rem); font-weight:400; color:rgba(255,255,255,0.55); letter-spacing:-0.04em; max-width:480px; }
+        .bio-block { margin-top:1.75rem; }
+        .bio-toggle {
+            background:none; border:none; color:rgba(255,255,255,0.45);
+            font-family:'Space Grotesk',sans-serif; font-size:0.8rem; font-weight:500;
+            letter-spacing:-0.04em; text-transform:lowercase; padding:0;
+            transition:color 0.25s ease; display:inline-flex; align-items:center; gap:0.45em; position:relative;
+        }
+        .bio-toggle::before { content:''; position:absolute; inset:-18px -28px; }
+        .bio-toggle:hover, .bio-toggle.open { color:rgba(255,255,255,0.9); }
+        .bio-toggle .toggle-icon {
+            width:6px; height:6px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor;
+            transform:translateY(-2px) rotate(45deg); transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); display:inline-block;
+        }
+        .bio-toggle.open .toggle-icon { transform:translateY(1px) rotate(-135deg); }
+        .bio-expanded { overflow:hidden; max-height:0; transition:max-height 0.55s cubic-bezier(0.4,0,0.2,1),opacity 0.4s ease; opacity:0; max-width:1120px; }
+        .bio-expanded.open { max-height:900px; opacity:1; }
+        .bio-expanded p { margin-top:1.2rem; font-size:0.95rem; line-height:1.7; color:rgba(255,255,255,0.6); letter-spacing:-0.04em; }
+        .bio-expanded p:first-child { margin-top:1.4rem; }
+        /* ── hover-fill donut cursor for the biography reveal ── */
+        #bioRing { position:fixed; left:0; top:0; width:12px; height:12px; transform:translate(-50%,-50%);
+            pointer-events:none; z-index:10055; opacity:0; mix-blend-mode:difference; transition:opacity 0.18s ease; }
+        #bioRing.show { opacity:1; }
+        #bioRing circle { fill:none; }
+        #bioRing .ring-track { stroke:rgba(255,255,255,0.22); stroke-width:2.4; }
+        #bioRing .ring-fill { stroke:#fff; stroke-width:2.8; stroke-linecap:round; transform:rotate(-90deg); transform-origin:50% 50%; }
+        body.bio-ring-active .cursor { opacity:0 !important; }
+        /* ── director-image cursor on name hover ── */
+        #dirImgCursor { position:fixed; left:0; top:0; transform:translate(-50%,-50%) scale(0.85);
+            width:190px; max-width:40vw; height:auto; border-radius:6px; pointer-events:none; z-index:10060;
+            opacity:0; box-shadow:0 18px 50px rgba(0,0,0,0.45);
+            transition:opacity 0.22s ease, transform 0.32s cubic-bezier(0.2,0.8,0.2,1); }
+        #dirImgCursor.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
+        body.dir-img-active .cursor { opacity:0 !important; }
+        .work-section { background:var(--white); padding:0; padding-bottom:5rem; }
+        .work-section-header { padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
+        .work-section-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; color:rgba(0,0,0,0.35); text-transform:uppercase; }
+        .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; width:100%; background:var(--white); }
+        .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; height:6px; }
+        .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+        .work-card:hover .card-thumb { filter:brightness(0.88); transition:filter 0.4s ease; }
+        .card-video { position:absolute; inset:0; opacity:0; transition:opacity 0.15s ease; pointer-events:none; z-index:1; container-type:size; }
+        .card-video iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); border:none; pointer-events:none; width:calc(100cqw * var(--zoom,1.32)); height:calc(56.25cqw * var(--zoom,1.32)); min-width:calc(177.78cqh * var(--zoom,1.32)); min-height:calc(100cqh * var(--zoom,1.32)); }
+        .card-video.playing { opacity:1; }
+        .card-scrim { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.72) 0%,rgba(0,0,0,0) 55%); z-index:2; pointer-events:none; }
+        .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:0; transition:opacity 0.3s ease; }
+        .card-client { font-size:clamp(1.05rem,2.1vw,1.5rem); font-weight:400; color:var(--white); letter-spacing:-0.04em; line-height:1.05; margin-bottom:0.25rem; }
+        .card-title { font-size:0.65rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.55); line-height:1.1; }
+        .site-footer { position:fixed; bottom:0; left:0; right:0; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1001; }
+        .site-footer-left { font-size:0.7rem; font-weight:500; color:var(--white); opacity:0.5; transition:color 0.3s ease; }
+        .footer-link { color:inherit; text-decoration:none; transition:color 0.2s ease; }
+        .footer-link:hover { color:var(--bond-blue); }
+        .site-footer-right { display:flex; align-items:center; gap:1.5rem; opacity:0.5; }
+        .site-footer-socials { display:flex; align-items:center; gap:1rem; }
+        .social-link { color:var(--white); display:flex; align-items:center; transition:color 0.18s ease,opacity 0.18s ease,transform 0.18s ease,filter 0.18s ease; transform-origin:center; }
+        .site-footer.on-light .site-footer-left { color:#0A0A0A !important; -webkit-text-fill-color:#0A0A0A; }
+        .site-footer.on-light .social-link { color:#0A0A0A !important; -webkit-text-fill-color:#0A0A0A; transition:color 0.3s ease,-webkit-text-fill-color 0.3s ease; }
+        .social-link[aria-label="Instagram"]:hover { color:#E1306C !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(225,48,108,0.55)) saturate(1.4); }
+        .social-link[aria-label="LinkedIn"]:hover { color:#0A66C2 !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(10,102,194,0.6)) saturate(1.4); }
+        .social-link.social-link-ionic:hover { color:#714BDD !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(113,75,221,0.6)) saturate(1.4); }
+        .menu-overlay.active .menu-socials:hover { opacity:1 !important; }
+        .dark-mode-toggle { cursor:none; }
+        .dark-mode-toggle input { display:none; }
+        .toggle-track { width:28px; height:16px; background:rgba(0,0,0,0.15); border-radius:8px; position:relative; transition:background 0.3s ease; cursor:none; display:block; }
+        .toggle-track::after { content:''; position:absolute; top:2px; left:2px; width:12px; height:12px; background:rgba(0,0,0,0.4); border-radius:50%; transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .dark-mode-toggle input:checked + .toggle-track { background:rgba(255,69,0,0.8); }
+        .dark-mode-toggle input:checked + .toggle-track::after { transform:translateX(12px); background:#FF4500; }
+        /* ── light mode: white background + dark text (dark mode keeps black/orange) ── */
+        body:not(.dark-mode) { background-color:var(--white); color:var(--black); }
+        body:not(.dark-mode) .dir-header { background:var(--white); border-bottom-color:rgba(0,0,0,0.08); }
+        body:not(.dark-mode) .hero-name { color:var(--black); }
+        body:not(.dark-mode) .hero-tagline { color:rgba(0,0,0,0.55); }
+        body:not(.dark-mode) .hero-location { color:rgba(0,0,0,0.45); }
+        body:not(.dark-mode) .bio-toggle { color:rgba(0,0,0,0.45); }
+        body:not(.dark-mode) .bio-toggle:hover, body:not(.dark-mode) .bio-toggle.open { color:rgba(0,0,0,0.9); }
+        body:not(.dark-mode) .bio-expanded p { color:rgba(0,0,0,0.6); }
+        body:not(.dark-mode) .menu-link { color:var(--black); }
+        body:not(.dark-mode) .menu-link-lab { color:#A6FF8E; }
+        body:not(.dark-mode) .menu-link-bond { color:var(--bond-blue); }
+        body:not(.dark-mode) .plus-icon span { background:var(--black); }
+        body:not(.dark-mode) .logo-top svg path { fill:var(--black); }
+        body:not(.dark-mode) .site-footer-left { color:var(--black); }
+        body:not(.dark-mode) .social-link { color:var(--black); }
+        body.dark-mode { background-color:#0A0A0A !important; color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode ::selection { background:#FF4500 !important; color:#0A0A0A !important; -webkit-text-fill-color:#0A0A0A !important; }
+        body.dark-mode .cursor { background:#FF4500 !important; }
+        body.dark-mode .plus-icon span { background:#FF4500 !important; }
+        body.dark-mode .menu-link { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .menu-link-lab { color:#A6FF8E !important; -webkit-text-fill-color:#A6FF8E; }
+        body.dark-mode .menu-link-bond { color:var(--bond-blue) !important; -webkit-text-fill-color:var(--bond-blue); }
+        body.dark-mode .logo-top svg path { fill:#FF4500 !important; }
+        body.dark-mode .social-link { color:#FF4500 !important; }
+        body.dark-mode .site-footer-left { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .hero-name { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .hero-location { color:rgba(255,69,0,0.7) !important; -webkit-text-fill-color:rgba(255,69,0,0.7); }
+        body.dark-mode .card-title, body.dark-mode .card-client { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        html { scrollbar-width:thin; scrollbar-color:rgba(89,121,233,0.45) transparent; }
+        html::-webkit-scrollbar { width:6px; }
+        html::-webkit-scrollbar-track { background:transparent; }
+        html::-webkit-scrollbar-thumb { background:rgba(89,121,233,0.35); border-radius:3px; }
+        html::-webkit-scrollbar-thumb:hover { background:var(--bond-blue); }
+        html:has(body.dark-mode) { background-color:#0A0A0A; }
+        body:not(.page-ready) { opacity:0; }
+        body.page-ready { opacity:1; transition:opacity 0.4s ease; }
+        @media (max-width:1024px) {
+            .dir-header-inner { grid-template-columns:1fr; gap:2.5rem; align-items:start; }
+        }
+        @media (max-width:768px) {
+            .nav { padding:1.5rem; }
+            .logo-top { top:1.5rem; left:1.5rem; }
+            .logo-top svg { width:32px; height:32px; }
+            .dir-header { padding:7rem 1.5rem 3rem; }
+            .dir-header-inner { grid-template-columns:1fr; gap:2rem; }
+            .work-section { padding:0; }
+            .work-grid { grid-template-columns:1fr; gap:0; }
+            .work-section-header { padding:1.5rem; }
+            .card-text { bottom:1rem; left:1rem; }
+            .menu-overlay { padding:5rem 1.5rem 1.5rem; }
+            body { padding-bottom:3.5rem; }
+        }
+        @media (pointer:coarse) {
+            /* touch: the scroll-scrub height morph is disabled in JS (it scrambles with
+               momentum scrolling + address-bar resize). Show full-height cards instead. */
+            .work-card { height:auto !important; aspect-ratio:16/9; }
+            .work-card .card-text { opacity:1 !important; }
+        }
+        /* ── Work Viewer ──────────────────────────────────── */
+        .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+        .work-viewer.active { opacity:1; pointer-events:all; }
+        .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); height:calc(90vw * 9 / 16); max-height:90vh; }
+        .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+        .viewer-video-hero { position:absolute; inset:0; }
+        .viewer-click-layer { position:absolute; inset:0; z-index:2; }
+        .viewer-center-icon { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.7); width:84px; height:84px; border-radius:50%; background:rgba(0,0,0,0.42); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; z-index:4; }
+        .viewer-center-icon .cc-ic { width:38px; height:38px; display:none; }
+        .viewer-center-icon.show-play .cc-play { display:block; }
+        .viewer-center-icon.show-pause .cc-pause { display:block; }
+        .viewer-center-icon.flash { animation:ccFlash 0.6s ease-out; }
+        @keyframes ccFlash { 0%{opacity:0;transform:translate(-50%,-50%) scale(0.7);} 18%{opacity:1;transform:translate(-50%,-50%) scale(1);} 100%{opacity:0;transform:translate(-50%,-50%) scale(1.3);} }
+        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 96px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
+        .viewer-fs-corner { position:absolute; bottom:14px; right:18px; z-index:5; background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
+        .viewer-fs-corner:hover { opacity:1; }
+        /* volume control: corner button left of the expand button, with a pop-up gauge */
+        .viewer-vol { position:absolute; bottom:14px; right:54px; z-index:5; display:flex; align-items:center; justify-content:center; line-height:0; transition:opacity 0.3s ease; }
+        .viewer-vol-btn { background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
+        .viewer-vol-btn:hover { opacity:1; }
+        .viewer-vol-btn .vol-ic { display:none; }
+        .viewer-vol-btn .vol-on { display:block; }
+        .viewer-vol.muted .vol-on { display:none; }
+        .viewer-vol.muted .vol-off { display:block; }
+        .viewer-vol-gauge { position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); opacity:0; pointer-events:none; transition:opacity 0.18s ease; background:rgba(20,20,20,0.72); border-radius:999px; padding:12px 0; }
+        .viewer-vol.show-gauge .viewer-vol-gauge { opacity:1; pointer-events:auto; }
+        .viewer-vol-track { width:4px; height:70px; margin:0 13px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; cursor:none; }
+        .viewer-vol-fill { position:absolute; left:0; right:0; bottom:0; height:0%; background:#fff; border-radius:999px; }
+        .viewer-video-hero.cs-playing .viewer-controls { opacity:0; transform:translateY(6px); pointer-events:none; }
+        .viewer-video-hero.cs-playing.cs-hover .viewer-controls { opacity:1; transform:translateY(0); pointer-events:auto; }
+        /* corner buttons (volume + expand) fade out with the controls when the video isn't being hovered */
+        .viewer-video-hero.cs-playing ~ .viewer-fs-corner, .viewer-video-hero.cs-playing ~ .viewer-vol { opacity:0; pointer-events:none; }
+        .viewer-video-hero.cs-playing.cs-hover ~ .viewer-fs-corner { opacity:0.65; pointer-events:auto; }
+        .viewer-video-hero.cs-playing.cs-hover ~ .viewer-vol { opacity:1; pointer-events:auto; }
+        .viewer-ctrl-btn { background:none; border:none; padding:4px 6px; flex-shrink:0; cursor:none; }
+        .viewer-ctrl-btn .cs-ctrl-icon { display:none; width:14px; height:14px; object-fit:contain; }
+        .viewer-ctrl-btn .cs-icon-play { display:block; }
+        .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-play { display:none; }
+        .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-pause { display:block; }
+        .viewer-progress { flex:1; padding:8px 0; cursor:none; position:relative; }
+        .viewer-progress .cs-progress-track { width:100%; height:2px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; overflow:hidden; transition:height 0.15s ease; }
+        .viewer-progress .cs-progress-fill { position:absolute; left:0; top:0; bottom:0; width:0%; background:#fff; border-radius:999px; }
+        .viewer-progress .cs-progress-thumb { position:absolute; top:50%; left:0; width:11px; height:11px; border-radius:50%; background:#fff; transform:translate(-50%,-50%); opacity:0; transition:opacity 0.15s ease; pointer-events:none; box-shadow:0 1px 5px rgba(0,0,0,0.5); }
+        .viewer-progress:hover .cs-progress-thumb, .viewer-progress.dragging .cs-progress-thumb { opacity:1; }
+        .viewer-progress:hover .cs-progress-track, .viewer-progress.dragging .cs-progress-track { height:4px; }
+        /* scrubber frame preview (mini player seeked to the cursor time) */
+        .scrub-preview { position:absolute; bottom:calc(100% + 14px); left:0; transform:translateX(-50%); width:168px; opacity:0; pointer-events:none; transition:opacity 0.12s ease; z-index:6; }
+        .scrub-preview.show { opacity:1; }
+        .scrub-preview-frame { width:168px; height:95px; border-radius:6px; overflow:hidden; background:#000; box-shadow:0 10px 34px rgba(0,0,0,0.55); position:relative; }
+        .scrub-preview-frame iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100%; height:100%; min-width:169px; min-height:95px; border:none; pointer-events:none; }
+        .scrub-preview-time { display:block; text-align:center; margin-top:5px; font-size:11px; color:#fff; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.03em; text-shadow:0 1px 3px rgba(0,0,0,0.65); }
+        .viewer-time { font-size:11px; color:rgba(255,255,255,0.7); white-space:nowrap; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.04em; }
+        .viewer-close { position:absolute; top:1.5rem; right:1.5rem; z-index:10; background:none; border:none; cursor:none; padding:0.5rem; opacity:0.5; transition:opacity 0.2s; line-height:0; }
+        .viewer-close:hover { opacity:1; }
+        .viewer-meta { position:absolute; bottom:2rem; left:3rem; display:none; flex-direction:column; gap:0.2rem; pointer-events:none; }
+        .viewer-client-label { font-size:0.6rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); }
+        .viewer-title-label { font-size:0.95rem; font-weight:400; color:rgba(255,255,255,0.85); text-transform:lowercase; }
+        .viewer-nav { display:none; position:absolute; top:50%; transform:translateY(-50%); background:none; border:none; cursor:none; padding:1.2rem; opacity:0.4; transition:opacity 0.2s; line-height:0; }
+        .viewer-nav:hover { opacity:1; }
+        .viewer-prev { left:0.5rem; }
+        .viewer-next { right:0.5rem; }
+        /* viewer open: hide page chrome (menu +) and the corner close; clicking the margin closes */
+        body.viewer-open .nav { opacity:0 !important; pointer-events:none !important; }
+        /* fullscreen: let the native cursor show (the custom cursor can't render outside the fullscreen element) */
+        :fullscreen, :fullscreen * { cursor:auto !important; }
+        :-webkit-full-screen, :-webkit-full-screen * { cursor:auto !important; }
+        /* fullscreen idle: hide cursor + controls + expand button after 1s of no movement */
+        #viewerFrame.fs-idle, #viewerFrame.fs-idle * { cursor:none !important; }
+        #viewerFrame.fs-idle .viewer-controls, #viewerFrame.fs-idle .viewer-fs-corner, #viewerFrame.fs-idle .viewer-vol { opacity:0 !important; pointer-events:none !important; }
+        .viewer-close { display:none; }
+        /* EXIT cursor: knockout label shown when the pointer leaves the video bounds */
+        #viewerExitCursor { position:fixed; left:-200px; top:-200px; text-transform:uppercase;
+            transform:translate(-50%,-50%) scale(.85); opacity:0; pointer-events:none; z-index:10080;
+            mix-blend-mode:difference; transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1);
+            will-change:transform,left,top,opacity; }
+        #viewerExitCursor.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
+        body.viewer-exit-active .cursor { opacity:0 !important; }
+    </style>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+    <div class="cursor" id="cursor"></div>
+    <svg id="bioRing" viewBox="0 0 12 12" aria-hidden="true">
+        <circle class="ring-track" cx="6" cy="6" r="4"></circle>
+        <circle class="ring-fill" cx="6" cy="6" r="4"></circle>
+    </svg>
+    <img id="dirImgCursor" alt="" aria-hidden="true">
+
+
+    <a href="/" class="logo-top" data-cursor="home">
+        <svg viewBox="0 0 160 160" fill="none">
+            <path fill="#ffffff" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+        </svg>
+    </a>
+
+    <nav class="nav">
+        <div class="menu-toggle" id="menuToggle" data-cursor="menu">
+            <div class="plus-icon"><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-links">
+            <a href="/directors" class="menu-link current">directors</a>
+            <a href="/about"     class="menu-link">about</a>
+            <a href="/contact"   class="menu-link">contact</a>
+            <div class="menu-spacer"></div>
+            <a href="/lab"       class="menu-link menu-link-lab">lab</a>
+            <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
+        </div>
+        <div class="menu-socials">
+            <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            </a>
+            <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg>
+            </a>
+        </div>
+    </div>
+
+    <header class="dir-header">
+        <div class="dir-header-inner">
+            <div class="dir-header-top">
+                <h1 class="hero-name" id="heroName"></h1>
+                <span class="hero-location" id="heroLocation"></span>
+            </div>
+            <p class="hero-tagline" id="heroTagline"></p>
+            <div class="bio-block">
+                <button class="bio-toggle" id="bioToggle">
+                    <span>biography</span><em class="toggle-icon" aria-hidden="true"></em>
+                </button>
+                <div class="bio-expanded" id="bioExpanded"></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="work-section" id="workSection">
+        <div class="work-grid" id="workGrid"></div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="site-footer-left">2026, covalent studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">privacy</a></div>
+        <div class="site-footer-right">
+            <div class="site-footer-socials">
+                <label class="dark-mode-toggle">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="toggle-track"></span>
+                </label>
+                <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                </a>
+                <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Work Viewer -->
+    <div id="workViewer" class="work-viewer">
+        <div class="viewer-frame" id="viewerFrame">
+            <div class="viewer-video-hero" id="viewerVideoHero">
+                <iframe id="viewerIframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <div class="viewer-click-layer" id="viewerClickLayer"></div>
+                <div class="viewer-center-icon" id="viewerCenterIcon" aria-hidden="true">
+                    <svg class="cc-ic cc-play" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="cc-ic cc-pause" viewBox="0 0 24 24" fill="#fff"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                </div>
+                <div class="viewer-controls" id="viewerControls">
+                    <button class="viewer-ctrl-btn" id="viewerPlayPause" data-cursor="play">
+                        <img src="/assets/logos/covalent_white_play_button.png" width="128" height="128" alt="Play" class="cs-ctrl-icon cs-icon-play">
+                        <img src="/assets/logos/pause_button.png" width="128" height="128" alt="Pause" class="cs-ctrl-icon cs-icon-pause">
+                    </button>
+                    <div class="viewer-progress" id="viewerProgress">
+                        <div class="scrub-preview" id="scrubPreview"><div class="scrub-preview-frame" id="scrubPreviewFrame"></div><span class="scrub-preview-time" id="scrubPreviewTime">0:00</span></div>
+                        <div class="cs-progress-track"><div class="cs-progress-fill" id="viewerFill"></div></div>
+                        <div class="cs-progress-thumb" id="viewerThumb"></div>
+                    </div>
+                    <div class="viewer-time" id="viewerTime">00:00 / 00:00</div>
+                </div>
+            </div>
+            <div class="viewer-vol muted" id="viewerVol">
+                <div class="viewer-vol-gauge" id="viewerVolGauge">
+                    <div class="viewer-vol-track" id="viewerVolTrack"><div class="viewer-vol-fill" id="viewerVolFill"></div></div>
+                </div>
+                <button class="viewer-vol-btn" id="viewerVolBtn" data-cursor="unmute" aria-label="Volume">
+                    <svg class="vol-ic vol-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+                    <svg class="vol-ic vol-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
+                </button>
+            </div>
+            <button class="viewer-fs-corner" id="viewerFsBtn" aria-label="Fullscreen" data-cursor="expand">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+        </div>
+        <button class="viewer-close" id="viewerClose" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="2" y1="2" x2="16" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="2" x2="2" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="viewer-meta">
+            <span class="viewer-client-label" id="viewerClient"></span>
+            <span class="viewer-title-label" id="viewerTitleText"></span>
+        </div>
+        <button class="viewer-nav viewer-prev" id="viewerPrev" aria-label="Previous">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none"><polyline points="13,2 3,14 13,26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="viewer-nav viewer-next" id="viewerNext" aria-label="Next">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none"><polyline points="3,2 13,14 3,26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+    </div>
+
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <script>
+    window.DIRECTOR = {
+        name:      'Justin Kaminuma',
+        tagline:   'mixed-media films & music videos',
+        location:  'brooklyn, new york',
+        bio_short: 'justin kaminuma is a japanese-american filmmaker based in brooklyn, new york. his work explores nostalgia and embraces internet-born aesthetics through a diaristic approach combined with mixed-media techniques. his films have been screened at festivals such as ann arbor, chicago underground, leiden shorts, and antimatter.',
+        bio_full: [
+            'he has directed videos for artists such as the cure, yungblud, disclosure, royal & the serpent, and vance joy.',
+            'his work has been screened at the ann arbor film festival, chicago underground film festival, leiden shorts, bfi future film festival (winner — best international), nffty (winner — best experimental film), virginia film festival (audience award — best narrative), as well as exhibited at cosmo trastevere in rome and awarded a vimeo staff pick.'
+        ],
+        hero_vimeo: '',
+        types:  [],
+        styles: [],
+        work: []
+    };
+    </script>
+
+    <script>
+    (function populatePage() {
+        var D = window.DIRECTOR;
+        document.getElementById('heroName').textContent    = D.name;
+        document.getElementById('heroTagline').textContent = D.tagline;
+        document.getElementById('heroLocation').textContent = D.location || '';
+        var bioExpanded = document.getElementById('bioExpanded');
+        var bioParas = [];
+        if (D.bio_short) bioParas.push(D.bio_short);
+        if (D.bio_full && D.bio_full.length) bioParas = bioParas.concat(D.bio_full);
+        if (bioParas.length) {
+            bioExpanded.innerHTML = bioParas.map(function(p){return'<p>'+p+'</p>';}).join('');
+        } else {
+            document.getElementById('bioToggle').style.display = 'none';
+            var bb = document.querySelector('.bio-block'); if (bb) bb.style.display = 'none';
+        }
+        var grid = document.getElementById('workGrid');
+        if (!D.work || !D.work.length) {
+            document.getElementById('workSection').style.display = 'none';
+            return;
+        }
+        D.work.forEach(function(item, i) {
+            var card = document.createElement('a');
+            card.className = 'work-card';
+            card.href = '#';
+            card.setAttribute('data-vimeo',  item.vimeo  || '');
+            card.setAttribute('data-hash',   item.hash   || '');
+            card.setAttribute('data-client', item.client || '');
+            card.setAttribute('data-title',  item.title  || '');
+            card.innerHTML = (item.thumbnail
+                ? '<img class="card-thumb" src="'+item.thumbnail+'" width="1280" height="720" alt="'+item.client+', '+item.title+'" loading="lazy">'
+                : '<div class="card-thumb" style="background:#1a1a1a;"></div>') +
+                '<div class="card-video" id="cardVideo'+i+'"></div>' +
+                '<div class="card-scrim"></div>' +
+                '<div class="card-text"><p class="card-client">'+item.client+'</p><p class="card-title">'+item.title+'</p></div>';
+            grid.appendChild(card);
+            if (!item.thumbnail && item.vimeo) {
+                (function(vimeoId, hash, cardEl, client, title) {
+                    var vUrl = 'https://vimeo.com/' + vimeoId + (hash ? '/' + hash : '');
+                    fetch('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent(vUrl) + '&width=1280')
+                        .then(function(r){return r.json();})
+                        .then(function(data){
+                            if(!data.thumbnail_url) return;
+                            var placeholder = cardEl.querySelector('.card-thumb');
+                            if(!placeholder) return;
+                            var img = document.createElement('img');
+                            img.className = 'card-thumb';
+                            img.src = data.thumbnail_url.replace(/_\d+x\d+(\.\w+)$/, '_1280x720$1');
+                            img.width = 1280; img.height = 720;
+                            img.alt = client + ', ' + title; img.loading = 'lazy';
+                            placeholder.parentNode.replaceChild(img, placeholder);
+                        })
+                        .catch(function(){});
+                })(item.vimeo, item.hash||'', card, item.client, item.title);
+            }
+            card.setAttribute('data-zoom', String(item.zoom || 1.32));
+            if (item.vimeo && window.matchMedia('(pointer:fine)').matches) {
+                var vl = card.querySelector('#cardVideo'+i);
+                if (vl) {
+                    card.addEventListener('mouseenter', function() { vl.classList.add('playing'); });
+                    card.addEventListener('mouseleave', function() { vl.classList.remove('playing'); });
+                }
+            }
+        });
+    })();
+
+    window.addEventListener('load', function() {
+        try {
+            if (!window.matchMedia('(pointer:fine)').matches) return;
+            document.querySelectorAll('.work-card').forEach(function(card) {
+                var vimeo = card.getAttribute('data-vimeo');
+                if (!vimeo) return;
+                var vl = card.querySelector('.card-video');
+                if (!vl) return;
+                var hash = card.getAttribute('data-hash') || '';
+                var zoom = parseFloat(card.getAttribute('data-zoom') || '1.32');
+                var iframe = document.createElement('iframe');
+                iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+                vl.style.setProperty('--zoom', zoom);
+                iframe.src = 'https://player.vimeo.com/video/' + vimeo
+                    + '?' + (hash ? 'h=' + hash + '&' : '')
+                    + 'autoplay=1&muted=1&loop=1&controls=0&background=1&dnt=1';
+                vl.appendChild(iframe);
+            });
+        } catch(e) {}
+    }, {once: true});
+
+    (function initWorkViewer() {
+        var viewerItems = [];
+        document.querySelectorAll('.work-card').forEach(function(card, i) {
+            viewerItems.push({ vimeo:card.getAttribute('data-vimeo'), hash:card.getAttribute('data-hash')||'', client:card.getAttribute('data-client'), title:card.getAttribute('data-title') });
+            card.addEventListener('click', function(e) { e.preventDefault(); openViewer(i); });
+        });
+        var viewer   = document.getElementById('workViewer');
+        var frame    = document.getElementById('viewerFrame');
+        var vHero    = document.getElementById('viewerVideoHero');
+        var iframe   = document.getElementById('viewerIframe');
+        var clientEl = document.getElementById('viewerClient');
+        var titleEl  = document.getElementById('viewerTitleText');
+        var closeBtn = document.getElementById('viewerClose');
+        var prevBtn  = document.getElementById('viewerPrev');
+        var nextBtn  = document.getElementById('viewerNext');
+        var ppBtn    = document.getElementById('viewerPlayPause');
+        var progEl   = document.getElementById('viewerProgress');
+        var fillEl   = document.getElementById('viewerFill');
+        var thumb    = document.getElementById('viewerThumb');
+        var timeEl   = document.getElementById('viewerTime');
+        var fsBtn    = document.getElementById('viewerFsBtn');
+        var clickLayer = document.getElementById('viewerClickLayer');
+        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false, vVolume = 1, vMuted = true, volDragging = false;
+        // EXIT cursor: knockout "EXIT" label shown over the margin around the video
+        var exitCur = document.createElement('div');
+        exitCur.id='viewerExitCursor'; exitCur.setAttribute('aria-hidden','true');
+        (function(){ var w=Math.round('EXIT'.length*8.6+28), h=26;
+            exitCur.innerHTML='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="exitCurMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">EXIT</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#exitCurMask)"/></svg>';
+        })();
+        document.body.appendChild(exitCur);
+        function ptrInsideFrame(e){ var r=frame.getBoundingClientRect(); return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
+        viewer.addEventListener('mousemove', function(e){
+            if(!viewer.classList.contains('active')) return;
+            var overNav = e.target && e.target.closest && e.target.closest('.viewer-nav');
+            if(ptrInsideFrame(e) || overNav){ exitCur.classList.remove('show'); document.body.classList.remove('viewer-exit-active'); }
+            else { exitCur.style.left=e.clientX+'px'; exitCur.style.top=e.clientY+'px'; exitCur.classList.add('show'); document.body.classList.add('viewer-exit-active'); }
+        }, {passive:true});
+        function fmt(s) { var m=Math.floor(s/60),sec=Math.floor(s%60); return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec; }
+        function setPlaying(p) { vPlaying=p; vHero.classList.toggle('cs-playing',p); if(ppBtn) ppBtn.setAttribute('data-cursor', p?'pause':'play'); }
+        function resetPlayer() {
+            if (vPlayer) { try { vPlayer.destroy(); } catch(e){} vPlayer=null; }
+            var stray=vHero.querySelector('iframe'); if(stray) stray.remove();
+            vPlaying=false; vDuration=0;
+            vHero.classList.remove('cs-playing','cs-hover');
+            if (fillEl) fillEl.style.width='0%';
+            if (thumb) thumb.style.left='0%';
+            if (timeEl) timeEl.textContent='00:00 / 00:00';
+            hidePrev(); teardownPrev();
+        }
+        function bindPlayer(p) {
+            p.getDuration().then(function(d){ vDuration=d; if(timeEl&&d) timeEl.textContent='00:00 / '+fmt(d); }).catch(function(){});
+            p.on('play',  function(){ setPlaying(true); });
+            p.on('pause', function(){ setPlaying(false); });
+            p.on('ended', function(){ setPlaying(false); });
+            p.on('timeupdate', function(data){ if(!vDuration||!fillEl||dragging)return; var pc=data.seconds/vDuration*100; fillEl.style.width=pc+'%'; if(thumb) thumb.style.left=pc+'%'; if(timeEl) timeEl.textContent=fmt(data.seconds)+' / '+fmt(vDuration); });
+        }
+        function whenVimeoReady(cb){
+            if(window.Vimeo){ cb(); return; }
+            var n=0; (function poll(){ if(window.Vimeo) return cb(); if(n++>120) return; setTimeout(poll,50); })();
+        }
+        function openViewer(idx) {
+            current=idx; var item=viewerItems[idx];
+            resetPlayer();
+            // Build a fresh iframe each open — Vimeo's player.destroy() removes the
+            // iframe from the DOM, so reusing one breaks every reopen (the prod bug).
+            iframe=document.createElement('iframe');
+            iframe.id='viewerIframe';
+            iframe.setAttribute('frameborder','0');
+            iframe.setAttribute('allow','autoplay; fullscreen; picture-in-picture');
+            iframe.setAttribute('allowfullscreen','');
+            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&muted=1&controls=0&dnt=1&playsinline=1';
+            vHero.insertBefore(iframe, vHero.firstChild);
+            clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
+            viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
+            prevBtn.style.opacity=idx>0?'0.6':'0.15';
+            nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
+            // Bind the player as soon as the SDK is ready — don't depend on iframe.onload
+            // (the onload+SDK race is what left the controls dead in production).
+            whenVimeoReady(function(){
+                try{
+                    vPlayer=new Vimeo.Player(iframe);
+                    bindPlayer(vPlayer);
+                    vPlayer.ready().then(function(){ vPlayer.play().catch(function(){}); applyVol(); }).catch(function(){});
+                }catch(e){}
+            });
+        }
+        function closeViewer() {
+            viewer.classList.remove('active');
+            document.body.classList.remove('viewer-open','viewer-exit-active');
+            if(exitCur) exitCur.classList.remove('show');
+            clearTimeout(idleTimer); resetPlayer();
+            document.body.style.overflow='';
+        }
+        var centerIcon=document.getElementById('viewerCenterIcon');
+        function flashCenter(playing){ if(!centerIcon)return; centerIcon.classList.remove('flash','show-play','show-pause'); void centerIcon.offsetWidth; centerIcon.classList.add(playing?'show-play':'show-pause','flash'); }
+        function togglePlay(flash) { if(!vPlayer)return; var willPlay=!vPlaying; if(vPlaying) vPlayer.pause(); else vPlayer.play(); if(flash) flashCenter(willPlay); }
+        clickLayer.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(true); });
+        ppBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(false); });
+        // scrubber: click + drag with a visible thumb that tracks the cursor
+        function scrubPct(e){ var r=progEl.getBoundingClientRect(); return Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)); }
+        function scrubPreview(p){ if(fillEl) fillEl.style.width=(p*100)+'%'; if(thumb) thumb.style.left=(p*100)+'%'; if(timeEl&&vDuration) timeEl.textContent=fmt(p*vDuration)+' / '+fmt(vDuration); }
+        // frame preview: a 2nd hidden Vimeo player seeked to the cursor time (Vimeo is
+        // cross-origin, so a seeked mini-player is the only way to show the actual frame)
+        var scrubPrev=document.getElementById('scrubPreview'), scrubPrevFrame=document.getElementById('scrubPreviewFrame'), scrubPrevTime=document.getElementById('scrubPreviewTime');
+        var prevPlayer=null, prevReady=false, prevVimeo=null, prevSeeking=false, prevPending=null;
+        function teardownPrev(){ if(prevPlayer){ try{prevPlayer.destroy();}catch(e){} } prevPlayer=null; prevReady=false; prevVimeo=null; prevSeeking=false; prevPending=null; if(scrubPrevFrame) scrubPrevFrame.innerHTML=''; }
+        function buildPrev(){
+            var item=viewerItems[current]; if(!item||!item.vimeo||!scrubPrevFrame) return;
+            if(prevVimeo===item.vimeo && prevPlayer) return;
+            teardownPrev(); prevVimeo=item.vimeo;
+            var pf=document.createElement('iframe'); pf.setAttribute('frameborder','0'); pf.setAttribute('allow','autoplay');
+            pf.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'background=1&muted=1&controls=0&dnt=1';
+            scrubPrevFrame.appendChild(pf);
+            whenVimeoReady(function(){ try{ prevPlayer=new Vimeo.Player(pf); prevPlayer.ready().then(function(){ prevReady=true; if(prevPending!=null){ var t=prevPending; prevPending=null; seekPrev(t); } }).catch(function(){}); }catch(e){} });
+        }
+        function seekPrev(t){
+            if(!prevReady||!prevPlayer){ prevPending=t; return; }
+            if(prevSeeking){ prevPending=t; return; }
+            prevSeeking=true;
+            prevPlayer.setCurrentTime(t).then(function(){ prevSeeking=false; if(prevPending!=null){ var n=prevPending; prevPending=null; seekPrev(n); } }).catch(function(){ prevSeeking=false; });
+        }
+        function showPrev(e){
+            if(!vDuration||!scrubPrev) return;
+            buildPrev();
+            var p=scrubPct(e), r=progEl.getBoundingClientRect();
+            scrubPrev.style.left=Math.max(84, Math.min(r.width-84, e.clientX-r.left))+'px';
+            if(scrubPrevTime) scrubPrevTime.textContent=fmt(p*vDuration);
+            scrubPrev.classList.add('show');
+            seekPrev(p*vDuration);
+        }
+        function hidePrev(){ if(scrubPrev) scrubPrev.classList.remove('show'); }
+        progEl.addEventListener('mousedown', function(e){
+            if(!vPlayer||!vDuration)return;
+            e.preventDefault(); e.stopPropagation();
+            dragging=true; progEl.classList.add('dragging'); scrubPreview(scrubPct(e)); showPrev(e);
+        });
+        progEl.addEventListener('mousemove', function(e){ if(!dragging) showPrev(e); }, {passive:true});
+        progEl.addEventListener('mouseleave', function(){ if(!dragging) hidePrev(); }, {passive:true});
+        document.addEventListener('mousemove', function(e){ if(dragging){ scrubPreview(scrubPct(e)); showPrev(e); } }, {passive:true});
+        document.addEventListener('mouseup', function(e){
+            if(!dragging)return;
+            dragging=false; progEl.classList.remove('dragging');
+            var p=scrubPct(e); if(vPlayer&&vDuration) vPlayer.setCurrentTime(p*vDuration).catch(function(){});
+            hidePrev();
+        });
+        fsBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            var target=frame||viewer;
+            if(document.fullscreenElement) document.exitFullscreen().catch(function(){});
+            else target.requestFullscreen().catch(function(){});
+        });
+        // fullscreen: hide cursor + controls + expand button after 1s of no movement
+        var fsIdleTimer=null;
+        function inFs(){ return document.fullscreenElement||document.webkitFullscreenElement; }
+        function fsIdleHide(){ if(inFs()) frame.classList.add('fs-idle'); }
+        function fsPoke(){ if(fsIdleTimer)clearTimeout(fsIdleTimer); frame.classList.remove('fs-idle'); if(inFs()) fsIdleTimer=setTimeout(fsIdleHide,1000); }
+        function fsLeave(){ frame.classList.remove('fs-idle'); if(fsIdleTimer){clearTimeout(fsIdleTimer);fsIdleTimer=null;} }
+        document.addEventListener('mousemove', function(){ if(inFs()) fsPoke(); }, {passive:true});
+        document.addEventListener('fullscreenchange', function(){ inFs()?fsPoke():fsLeave(); });
+        document.addEventListener('webkitfullscreenchange', function(){ inFs()?fsPoke():fsLeave(); });
+        // volume: mute toggle + draggable gauge (videos autoplay muted, so this is how sound comes on)
+        var volWrap=document.getElementById('viewerVol'), volBtn=document.getElementById('viewerVolBtn'),
+            volTrack=document.getElementById('viewerVolTrack'), volFill=document.getElementById('viewerVolFill'), volHideT=null;
+        function renderVol(){ var off=(vMuted||vVolume===0); volWrap.classList.toggle('muted',off); volFill.style.height=((off?0:vVolume)*100)+'%'; volBtn.setAttribute('data-cursor',off?'unmute':'mute'); }
+        function applyVol(){ if(!vPlayer)return; var off=(vMuted||vVolume===0); try{ if(vPlayer.setMuted) vPlayer.setMuted(off); }catch(e){} try{ vPlayer.setVolume(off?0:vVolume).catch(function(){}); }catch(e){} renderVol(); }
+        function showGauge(){ clearTimeout(volHideT); volWrap.classList.add('show-gauge'); }
+        function hideGaugeSoon(){ clearTimeout(volHideT); volHideT=setTimeout(function(){ if(!volDragging) volWrap.classList.remove('show-gauge'); },500); }
+        function volFromY(e){ var r=volTrack.getBoundingClientRect(); return Math.max(0,Math.min(1, 1-(e.clientY-r.top)/r.height)); }
+        volBtn.addEventListener('click', function(e){ e.stopPropagation(); vMuted=!vMuted; if(!vMuted&&vVolume===0) vVolume=1; applyVol(); showGauge(); });
+        volWrap.addEventListener('mouseenter', showGauge);
+        volWrap.addEventListener('mouseleave', hideGaugeSoon);
+        volTrack.addEventListener('mousedown', function(e){ e.preventDefault(); e.stopPropagation(); volDragging=true; var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); });
+        document.addEventListener('mousemove', function(e){ if(volDragging){ var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); } }, {passive:true});
+        document.addEventListener('mouseup', function(){ volDragging=false; });
+        renderVol();
+        // Keep the controls + corner buttons alive while the cursor is anywhere in the
+        // frame (incl. the volume/expand buttons, which are siblings of the video-hero).
+        // Don't auto-hide while the volume gauge is open or being dragged.
+        function csIdleHide(){ if(!volWrap.classList.contains('show-gauge') && !volDragging) vHero.classList.remove('cs-hover'); }
+        function csPoke(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(csIdleHide,2000); }
+        frame.addEventListener('mouseenter', csPoke);
+        frame.addEventListener('mousemove',  csPoke);
+        frame.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
+        if(closeBtn) closeBtn.addEventListener('click',closeViewer);
+        // click anywhere outside the video bounds closes (the EXIT cursor signals this)
+        viewer.addEventListener('click',function(e){
+            if(!viewer.classList.contains('active'))return;
+            if(e.target && e.target.closest && e.target.closest('.viewer-nav')) return;
+            if(!ptrInsideFrame(e)) closeViewer();
+        });
+        prevBtn.addEventListener('click',function(e){e.stopPropagation();if(current>0)openViewer(current-1);});
+        nextBtn.addEventListener('click',function(e){e.stopPropagation();if(current<viewerItems.length-1)openViewer(current+1);});
+        document.addEventListener('keydown',function(e){
+            if(!viewer.classList.contains('active'))return;
+            if(e.key==='Escape')closeViewer();
+            if(e.key==='ArrowLeft'&&current>0)openViewer(current-1);
+            if(e.key==='ArrowRight'&&current<viewerItems.length-1)openViewer(current+1);
+            if(e.key===' '){e.preventDefault();togglePlay(true);}
+        });
+    })();
+
+    (function initBioReveal() {
+        var toggle=document.getElementById('bioToggle'), expanded=document.getElementById('bioExpanded');
+        if(!toggle||!expanded) return;
+        var coarse = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+        var openAt = 0;
+        function openBio(){ if(expanded.classList.contains('open'))return; expanded.classList.add('open'); toggle.classList.add('open'); openAt=Date.now(); }
+        function closeBio(){ expanded.classList.remove('open'); toggle.classList.remove('open'); }
+        function toggleBio(){ expanded.classList.contains('open')?closeBio():openBio(); }
+
+        // click = fallback for touch / accessibility
+        toggle.addEventListener('click', toggleBio);
+
+        // auto-collapse the instant the user scrolls away (after a brief grace period)
+        function onAnyScroll(){ if(expanded.classList.contains('open') && Date.now()-openAt>250) closeBio(); }
+        window.addEventListener('scroll', onAnyScroll, {passive:true, capture:true});
+        document.body.addEventListener('scroll', onAnyScroll, {passive:true});
+
+        if (coarse) return; // touch devices: click only, no hover-fill cursor
+
+        // ── donut-fill cursor: hover 'biography' ~0.5s to reveal ──
+        var ring=document.getElementById('bioRing');
+        var fill=ring && ring.querySelector('.ring-fill');
+        var C=2*Math.PI*4, MS=250, raf=null, active=false;
+        if(fill){ fill.style.strokeDasharray=C.toFixed(2); fill.style.strokeDashoffset=C.toFixed(2); }
+        function setProg(p){ if(fill) fill.style.strokeDashoffset=(C*(1-p)).toFixed(2); }
+        function stopRing(){ active=false; if(raf)cancelAnimationFrame(raf); raf=null; if(ring)ring.classList.remove('show'); document.body.classList.remove('bio-ring-active'); setProg(0); }
+        function startRing(){
+            if(active||!ring) return; active=true;
+            document.body.classList.add('bio-ring-active'); ring.classList.add('show');
+            var t0=Date.now();
+            (function step(){ if(!active)return; var p=Math.min(1,(Date.now()-t0)/MS); setProg(p);
+                if(p<1){ raf=requestAnimationFrame(step); } else { active=false; toggleBio(); stopRing(); } })();
+        }
+        document.addEventListener('mousemove', function(e){ if(ring){ ring.style.left=e.clientX+'px'; ring.style.top=e.clientY+'px'; } }, {passive:true});
+        toggle.addEventListener('mouseenter', function(){ startRing(); });
+        toggle.addEventListener('mouseleave', stopRing);
+
+        // ── director-image cursor on name hover (gated on D.cursor_image) ──
+        var D=window.DIRECTOR, name=document.getElementById('heroName'), img=document.getElementById('dirImgCursor');
+        if(D && D.cursor_image && name && img){
+            img.src=D.cursor_image;
+            document.addEventListener('mousemove', function(e){ img.style.left=e.clientX+'px'; img.style.top=e.clientY+'px'; }, {passive:true});
+            name.addEventListener('mouseenter', function(){ document.body.classList.add('dir-img-active'); img.classList.add('show'); });
+            name.addEventListener('mouseleave', function(){ document.body.classList.remove('dir-img-active'); img.classList.remove('show'); });
+        }
+    })();
+
+    (function initMenu() {
+        var mt=document.getElementById('menuToggle'), mo=document.getElementById('menuOverlay');
+        mt.addEventListener('click',function(){mt.classList.toggle('active');mo.classList.toggle('active');});
+        mo.addEventListener('click',function(e){if(e.target===mo){mt.classList.remove('active');mo.classList.remove('active');}});
+        document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mo.classList.contains('active')){mt.classList.remove('active');mo.classList.remove('active');}});
+    })();
+
+    (function initFooterContrast(){
+        var footer = document.querySelector('.site-footer');
+        var light = document.querySelector('.work-section');
+        if (!footer || !light) return;
+        var raf = null;
+        function update(){
+            var fr = footer.getBoundingClientRect();
+            var fcy = fr.top + fr.height / 2;
+            var lr = light.getBoundingClientRect();
+            footer.classList.toggle('on-light', lr.top <= fcy && lr.bottom >= fcy);
+        }
+        function onScroll(){ if (!raf) raf = requestAnimationFrame(function(){ update(); raf = null; }); }
+        window.addEventListener('scroll', onScroll, {passive:true, capture:true});
+        document.body.addEventListener('scroll', onScroll, {passive:true});
+        window.addEventListener('resize', onScroll, {passive:true});
+        update();
+    })();
+
+    (function initReveal() {
+        var cards = Array.prototype.slice.call(document.querySelectorAll(".work-card"));
+        if (!cards.length) return;
+        // Touch: skip the scroll-scrub height morph — it fights momentum scrolling + the
+        // address-bar resize and scrambles the grid. Show full-height cards (CSS aspect-ratio).
+        if (window.matchMedia && window.matchMedia('(pointer:coarse)').matches) {
+            cards.forEach(function(card){ card.style.height=''; var t=card.querySelector('.card-text'); if(t) t.style.opacity='1'; });
+            return;
+        }
+        var COLLAPSED = 6;
+        function fullH(card) { return card.offsetWidth * 9 / 16; }
+        function smooth(t) { return t * t * (3 - 2 * t); }
+        cards.forEach(function(card) { card.style.height = COLLAPSED + "px"; });
+        var raf = null;
+        function update() {
+            var vh = window.innerHeight;
+            var trigger = vh * 0.55;   // fully expanded once the card top rises to 55% of viewport
+            var zone = vh - trigger;   // it starts expanding the instant it enters at the bottom
+            cards.forEach(function(card) {
+                var top = card.getBoundingClientRect().top;
+                var p = smooth(Math.max(0, Math.min(1, (vh - top) / zone)));
+                card.style.height = Math.round(COLLAPSED + (fullH(card) - COLLAPSED) * p) + "px";
+                var txt = card.querySelector(".card-text");
+                if (txt) txt.style.opacity = Math.max(0, Math.min(1, (p - 0.9) / 0.1));
+            });
+        }
+        function onScroll() { if (!raf) raf = requestAnimationFrame(function() { update(); raf = null; }); }
+        window.addEventListener("scroll", onScroll, {passive:true, capture:true});
+        document.body.addEventListener("scroll", onScroll, {passive:true});
+        window.addEventListener("resize", onScroll, {passive:true});
+        update();
+    })();
+
+    (function initCursor() {
+        var cursor=document.getElementById('cursor'); if(!cursor) return;
+        var mx=0,my=0,cx=0,cy=0,sc=1; window._cursorTargetScale=1;
+        document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+        (function loop(){cx+=(mx-cx)*0.5;cy+=(my-cy)*0.5;sc+=(window._cursorTargetScale-sc)*0.15;cursor.style.transform='translate('+(cx-5)+'px,'+(cy-5)+'px) scale('+sc+')';requestAnimationFrame(loop);})();
+    })();
+
+    (function initDarkMode() {
+        var toggle=document.getElementById('darkModeToggle');
+        if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}
+        toggle.addEventListener('change',function(){document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});
+    })();
+
+    (function initPageGate(){
+        var shown=false;
+        function show(){if(shown)return;shown=true;document.body.classList.add('page-ready');}
+        var iframe=document.querySelector('.hero-video iframe');
+        if(iframe){iframe.addEventListener('load',show);setTimeout(show,1200);}else show();
+    })();
+    </script>
+
+    <script src="/scripts/analytics.js"></script>
+
+    <script>
+    (function(){
+        function enforceNoCursor(){var e=document.getElementById('no-native-cursor');if(e)e.remove();var s=document.createElement('style');s.id='no-native-cursor';s.textContent='html,html *,body,body *{cursor:none !important;}';document.head.appendChild(s);}
+        enforceNoCursor();
+        window.addEventListener('pageshow',function(){enforceNoCursor();var c=document.getElementById('cursor');if(c&&!('ontouchstart'in window))c.style.display='block';});
+        document.addEventListener('visibilitychange',function(){if(!document.hidden)enforceNoCursor();});
+        // re-assert cursor:none after leaving fullscreen so the native cursor doesn't linger alongside the custom one
+        document.addEventListener('fullscreenchange',function(){ if(!document.fullscreenElement) enforceNoCursor(); });
+        document.addEventListener('webkitfullscreenchange',function(){ if(!document.webkitFullscreenElement) enforceNoCursor(); });
+    })();
+    </script>
+
+    <!-- Custom click cursor: knockout label box over clickable elements -->
+    <script>
+    (function(){
+      try {
+        if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
+        var st = document.createElement('style');
+        st.textContent = '#clickCursor{position:fixed;text-transform:uppercase;left:-200px;top:-200px;transform:translate(-50%,-50%) scale(.7);opacity:0;pointer-events:none;z-index:10050;mix-blend-mode:difference;transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.2,1);will-change:transform,left,top,opacity}#clickCursor.show{opacity:1;transform:translate(-50%,-50%) scale(1)}body.click-cursor-active .cursor{opacity:0 !important}';
+        document.head.appendChild(st);
+        var box = document.createElement('div');
+        box.id = 'clickCursor';
+        box.setAttribute('aria-hidden','true');
+        document.body.appendChild(box);
+        function makeBox(label){
+          var w = Math.max(56, Math.round(label.length * 8.6 + 28)), h = 26;
+          return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="clickCursorMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">'+label+'</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#clickCursorMask)"/></svg>';
+        }
+        var current = '';
+        function setLabel(l){ if (l === current) return; current = l; box.innerHTML = makeBox(l); }
+        setLabel('CLICK');
+        function menuOpen(){ return !!document.querySelector('.menu-overlay.active'); }
+        function hide(){ box.classList.remove('show'); document.body.classList.remove('click-cursor-active'); }
+        function show(el){
+          var vctrl = el.closest && el.closest('.viewer-ctrl-btn, .viewer-fs-corner, .viewer-vol-btn');
+          if (menuOpen() || (document.body.classList.contains('viewer-open') && !vctrl)) { hide(); return; }
+          var lbl = (el.getAttribute && el.getAttribute('data-cursor')) || 'CLICK';
+          setLabel(String(lbl).toUpperCase());
+          box.classList.add('show');
+          document.body.classList.add('click-cursor-active');
+        }
+        document.addEventListener('mousemove', function(e){
+          box.style.left = e.clientX + 'px'; box.style.top = e.clientY + 'px';
+          if (menuOpen() && box.classList.contains('show')) hide();
+        }, {passive:true});
+        var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .dark-mode-toggle, .logo-bottom, .project-client-link, [data-cursor]';
+        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; if (t.closest('.work-card')) return null; if (t.closest('.bio-toggle')) return null; return t.closest(sel); }
+        document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
+        document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
+      } catch(err){}
+    })();
+    </script>
+</body>
+</html>
