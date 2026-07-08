@@ -156,6 +156,12 @@
         .work-section { background:var(--white); padding:0; padding-bottom:5rem; }
         .work-section-header { padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
         .work-section-label { font-size:0.65rem; font-weight:600; letter-spacing:0.1em; color:rgba(0,0,0,0.35); text-transform:uppercase; }
+        .work-filter { display:flex; align-items:center; gap:2rem; padding:2rem 3rem; border-bottom:1px solid rgba(0,0,0,0.08); }
+        .work-filter-btn { background:none; border:none; padding:0; font-family:'Space Grotesk',sans-serif; font-size:0.7rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(0,0,0,0.3); transition:color 0.25s ease; position:relative; }
+        .work-filter-btn::after { content:''; position:absolute; left:0; right:100%; bottom:-6px; height:1.5px; background:var(--black); transition:right 0.3s cubic-bezier(0.4,0,0.2,1); }
+        .work-filter-btn:hover { color:rgba(0,0,0,0.6); }
+        .work-filter-btn.active { color:var(--black); }
+        .work-filter-btn.active::after { right:0; }
         .work-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; width:100%; background:var(--white); }
         .work-card { display:block; text-decoration:none; color:var(--white); position:relative; overflow:hidden; background:#111; height:6px; }
         .card-thumb { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
@@ -215,6 +221,9 @@
         body.dark-mode .hero-name { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
         body.dark-mode .hero-location { color:rgba(255,69,0,0.7) !important; -webkit-text-fill-color:rgba(255,69,0,0.7); }
         body.dark-mode .card-title, body.dark-mode .card-client { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .work-filter-btn { color:rgba(255,69,0,0.45) !important; -webkit-text-fill-color:rgba(255,69,0,0.45); }
+        body.dark-mode .work-filter-btn.active { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .work-filter-btn::after { background:#FF4500; }
         html { scrollbar-width:thin; scrollbar-color:rgba(89,121,233,0.45) transparent; }
         html::-webkit-scrollbar { width:6px; }
         html::-webkit-scrollbar-track { background:transparent; }
@@ -235,6 +244,7 @@
             .work-section { padding:0; }
             .work-grid { grid-template-columns:1fr; gap:0; }
             .work-section-header { padding:1.5rem; }
+            .work-filter { padding:1.5rem; gap:1.5rem; }
             .card-text { bottom:1rem; left:1rem; }
             .menu-overlay { padding:5rem 1.5rem 1.5rem; }
             body { padding-bottom:3.5rem; }
@@ -386,6 +396,10 @@
     </header>
 
     <section class="work-section" id="workSection">
+        <div class="work-filter" id="workFilter">
+            <button class="work-filter-btn active" data-filter="commercial" data-cursor="commercial">commercial</button>
+            <button class="work-filter-btn" data-filter="music" data-cursor="music videos">music videos</button>
+        </div>
         <div class="work-grid" id="workGrid"></div>
     </section>
 
@@ -482,7 +496,14 @@
             { client:'final boss sour',                 title:'elevator pitch',        thumbnail:'https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_1280x720', vimeo:'1164239118', clip_start:0 },
             { client:'everything all at once',          title:'',                      thumbnail:'https://i.vimeocdn.com/video/2174285588-abfdd775a00eb6c90e250b9338774bd18be2e07a0cf68d931e954624d1949da1-d_1280x720', vimeo:'1205645142', clip_start:0 },
             { client:'7-eleven',                        title:'the summer smash',      thumbnail:'https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_1280x720', vimeo:'1164238677', clip_start:0 },
-            { client:'2024 summer smash',               title:'official commercial',   thumbnail:'https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_1280x720', vimeo:'1164237076', clip_start:0, zoom:1.5 }
+            { client:'2024 summer smash',               title:'official commercial',   thumbnail:'https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_1280x720', vimeo:'1164237076', clip_start:0, zoom:1.5 },
+            { client:'sailorr',        title:'coconut (feat. eem triplin)',  category:'music', thumbnail:'https://i.vimeocdn.com/video/2177129683-c96f9b6e2424895ed9a7fce82e935720efe6d820f9e0c067d3ca5ac278778bab-d_1280x720', vimeo:'1207935080', clip_start:0 },
+            { client:'draft day',      title:'city on fire',                 category:'music', thumbnail:'https://i.vimeocdn.com/video/2177132265-423e76b62b68fb010b766d3f54c275570cf2a45d6744738b8dc3056f096a30c3-d_1280x720', vimeo:'1207937955', clip_start:0 },
+            { client:'themind',        title:'gina',                         category:'music', thumbnail:'https://i.vimeocdn.com/video/2177132790-c7d92604fdcab93fa21345953861d9f7947058ed3d515a4901322e7dae0caaeb-d_1280x720', vimeo:'1207937956', clip_start:0 },
+            { client:'sosocamo',       title:'me & you (feat. sofaygo)',     category:'music', thumbnail:'https://i.vimeocdn.com/video/2177128938-e93a3bc7b841d7133936aaff25fc29c1c9167f8fc1851a8456d35c3414a096e4-d_1280x720', vimeo:'1207935079', clip_start:0 },
+            { client:'prettifun',      title:'feel like uzi',                category:'music', thumbnail:'https://i.vimeocdn.com/video/2177159019-f66872b40cb7bfe3b6452063418f08fdd3a36b656158cdc88da28f969707ca82-d_1280x720', vimeo:'1207960544', clip_start:0 },
+            { client:'fig',            title:'seeking for connection',       category:'music', thumbnail:'https://i.vimeocdn.com/video/2177157032-f4ec958c6292c102c2cccf0c6409787c16af89122c5377cd1751c0ff6ed7880a-d_1280x720', vimeo:'1207940506', clip_start:0 },
+            { client:'dreamer isioma', title:'in my head',                   category:'music', thumbnail:'https://i.vimeocdn.com/video/2177156612-92dbd34aa7c81aaa924b06da291c284c219a51f6eb42420d3827081866bb035e-d_1280x720', vimeo:'1207940504', clip_start:0 }
         ]
     };
     </script>
@@ -516,6 +537,7 @@
             card.setAttribute('data-hash',   item.hash   || '');
             card.setAttribute('data-client', item.client || '');
             card.setAttribute('data-title',  item.title  || '');
+            card.setAttribute('data-category', item.category || 'commercial');
             card.innerHTML = (item.thumbnail
                 ? '<img class="card-thumb" src="'+item.thumbnail+'" width="1280" height="720" alt="'+item.client+', '+item.title+'" loading="lazy">'
                 : '<div class="card-thumb" style="background:#1a1a1a;"></div>') +
@@ -553,14 +575,17 @@
         });
     })();
 
-    window.addEventListener('load', function() {
+    // hover previews are built per visible card (and again when the filter reveals
+    // more) so hidden-category cards don't spin up background Vimeo players
+    function buildHoverPreviews() {
         try {
             if (!window.matchMedia('(pointer:fine)').matches) return;
             document.querySelectorAll('.work-card').forEach(function(card) {
+                if (card.style.display === 'none') return;
                 var vimeo = card.getAttribute('data-vimeo');
                 if (!vimeo) return;
                 var vl = card.querySelector('.card-video');
-                if (!vl) return;
+                if (!vl || vl.querySelector('iframe')) return;
                 var hash = card.getAttribute('data-hash') || '';
                 var zoom = parseFloat(card.getAttribute('data-zoom') || '1.32');
                 var iframe = document.createElement('iframe');
@@ -572,12 +597,31 @@
                 vl.appendChild(iframe);
             });
         } catch(e) {}
-    }, {once: true});
+    }
+    window.addEventListener('load', buildHoverPreviews, {once: true});
+
+    (function initWorkFilter() {
+        var bar = document.getElementById('workFilter');
+        if (!bar) return;
+        var btns = Array.prototype.slice.call(bar.querySelectorAll('.work-filter-btn'));
+        var cards = Array.prototype.slice.call(document.querySelectorAll('.work-card'));
+        var cats = {};
+        cards.forEach(function(c){ cats[c.getAttribute('data-category')] = true; });
+        if (Object.keys(cats).length < 2) { bar.style.display = 'none'; return; }
+        function apply(cat) {
+            btns.forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-filter') === cat); });
+            cards.forEach(function(card){ card.style.display = (card.getAttribute('data-category') === cat) ? '' : 'none'; });
+            buildHoverPreviews();
+            window.dispatchEvent(new Event('scroll')); // re-run the scroll-scrub height morph
+        }
+        btns.forEach(function(b){ b.addEventListener('click', function(){ apply(b.getAttribute('data-filter')); }); });
+        apply('commercial');
+    })();
 
     (function initWorkViewer() {
         var viewerItems = [];
         document.querySelectorAll('.work-card').forEach(function(card, i) {
-            viewerItems.push({ vimeo:card.getAttribute('data-vimeo'), hash:card.getAttribute('data-hash')||'', client:card.getAttribute('data-client'), title:card.getAttribute('data-title') });
+            viewerItems.push({ vimeo:card.getAttribute('data-vimeo'), hash:card.getAttribute('data-hash')||'', client:card.getAttribute('data-client'), title:card.getAttribute('data-title'), category:card.getAttribute('data-category')||'commercial' });
             card.addEventListener('click', function(e) { e.preventDefault(); openViewer(i); });
         });
         var viewer   = document.getElementById('workViewer');
@@ -634,6 +678,13 @@
             if(window.Vimeo){ cb(); return; }
             var n=0; (function poll(){ if(window.Vimeo) return cb(); if(n++>120) return; setTimeout(poll,50); })();
         }
+        // prev/next stay within the current item's category (commercial vs music videos)
+        function sibIdx(from, dir) {
+            var cat = viewerItems[from] ? viewerItems[from].category : null;
+            var j = from + dir;
+            while (j >= 0 && j < viewerItems.length && viewerItems[j].category !== cat) j += dir;
+            return (j >= 0 && j < viewerItems.length) ? j : -1;
+        }
         function openViewer(idx) {
             current=idx; var item=viewerItems[idx];
             resetPlayer();
@@ -648,8 +699,8 @@
             vHero.insertBefore(iframe, vHero.firstChild);
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
             viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
-            prevBtn.style.opacity=idx>0?'0.6':'0.15';
-            nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
+            prevBtn.style.opacity=sibIdx(idx,-1)>=0?'0.6':'0.15';
+            nextBtn.style.opacity=sibIdx(idx,1)>=0?'0.6':'0.15';
             // Bind the player as soon as the SDK is ready — don't depend on iframe.onload
             // (the onload+SDK race is what left the controls dead in production).
             whenVimeoReady(function(){
@@ -764,13 +815,13 @@
             if(e.target && e.target.closest && e.target.closest('.viewer-nav')) return;
             if(!ptrInsideFrame(e)) closeViewer();
         });
-        prevBtn.addEventListener('click',function(e){e.stopPropagation();if(current>0)openViewer(current-1);});
-        nextBtn.addEventListener('click',function(e){e.stopPropagation();if(current<viewerItems.length-1)openViewer(current+1);});
+        prevBtn.addEventListener('click',function(e){e.stopPropagation();var j=sibIdx(current,-1);if(j>=0)openViewer(j);});
+        nextBtn.addEventListener('click',function(e){e.stopPropagation();var j=sibIdx(current,1);if(j>=0)openViewer(j);});
         document.addEventListener('keydown',function(e){
             if(!viewer.classList.contains('active'))return;
             if(e.key==='Escape')closeViewer();
-            if(e.key==='ArrowLeft'&&current>0)openViewer(current-1);
-            if(e.key==='ArrowRight'&&current<viewerItems.length-1)openViewer(current+1);
+            if(e.key==='ArrowLeft'){var j=sibIdx(current,-1);if(j>=0)openViewer(j);}
+            if(e.key==='ArrowRight'){var j2=sibIdx(current,1);if(j2>=0)openViewer(j2);}
             if(e.key===' '){e.preventDefault();togglePlay(true);}
         });
     })();
