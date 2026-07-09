@@ -685,7 +685,7 @@
             while (j >= 0 && j < viewerItems.length && viewerItems[j].category !== cat) j += dir;
             return (j >= 0 && j < viewerItems.length) ? j : -1;
         }
-        function openViewer(idx) {
+        function openViewer(idx) { vMuted=false; if(vVolume===0) vVolume=1; renderVol();
             current=idx; var item=viewerItems[idx];
             resetPlayer();
             // Build a fresh iframe each open — Vimeo's player.destroy() removes the

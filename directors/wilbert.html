@@ -635,7 +635,7 @@
             if(window.Vimeo){ cb(); return; }
             var n=0; (function poll(){ if(window.Vimeo) return cb(); if(n++>120) return; setTimeout(poll,50); })();
         }
-        function openViewer(idx) {
+        function openViewer(idx) { vMuted=false; if(vVolume===0) vVolume=1; renderVol();
             current=idx; var item=viewerItems[idx];
             resetPlayer();
             // Build a fresh iframe each open — Vimeo's player.destroy() removes the
