@@ -596,7 +596,7 @@
         var timeEl   = document.getElementById('viewerTime');
         var fsBtn    = document.getElementById('viewerFsBtn');
         var clickLayer = document.getElementById('viewerClickLayer');
-        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false, vVolume = 1, vMuted = true, volDragging = false;
+        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false, vVolume = 1, vMuted = false, volDragging = false;
         // EXIT cursor: knockout "EXIT" label shown over the margin around the video
         var exitCur = document.createElement('div');
         exitCur.id='viewerExitCursor'; exitCur.setAttribute('aria-hidden','true');
@@ -644,7 +644,7 @@
             iframe.setAttribute('frameborder','0');
             iframe.setAttribute('allow','autoplay; fullscreen; picture-in-picture');
             iframe.setAttribute('allowfullscreen','');
-            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&muted=1&controls=0&dnt=1&playsinline=1';
+            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&muted=0&controls=0&dnt=1&playsinline=1';
             vHero.insertBefore(iframe, vHero.firstChild);
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
             viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
@@ -772,6 +772,7 @@
             if(e.key==='ArrowLeft'&&current>0)openViewer(current-1);
             if(e.key==='ArrowRight'&&current<viewerItems.length-1)openViewer(current+1);
             if(e.key===' '){e.preventDefault();togglePlay(true);}
+            if(e.key==='m'||e.key==='M'){vMuted=!vMuted;if(!vMuted&&vVolume===0)vVolume=1;applyVol();showGauge();}
         });
     })();
 
