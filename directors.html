@@ -223,19 +223,7 @@
             transition-delay: 0.3s;
         }
 
-        .menu-link-lab {
-            color: #A6FF8E;
-        }
 
-        .menu-overlay.active .menu-link-lab {
-            opacity: 0.5 !important;
-            transition: opacity 0.12s ease !important;
-        }
-
-        .menu-overlay.active .menu-link-lab:hover {
-            opacity: 1 !important;
-            transition: opacity 0.12s ease !important;
-        }
 
         .menu-link-bond {
             font-family: 'Satoshi', sans-serif;
@@ -331,6 +319,11 @@
 
         .video-wrapper iframe.zoom-slight {
             transform: scale(1.15);
+        }
+
+        /* for 4:3 clips (e.g. justin's yungblud reel) — zoom to fill the 16:9 frame */
+        .video-wrapper iframe.zoom-fill {
+            transform: scale(1.4);
         }
 
         .video-wrapper iframe.active {
@@ -551,7 +544,7 @@
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
-        body.dark-mode .menu-link-lab { color: #A6FF8E !important; -webkit-text-fill-color: #A6FF8E; }
+        body.dark-mode
         body.dark-mode .menu-link-bond { color: var(--bond-blue) !important; -webkit-text-fill-color: var(--bond-blue); }
 
         body.dark-mode .logo-bottom svg path {
@@ -762,7 +755,6 @@
             <a href="/about"     class="menu-link">about</a>
             <a href="/contact"   class="menu-link">contact</a>
             <div class="menu-spacer"></div>
-            <a href="/lab"       class="menu-link menu-link-lab">lab</a>
             <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
         </div>
         <div class="menu-socials">

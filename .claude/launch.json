@@ -6,6 +6,16 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", ".", "-p", "4200", "--no-clipboard"],
       "port": 4200
+    },
+    {
+      "name": "ionic-site",
+      "url": "http://localhost:4399"
+    },
+    {
+      "name": "mustafar-open",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "/Users/zerbs/Documents/mustafar-open"],
+      "port": 3000
     }
   ]
 }
