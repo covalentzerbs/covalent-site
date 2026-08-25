@@ -1075,6 +1075,17 @@ body.dark-mode .project-client {
             <img src="assets/logos/WORDMARK_FINAL_WHITE.png" width="1920" height="1080" class="hero-wordmark" alt="Covalent Studios">
         </section>
 
+        <!-- NEW ERA — TAKE IT EASY -->
+        <section class="project-section" id="projectNewEra">
+            <div class="project-video-container" style="aspect-ratio: 16 / 9;">
+                <iframe data-src="https://player.vimeo.com/video/1221251397?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <!-- TODO: swap for <img class="project-logo"> once a New Era logo lands in assets/logos/client-logos/ -->
+                <a href="new-era.html" class="project-client-link" data-cursor="view"><h2 class="project-client">new era</h2></a>
+            </div>
+        </section>
+
         <!-- BO HOUSE — VILLA PENINSULA -->
         <section class="project-section" id="projectBo">
             <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
@@ -1411,10 +1422,11 @@ body.dark-mode .project-client {
         updateProgress();
 
         // ==================== //
-        // INTERSECTION OBSERVER (9 panels)
+        // INTERSECTION OBSERVER (11 panels)
         // ==================== //
         const allSectionIds = [
             'heroSection',
+            'projectNewEra',
             'projectBo',
             'project1', 'project2', 'project3', 'project4',
             'project5', 'project6', 'project7', 'project8'
@@ -1521,7 +1533,7 @@ body.dark-mode .project-client {
     // LAZY LOADER
     // Each project iframe holds its Vimeo URL in data-src and only swaps it into
     // src as its panel enters the viewport — so on first load just the hero bg
-    // player fires a network chain, not all nine. Panels that scroll more than
+    // player fires a network chain, not all ten. Panels that scroll more than
     // 400px past the viewport are unloaded again (src cleared) so off-screen
     // background videos stop autoplaying. The panel keeps its background colour
     // and aspect-ratio box throughout, so loading/unloading never shifts the
