@@ -26,6 +26,7 @@
     <meta property="og:url" content="https://covalentstudios.co">
     <meta property="og:type" content="website">
     <!-- Preload client logos so they're ready before loading screen ends -->
+    <link rel="preload" as="image" href="assets/logos/client-logos/new-era-logo-white.png">
     <link rel="preload" as="image" href="assets/logos/client-logos/bo-house-logo-white.png">
     <link rel="preload" as="image" href="assets/logos/client-logos/onco-optima-logo.png">
     <link rel="preload" as="image" href="assets/logos/client-logos/wabi-logo-white.png">
@@ -495,6 +496,10 @@
         /* Bo House emblem is square — render it smaller than the wordmark logos */
         .project-logo-bo { width: clamp(80px, 9vw, 140px); }
 
+        /* New Era flag is a chunky emblem (~1.35:1) — scale down so its visual
+           weight matches the wide wordmarks rather than towering over them */
+        .project-logo-newera { width: clamp(100px, 11vw, 170px); }
+
         .project-client-link {
             text-decoration: none;
             color: inherit;
@@ -622,6 +627,7 @@
                 opacity: 1 !important;
                 width: clamp(100px, 40vw, 200px) !important;
             }
+            .project-logo-newera { width: clamp(90px, 30vw, 150px) !important; }
             .project-info { text-align: center; }
 
             /* Bigger menu links on mobile */
@@ -1081,8 +1087,7 @@ body.dark-mode .project-client {
                 <iframe data-src="https://player.vimeo.com/video/1221251397?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="project-info">
-                <!-- TODO: swap for <img class="project-logo"> once a New Era logo lands in assets/logos/client-logos/ -->
-                <a href="new-era.html" class="project-client-link" data-cursor="view"><h2 class="project-client">new era</h2></a>
+                <a href="new-era.html" class="project-client-link" data-cursor="view"><img src="assets/logos/client-logos/new-era-logo-white.png" width="991" height="732" class="project-logo project-logo-newera" alt="new era"></a>
             </div>
         </section>
 
