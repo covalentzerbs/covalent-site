@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" href="favicon.ico">
-    <meta name="description" content="Covalent Studios creative roster — freelance collaborators available to bid.">
+    <meta name="description" content="Covalent Studios creative roster — freelance directors available to bid.">
     <link rel="canonical" href="https://covalentstudios.co/roster">
     <!-- Roster is unlisted: directors are non-exclusive and not publicly advertised. -->
     <meta name="robots" content="noindex, nofollow">
@@ -23,7 +23,7 @@
         gtag('config', 'G-T14F8BVFLJ');
     </script>
     <meta property="og:title" content="creative roster.">
-    <meta property="og:description" content="freelance collaborators available to bid.">
+    <meta property="og:description" content="freelance directors available to bid.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co/roster">
     <meta property="og:type" content="website">
@@ -682,13 +682,8 @@
 
         .roster-page {
             width: 100%;
-            padding: 7rem 2rem 2rem;
-            /* pull the composition to the middle of the viewport */
-            min-height: calc(100svh - 7.5rem);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            /* full-bleed: every px of width buys a larger name before it wraps */
+            padding: 9rem 2.5rem 4rem;
         }
 
         .roster-heading {
@@ -699,8 +694,7 @@
             line-height: 0.95;
             text-transform: none;
             color: var(--black);
-            text-align: center;
-            margin-bottom: clamp(2rem, 4vw, 3.25rem);
+            margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
         }
 
         /* ── 5 across x 3 down ── */
@@ -709,10 +703,9 @@
             margin: 0;
             padding: 0;
             display: grid;
-            grid-template-columns: repeat(5, max-content);
-            justify-content: center;
-            gap: clamp(1rem, 2vw, 2rem) clamp(1.25rem, 2.6vw, 3rem);
-            align-items: baseline;
+            grid-template-columns: repeat(5, 1fr);
+            gap: clamp(2rem, 4vw, 3.75rem) clamp(0.9rem, 1.6vw, 1.75rem);
+            align-items: start;
         }
 
         .roster-item {
@@ -724,7 +717,7 @@
         .roster-name {
             font-family: var(--helv);
             font-weight: 700;
-            font-size: clamp(1rem, 2.45vw, 3.5rem);
+            font-size: clamp(1rem, 2.05vw, 3rem);
             letter-spacing: -0.04em;
             line-height: 0.92;
             /* names are proper nouns — never fold to the site-wide lowercase */
@@ -843,12 +836,10 @@
 
     <!-- Main Content -->
     <main class="roster-page">
-        <h1 class="roster-heading">Freelance Collaborators.</h1>
+        <h1 class="roster-heading">Freelance Directors.</h1>
 
-        <!-- 5 across x 3 down, one line per name. Columns are content-width and
-             the block is centred, so the names sit tight in the middle rather than
-             stretching to the edges. Wrap a name in <a class="roster-item" href="...">
-             to make it a real link. -->
+        <!-- 5 across x 3 down, one line per name. Wrap a name in
+             <a class="roster-item" href="..."> to make it a real link. -->
         <ul class="roster-list">
             <li>
                 <span class="roster-item"><span class="roster-name">Jacob Frost</span></span>
