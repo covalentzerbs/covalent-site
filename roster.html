@@ -681,8 +681,8 @@
         .site-footer { position: static; margin-top: 4rem; }
 
         .roster-page {
-            max-width: 1500px;
-            margin: 0 auto;
+            /* full-bleed: every px of width buys a larger name before it wraps */
+            width: 100%;
             padding: 9rem 3.5rem 4rem;
         }
 
@@ -704,7 +704,7 @@
             padding: 0;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: clamp(1.75rem, 3.5vw, 3.25rem) clamp(1rem, 2.2vw, 2.25rem);
+            gap: clamp(1.75rem, 3.2vw, 3rem) clamp(0.9rem, 1.8vw, 2rem);
             /* tops line up even when a long name wraps to two lines */
             align-items: start;
         }
@@ -718,9 +718,9 @@
         .roster-name {
             font-family: var(--helv);
             font-weight: 700;
-            font-size: clamp(0.95rem, 1.55vw, 1.7rem);
-            letter-spacing: -0.03em;
-            line-height: 1.15;
+            font-size: clamp(1.15rem, 2vw, 2.6rem);
+            letter-spacing: -0.035em;
+            line-height: 1.1;
             /* names are proper nouns — never fold to the site-wide lowercase */
             text-transform: none;
             color: var(--black);
@@ -731,8 +731,7 @@
             transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .roster-item:hover .roster-name,
-        .roster-item:focus-visible .roster-name {
+        .roster-item:hover .roster-name {
             opacity: 1;
             transform: translateX(3px);
         }
@@ -740,8 +739,7 @@
         /* Respect users who prefer no motion — keep the opacity cue, drop the slide. */
         @media (prefers-reduced-motion: reduce) {
             .roster-name { transition: opacity 0.25s ease; }
-            .roster-item:hover .roster-name,
-            .roster-item:focus-visible .roster-name { transform: none; }
+            .roster-item:hover .roster-name { transform: none; }
         }
 
         /* Touch devices get no hover — show names at full strength instead. */
@@ -832,52 +830,53 @@
     <main class="roster-page">
         <h1 class="roster-heading">Directors.</h1>
 
-        <!-- 5 across x 3 down. href="#" placeholders — swap for reels/profiles. -->
+        <!-- 5 across x 3 down. Plain spans for now — wrap a name in
+             <a class="roster-item" href="..."> once it has a reel/profile. -->
         <ul class="roster-list">
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Jacob Frost</span></a>
+                <span class="roster-item"><span class="roster-name">Jacob Frost</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Jon Schwartz</span></a>
+                <span class="roster-item"><span class="roster-name">Jon Schwartz</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Max Gilberg</span></a>
+                <span class="roster-item"><span class="roster-name">Max Gilberg</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Noah Keckler</span></a>
+                <span class="roster-item"><span class="roster-name">Noah Keckler</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Benjamin Gugick</span></a>
+                <span class="roster-item"><span class="roster-name">Benjamin Gugick</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Zach &amp; Ryan</span></a>
+                <span class="roster-item"><span class="roster-name">Zach &amp; Ryan</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Michael Martin</span></a>
+                <span class="roster-item"><span class="roster-name">Michael Martin</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Soren Knippen</span></a>
+                <span class="roster-item"><span class="roster-name">Soren Knippen</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Lisa Mausbach</span></a>
+                <span class="roster-item"><span class="roster-name">Lisa Mausbach</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Jordan Brady</span></a>
+                <span class="roster-item"><span class="roster-name">Jordan Brady</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Vanessa Pla</span></a>
+                <span class="roster-item"><span class="roster-name">Vanessa Pla</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Samer Almadani</span></a>
+                <span class="roster-item"><span class="roster-name">Samer Almadani</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Paul Riccio</span></a>
+                <span class="roster-item"><span class="roster-name">Paul Riccio</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Scott Peters</span></a>
+                <span class="roster-item"><span class="roster-name">Scott Peters</span></span>
             </li>
             <li>
-                <a class="roster-item" href="#"><span class="roster-name">Cam Erickson</span></a>
+                <span class="roster-item"><span class="roster-name">Cam Erickson</span></span>
             </li>
         </ul>
     </main>
