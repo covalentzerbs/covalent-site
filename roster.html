@@ -683,7 +683,7 @@
         .roster-page {
             /* full-bleed: every px of width buys a larger name before it wraps */
             width: 100%;
-            padding: 9rem 3.5rem 4rem;
+            padding: 9rem 2.5rem 4rem;
         }
 
         .roster-heading {
@@ -704,7 +704,7 @@
             padding: 0;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: clamp(1.75rem, 3.2vw, 3rem) clamp(0.9rem, 1.8vw, 2rem);
+            gap: clamp(2rem, 4vw, 3.75rem) clamp(0.9rem, 1.6vw, 1.75rem);
             /* tops line up even when a long name wraps to two lines */
             align-items: start;
         }
@@ -718,9 +718,9 @@
         .roster-name {
             font-family: var(--helv);
             font-weight: 700;
-            font-size: clamp(1.15rem, 2vw, 2.6rem);
-            letter-spacing: -0.035em;
-            line-height: 1.1;
+            font-size: clamp(1.5rem, 3.4vw, 5.5rem);
+            letter-spacing: -0.04em;
+            line-height: 0.92;
             /* names are proper nouns — never fold to the site-wide lowercase */
             text-transform: none;
             color: var(--black);
@@ -749,11 +749,20 @@
 
         /* Column count steps down so names always stay on one line.
            These must come after the base .roster-list rule to win the cascade. */
-        @media (max-width: 1100px) {
+        @media (max-width: 1300px) {
             .roster-list { grid-template-columns: repeat(3, 1fr); }
+            /* wider columns at 3 across — let the type grow into them */
+            .roster-name { font-size: clamp(1.75rem, 5.5vw, 4.5rem); }
         }
         @media (max-width: 768px) {
             .roster-list { grid-template-columns: repeat(2, 1fr); }
+            .roster-name { font-size: clamp(1.4rem, 7.2vw, 4rem); }
+        }
+        /* Narrow phones: one column, so the names can stay large instead of
+           being squeezed to fit two. */
+        @media (max-width: 400px) {
+            .roster-list { grid-template-columns: 1fr; }
+            .roster-name { font-size: clamp(2rem, 13vw, 3.5rem); }
         }
 
         /* ── Dark mode ── */
@@ -830,53 +839,54 @@
     <main class="roster-page">
         <h1 class="roster-heading">Directors.</h1>
 
-        <!-- 5 across x 3 down. Plain spans for now — wrap a name in
-             <a class="roster-item" href="..."> once it has a reel/profile. -->
+        <!-- 5 across x 3 down. Names stack first/last so the type can run large
+             at five columns. Wrap a name in <a class="roster-item" href="..."> to
+             make it a real link. -->
         <ul class="roster-list">
             <li>
-                <span class="roster-item"><span class="roster-name">Jacob Frost</span></span>
+                <span class="roster-item"><span class="roster-name">Jacob<br>Frost</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Jon Schwartz</span></span>
+                <span class="roster-item"><span class="roster-name">Jon<br>Schwartz</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Max Gilberg</span></span>
+                <span class="roster-item"><span class="roster-name">Max<br>Gilberg</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Noah Keckler</span></span>
+                <span class="roster-item"><span class="roster-name">Noah<br>Keckler</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Benjamin Gugick</span></span>
+                <span class="roster-item"><span class="roster-name">Benjamin<br>Gugick</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Zach &amp; Ryan</span></span>
+                <span class="roster-item"><span class="roster-name">Zach<br>&amp; Ryan</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Michael Martin</span></span>
+                <span class="roster-item"><span class="roster-name">Michael<br>Martin</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Soren Knippen</span></span>
+                <span class="roster-item"><span class="roster-name">Soren<br>Knippen</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Lisa Mausbach</span></span>
+                <span class="roster-item"><span class="roster-name">Lisa<br>Mausbach</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Jordan Brady</span></span>
+                <span class="roster-item"><span class="roster-name">Jordan<br>Brady</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Vanessa Pla</span></span>
+                <span class="roster-item"><span class="roster-name">Vanessa<br>Pla</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Samer Almadani</span></span>
+                <span class="roster-item"><span class="roster-name">Samer<br>Almadani</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Paul Riccio</span></span>
+                <span class="roster-item"><span class="roster-name">Paul<br>Riccio</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Scott Peters</span></span>
+                <span class="roster-item"><span class="roster-name">Scott<br>Peters</span></span>
             </li>
             <li>
-                <span class="roster-item"><span class="roster-name">Cam Erickson</span></span>
+                <span class="roster-item"><span class="roster-name">Cam<br>Erickson</span></span>
             </li>
         </ul>
     </main>
