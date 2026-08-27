@@ -703,7 +703,7 @@
             margin: 0;
             padding: 0;
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: clamp(2rem, 4vw, 3.75rem) clamp(0.9rem, 1.6vw, 1.75rem);
             align-items: start;
         }
@@ -717,7 +717,7 @@
         .roster-name {
             font-family: var(--helv);
             font-weight: 700;
-            font-size: clamp(1rem, 2.05vw, 3rem);
+            font-size: clamp(1.25rem, 3.45vw, 4.75rem);
             letter-spacing: -0.04em;
             line-height: 0.92;
             /* names are proper nouns — never fold to the site-wide lowercase */
@@ -748,20 +748,15 @@
 
         /* Column count steps down so names always stay on one line.
            These must come after the base .roster-list rule to win the cascade. */
-        @media (max-width: 1300px) {
-            .roster-list { grid-template-columns: repeat(3, 1fr); }
-            /* wider columns at 3 across — let the type grow into them */
-            .roster-name { font-size: clamp(1.25rem, 4vw, 3.5rem); }
-        }
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .roster-list { grid-template-columns: repeat(2, 1fr); }
-            .roster-name { font-size: clamp(1.1rem, 5.5vw, 2.75rem); }
+            .roster-name { font-size: clamp(1.1rem, 5.15vw, 3rem); }
         }
-        /* Narrow phones: one column, so the names can stay large instead of
-           being squeezed to fit two. */
-        @media (max-width: 400px) {
+        /* Phones: one column, so the names can stay large instead of being
+           squeezed to fit two. */
+        @media (max-width: 480px) {
             .roster-list { grid-template-columns: 1fr; }
-            .roster-name { font-size: clamp(1.5rem, 10.5vw, 2.75rem); }
+            .roster-name { font-size: clamp(1.4rem, 9.2vw, 3.25rem); }
         }
 
         /* ── Dark mode ── */
@@ -838,7 +833,7 @@
     <main class="roster-page">
         <h1 class="roster-heading">Freelance Directors.</h1>
 
-        <!-- 5 across x 3 down, one line per name. Wrap a name in
+        <!-- 3 across x 5 down, one line per name. Wrap a name in
              <a class="roster-item" href="..."> to make it a real link. -->
         <ul class="roster-list">
             <li>
