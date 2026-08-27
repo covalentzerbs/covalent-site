@@ -23,7 +23,7 @@
         gtag('config', 'G-T14F8BVFLJ');
     </script>
     <meta property="og:title" content="creative roster.">
-    <meta property="og:description" content="how covalent studios handles data: almost no collection, never any selling.">
+    <meta property="og:description" content="directors available to bid.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co/roster">
     <meta property="og:type" content="website">
@@ -477,6 +477,7 @@
             .roster-page {
                 padding: 7rem 1.5rem 3rem;
             }
+
         }
 
         /* Hide dot cursor on touch devices */
@@ -674,105 +675,66 @@
         /* ==================== */
         /* CREATIVE ROSTER      */
         /* ==================== */
-        /* This page scrolls (15 names), so the footer flows after the content
-           instead of being pinned like the single-screen pages. */
+        /* Page scrolls, so the footer flows after the content instead of
+           being pinned like the single-screen pages. */
         html, body { height: auto; min-height: 100%; }
         .site-footer { position: static; margin-top: 4rem; }
 
         .roster-page {
-            max-width: 1300px;
+            max-width: 1500px;
             margin: 0 auto;
             padding: 9rem 3.5rem 4rem;
         }
 
-        /* ── Header ── */
-        .roster-header {
-            margin-bottom: clamp(3rem, 7vw, 5.5rem);
-        }
-        .roster-eyebrow {
-            font-family: var(--helv);
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-        }
         .roster-heading {
             font-family: var(--helv);
             font-weight: 700;
-            font-size: clamp(2.75rem, 8vw, 6rem);
+            font-size: clamp(2.5rem, 7vw, 5rem);
             letter-spacing: -0.035em;
             line-height: 0.95;
             text-transform: none;
             color: var(--black);
-        }
-        .roster-intro {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--black);
-            opacity: 0.6;
-            max-width: 46ch;
-            margin-top: 1.75rem;
+            margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
         }
 
-        /* ── Name list ── */
+        /* ── 5 across x 3 down ── */
         .roster-list {
             list-style: none;
             margin: 0;
             padding: 0;
-            border-top: 1px solid rgba(0, 0, 0, 0.12);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: clamp(1.75rem, 3.5vw, 3.25rem) clamp(1rem, 2.2vw, 2.25rem);
+            /* tops line up even when a long name wraps to two lines */
+            align-items: start;
         }
 
-        .roster-row {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-        }
-
-        /* The whole row is the hover target so the hit area spans full width. */
         .roster-item {
-            display: flex;
-            align-items: baseline;
-            gap: clamp(1rem, 3vw, 2.5rem);
-            padding: clamp(0.6rem, 1.6vw, 1.1rem) 0;
+            display: block;
             text-decoration: none;
             color: inherit;
-            transition: opacity 0.25s ease;
-        }
-
-        .roster-index {
-            font-family: var(--helv);
-            font-weight: 700;
-            font-size: clamp(0.65rem, 1vw, 0.8rem);
-            letter-spacing: 0.06em;
-            color: var(--gray);
-            flex: 0 0 auto;
-            min-width: 2.2ch;
-            /* keep numerals from jittering as the name shifts on hover */
-            font-variant-numeric: tabular-nums;
         }
 
         .roster-name {
             font-family: var(--helv);
             font-weight: 700;
-            font-size: clamp(1.9rem, 5.5vw, 4.25rem);
-            letter-spacing: -0.035em;
-            line-height: 1.02;
+            font-size: clamp(0.95rem, 1.55vw, 1.7rem);
+            letter-spacing: -0.03em;
+            line-height: 1.15;
             /* names are proper nouns — never fold to the site-wide lowercase */
             text-transform: none;
             color: var(--black);
-            opacity: 0.42;
-            transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.55;
+            display: block;
+            /* even split when a long name has to wrap */
+            text-wrap: balance;
+            transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .roster-item:hover .roster-name,
         .roster-item:focus-visible .roster-name {
             opacity: 1;
-            transform: translateX(clamp(6px, 1vw, 14px));
-        }
-
-        .roster-item:hover .roster-index,
-        .roster-item:focus-visible .roster-index {
-            color: var(--black);
+            transform: translateX(3px);
         }
 
         /* Respect users who prefer no motion — keep the opacity cue, drop the slide. */
@@ -787,38 +749,20 @@
             .roster-name { opacity: 1; }
         }
 
-        .roster-note {
-            margin-top: 3rem;
-            font-size: 0.8rem;
-            line-height: 1.7;
-            opacity: 0.45;
-            max-width: 52ch;
+        /* Column count steps down so names always stay on one line.
+           These must come after the base .roster-list rule to win the cascade. */
+        @media (max-width: 1100px) {
+            .roster-list { grid-template-columns: repeat(3, 1fr); }
         }
-        .roster-note a {
-            color: var(--bond-blue);
-            text-decoration: none;
-            transition: opacity 0.2s ease;
+        @media (max-width: 768px) {
+            .roster-list { grid-template-columns: repeat(2, 1fr); }
         }
-        .roster-note a:hover { opacity: 0.7; }
 
         /* ── Dark mode ── */
         body.dark-mode .roster-heading,
-        body.dark-mode .roster-name,
-        body.dark-mode .roster-intro,
-        body.dark-mode .roster-note {
+        body.dark-mode .roster-name {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
-        }
-        body.dark-mode .roster-eyebrow,
-        body.dark-mode .roster-index {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-            opacity: 0.55;
-        }
-        body.dark-mode .roster-item:hover .roster-index { opacity: 1; }
-        body.dark-mode .roster-list,
-        body.dark-mode .roster-row {
-            border-color: rgba(255, 69, 0, 0.22);
         }
 
 
@@ -886,121 +830,56 @@
 
     <!-- Main Content -->
     <main class="roster-page">
-        <header class="roster-header">
-            <p class="roster-eyebrow">Creative Roster</p>
-            <h1 class="roster-heading">Directors.</h1>
-            <p class="roster-intro">Directors we can bid with. Reach out and we will put the right one on your board.</p>
-        </header>
+        <h1 class="roster-heading">Directors.</h1>
 
+        <!-- 5 across x 3 down. href="#" placeholders — swap for reels/profiles. -->
         <ul class="roster-list">
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">01</span>
-                    <span class="roster-name">Jacob Frost</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Jacob Frost</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">02</span>
-                    <span class="roster-name">Jon Schwartz</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Jon Schwartz</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">03</span>
-                    <span class="roster-name">Max Gilberg</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Max Gilberg</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">04</span>
-                    <span class="roster-name">Noah Keckler</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Noah Keckler</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">05</span>
-                    <span class="roster-name">Benjamin Gugick</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Benjamin Gugick</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">06</span>
-                    <span class="roster-name">Zach &amp; Ryan</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Zach &amp; Ryan</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">07</span>
-                    <span class="roster-name">Michael Martin</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Michael Martin</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">08</span>
-                    <span class="roster-name">Soren Knippen</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Soren Knippen</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">09</span>
-                    <span class="roster-name">Lisa Mausbach</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Lisa Mausbach</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">10</span>
-                    <span class="roster-name">Jordan Brady</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Jordan Brady</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">11</span>
-                    <span class="roster-name">Vanessa Pla</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Vanessa Pla</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">12</span>
-                    <span class="roster-name">Samer Almadani</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Samer Almadani</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">13</span>
-                    <span class="roster-name">Paul Riccio</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Paul Riccio</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">14</span>
-                    <span class="roster-name">Scott Peters</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Scott Peters</span></a>
             </li>
-            <li class="roster-row">
-                <!-- href="#" for now — swap for a reel/profile URL per director -->
-                <a class="roster-item" href="#">
-                    <span class="roster-index">15</span>
-                    <span class="roster-name">Cam Erickson</span>
-                </a>
+            <li>
+                <a class="roster-item" href="#"><span class="roster-name">Cam Erickson</span></a>
             </li>
         </ul>
-
-        <p class="roster-note">Availability varies by project. Email <a href="mailto:hello@covalentstudios.co">hello@covalentstudios.co</a> to check on a specific director or request reels.</p>
     </main>
 
     <!-- Global Footer -->
