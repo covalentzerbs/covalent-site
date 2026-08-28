@@ -760,8 +760,24 @@
         }
 
         /* ── Dark mode ── */
+        /* Fine print. Regular weight rather than the bold used for the names,
+           and normal tracking — the page-wide -0.07em is far too tight at this size. */
+        .roster-disclaimer {
+            font-family: var(--helv);
+            font-weight: 400;
+            font-size: clamp(0.7rem, 0.8vw, 0.8rem);
+            line-height: 1.65;
+            letter-spacing: -0.005em;
+            text-transform: none;
+            color: var(--black);
+            opacity: 0.4;
+            max-width: 68ch;
+            margin-top: clamp(3.5rem, 7vw, 6rem);
+        }
+
         body.dark-mode .roster-heading,
-        body.dark-mode .roster-name {
+        body.dark-mode .roster-name,
+        body.dark-mode .roster-disclaimer {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
@@ -882,6 +898,8 @@
                 <span class="roster-item"><span class="roster-name">Cam Erickson</span></span>
             </li>
         </ul>
+
+        <p class="roster-disclaimer">Disclaimer: these directors are not on exclusive roster positions with Covalent Studios, and we want to make that abundantly clear. They are highly talented individuals who share our goal and interest in creating stunning, emotionally driven commercial, music video, and narrative work in collaboration with us.</p>
     </main>
 
     <!-- Global Footer -->
