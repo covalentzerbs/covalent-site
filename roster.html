@@ -760,6 +760,98 @@
         }
 
         /* ── Dark mode ── */
+        /* ==================== */
+        /* PASSWORD GATE        */
+        /* ==================== */
+        .gate {
+            min-height: 55vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .gate-form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+            width: min(100%, 340px);
+        }
+
+        .gate-label {
+            font-family: var(--helv);
+            font-weight: 700;
+            font-size: clamp(1.75rem, 4vw, 3rem);
+            letter-spacing: -0.035em;
+            line-height: 1;
+            text-transform: none;
+            color: var(--black);
+        }
+
+        .gate-input {
+            font-family: var(--helv);
+            font-weight: 400;
+            font-size: 1rem;
+            /* near-normal tracking — the page-wide -0.07em is unreadable at input size */
+            letter-spacing: 0;
+            width: 100%;
+            padding: 0.65rem 0;
+            color: var(--black);
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.25);
+            border-radius: 0;
+            outline: none;
+            transition: border-color 0.2s ease;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .gate-input:focus {
+            border-bottom-color: var(--black);
+        }
+
+        .gate-btn {
+            font-family: var(--helv);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: var(--white);
+            background: var(--black);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            margin-top: 0.5rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .gate-btn:hover { opacity: 0.75; }
+        .gate-btn:disabled { opacity: 0.4; }
+
+        .gate-error {
+            font-family: var(--helv);
+            font-weight: 400;
+            font-size: 0.8rem;
+            letter-spacing: 0;
+            line-height: 1.5;
+            color: var(--black);
+            opacity: 0.55;
+            min-height: 1.2em;
+        }
+
+        body.dark-mode .gate-label,
+        body.dark-mode .gate-input,
+        body.dark-mode .gate-error {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+        body.dark-mode .gate-input { border-bottom-color: rgba(255, 69, 0, 0.4); }
+        body.dark-mode .gate-input:focus { border-bottom-color: #FF4500; }
+        body.dark-mode .gate-btn {
+            background: #FF4500 !important;
+            color: #0A0A0A !important;
+            -webkit-text-fill-color: #0A0A0A;
+        }
+
         /* Fine print. Regular weight rather than the bold used for the names,
            and normal tracking — the page-wide -0.07em is far too tight at this size. */
         .roster-disclaimer {
@@ -847,59 +939,20 @@
 
     <!-- Main Content -->
     <main class="roster-page">
-        <h1 class="roster-heading">Freelance Directors.</h1>
+        <!-- The roster itself is AES-256-GCM encrypted and lives in #rosterPayload
+             below. The password derives the key via PBKDF2, so the names are not
+             present in this file in any readable form. -->
+        <section class="gate" id="gate">
+            <form class="gate-form" id="gateForm" autocomplete="off">
+                <label class="gate-label" for="gatePassword">Password</label>
+                <input class="gate-input" id="gatePassword" type="password"
+                       autocomplete="current-password" spellcheck="false" required>
+                <button class="gate-btn" type="submit" id="gateBtn">Enter</button>
+                <p class="gate-error" id="gateError" role="alert" aria-live="polite"></p>
+            </form>
+        </section>
 
-        <!-- 3 across x 5 down, one line per name. Wrap a name in
-             <a class="roster-item" href="..."> to make it a real link. -->
-        <ul class="roster-list">
-            <li>
-                <span class="roster-item"><span class="roster-name">Jacob Frost</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Jon Schwartz</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Max Gilberg</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Noah Keckler</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Benjamin Gugick</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Zach &amp; Ryan</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Michael Martin</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Soren Knippen</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Lisa Mausbach</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Jordan Brady</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Vanessa Pla</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Samer Almadani</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Paul Riccio</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Scott Peters</span></span>
-            </li>
-            <li>
-                <span class="roster-item"><span class="roster-name">Cam Erickson</span></span>
-            </li>
-        </ul>
-
-        <p class="roster-disclaimer">Disclaimer: these directors are not on exclusive roster positions with Covalent Studios, and we want to make that abundantly clear. They are highly talented individuals who share our goal and interest in creating stunning, emotionally driven commercial, music video, and narrative work in collaboration with us.</p>
+        <div class="roster-reveal" id="rosterContent" hidden></div>
     </main>
 
     <!-- Global Footer -->
@@ -1165,6 +1218,85 @@
         document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
         document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
       } catch(err){}
+    })();
+    </script>
+
+    <script id="rosterPayload" type="application/json">{"s":"FIhnzpJdtJZs1lUxEigUHA==","i":"XihTs4JWttgNfl4b","c":"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","n":250000}</script>
+    <script>
+    // Roster unlock. The page ships only ciphertext; the password derives the
+    // AES key, so nothing is revealed by view-source or a plain fetch.
+    (function () {
+        var form    = document.getElementById('gateForm');
+        var input   = document.getElementById('gatePassword');
+        var btn     = document.getElementById('gateBtn');
+        var errorEl = document.getElementById('gateError');
+        var gate    = document.getElementById('gate');
+        var target  = document.getElementById('rosterContent');
+        var payload = JSON.parse(document.getElementById('rosterPayload').textContent);
+        var KEY     = 'covalent.roster.pw';
+
+        function b64(s) {
+            var bin = atob(s), out = new Uint8Array(bin.length);
+            for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+            return out;
+        }
+
+        async function decrypt(password) {
+            var base = await crypto.subtle.importKey(
+                'raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+            var key = await crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt: b64(payload.s), iterations: payload.n, hash: 'SHA-256' },
+                base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+            var plain = await crypto.subtle.decrypt(
+                { name: 'AES-GCM', iv: b64(payload.i) }, key, b64(payload.c));
+            return new TextDecoder().decode(plain);
+        }
+
+        function reveal(html) {
+            target.innerHTML = html;
+            target.hidden = false;
+            gate.remove();
+            document.body.classList.add('roster-unlocked');
+        }
+
+        async function attempt(password, fromStore) {
+            try {
+                reveal(await decrypt(password));
+                try { sessionStorage.setItem(KEY, password); } catch (e) {}
+                return true;
+            } catch (e) {
+                // a bad password fails the GCM auth tag and lands here
+                if (!fromStore) {
+                    errorEl.textContent = 'Incorrect password.';
+                    input.value = '';
+                    input.focus();
+                }
+                try { if (fromStore) sessionStorage.removeItem(KEY); } catch (e2) {}
+                return false;
+            }
+        }
+
+        // Web Crypto needs a secure context (https or localhost).
+        if (!window.crypto || !crypto.subtle) {
+            errorEl.textContent = 'This page needs a secure (https) connection.';
+            if (btn) btn.disabled = true;
+            return;
+        }
+
+        // stay unlocked while the tab is open
+        var saved = null;
+        try { saved = sessionStorage.getItem(KEY); } catch (e) {}
+        if (saved) attempt(saved, true);
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            var pw = input.value;
+            if (!pw) return;
+            errorEl.textContent = '';
+            btn.disabled = true;
+            await attempt(pw, false);
+            btn.disabled = false;
+        });
     })();
     </script>
 </body>
