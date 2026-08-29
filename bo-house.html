@@ -1073,7 +1073,7 @@
 
     <!-- Page Wrapper -->
     <!-- Logo Bottom Right - Home Button -->
-    <a href="/" class="logo-bottom" data-cursor="home">
+    <a href="/" class="logo-bottom">
         <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
         </svg>
@@ -1101,7 +1101,7 @@
                         <!-- Custom Controls -->
                         <div class="cs-video-controls" id="videoControls">
                             <!-- Play/Pause Button -->
-                            <button class="cs-ctrl" id="playPauseBtn" data-cursor="play">
+                            <button class="cs-ctrl" id="playPauseBtn">
                                 <img src="assets/logos/covalent_white_play_button.png" width="128" height="128" alt="Play" class="cs-ctrl-icon cs-icon-play">
                                 <img src="assets/logos/pause_button.png" width="128" height="128" alt="Pause" class="cs-ctrl-icon cs-icon-pause">
                             </button>
@@ -1123,14 +1123,14 @@
                                 <div class="cs-vol-gauge" id="csVolGauge">
                                     <div class="cs-vol-track" id="csVolTrack"><div class="cs-vol-fill" id="csVolFill"></div></div>
                                 </div>
-                                <button class="cs-ctrl cs-vol-btn" id="csVolBtn" data-cursor="mute" aria-label="Volume">
+                                <button class="cs-ctrl cs-vol-btn" id="csVolBtn" aria-label="Volume">
                                     <svg class="cs-vol-ic cs-vol-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
                                     <svg class="cs-vol-ic cs-vol-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
                                 </button>
                             </div>
 
                             <!-- Fullscreen Button -->
-                            <button class="cs-ctrl" id="fullscreenBtn" data-cursor="expand">
+                            <button class="cs-ctrl" id="fullscreenBtn">
                                 <img src="assets/logos/fullscreen_button.png" width="128" height="128" alt="Fullscreen" class="cs-ctrl-icon">
                             </button>
                         </div>
@@ -1594,45 +1594,6 @@
         document.addEventListener('visibilitychange', function() {
             if (!document.hidden) enforceNoCursor();
         });
-    })();
-    </script>
-    <!-- Custom click cursor: knockout label box over clickable elements -->
-    <script>
-    (function(){
-      try {
-        if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
-        var st = document.createElement('style');
-        st.textContent = '#clickCursor{position:fixed;text-transform:uppercase;left:-200px;top:-200px;transform:translate(-50%,-50%) scale(.7);opacity:0;pointer-events:none;z-index:10050;mix-blend-mode:difference;transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.2,1);will-change:transform,left,top,opacity}#clickCursor.show{opacity:1;transform:translate(-50%,-50%) scale(1)}body.click-cursor-active .cursor{opacity:0 !important}';
-        document.head.appendChild(st);
-        var box = document.createElement('div');
-        box.id = 'clickCursor';
-        box.setAttribute('aria-hidden','true');
-        document.body.appendChild(box);
-        function makeBox(label){
-          var w = Math.max(56, Math.round(label.length * 8.6 + 28)), h = 26;
-          return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="clickCursorMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">'+label+'</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#clickCursorMask)"/></svg>';
-        }
-        var current = '';
-        function setLabel(l){ if (l === current) return; current = l; box.innerHTML = makeBox(l); }
-        setLabel('CLICK');
-        function menuOpen(){ return !!document.querySelector('.menu-overlay.active'); }
-        function hide(){ box.classList.remove('show'); document.body.classList.remove('click-cursor-active'); }
-        function show(el){
-          if (menuOpen()) { hide(); return; }
-          var lbl = (el.getAttribute && el.getAttribute('data-cursor')) || 'CLICK';
-          setLabel(String(lbl).toUpperCase());
-          box.classList.add('show');
-          document.body.classList.add('click-cursor-active');
-        }
-        document.addEventListener('mousemove', function(e){
-          box.style.left = e.clientX + 'px'; box.style.top = e.clientY + 'px';
-          if (menuOpen() && box.classList.contains('show')) hide();
-        }, {passive:true});
-        var sel = 'a[href], button, label, input, select, textarea, summary, [role=button], [onclick], .cs-ctrl, .dark-mode-toggle, .logo-bottom, .project-client-link, [data-cursor]';
-        function hit(t){ if (!t || !t.closest) return null; if (t.closest('.site-footer, .footer, .lab-footer')) return null; if (t.closest('.cs-video-controls') && !t.closest('.cs-ctrl')) return null; return t.closest(sel); }
-        document.addEventListener('mouseover', function(e){ var el = hit(e.target); if (el) show(el); }, {passive:true});
-        document.addEventListener('mouseout', function(e){ if (hit(e.target) && !hit(e.relatedTarget)) hide(); }, {passive:true});
-      } catch(err){}
     })();
     </script>
     <!-- Bo House social clips grid -->
