@@ -1232,6 +1232,25 @@ People + product = boutique.</p>
         });
 
         // ==================== //
+        // ALWAYS START AT THE TOP
+        // ==================== //
+        // The manifesto is a pinned scroll-reveal, so a restored scroll position
+        // drops you mid-reveal with the whole text already lit. Opt out of the
+        // browser's scroll restoration and pin every entry (reload, back/forward,
+        // bfcache) to the top so the reveal always starts from the first line.
+        (function initScrollTop() {
+            if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+            function toTop() {
+                window.scrollTo(0, 0);
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+            }
+            toTop();
+            window.addEventListener('load', toTop);
+            window.addEventListener('pageshow', toTop);
+        })();
+
+        // ==================== //
         // MANIFESTO PINNED SCROLL REVEAL
         // ==================== //
         (function initManifestoReveal() {
