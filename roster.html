@@ -752,11 +752,18 @@
             .roster-list { grid-template-columns: repeat(2, 1fr); }
             .roster-name { font-size: clamp(1.1rem, 5.15vw, 3rem); }
         }
-        /* Phones: one column, so the names can stay large instead of being
-           squeezed to fit two. */
-        @media (max-width: 480px) {
-            .roster-list { grid-template-columns: 1fr; }
-            .roster-name { font-size: clamp(1.25rem, 8.3vw, 3.25rem); }
+        /* Phones: one column, so every name stays on a single line at one
+           consistent size. Spacing is pulled in tight so 16 names do not turn
+           into an endless scroll. */
+        @media (max-width: 600px) {
+            .roster-page { padding: 5.5rem 1.25rem 2rem; }
+            .roster-heading { margin-bottom: 1.5rem; }
+            .roster-list {
+                grid-template-columns: 1fr;
+                gap: 0.35rem 0;
+            }
+            .roster-name { font-size: clamp(1.25rem, 7.6vw, 2.5rem); }
+            .roster-disclaimer { margin-top: 2.25rem; }
         }
 
         /* ── Dark mode ── */
@@ -834,6 +841,15 @@
         .gate-toggle:hover,
         .gate-toggle:focus-visible { opacity: 0.85; }
 
+        /* Icon swap is class-driven, not attribute-driven: `hidden` is an IDL
+           property of HTMLElement, so `svg.hidden = true` sets a JS expando and
+           never reaches the DOM, and the UA rule [hidden]{display:none} does not
+           apply to the SVG namespace either. */
+        .gate-toggle .gate-eye { display: block; }
+        .gate-toggle .gate-eye-off { display: none; }
+        .gate-toggle.is-masked .gate-eye { display: none; }
+        .gate-toggle.is-masked .gate-eye-off { display: block; }
+
         .gate-btn {
             font-family: var(--helv);
             font-weight: 700;
@@ -877,6 +893,23 @@
             -webkit-text-fill-color: #0A0A0A;
         }
 
+        /* Mobile gate. Must come after the base .gate rules above to win the
+           cascade — otherwise min-height/align-items fall back to desktop. */
+        @media (max-width: 600px) {
+            .gate {
+                min-height: auto;
+                padding-top: 0.5rem;
+                align-items: flex-start;
+            }
+            .gate-form { width: 100%; gap: 0.6rem; }
+            .gate-label { font-size: clamp(1.75rem, 8vw, 2.25rem); }
+            /* 16px stops iOS zooming the viewport when the field is focused */
+            .gate-input { font-size: 16px; padding: 0.55rem 0; }
+            .gate-btn { padding: 0.8rem 1.5rem; }
+            /* comfortable tap target */
+            .gate-toggle { padding: 0.5rem; }
+        }
+
         /* Fine print. Regular weight rather than the bold used for the names,
            and normal tracking — the page-wide -0.07em is far too tight at this size. */
         .roster-disclaimer {
@@ -888,7 +921,7 @@
             text-transform: none;
             color: var(--black);
             opacity: 0.4;
-            max-width: 68ch;
+            max-width: none;
             margin-top: clamp(3.5rem, 7vw, 6rem);
         }
 
@@ -985,7 +1018,7 @@
                         </svg>
                         <svg class="gate-eye-off" viewBox="0 0 24 24" width="20" height="20" fill="none"
                              stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                             stroke-linejoin="round" aria-hidden="true" hidden>
+                             stroke-linejoin="round" aria-hidden="true">
                             <path d="M9.9 5.2A9.6 9.6 0 0 1 12 5c6.1 0 10.2 7 10.2 7a17.9 17.9 0 0 1-3.3 4.1M6.2 6.2A17.7 17.7 0 0 0 1.8 12S5.9 19 12 19a9.5 9.5 0 0 0 4-.86"/>
                             <path d="M9.8 9.8a3.2 3.2 0 0 0 4.4 4.4"/>
                             <path d="M3 3l18 18"/>
@@ -1226,7 +1259,7 @@
         });
     })();
     </script>
-    <script id="rosterPayload" type="application/json">{"s":"0eAhNXyEcmwEHrkCR5PINg==","i":"XCBmfwd4Dc3cRqIC","c":"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","n":250000}</script>
+    <script id="rosterPayload" type="application/json">{"s":"NGxDkEKGJYiDO0Ert1UtJA==","i":"GNzZdjVaawKX7XXP","c":"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","n":250000}</script>
     <script>
     // Roster unlock. The page ships only ciphertext; the password derives the
     // AES key, so nothing is revealed by view-source or a plain fetch.
@@ -1295,17 +1328,15 @@
 
         // Password starts visible; this masks it. Caret position is preserved so
         // toggling mid-typing does not jump the cursor to the end.
-        var toggle   = document.getElementById('gateToggle');
-        var eyeOpen  = toggle.querySelector('.gate-eye');
-        var eyeShut  = toggle.querySelector('.gate-eye-off');
+        var toggle = document.getElementById('gateToggle');
         toggle.addEventListener('click', function () {
-            var masked = input.type === 'password';
-            var start  = input.selectionStart, end = input.selectionEnd;
-            input.type = masked ? 'text' : 'password';
-            eyeOpen.hidden = !masked;
-            eyeShut.hidden = masked;
-            toggle.setAttribute('aria-pressed', masked ? 'false' : 'true');
-            var lbl = masked ? 'Hide password' : 'Show password';
+            var wasMasked = input.type === 'password';
+            var start = input.selectionStart, end = input.selectionEnd;
+            var nowMasked = !wasMasked;
+            input.type = nowMasked ? 'password' : 'text';
+            toggle.classList.toggle('is-masked', nowMasked);
+            toggle.setAttribute('aria-pressed', nowMasked ? 'true' : 'false');
+            var lbl = nowMasked ? 'Show password' : 'Hide password';
             toggle.setAttribute('aria-label', lbl);
             toggle.setAttribute('title', lbl);
             input.focus();
