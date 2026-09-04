@@ -999,8 +999,13 @@
         .roster-name { transition: opacity 0.18s ease, color 0.18s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 
         body.roster-hover .roster-heading,
-        body.roster-hover .roster-disclaimer,
-        body.roster-hover .roster-name { opacity: 0; }
+        body.roster-hover .roster-disclaimer { opacity: 0; }
+        /* the rest of the list stays put, dimmed to 40% black over the footage */
+        body.roster-hover .roster-name {
+            opacity: 0.4;
+            color: #000000 !important;
+            -webkit-text-fill-color: #000000;
+        }
 
         body.roster-hover .roster-item.is-hover .roster-name {
             opacity: 1;
