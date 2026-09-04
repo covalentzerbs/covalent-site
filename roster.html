@@ -704,7 +704,8 @@
             padding: 0;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: clamp(2rem, 4vw, 3.75rem) clamp(0.9rem, 1.6vw, 1.75rem);
+            /* rows sit tight: roughly a quarter of a line between names */
+            gap: clamp(0.5rem, 0.9vw, 1.1rem) clamp(0.9rem, 1.6vw, 1.75rem);
             align-items: start;
         }
 
@@ -749,7 +750,7 @@
         /* Column count steps down so names always stay on one line.
            These must come after the base .roster-list rule to win the cascade. */
         @media (max-width: 900px) {
-            .roster-list { grid-template-columns: repeat(2, 1fr); }
+            .roster-list { grid-template-columns: repeat(2, 1fr); row-gap: clamp(0.4rem, 1.2vw, 0.9rem); }
             .roster-name { font-size: clamp(1.1rem, 5.15vw, 3rem); }
         }
         /* Phones: one column, so every name stays on a single line at one
