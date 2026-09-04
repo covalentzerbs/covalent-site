@@ -1002,7 +1002,7 @@
         body.roster-hover .roster-disclaimer { opacity: 0; }
         /* the rest of the list stays put, dimmed to 40% black over the footage */
         body.roster-hover .roster-name {
-            opacity: 0.4;
+            opacity: 0.75;
             color: #000000 !important;
             -webkit-text-fill-color: #000000;
         }
@@ -1474,24 +1474,29 @@
             f.title = '';
             f.addEventListener('load', function () {
                 f.dataset.loaded = '1';
+                post(f, 'addEventListener', 'play');
                 // background=1 wants to autoplay; hold it until it is hovered
                 if (active !== f) post(f, 'pause');
-                else { post(f, 'play'); f.classList.add('is-ready'); }
+                else post(f, 'play');
             });
             bg.appendChild(f);
             frames[id] = f;
             return f;
         }
 
-        function leave() {
-            if (!current) return;
-            current.classList.remove('is-hover');
-            current = null;
-            document.body.classList.remove('roster-hover');
-            bg.classList.remove('is-on');
-            clearTimeout(playCheck);
-            if (active) { post(active, 'pause'); active.classList.remove('is-ready'); active = null; }
-        }
+        // Player events arrive as postMessages; route the "play" event back to
+        // the frame that sent it so a switch can wait for real playback.
+        window.addEventListener('message', function (e) {
+            if (e.origin !== 'https://player.vimeo.com') return;
+            var d; try { d = JSON.parse(e.data); } catch (err) { return; }
+            if (d.event !== 'play') return;
+            for (var id in frames) {
+                if (frames[id].contentWindow === e.source && frames[id]._onPlay) {
+                    frames[id]._onPlay();
+                    return;
+                }
+            }
+        });
 
         // The player answers getPaused; if it will not start from the warm
         // state within a beat, reload it with autoplay on. Slower, but never
@@ -1524,20 +1529,66 @@
             f.src = f.src.replace('autoplay=0', 'autoplay=1');
         }
 
+        var leaveTimer = null;
+
+        // Fully off the list: fade everything back. Debounced, because the
+        // cursor crosses the gap between two names on the way to the next one
+        // and that must not read as a leave.
+        function leave() {
+            clearTimeout(leaveTimer);
+            leaveTimer = setTimeout(function () {
+                if (!current) return;
+                clearTimeout(playCheck);
+                current.classList.remove('is-hover');
+                current = null;
+                document.body.classList.remove('roster-hover');
+                bg.classList.remove('is-on');
+                if (active) {
+                    var f = active;
+                    active = null;
+                    f._onPlay = null;
+                    f.classList.remove('is-ready');
+                    post(f, 'pause');
+                }
+            }, 140);
+        }
+
+        // Name to name: the previous clip stays on screen until the next one
+        // reports it is actually playing, then they cross-fade. No black gap.
         function enter(item) {
+            clearTimeout(leaveTimer);
             if (item === current) return;
-            leave();
             var f = frameFor(item);
             if (!f) return;
+            if (current) current.classList.remove('is-hover');
             current = item;
-            active = f;
             item.classList.add('is-hover');
             document.body.classList.add('roster-hover');
             bg.classList.add('is-on');
+
+            var prev = active;
+            active = f;
+            clearTimeout(playCheck);
+            if (prev && prev !== f) prev._onPlay = null;
+
+            var swapped = false, swapTimer = null;
+            function swap() {
+                if (swapped || active !== f) return;
+                swapped = true;
+                clearTimeout(swapTimer);
+                f._onPlay = null;
+                f.classList.add('is-ready');
+                if (prev && prev !== f) { prev.classList.remove('is-ready'); post(prev, 'pause'); }
+                setTimeout(function () { if (active === f) ensurePlaying(f); }, 250);
+            }
+            f._onPlay = swap;
             if (f.dataset.loaded) {
                 post(f, 'play');
-                f.classList.add('is-ready');
-                setTimeout(function () { if (active === f) ensurePlaying(f); }, 250);
+                // if the play event never comes, swap anyway
+                swapTimer = setTimeout(swap, 700);
+            } else {
+                // still loading: the load handler plays it and the play event lands here
+                swapTimer = setTimeout(swap, 2500);
             }
         }
 
