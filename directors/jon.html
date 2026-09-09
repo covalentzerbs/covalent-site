@@ -24,7 +24,6 @@
     <link rel="dns-prefetch" href="https://f.vimeocdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         @font-face {
             font-family: 'Satoshi';
@@ -44,11 +43,11 @@
         ::selection { background:var(--black); color:var(--white); -webkit-text-fill-color:var(--white); }
         html, body { height:100%; overflow-x:hidden; overscroll-behavior-y:contain; }
         body {
-            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
             background-color: var(--black);
             color: var(--white);
             text-transform: lowercase;
-            letter-spacing: -0.07em;
+            letter-spacing: -0.04em;
         }
         .cursor {
             position:fixed; width:10px; height:10px; border-radius:50%;
@@ -123,7 +122,7 @@
         .bio-block { margin-top:1.75rem; }
         .bio-toggle {
             background:none; border:none; color:rgba(255,255,255,0.45);
-            font-family:'Space Grotesk',sans-serif; font-size:0.8rem; font-weight:500;
+            font-family:'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; font-size:0.8rem; font-weight:500;
             letter-spacing:-0.04em; text-transform:lowercase; padding:0;
             transition:color 0.25s ease; display:inline-flex; align-items:center; gap:0.45em; position:relative;
         }
@@ -295,8 +294,8 @@
         .scrub-preview.show { opacity:1; }
         .scrub-preview-frame { width:168px; height:95px; border-radius:6px; overflow:hidden; background:#000; box-shadow:0 10px 34px rgba(0,0,0,0.55); position:relative; }
         .scrub-preview-frame iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100%; height:100%; min-width:169px; min-height:95px; border:none; pointer-events:none; }
-        .scrub-preview-time { display:block; text-align:center; margin-top:5px; font-size:11px; color:#fff; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.03em; text-shadow:0 1px 3px rgba(0,0,0,0.65); }
-        .viewer-time { font-size:11px; color:rgba(255,255,255,0.7); white-space:nowrap; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.04em; }
+        .scrub-preview-time { display:block; text-align:center; margin-top:5px; font-size:11px; color:#fff; font-family:'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; letter-spacing:-0.03em; text-shadow:0 1px 3px rgba(0,0,0,0.65); }
+        .viewer-time { font-size:11px; color:rgba(255,255,255,0.7); white-space:nowrap; font-family:'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; letter-spacing:-0.04em; }
         .viewer-close { position:absolute; top:1.5rem; right:1.5rem; z-index:10; background:none; border:none; cursor:none; padding:0.5rem; opacity:0.5; transition:opacity 0.2s; line-height:0; }
         .viewer-close:hover { opacity:1; }
         .viewer-meta { position:absolute; bottom:2rem; left:3rem; display:none; flex-direction:column; gap:0.2rem; pointer-events:none; }
@@ -606,7 +605,7 @@
         var exitCur = document.createElement('div');
         exitCur.id='viewerExitCursor'; exitCur.setAttribute('aria-hidden','true');
         (function(){ var w=Math.round('EXIT'.length*8.6+28), h=26;
-            exitCur.innerHTML='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="exitCurMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">EXIT</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#exitCurMask)"/></svg>';
+            exitCur.innerHTML='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="exitCurMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica Neue, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">EXIT</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#exitCurMask)"/></svg>';
         })();
         document.body.appendChild(exitCur);
         function ptrInsideFrame(e){ var r=frame.getBoundingClientRect(); return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
@@ -935,7 +934,7 @@
         document.body.appendChild(box);
         function makeBox(label){
           var w = Math.max(56, Math.round(label.length * 8.6 + 28)), h = 26;
-          return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="clickCursorMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">'+label+'</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#clickCursorMask)"/></svg>';
+          return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="clickCursorMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica Neue, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">'+label+'</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#clickCursorMask)"/></svg>';
         }
         var current = '';
         function setLabel(l){ if (l === current) return; current = l; box.innerHTML = makeBox(l); }

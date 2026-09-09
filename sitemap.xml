@@ -6,11 +6,6 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://covalentstudios.co/directors</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
     <loc>https://covalentstudios.co/about</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
