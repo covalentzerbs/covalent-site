@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Covalent Studios is a modern production company creating films, commercials, and branded content.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="description" content="Covalent Studios is a creative production company making commercials, music videos and narrative work.">
     <link rel="canonical" href="https://covalentstudios.co/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" href="favicon.ico">
     <title>Covalent Studios</title>
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
@@ -21,43 +21,23 @@
         gtag('config', 'G-T14F8BVFLJ');
     </script>
     <meta property="og:title" content="covalent studios">
-    <meta property="og:description" content="a modern production company.">
+    <meta property="og:description" content="creative production company. commercials, music videos, narrative.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co">
     <meta property="og:type" content="website">
-    <!-- Preload client logos so they're ready before loading screen ends -->
-    <link rel="preload" as="image" href="assets/logos/client-logos/new-era-logo-white.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/bo-house-logo-white.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/onco-optima-logo.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/wabi-logo-white.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/aesop-logo-white.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/pinch.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/fare-logo-white.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/arcteryx-logo.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/woh-logo-white.png">
-    <link rel="preload" as="image" href="assets/logos/client-logos/ever-logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
     <style>
-        @font-face {
-            font-family: 'Satoshi';
-            src: url('assets/fonts/Satoshi-Variable.ttf') format('truetype');
-            font-weight: 300 900;
-            font-display: swap;
-        }
 
-        /* CSS Variables */
         :root {
             --ice: #FAFBFC;
             --bond-blue: #5979e9;
             --black: #0A0A0A;
             --gray: #6B7280;
             --white: #FFFFFF;
+            --accent: #FF4500;      /* dark-mode accent, same as the rest of the site */
+            --space-dark: #0A0A0A;
         }
-
-        /* Reset */
-        /* Explicit root — bfcache restore can miss the * selector */
-        html, body, .scroll-container { cursor: none !important; }
 
         *, *::before, *::after {
             margin: 0;
@@ -75,1713 +55,392 @@
             -webkit-text-fill-color: var(--white);
         }
 
-        html {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100%;
-        }
+        html, body { height: 100%; }
 
-        /* Body — no scroll, scroll container handles it */
         body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
             font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
             background-color: var(--white);
             color: var(--black);
             letter-spacing: -0.04em;
+            overflow: hidden;
         }
+        body.dark-mode { background-color: var(--space-dark); }
 
-        /* ==================== */
-        /* HORIZONTAL SCROLL CONTAINER */
-        /* ==================== */
-        .scroll-container {
-            display: flex;
-            flex-direction: row;
-            overflow-x: scroll;
-            overflow-y: hidden;
-            width: 100vw;
-            height: 100vh;
-            scroll-snap-type: none;
-            scroll-behavior: auto;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .scroll-container::-webkit-scrollbar {
-            display: none; /* Chrome, Safari */
-        }
-
-        /* Custom Cursor */
+        /* ===== Custom cursor ===== */
         .cursor {
             position: fixed;
-            width: 10px;
-            height: 10px;
+            width: 10px; height: 10px;
             border-radius: 50%;
             background: var(--white);
             pointer-events: none;
             z-index: 10001;
             mix-blend-mode: difference;
-            left: 0;
-            top: 0;
-            will-change: transform;
+            transform: translate(-50%, -50%);
         }
+        @media (pointer: coarse) { .cursor { display: none; } }
 
-        /* Navigation - Plus Menu */
-        .nav {
-            position: fixed;
-            top: 0;
-            right: 0;
-            padding: 2rem;
-            z-index: 10001;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.6s ease;
-        }
-
-        .nav.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
+        /* ===== Nav / plus menu ===== */
+        .nav { position: fixed; top: 0; right: 0; padding: 2rem; z-index: 10001; }
         .menu-toggle {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
         }
-
-        .menu-toggle.active {
-            transform: rotate(45deg);
-        }
-
-        .plus-icon {
-            width: 18px;
-            height: 18px;
-            position: relative;
-        }
-
+        .menu-toggle.active { transform: rotate(45deg); }
+        .plus-icon { width: 18px; height: 18px; position: relative; }
         .plus-icon span {
-            display: block;
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: var(--black);
-            top: 50%;
-            left: 0;
-            transition: all 0.3s ease;
+            display: block; position: absolute; width: 100%; height: 2px;
+            background: var(--black); top: 50%; left: 0; transition: all 0.3s ease;
         }
+        .plus-icon span:first-child { transform: translateY(-50%) rotate(90deg); }
+        .plus-icon span:last-child  { transform: translateY(-50%); }
 
-        .plus-icon span:first-child {
-            transform: translateY(-50%) rotate(90deg);
-        }
-
-        .plus-icon span:last-child {
-            transform: translateY(-50%);
-        }
-
-        /* Expanded Menu */
         .menu-overlay {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-end;
-            padding: 3rem;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            position: fixed; inset: 0; z-index: 10000; display: flex; flex-direction: column;
+            justify-content: center; align-items: flex-end; padding: 3rem;
+            pointer-events: none; opacity: 0; transition: opacity 0.4s ease;
         }
-
         .menu-overlay.active {
-            pointer-events: auto;
-            opacity: 1;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.3);
+            pointer-events: auto; opacity: 1;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(255,255,255,0.3);
         }
-
-        .menu-links {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0;
-        }
-
-        .menu-spacer {
-            height: 0.8em;
-        }
-
-        .menu-socials {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            margin-top: 1.5rem;
-            opacity: 0;
-            transform: translateX(30px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .menu-overlay.active .menu-socials {
-            opacity: 0.5;
-            transform: translateX(0);
-            transition-delay: 0.3s;
-        }
-
-        .menu-socials .social-link {
-            color: var(--black);
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        .menu-links { display: flex; flex-direction: column; align-items: flex-end; gap: 0; }
         .menu-link {
-            font-size: clamp(3.5rem, 8vw, 7rem);
-            font-weight: 500;
-            color: var(--black);
-            text-decoration: none;
-            opacity: 0;
-            transform: translateX(30px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: -0.07em;
-            line-height: 1.05;
-            position: relative;
-            display: inline-block;
+            font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 500; color: var(--black);
+            text-decoration: none; opacity: 0; transform: translateX(30px);
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            letter-spacing: -0.04em; line-height: 1.05;
         }
-
-        .menu-overlay.active .menu-link {
-            opacity: 0.6;
-            transform: translateX(0);
-        }
-
+        .menu-overlay.active .menu-link { opacity: 0.6; transform: translateX(0); }
         .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.05s; }
-        .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.1s; }
+        .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.10s; }
         .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.15s; }
-        .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.25s; }
-        .menu-overlay.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
-
-
-
-        .menu-link-bond {
-            font-family: 'Satoshi', sans-serif;
-            font-weight: 500;
-            letter-spacing: -0.03em;
-            color: var(--bond-blue);
-            text-transform: none;
+        .menu-link:hover { opacity: 1 !important; }
+        .menu-socials {
+            display: flex; align-items: center; gap: 1.2rem; margin-top: 1.5rem;
+            opacity: 0; transform: translateX(30px);
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
         }
+        .menu-overlay.active .menu-socials { opacity: 0.5; transform: translateX(0); transition-delay: 0.3s; }
+        .social-link { color: var(--black); display: inline-flex; transition: color 0.2s ease; }
 
-        .menu-link:hover {
-            opacity: 1 !important;
+        /* ===== Top-left logomark ===== */
+        .logo-bottom { position: fixed; top: 2rem; left: 2rem; z-index: 10001; background: none; border: none; transition: opacity 0.3s ease; }
+        .logo-bottom:hover { opacity: 0.7; }
+        .logo-bottom svg { width: 40px; height: 40px; display: block; }
+        .logo-bottom svg path { fill: var(--black); }
+
+        /* ===== Stage: single non-scrolling landing ===== */
+        .stage {
+            position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
         }
-
-
-        .menu-link-bond:hover {
-            color: var(--bond-blue) !important;
-            -webkit-text-fill-color: var(--bond-blue) !important;
-        }
-
-        .menu-link.current {
-            opacity: 1 !important;
-        }
-
-        /* Logo top-left */
-        .logo-bottom {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.6s ease;
-            /* button reset (logo-bottom is a <button>) */
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            display: block;
-            line-height: 0;
-        }
-
-        .logo-bottom.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .logo-bottom svg {
-            width: 40px;
-            height: 40px;
-        }
-
-        /* Scroll Progress Indicator — lives inside footer, grows from center */
-        .scroll-progress {
-            flex: 1;
-            margin: 0 1.5rem;
-            height: 4px;
-            position: relative;
-            align-self: center;
-        }
-
-        .scroll-progress-line {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            right: 50%;
-            background: var(--black);
-            opacity: 1;
-            border-radius: 2px;
-        }
-
-        /* ==================== */
-        /* FIXED BACKGROUND VIDEO (hero + about panels) */
-        /* ==================== */
-        /* Even white margin on every edge (6vh all round); the reel covers the
-           box. Use the same oversize-to-cover trick as mobile so the 16:9 player
-           fills the wider box instead of letterboxing onto black. */
-        .fixed-video-bg {
-            position: fixed;
-            top: 6vh;
-            right: 6vh;
-            bottom: 6vh;
-            left: 6vh;
-            z-index: 0;
-            overflow: hidden;
-            border-radius: 4px;
-            background: #0A0A0A;
-            transition: opacity 0.6s ease;
-        }
-
-        .fixed-video-bg iframe {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: max(100%, 177.78vh);
-            height: max(100%, 56.25vw);
-            transform: translate(-50%, -50%);
-            border: none;
-            pointer-events: none;
-        }
-
-        /* ==================== */
-        /* HERO SECTION — logo only */
-        /* ==================== */
-        .hero-section {
-            position: relative;
-            min-width: 100vw;
-            width: 100vw;
-            height: 100vh;
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            scroll-snap-stop: normal;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
-        }
-
-        /* Large centered logomark */
         .hero-wordmark {
-            position: relative;
-            z-index: 10;
-            width: 37.5vw;
-            max-width: 350px;
-            height: auto;
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-user-drag: none;
-            pointer-events: none;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 20; width: 20vw; max-width: 280px; height: auto;
+            user-select: none; -webkit-user-drag: none; pointer-events: none;
         }
 
-
-        /* ==================== */
-        /* PROJECT SECTIONS */
-        /* ==================== */
-        .project-section {
-            position: relative;
-            min-width: 100vw;
-            width: 100vw;
-            height: 100vh;
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            scroll-snap-stop: normal;
-            z-index: 2;
-            background: var(--white);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* ===== 3x4 project grid (centered, white margin all around) ===== */
+        .work-grid {
+            height: 76vh; aspect-ratio: 4 / 3; max-width: 80vw;
+            display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr);
+            gap: 0.5vw;
         }
-
-        .project-video-container {
-            position: relative;
-            height: 75vh;
-            width: auto;
-            max-width: 85vw;
-            aspect-ratio: 16 / 9;
-            overflow: hidden;
-            border-radius: 4px;
-            background: #0A0A0A;
+        .grid-spacer { background: transparent; }
+        .work-card {
+            position: relative; width: 100%; height: 100%; overflow: hidden;
+            background: #0d0d0d; border-radius: 3px;
         }
-
-        /* Cover the frame with a 16:9 player sized off the container height, plus
-           ~10px overscan each edge so the editor's baked-in black borders get
-           cropped out instead of showing on the outskirts. */
-        .project-video-container iframe {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: calc(75vh + 20px);
-            width: calc((75vh + 20px) * 16 / 9);
-            border: none;
-            pointer-events: none;
+        .work-card .card-thumb {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;
         }
-
-        /* fare side artifact — base overscan already covers it */
-        .project-video-crop iframe {
-            transform: translate(-50%, -50%);
+        /* Blurred footage filling the side bars (square videos like hyatt) */
+        .work-card .card-fill {
+            position: absolute; top: 50%; left: 50%;
+            width: 100%; height: 177.78%;
+            transform: translate(-50%, -50%) scale(1.18);
+            border: 0; z-index: 2; pointer-events: none;
+            filter: blur(22px) brightness(0.82);
+            opacity: 0; /* instant reveal on hover — no fade */
         }
-
-        /* onco/wabi/pinch — shift up so the bigger black bar baked into the top
-           of those clips is cropped off. */
-        .project-video-crop-y iframe {
-            transform: translate(-50%, calc(-50% - 8px));
+        /* Main player — sized to the video's native aspect so it isn't over-cropped,
+           then scaled by --zoom to fill the 16:9 tile (square videos stay letterboxed). */
+        .work-card .card-vid {
+            position: absolute; top: 50%; left: 50%;
+            height: 100%; width: calc(var(--va, 1.778) * 56.25%);
+            transform: translate(-50%, -50%) scale(var(--zoom, 1));
+            border: 0; z-index: 3;
+            opacity: 0; /* instant reveal on hover — no fade */
+            pointer-events: none; /* let the custom cursor keep tracking over the player */
         }
-
-        /* Text overlay — dead center of viewport */
-        .project-info {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            transform: translateY(-50%);
-            text-align: center;
-            z-index: 10;
-            pointer-events: none;
+        .work-card.playing .card-vid, .work-card.playing .card-fill { opacity: 1; }
+        .work-card .card-scrim {
+            position: absolute; inset: 0; z-index: 4; pointer-events: none;
+            background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0) 55%);
+            opacity: 0; transition: opacity 0.3s ease;
         }
-
-        .project-info a {
-            pointer-events: auto;
+        .work-card:hover .card-scrim, .work-card.playing .card-scrim { opacity: 1; }
+        .work-card .card-text {
+            position: absolute; left: 0.9rem; bottom: 0.8rem; z-index: 5;
+            opacity: 0; transition: opacity 0.3s ease;
         }
-
-        .project-logo {
-            width: clamp(120px, 15vw, 250px);
-            height: auto;
-            opacity: 0;
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-user-drag: none;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+        .work-card:hover .card-text, .work-card.playing .card-text { opacity: 1; }
+        .work-card .card-client {
+            font-size: clamp(0.8rem, 1.2vw, 1.05rem); font-weight: 400; letter-spacing: -0.04em;
+            line-height: 1.05; text-transform: lowercase; color: var(--white); margin-bottom: 0.15rem;
         }
-
-        .project-section.in-view .project-logo {
-            opacity: 1;
+        .work-card .card-title {
+            font-size: 0.55rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+            color: rgba(255,255,255,0.6); line-height: 1.1;
         }
+        body.dark-mode .work-card .card-client { color: var(--white); -webkit-text-fill-color: var(--white); }
+        body.dark-mode .work-card .card-title { color: rgba(255,255,255,0.6); -webkit-text-fill-color: rgba(255,255,255,0.6); }
 
-        /* Bo House emblem is square — render it smaller than the wordmark logos */
-        .project-logo-bo { width: clamp(80px, 9vw, 140px); }
-
-        /* New Era flag is a chunky emblem (~1.35:1) — scale down so its visual
-           weight matches the wide wordmarks rather than towering over them */
-        .project-logo-newera { width: clamp(100px, 11vw, 170px); }
-
-        .project-client-link {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .project-client {
-            font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-            font-size: clamp(3.5rem, 7vw, 7rem);
-            font-weight: 700;
-            color: var(--white);
-            line-height: 1;
-            letter-spacing: -0.07em;
-            text-transform: lowercase;
-            text-align: center;
-            margin: 0;
-            opacity: 0;
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            display: inline-block;
-        }
-
-
-        .project-subtitle {
-            font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-            font-size: clamp(1rem, 2vw, 1.5rem);
-            font-weight: 300;
-            color: var(--white);
-            opacity: 0;
-            line-height: 1.3;
-            letter-spacing: -0.07em;
-            text-transform: lowercase;
-            margin: 0.05em 0 0 0;
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.08s;
-        }
-
-        /* When section is in view, fade text in */
-        .project-section.in-view .project-client {
-            opacity: 1;
-        }
-
-        .project-section.in-view .project-subtitle {
-            opacity: 0.7;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .nav { padding: 1.5rem; }
-            .logo-bottom { top: 1.5rem; left: 1.5rem; }
-            .menu-overlay { padding: 6rem 2.5rem 2.5rem; }
-        }
-
-        @media (max-width: 768px) {
-            .nav { padding: 1.5rem; }
-            .logo-bottom { top: 1.5rem; left: 1.5rem; }
-            .logo-bottom svg { width: 32px; height: 32px; }
-            .menu-toggle { width: 32px; height: 32px; }
-            .plus-icon { width: 14px; height: 14px; }
-            .menu-overlay { padding: 5rem 1.5rem 1.5rem; }
-
-            /* Use dynamic viewport height — Safari ignores vh percentage chains */
-            html { overflow: visible !important; overscroll-behavior-y: auto !important; }
-            body { overflow: visible !important; overscroll-behavior-y: auto !important; }
-            .scroll-container { height: 100dvh; overscroll-behavior-y: auto; }
-            .project-section, .hero-section { height: 100dvh; }
-            .fixed-video-bg { height: 100dvh; }
-            .loading-overlay { height: 100dvh; }
-
-            /* Vertical video cards on mobile - fill between nav and footer */
-            .fixed-video-bg {
-                position: fixed !important;
-                width: 85% !important;
-                height: calc(100dvh - 9rem) !important;
-                top: 50% !important;
-                left: 50% !important;
-                transform: translate(-50%, -50%) !important;
-                aspect-ratio: unset !important;
-                border-radius: 4px !important;
+        /* Mobile: let it scroll, 2-up, wordmark pinned at top */
+        @media (max-width: 820px) {
+            body { overflow: auto; }
+            .stage { position: static; min-height: 100%; padding: 18vh 5vw 8vh; }
+            .work-grid {
+                height: auto; aspect-ratio: auto; max-width: 100%; width: 100%;
+                grid-template-columns: repeat(2, 1fr); grid-template-rows: none; gap: 3vw;
             }
-
-            .project-video-container {
-                width: 85% !important;
-                height: calc(100dvh - 9rem) !important;
-                aspect-ratio: unset !important;
-            }
-
-            /* Scale 16:9 iframe to cover the tall container */
-            .project-video-container iframe,
-            .fixed-video-bg iframe {
-                position: absolute !important;
-                top: 50% !important;
-                left: 50% !important;
-                min-width: 100% !important;
-                min-height: 100% !important;
-                width: auto !important;
-                height: 100% !important;
-                transform: translate(-50%, -50%) !important;
-            }
-
-            /* Ensure width covers when container is narrow */
-            @supports (width: max(1px, 1px)) {
-                .project-video-container iframe,
-                .fixed-video-bg iframe {
-                    width: max(100%, 177.78vh) !important;
-                    height: max(100%, 56.25vw) !important;
-                }
-            }
-
-            /* Loading screen — put tagline in flex flow so bar+tagline center as a group */
-            .loading-tagline {
-                position: static;
-                margin-top: 1.5rem;
-                font-size: clamp(0.65rem, 3.5vw, 0.9rem);
-                text-align: center;
-                letter-spacing: -0.05em;
-            }
-
-            /* Force all chrome visible — IntersectionObserver unreliable on mobile */
-            .nav, .logo-bottom, .site-footer {
-                opacity: 1 !important;
-                pointer-events: auto !important;
-            }
-
-            /* Project logos: always visible on mobile */
-            .project-logo {
-                opacity: 1 !important;
-                width: clamp(100px, 40vw, 200px) !important;
-            }
-            .project-logo-newera { width: clamp(90px, 30vw, 150px) !important; }
-            .project-info { text-align: center; }
-
-            /* Bigger menu links on mobile */
-            .menu-link {
-                font-size: clamp(3rem, 12vw, 5rem) !important;
-            }
+            .work-card { aspect-ratio: 16 / 9; }
+            .grid-spacer { display: none; }
+            .hero-wordmark { position: fixed; top: 1.6rem; width: 38vw; max-width: 200px; }
         }
 
-        /* ==================== */
-        /* SWIPE ARROWS (mobile only) */
-        /* ==================== */
-        .swipe-arrow {
-            position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 24px;
-            height: 24px;
-            z-index: 1002;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s ease;
-            display: none;
-        }
-
-        .swipe-arrow svg {
-            width: 100%;
-            height: 100%;
-            stroke: var(--black);
-            stroke-width: 2;
-            fill: none;
-        }
-
-        .swipe-arrow.left { left: 0.5rem; }
-        .swipe-arrow.right { right: 0.5rem; }
-
-        .swipe-arrow.visible {
-            opacity: 0.5;
-        }
-
-        @media (max-width: 768px) {
-            .swipe-arrow { display: block; }
-        }
-
-        /* Hide dot cursor on touch devices */
-        @media (pointer: coarse) {
-            .cursor { display: none !important; }
-            * { cursor: auto !important; }
-        }
-
-        /* Disable blue gradient text effect on touch/mobile */
-        @media (pointer: coarse) {
-        }
-
-        /* ==================== */
-        /* DARK MODE OVERRIDES */
-        /* ==================== */
-        body.dark-mode {
-            background-color: #0A0A0A !important;
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode ::selection {
-            background: #FF4500 !important;
-            color: #0A0A0A !important;
-            -webkit-text-fill-color: #0A0A0A !important;
-        }
-
-        body.dark-mode .cursor { background: #FF4500 !important; }
-        body.dark-mode .plus-icon span { background: #FF4500 !important; }
-
-        body.dark-mode .menu-link {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-        body.dark-mode
-        body.dark-mode .menu-link-bond { color: var(--bond-blue) !important; -webkit-text-fill-color: var(--bond-blue); }
-
-        body.dark-mode .logo-bottom svg path { fill: #FF4500 !important; }
-        body.dark-mode .footer { background: #0A0A0A !important; }
-        /* The project panels default to white; make them black in dark mode so the
-           margins around each reel match the hero instead of flashing white. */
-        body.dark-mode .project-section { background-color: #0A0A0A !important; }
-
-        body.dark-mode .footer-left,
-        body.dark-mode .footer-link,
-        body.dark-mode .footer-link .char {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .footer-link::after { background: #FF4500 !important; }
-        body.dark-mode .social-link { color: #FF4500 !important; }
-
-        body.dark-mode .contact-email {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .clock-row {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-body.dark-mode .project-client {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .project-subtitle {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .scroll-progress-line { background: #FF4500 !important; }
-
-        body.dark-mode .director-name {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .director-credit {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .case-study-link {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
-
-        body.dark-mode .case-study-link::after { background: #FF4500 !important; }
-
-        body.dark-mode .hero-wordmark { filter: brightness(0) saturate(100%) invert(38%) sepia(99%) saturate(1200%) hue-rotate(358deg) brightness(103%) contrast(107%) !important; }
-
-        /* ==================== */
-        /* DARK MODE TOGGLE */
-        /* ==================== */
-        .dark-mode-toggle {
-            display: flex;
-            align-items: center;
-            cursor: none;
-        }
-
-        .dark-mode-toggle input { display: none; }
-
-        .toggle-track {
-            width: 28px;
-            height: 16px;
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            position: relative;
-            transition: background 0.3s ease;
-            cursor: none;
-            display: block;
-        }
-
-        .toggle-track::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 12px;
-            height: 12px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 50%;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .dark-mode-toggle input:checked + .toggle-track {
-            background: rgba(255, 69, 0, 0.8);
-        }
-
-        .dark-mode-toggle input:checked + .toggle-track::after {
-            transform: translateX(12px);
-            background: #FF4500;
-        }
-
-        /* ==================== */
-        /* LOADING OVERLAY      */
-        /* ==================== */
-        .loading-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: var(--black);
-            z-index: 99999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease;
-        }
-        .loading-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .loading-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            transition: opacity 0.5s ease;
-        }
-        .loading-content.fade-out {
-            opacity: 0;
-        }
-        .loading-label {
-            font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-            font-size: 0.7rem;
-            font-weight: 300;
-            color: rgba(255,255,255,0.5);
-            letter-spacing: 0.1em;
-            text-transform: lowercase;
-        }
-        .loading-bar-track {
-            width: 100px;
-            height: 3px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 1px;
-            overflow: hidden;
-        }
-        .loading-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--white);
-            border-radius: 1px;
-            transition: width 0.4s ease;
-        }
-        .loading-tagline {
-            position: absolute;
-            font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-            font-size: clamp(0.6rem, 1.2vw, 1.2rem);
-            font-weight: 500;
-            color: var(--white);
-            letter-spacing: -0.07em;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-            pointer-events: none;
-        }
-        .loading-tagline.visible {
-            opacity: 1;
-        }
-
-        /* ==================== */
-        /* GLOBAL FOOTER        */
-        /* ==================== */
+        /* ===== Footer (fixed in the bottom white margin) ===== */
         .site-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1001;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.1rem 2rem; background: transparent; z-index: 10001;
         }
-        .site-footer.visible {
-            opacity: 1;
-            pointer-events: auto;
+        @media (max-width: 820px) { .site-footer { position: relative; background: var(--white); } }
+        body.dark-mode .site-footer-left, body.dark-mode .footer-link { color: var(--accent); }
+        .site-footer-left { font-size: 0.8rem; color: var(--black); }
+        .footer-link { color: var(--black); text-decoration: none; opacity: 0.7; }
+        .footer-link:hover { opacity: 1; }
+        .site-footer-socials { display: flex; align-items: center; gap: 1rem; }
+        .dark-mode-toggle { position: relative; display: inline-block; width: 34px; height: 18px; }
+        .dark-mode-toggle input { opacity: 0; width: 0; height: 0; }
+        .toggle-track {
+            position: absolute; inset: 0; background: #d0d0d0; border-radius: 20px; transition: background 0.3s ease;
         }
-        .site-footer-left {
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: var(--black);
-            opacity: 0.5;
+        .toggle-track::before {
+            content: ''; position: absolute; width: 14px; height: 14px; left: 2px; top: 2px;
+            background: #fff; border-radius: 50%; transition: transform 0.3s ease;
         }
-        .site-footer-right {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            opacity: 0.5;
-        }
-        .site-footer-link {
-            font-size: 0.7rem;
-            color: var(--black);
-            text-decoration: none;
-        }
-        .site-footer-socials {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .social-link {
-            color: var(--black);
-            display: flex;
-            align-items: center;
-            transition: color 0.2s ease;
-        }
+        .dark-mode-toggle input:checked + .toggle-track { background: var(--accent); }
+        .dark-mode-toggle input:checked + .toggle-track::before { transform: translateX(16px); }
 
-        .social-link-ionic:hover {
-            color: #6C5CE7;
-        }
-        .site-footer-social {
-            display: flex;
-            align-items: center;
-        }
-        .site-footer-social svg {
-            width: 16px;
-            height: 16px;
-            fill: var(--black);
-        }
-        /* SOCIAL ICON BRAND HOVER */
-        /* SOCIAL ICON BRAND HOVER — high-saturation feedback */
-        .social-link {
-            transition: color 0.18s ease, opacity 0.18s ease, transform 0.18s ease, filter 0.18s ease;
-            transform-origin: center;
-        }
-        .social-link[aria-label="Instagram"]:hover {
-            color: #E1306C !important;
-            opacity: 1 !important;
-            transform: scale(1.22);
-            filter: drop-shadow(0 0 10px rgba(225, 48, 108, 0.55)) saturate(1.4);
-        }
-        .social-link[aria-label="LinkedIn"]:hover {
-            color: #0A66C2 !important;
-            opacity: 1 !important;
-            transform: scale(1.22);
-            filter: drop-shadow(0 0 10px rgba(10, 102, 194, 0.6)) saturate(1.4);
-        }
-        .social-link.social-link-ionic:hover {
-            color: #714BDD !important;
-            opacity: 1 !important;
-            transform: scale(1.22);
-            filter: drop-shadow(0 0 10px rgba(113, 75, 221, 0.6)) saturate(1.4);
-        }
-        /* Lift the muted .menu-socials row so the hovered icon shows full color */
-        .menu-overlay.active .menu-socials:hover { opacity: 1 !important; }
-        /* BRANDED SCROLLBAR — replaces the native macOS overlay scrollbar
-           with a thin Bond-Blue line on the right edge of the page. */
-        html {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(89, 121, 233, 0.45) transparent;
-        }
-        html::-webkit-scrollbar {
-            width: 6px;
-        }
-        html::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        html::-webkit-scrollbar-thumb {
-            background: rgba(89, 121, 233, 0.35);
-            border-radius: 3px;
-            border: 1px solid transparent;
-            background-clip: padding-box;
-            transition: background-color 0.2s ease;
-        }
-        html::-webkit-scrollbar-thumb:hover {
-            background: var(--bond-blue, #5979e9);
-        }
+        /* ===== Dark mode ===== */
+        body.dark-mode { background-color: var(--space-dark); color: var(--accent); }
+        body.dark-mode .hero-section,
+        body.dark-mode .work-section,
+        body.dark-mode .site-footer { background: var(--space-dark); }
+        body.dark-mode .plus-icon span { background: var(--accent); }
+        body.dark-mode .menu-link,
+        body.dark-mode .social-link,
+        body.dark-mode .site-footer-left,
+        body.dark-mode .footer-link { color: var(--accent); -webkit-text-fill-color: var(--accent); }
+        body.dark-mode .logo-bottom svg path { fill: var(--accent) !important; }
+        body.dark-mode .cursor { background: var(--accent); }
+        body.dark-mode ::selection { background: var(--accent); color: var(--space-dark); -webkit-text-fill-color: var(--space-dark); }
+        body.dark-mode .menu-overlay.active { background: rgba(26,26,46,0.4); }
 
-        /* Dark mode: paint the root element so the canvas stays dark while
-           scrolling. body height:100% means its background does not reach the
-           canvas once the page scrolls, leaving the root white. */
-        html:has(body.dark-mode) {
-            background-color: #0A0A0A;
-        }
-
-
-
-
-
-        /* Footer link inherits footer colour (kills default visited-link purple) */
-        .footer-link, .footer-link:link, .footer-link:visited { color: inherit; }
     </style>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
-<body>
-
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay" style="display:none">
-        <div class="loading-content" id="loadingContent">
-            <p class="loading-label">loading...</p>
-            <div class="loading-bar-track">
-                <div class="loading-bar-fill" id="loadingBarFill"></div>
-            </div>
-        </div>
-        <p class="loading-tagline" id="loadingTagline">relentlessly efficient.</p>
-    </div>
-
-    <!-- Custom Cursor -->
+<body><script>try{if(localStorage.getItem("darkMode")==="true")document.body.classList.add("dark-mode");}catch(e){}</script>
     <div class="cursor" id="cursor"></div>
 
-    <!-- Navigation - Plus Menu -->
+    <!-- Nav -->
     <nav class="nav">
         <div class="menu-toggle" id="menuToggle">
-            <div class="plus-icon">
-                <span></span>
-                <span></span>
-            </div>
+            <div class="plus-icon"><span></span><span></span></div>
         </div>
     </nav>
 
-    <!-- Menu Overlay -->
+    <!-- Menu overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
             <a href="/roster" class="menu-link">directors</a>
-            <a href="about.html" class="menu-link">about</a>
-            <a href="contact.html" class="menu-link">contact</a>
-            <div class="menu-spacer"></div>
-            <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
+            <a href="/about" class="menu-link">about</a>
+            <a href="/contact" class="menu-link">contact</a>
         </div>
         <div class="menu-socials">
             <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
-                </svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
             </a>
             <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                </svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
             </a>
             <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="5" r="2.5" fill="currentColor"/>
-                    <rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/>
-                </svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg>
             </a>
         </div>
     </div>
 
-    <!-- Logo top-left — scrolls back to start -->
-    <button type="button" class="logo-bottom" id="logoBottom" aria-label="back to start">
-        <svg viewBox="0 0 160 160" fill="none">
-            <path fill="#0A0A0A" d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+    <!-- Top-left logomark -->
+    <a href="/" class="logo-bottom" aria-label="Covalent Studios home">
+        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
         </svg>
-    </button>
+    </a>
 
-    <!-- Fixed background video (hero panel only — hidden on project panels) -->
-    <div class="fixed-video-bg" id="fixedVideoBg">
-        <iframe src="https://player.vimeo.com/video/1170378022?h=1bb1658087&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=1080p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-    </div>
+    <!-- Single landing: centered project grid, click through to each project -->
+    <main class="stage">
+        <div class="work-grid" id="workGrid"></div>
+    </main>
 
-    <!-- ============================= -->
-    <!-- HORIZONTAL SCROLL CONTAINER  -->
-    <!-- ============================= -->
-    <div class="scroll-container" id="scrollContainer">
-
-        <!-- PANEL 1: HERO (wordmark only) -->
-        <section class="hero-section" id="heroSection">
-            <img src="assets/logos/WORDMARK_FINAL_WHITE.png" width="1920" height="1080" class="hero-wordmark" alt="Covalent Studios">
-        </section>
-
-        <!-- NEW ERA — TAKE IT EASY -->
-        <section class="project-section" id="projectNewEra">
-            <div class="project-video-container" style="aspect-ratio: 16 / 9;">
-                <iframe data-src="https://player.vimeo.com/video/1221251397?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <a href="new-era.html" class="project-client-link"><img src="assets/logos/client-logos/new-era-logo-white.png" width="991" height="732" class="project-logo project-logo-newera" alt="new era"></a>
-            </div>
-        </section>
-
-        <!-- BO HOUSE — VILLA PENINSULA -->
-        <section class="project-section" id="projectBo">
-            <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1205559620?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <a href="bo-house.html" class="project-client-link"><img src="assets/logos/client-logos/bo-house-logo-white.png" width="2048" height="2048" class="project-logo project-logo-bo" alt="bo house"></a>
-            </div>
-        </section>
-
-        <!-- PANEL 2: ONCO OPTIMA -->
-        <section class="project-section" id="project1">
-            <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1184586128?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <a href="onco-optima.html" class="project-client-link"><img src="assets/logos/client-logos/onco-optima-logo.png" width="2250" height="346" class="project-logo" alt="onco optima"></a>
-            </div>
-        </section>
-
-        <!-- PANEL 3: WABI -->
-        <section class="project-section" id="project2">
-            <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1161268499?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <a href="wabi.html" class="project-client-link"><img src="assets/logos/client-logos/wabi-logo-white.png" width="1008" height="354" class="project-logo" alt="wabi"></a>
-            </div>
-        </section>
-
-        <!-- PANEL 4: AESOP -->
-        <section class="project-section" id="project3">
-            <div class="project-video-container" style="aspect-ratio: 3 / 2;">
-                <iframe data-src="https://player.vimeo.com/video/1167988129?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <a href="aesop.html" class="project-client-link"><img src="assets/logos/client-logos/aesop-logo-white.png" width="2397" height="1257" class="project-logo" alt="aesop"></a>
-            </div>
-        </section>
-
-        <!-- PANEL 5: PINCH -->
-        <section class="project-section" id="project4">
-            <div class="project-video-container project-video-crop-y" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1140543709?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <a href="pinch.html" class="project-client-link"><img src="assets/logos/client-logos/pinch.png" width="2000" height="564" class="project-logo" alt="pinch"></a>
-            </div>
-        </section>
-
-        <!-- PANEL 6: FARE -->
-        <section class="project-section" id="project5">
-            <div class="project-video-container project-video-crop">
-                <iframe data-src="https://player.vimeo.com/video/1175563835?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <a href="fare.html" class="project-client-link"><img src="assets/logos/client-logos/fare-logo-white.png" width="1893" height="801" class="project-logo" alt="fare"></a>
-            </div>
-        </section>
-
-        <!-- PANEL 7: ARCTERYX -->
-        <section class="project-section" id="project6">
-            <div class="project-video-container" style="aspect-ratio: 4 / 3;">
-                <iframe data-src="https://player.vimeo.com/video/1141586908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <a href="arcteryx.html" class="project-client-link"><img src="assets/logos/client-logos/arcteryx-logo.png" width="2400" height="2400" class="project-logo" alt="arcteryx"></a>
-            </div>
-        </section>
-
-        <!-- PANEL 8: WORLD OF HYATT -->
-        <section class="project-section" id="project7">
-            <div class="project-video-container" style="aspect-ratio: 1 / 1;">
-                <iframe data-src="https://player.vimeo.com/video/1149097153?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <a href="hyatt.html" class="project-client-link"><img src="assets/logos/client-logos/woh-logo-white.png" width="600" height="600" class="project-logo" alt="world of hyatt"></a>
-            </div>
-        </section>
-
-        <!-- PANEL 9: EVER -->
-        <section class="project-section" id="project8">
-            <div class="project-video-container" style="aspect-ratio: 344 / 240;">
-                <iframe data-src="https://player.vimeo.com/video/1141278566?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <a href="ever.html" class="project-client-link"><img src="assets/logos/client-logos/ever-logo.png" width="1067" height="239" class="project-logo" alt="ever"></a>
-            </div>
-        </section>
-
-    </div><!-- /.scroll-container -->
-
-    <!-- Swipe Arrows (mobile only) -->
-    <div class="swipe-arrow left" id="swipeLeft" aria-hidden="true">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <polyline points="15 18 9 12 15 6" stroke-linecap="round" stroke-linejoin="round"></polyline>
-        </svg>
-    </div>
-    <div class="swipe-arrow right" id="swipeRight" aria-hidden="true">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"></polyline>
-        </svg>
-    </div>
-
-    <!-- Global Footer -->
+    <!-- Footer -->
     <footer class="site-footer">
         <div class="site-footer-left">2026, covalent studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">privacy</a></div>
-        <div class="scroll-progress" id="scrollProgress">
-            <div class="scroll-progress-line" id="progressLine"></div>
-        </div>
-        <div class="site-footer-right">
-            <div class="site-footer-socials">
-                <label class="dark-mode-toggle">
-                    <input type="checkbox" id="darkModeToggle">
-                    <span class="toggle-track"></span>
-                </label>
-                <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/>
-                        <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                    </svg>
-                </a>
-                <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="5" r="2.5" fill="currentColor"/>
-                        <rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/>
-                    </svg>
-                </a>
-            </div>
+        <div class="site-footer-socials">
+            <label class="dark-mode-toggle">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="toggle-track"></span>
+            </label>
+            <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            </a>
+            <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg>
+            </a>
         </div>
     </footer>
 
-    <!-- Motion library -->
-    <script src="https://cdn.jsdelivr.net/npm/motion@12.34.0/dist/motion.js"></script>
 
     <script>
-        // ==================== //
-        // REFERENCES
-        // ==================== //
-        // Touch detection — mirrors @media (pointer: coarse) exactly
-        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    // ===== Projects: the ten Covalent case studies, each card clicks through =====
+    // va = native video aspect ratio (w/h); zoom = scale applied so it fills the
+    // 16:9 tile nicely; fill = blurred footage fills the side bars (square video).
+    const PROJECTS = [
+        { client: "new era", title: "take it easy", href: '/new-era', vimeo: '1221251397', va: 1.775, zoom: 1, thumbnail: 'https://i.vimeocdn.com/video/2193905275-a9be7437ab239aff9ecd325670c7a7fd0eee0feb0195d35f747b884c5fee4003-d_1280?region=us' },
+        { client: "bo house", title: "villa peninsula", href: '/bo-house', vimeo: '1205559620', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2174174962-87f9a5a012a9bd00951a8b149e0debeb596bad2f3b43d4ebab238312fe4bf2c9-d_1280?region=us' },
+        { client: "onco optima", title: "refuse to leave it to chance", href: '/onco-optima', vimeo: '1184586128', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2147773004-bfe04ac45210e7486d3ec60c04f84db2026c53fd35be3f9319ab3f4f770a5d61-d_1280?region=us' },
+        { client: "wabi", title: "when did we stop playing", href: '/wabi', vimeo: '1161268499', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280?region=us' },
+        { client: "aesop", title: "skin", href: '/aesop', vimeo: '1167988129', va: 1.5, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2126179638-f6c354c75518a1be78a136a9d2531222a8d363f2f1dec81d60727825d123bc01-d_1280?region=us' },
+        { client: "pinch", title: "a holiday campaign", href: '/pinch', vimeo: '1140543709', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2089993227-e000ed9b7ef428ebf6588769ae040780042629649a7118b7c81199783dabe96a-d_1280?region=us' },
+        { client: "fare", title: "beyond the bowl", href: '/fare', vimeo: '1175563835', va: 1.775, zoom: 1, thumbnail: 'https://i.vimeocdn.com/video/2136430771-f53c21717a7bbd356033553598ee8ab44587fc7bfb1f902567c96ef2ccf98eb5-d_1280?region=us' },
+        { client: "arc'teryx", title: "a city to summit", href: '/arcteryx', vimeo: '1141586908', va: 1.333, zoom: 1.7, thumbnail: 'https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280?region=us' },
+        { client: "world of hyatt", title: "jess pegula x us open", href: '/hyatt', vimeo: '1149097153', va: 1, zoom: 1.7, fill: true, thumbnail: 'https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280?region=us' },
+        { client: "ever", title: "here to be great", href: '/ever', vimeo: '1141278566', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2099560891-36e638960a316e25a52fbf66821647feab77b29c0a3930becefced787395728d-d_1280?region=us' }
+    ];
 
-        const scrollContainer = document.getElementById('scrollContainer');
-        const fixedVideoBg   = document.getElementById('fixedVideoBg');
-        const logoBottom     = document.getElementById('logoBottom');
-        const navEl          = document.querySelector('.nav');
-        const menuToggle     = document.getElementById('menuToggle');
-        const menuOverlay    = document.getElementById('menuOverlay');
-        const progressLine   = document.getElementById('progressLine');
-        const siteFooter     = document.querySelector('.site-footer');
-
-        // ==================== //
-        // LOGO — scroll back to start
-        // ==================== //
-        logoBottom.addEventListener('click', (e) => {
-            e.preventDefault();
-            scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
-        });
-
-        // ==================== //
-        // MENU
-        // ==================== //
-        menuToggle.addEventListener('click', () => {
-            menuToggle.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-        });
-
-        menuOverlay.addEventListener('click', (e) => {
-            if (e.target === menuOverlay) {
-                menuToggle.classList.remove('active');
-                menuOverlay.classList.remove('active');
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && menuOverlay.classList.contains('active')) {
-                menuToggle.classList.remove('active');
-                menuOverlay.classList.remove('active');
-            }
-        });
-
-        // ==================== //
-        // MENU LINK GRADIENT SPREAD (desktop only)
-        // (menu hover handled by CSS only)
-
-
-        // ==================== //
-        // CUSTOM CURSOR
-        // ==================== //
-        const cursor = document.getElementById('cursor');
-        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-        let cursorScale = 1;
-        window._cursorTargetScale = 1; // shared with other script blocks
-
-        // Re-enforce cursor:none on bfcache restore (back/forward navigation)
-        window.addEventListener('pageshow', function() {
-            document.documentElement.style.setProperty('cursor', 'none', 'important');
-            document.body.style.setProperty('cursor', 'none', 'important');
-            const sc = document.getElementById('scrollContainer');
-            if (sc) sc.style.setProperty('cursor', 'none', 'important');
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        (function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.5;
-            cursorY += (mouseY - cursorY) * 0.5;
-            cursorScale += (window._cursorTargetScale - cursorScale) * 0.15;
-            // transform is GPU-composited in Safari — much faster than left/top
-            cursor.style.transform = `translate(${cursorX - 5}px, ${cursorY - 5}px) scale(${cursorScale})`;
-            requestAnimationFrame(animateCursor);
-        })();
-
-        // ==================== //
-        // WHEEL → HORIZONTAL NAV (free / continuous)
-        // Vertical wheel maps straight to horizontal scroll — no panel snapping,
-        // so it flows endlessly through the projects instead of skipping/locking.
-        // ==================== //
-        let isAnimating = false;
-        const SNAP_MS = 420;
-
-        function animateScrollTo(target, duration) {
-            duration = duration || SNAP_MS;
-            target = Math.max(0, target);
-            const start = scrollContainer.scrollLeft;
-            const dist = target - start;
-            if (Math.abs(dist) < 1) return;
-            isAnimating = true;
-            const t0 = performance.now();
-            (function step(now) {
-                let t = (now - t0) / duration;
-                if (t > 1) t = 1;
-                const eased = 1 - Math.pow(1 - t, 3);
-                scrollContainer.scrollLeft = start + dist * eased;
-                if (t < 1) { requestAnimationFrame(step); }
-                else { isAnimating = false; }
-            })(performance.now());
+    const grid = document.getElementById('workGrid');
+    // 10 projects: three rows of three, then the last one centred on its own row.
+    // Spacers on either side of it keep the 3x4 frame; hidden on mobile.
+    const SPACER_AT = { 9: true, 11: true };
+    let pi = 0;
+    for (let i = 0; i < 12; i++) {
+        if (SPACER_AT[i]) {
+            const sp = document.createElement('div');
+            sp.className = 'grid-spacer';
+            grid.appendChild(sp);
+            continue;
         }
-        window.snapHome = animateScrollTo; // shared with keyboard nav
-
-        // Only intercept wheel on desktop — mobile touch handles its own scrolling
-        const isTouchOnly = 'ontouchstart' in window && !window.matchMedia('(pointer: fine)').matches;
-        let settleTimer = null;
-        let lastDir = 1;                        // +1 forward, -1 back
-
-        window.addEventListener('wheel', (e) => {
-            if (isTouchOnly) return; // let mobile handle natively
-            e.preventDefault();
-            isAnimating = false;               // a manual scroll interrupts a key-nav animation
-            if (e.deltaY) lastDir = e.deltaY > 0 ? 1 : -1;
-            scrollContainer.scrollLeft += e.deltaY * 1.6;
-
-            // Gentle settle: a beat after scrolling stops, ease softly to a project so
-            // the viewer lands centered — but always in the direction of travel, so a
-            // forward scroll never gets yanked back to the previous project.
-            clearTimeout(settleTimer);
-            settleTimer = setTimeout(function() {
-                const vw = window.innerWidth;
-                let n = Math.round(scrollContainer.scrollLeft / vw);
-                const past = scrollContainer.scrollLeft - n * vw; // + = past the nearest panel
-                if (lastDir > 0 && past >  vw * 0.12) n += 1;      // forward & in the back half -> go forward
-                else if (lastDir < 0 && past < -vw * 0.12) n -= 1; // back & in the front half -> go back
-                animateScrollTo(n * vw, 520);
-            }, 180);
-        }, { passive: false });
-
-        // ==================== //
-        // KEYBOARD NAV (horizontal)
-        // ==================== //
-        document.addEventListener('keydown', (e) => {
-            if (menuOverlay.classList.contains('active')) return;
-            const vw = window.innerWidth;
-            const maxLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-            const idx = Math.round(scrollContainer.scrollLeft / vw);
-            if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-                e.preventDefault();
-                animateScrollTo(Math.min(maxLeft, (idx + 1) * vw));
-            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-                e.preventDefault();
-                animateScrollTo(Math.max(0, (idx - 1) * vw));
-            }
-        });
-
-        // ==================== //
-        // PARALLAX TEXT (project-info sweeps in from scroll direction)
-        // ==================== //
-        const projectSections = document.querySelectorAll('.project-section');
-
-        function updateParallax() {
-            const scrollLeft = scrollContainer.scrollLeft;
-            const vw = window.innerWidth;
-            projectSections.forEach(section => {
-                const panelLeft = section.offsetLeft;
-                // Distance from viewport left edge: positive = to the right, negative = to the left
-                const offset = panelLeft - scrollLeft;
-                const info = section.querySelector('.project-info');
-                if (info) {
-                    if (window.innerWidth <= 768) {
-                        info.style.transform = 'translateY(-50%)';
-                    } else {
-                        // Parallax factor: text moves at 65% of scroll speed
-                        const tx = offset * 0.65;
-                        info.style.transform = `translateY(-50%) translateX(${tx}px)`;
-                    }
-                }
-            });
-        }
-
-        scrollContainer.addEventListener('scroll', updateParallax, { passive: true });
-        window.addEventListener('resize', updateParallax);
-        updateParallax(); // set initial positions
-
-        // Progress bar — continuous, tied directly to scroll position
-        function updateProgress() {
-            const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-            const pct  = maxScroll > 0 ? scrollContainer.scrollLeft / maxScroll * 100 : 0;
-            const half = pct / 2;
-            progressLine.style.left  = (50 - half) + '%';
-            progressLine.style.right = (50 - half) + '%';
-        }
-        scrollContainer.addEventListener('scroll', updateProgress, { passive: true });
-        window.addEventListener('resize', updateProgress);
-        updateProgress();
-
-        // ==================== //
-        // INTERSECTION OBSERVER (11 panels)
-        // ==================== //
-        const allSectionIds = [
-            'heroSection',
-            'projectNewEra',
-            'projectBo',
-            'project1', 'project2', 'project3', 'project4',
-            'project5', 'project6', 'project7', 'project8'
-        ];
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const id = entry.target.id;
-
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-                    const idx = allSectionIds.indexOf(id);
-
-                    // Logo + nav: hidden on hero, visible on projects
-                    const onHero = id === 'heroSection';
-                    logoBottom.classList.toggle('visible', !onHero);
-                    navEl.classList.toggle('visible', !onHero);
-                    siteFooter.classList.toggle('visible', !onHero);
-
-                    // Hero reel: show on hero panel only
-                    fixedVideoBg.style.opacity = onHero ? '1' : '0';
-
-                    // Project in-view class
-                    if (id.startsWith('project')) {
-                        entry.target.classList.add('in-view');
-                    }
-                } else if (!entry.isIntersecting) {
-                    if (id.startsWith('project')) {
-                        entry.target.classList.remove('in-view');
-                    }
-                }
-            });
-        }, {
-            root: scrollContainer,
-            threshold: 0.5
-        });
-
-        allSectionIds.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) observer.observe(el);
-        });
-
-        // ==================== //
-        // PROJECT ANIMATIONS (Motion)
-        // ==================== //
-        const { animate, inView } = Motion;
-
-        document.querySelectorAll('.project-section').forEach((section) => {
-            const client   = section.querySelector('.project-client');
-            const subtitle = section.querySelector('.project-subtitle');
-
-            inView(section, () => {
-                if (client)   animate(client,   { opacity: [0, 1]   }, { duration: 0.7, easing: [0.22, 1, 0.36, 1] });
-                if (subtitle) animate(subtitle, { opacity: [0, 0.7] }, { duration: 0.7, delay: 0.12, easing: [0.22, 1, 0.36, 1] });
-
-                return () => {
-                    if (client)   animate(client,   { opacity: 0 }, { duration: 0.3 });
-                    if (subtitle) animate(subtitle, { opacity: 0 }, { duration: 0.3 });
-                };
-            }, { amount: 0.5 });
-        });
-    </script>
-
-
-    <script>
-        (function() {
-            const toggle = document.getElementById('darkModeToggle');
-            if (localStorage.getItem('darkMode') === 'true') {
-                document.body.classList.add('dark-mode');
-                toggle.checked = true;
-            }
-            toggle.addEventListener('change', () => {
-                document.body.classList.toggle('dark-mode');
-                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-            });
-
-        })();
-    </script>
-
-    <script>
-    // ==================== //
-    // ==================== //
-    // MOBILE: fix video dimensions
-    // ==================== //
-    function fixMobileVideos() {
-        if (window.innerWidth > 768) return;
-        // Use the section's actual rendered height for pixel accuracy
-        const h = document.querySelector('.project-section')
-                    ? document.querySelector('.project-section').offsetHeight
-                    : window.innerHeight;
-        const w = Math.ceil(h * 16 / 9) + 2;
-        document.querySelectorAll('.project-video-container iframe, .fixed-video-bg iframe').forEach(function(iframe) {
-            iframe.style.width     = w + 'px';
-            iframe.style.height    = h + 'px';
-            iframe.style.minWidth  = 'unset';
-            iframe.style.minHeight = 'unset';
-            // Reset any per-iframe inline transform so CSS centering takes over
-            iframe.style.transform = 'translate(-50%, -50%)';
-        });
+        const p = PROJECTS[pi++];
+        if (!p) break;
+        const card = document.createElement('div');
+        card.className = 'work-card';
+        card.dataset.vimeo = p.vimeo;
+        card.dataset.hash = p.hash || '';
+        card.dataset.fill = p.fill ? '1' : '';
+        card.dataset.href = p.href;
+        card.setAttribute('role', 'link');
+        card.setAttribute('aria-label', p.client + ' - ' + p.title);
+        card.style.setProperty('--va', p.va || 1.778);
+        card.style.setProperty('--zoom', p.zoom || 1);
+        card.innerHTML =
+            '<img class="card-thumb" src="' + p.thumbnail + '" width="1280" height="720" alt="' + p.client + '" loading="lazy" decoding="async">' +
+            '<div class="card-scrim"></div>' +
+            '<div class="card-text"><p class="card-client">' + p.client + '</p>' +
+            (p.title ? '<p class="card-title">' + p.title + '</p>' : '') + '</div>';
+        card.addEventListener('click', function() { window.location.href = card.dataset.href; });
+        grid.appendChild(card);
     }
-    fixMobileVideos();
-    window.addEventListener('resize', fixMobileVideos);
 
-    // ==================== //
-    // LAZY LOADER
-    // Each project iframe holds its Vimeo URL in data-src and only swaps it into
-    // src as its panel enters the viewport — so on first load just the hero bg
-    // player fires a network chain, not all ten. Panels that scroll more than
-    // 400px past the viewport are unloaded again (src cleared) so off-screen
-    // background videos stop autoplaying. The panel keeps its background colour
-    // and aspect-ratio box throughout, so loading/unloading never shifts the
-    // layout (CLS stays 0).
-    // ==================== //
-    (function() {
-        const sc = document.getElementById('scrollContainer');
+    // Reels play on hover (desktop) — same pattern as the roster hover. Posters
+    // stay as the resting state so the grid reads even before anything plays.
+    const cards = Array.from(document.querySelectorAll('.work-card'));
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
 
-        function load(iframe) {
-            if (iframe && !iframe.getAttribute('src') && iframe.dataset.src) {
-                iframe.src = iframe.dataset.src;
-            }
-        }
-        function unload(iframe) {
-            if (iframe && iframe.getAttribute('src')) {
-                iframe.dataset.src = iframe.getAttribute('src');
-                iframe.removeAttribute('src');
-            }
-        }
+    function makeVimeo(card, cls) {
+        const v = card.dataset.vimeo, h = card.dataset.hash;
+        const iframe = document.createElement('iframe');
+        iframe.className = cls;
+        iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+        iframe.src = 'https://player.vimeo.com/video/' + v +
+            '?' + (h ? 'h=' + h + '&' : '') +
+            'badge=0&autopause=0&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=540p';
+        card.appendChild(iframe);
+    }
 
-        // Load a panel the moment it touches the viewport edge.
-        const loadObserver = new IntersectionObserver(function(entries) {
+    // Preload every reel up front (each card already has its player buffering and
+    // looping behind the poster) so hovering reveals it instantly — no load, no fade.
+    function buildReel(card) {
+        if (card.querySelector('.card-vid')) return;
+        if (card.dataset.fill) makeVimeo(card, 'card-fill'); // blurred edge fill behind
+        makeVimeo(card, 'card-vid');
+    }
+
+    if (finePointer) {
+        cards.forEach(function(card) {
+            buildReel(card);
+            card.addEventListener('mouseenter', function() { card.classList.add('playing'); });
+            card.addEventListener('mouseleave', function() { card.classList.remove('playing'); });
+        });
+    } else {
+        // Touch devices: build + reveal the reel for whichever card is in view.
+        const io = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
-                if (entry.isIntersecting) load(entry.target.querySelector('iframe'));
+                if (entry.isIntersecting) { buildReel(entry.target); entry.target.classList.add('playing'); }
             });
-        }, { root: sc, rootMargin: '0px 200%', threshold: 0 });
+        }, { threshold: 0.5 });
+        cards.forEach(function(c) { io.observe(c); });
+    }
 
-        // Unload only once a panel sits more than 400px outside the viewport.
-        // The 0px/400px gap is hysteresis so a panel parked near the edge can't
-        // thrash between load and unload.
-        const unloadObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (!entry.isIntersecting) unload(entry.target.querySelector('iframe'));
-            });
-        }, { root: sc, rootMargin: '0px 300%', threshold: 0 });
+    // ===== Menu =====
+    const menuToggle = document.getElementById('menuToggle');
+    const menuOverlay = document.getElementById('menuOverlay');
+    menuToggle.addEventListener('click', function() {
+        menuToggle.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+    });
+    menuOverlay.addEventListener('click', function(e) {
+        if (e.target === menuOverlay) { menuToggle.classList.remove('active'); menuOverlay.classList.remove('active'); }
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') { menuToggle.classList.remove('active'); menuOverlay.classList.remove('active'); }
+    });
 
-        document.querySelectorAll('.project-section').forEach(function(section) {
-            if (section.querySelector('iframe[data-src]')) {
-                loadObserver.observe(section);
-                unloadObserver.observe(section);
-            }
+    // ===== Custom cursor (matches Covalent: 0.35 lerp, left/top centered) =====
+    const cursor = document.getElementById('cursor');
+    let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+    document.addEventListener('mousemove', function(e) { mouseX = e.clientX; mouseY = e.clientY; });
+    (function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.35;
+        cursorY += (mouseY - cursorY) * 0.35;
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        requestAnimationFrame(animateCursor);
+    })();
+
+    // ===== Dark mode =====
+    (function() {
+        const toggle = document.getElementById('darkModeToggle');
+        if (localStorage.getItem('darkMode') === 'true') { document.body.classList.add('dark-mode'); toggle.checked = true; }
+        toggle.addEventListener('change', function() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
         });
     })();
 
-    // ==================== //
-    // LOADING SCREEN
-    // Waits for the hero video to actually start playing (via Vimeo postMessage)
-    // before dismissing. Falls back after 5s if postMessage never fires.
-    // ==================== //
-    (function() {
-        const overlay    = document.getElementById('loadingOverlay');
-        const barFill    = document.getElementById('loadingBarFill');
-        const content    = document.getElementById('loadingContent');
-        const tagline    = document.getElementById('loadingTagline');
-        // Only the eager iframe (hero bg) is tracked for the progress bar;
-        // the project players load lazily and shouldn't gate the intro screen.
-        const eagerIframes = document.querySelectorAll('iframe[src*="vimeo"]');
-        const total      = eagerIframes.length;
-        let iframesLoaded = 0;
-        let videoStarted  = false;
-        let completed     = false;
-
-        // Loading screen removed — reveal the page immediately so projects show
-        // and load as fast as possible (no "relentlessly efficient" gate).
-        if (overlay) overlay.style.display = 'none';
-        return;
-
-        function setProgress(pct) {
-            barFill.style.width = pct + '%';
-        }
-
-        function runSequence() {
-            if (completed) return;
-            completed = true;
-            setProgress(100);
-            setTimeout(() => {
-                content.classList.add('fade-out');
-                setTimeout(() => {
-                    tagline.classList.add('visible');
-                    setTimeout(() => {
-                        tagline.classList.remove('visible');
-                        setTimeout(() => { overlay.classList.add('hidden'); }, 700);
-                    }, 1500);
-                }, 500);
-            }, 400);
-        }
-
-        function checkReady() {
-            if (iframesLoaded >= total && videoStarted) runSequence();
-        }
-
-        // Track iframe HTML loads for progress bar (fills to 80%)
-        eagerIframes.forEach(function(iframe) {
-            iframe.addEventListener('load', function() {
-                iframesLoaded++;
-                setProgress(Math.round((iframesLoaded / total) * 80));
-                checkReady();
-            });
-        });
-
-        // Vimeo postMessage: subscribe to play event on ready, dismiss when play fires
-        window.addEventListener('message', function(e) {
-            if (e.origin !== 'https://player.vimeo.com') return;
-            try {
-                const data = JSON.parse(e.data);
-                if (data.event === 'ready') {
-                    eagerIframes.forEach(function(iframe) {
-                        if (iframe.contentWindow) {
-                            iframe.contentWindow.postMessage(
-                                JSON.stringify({ method: 'addEventListener', value: 'play' }),
-                                'https://player.vimeo.com'
-                            );
-                        }
-                    });
-                }
-                if (data.event === 'play' && !videoStarted) {
-                    videoStarted = true;
-                    setProgress(100);
-                    checkReady();
-                }
-            } catch(err) {}
-        });
-
-        // Fallback: if Vimeo play event never fires, proceed after 5s
-        setTimeout(function() {
-            if (!videoStarted) { videoStarted = true; checkReady(); }
-        }, 5000);
-
-        // Hard fallback: 10s max
-        setTimeout(function() {
-            if (!completed) runSequence();
-        }, 10000);
-    })();
     </script>
-
-    <script>
-    // ==================== //
-    // SCROLL POSITION RESTORE
-    // Save scroll position before navigating away so back-button
-    // returns to the same project panel.
-    // ==================== //
-    (function() {
-        var sc = document.getElementById('scrollContainer');
-        if (!sc) return;
-
-        // Save scroll position continuously
-        sc.addEventListener('scroll', function() {
-            sessionStorage.setItem('homeScrollLeft', sc.scrollLeft);
-        }, { passive: true });
-
-        // Restore on page load (back-button or reload)
-        var saved = sessionStorage.getItem('homeScrollLeft');
-        if (saved) {
-            // Instant scroll (no smooth) to avoid visual slide
-            sc.scrollLeft = parseInt(saved, 10);
-        }
-    })();
-    </script>
-
-    <script>
-    // ==================== //
-    // SWIPE ARROW INDICATORS (mobile only)
-    // Show right arrow when there are more panels to the right,
-    // left arrow when there are panels to the left.
-    // ==================== //
-    (function() {
-        var sc = document.getElementById('scrollContainer');
-        var leftArrow = document.getElementById('swipeLeft');
-        var rightArrow = document.getElementById('swipeRight');
-        if (!sc || !leftArrow || !rightArrow) return;
-
-        function updateArrows() {
-            if (window.innerWidth > 768) {
-                leftArrow.classList.remove('visible');
-                rightArrow.classList.remove('visible');
-                return;
-            }
-            var left = sc.scrollLeft;
-            var maxLeft = sc.scrollWidth - sc.clientWidth;
-            // Tolerance for snap rounding
-            var atStart = left <= 4;
-            var atEnd = left >= maxLeft - 4;
-            leftArrow.classList.toggle('visible', !atStart);
-            rightArrow.classList.toggle('visible', !atEnd);
-        }
-
-        sc.addEventListener('scroll', updateArrows, { passive: true });
-        window.addEventListener('resize', updateArrows);
-        // Initial state (after a tick so scroll-restore runs first)
-        setTimeout(updateArrows, 100);
-    })();
-    </script>
-
     <script src="scripts/analytics.js"></script>
-    <script>
-    // Re-enforce cursor:none via injected stylesheet (bfcache-safe)
-    (function() {
-        function enforceNoCursor() {
-            var existing = document.getElementById('no-native-cursor');
-            if (existing) existing.remove();
-            var style = document.createElement('style');
-            style.id = 'no-native-cursor';
-            style.textContent = 'html, html *, body, body * { cursor: none !important; }';
-            document.head.appendChild(style);
-        }
-        enforceNoCursor();
-        window.addEventListener('pageshow', function(e) {
-            enforceNoCursor();
-            var cursor = document.getElementById('cursor');
-            if (cursor && !('ontouchstart' in window)) {
-                cursor.style.display = 'block';
-            }
-        });
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) enforceNoCursor();
-        });
-    })();
-    </script>
-
-    <!-- Make the whole project video clickable -> its project page (not just the centre logo) -->
-    <style>
-        .project-video-link{ position:absolute; inset:0; z-index:6; display:block; }
-    </style>
-    <script>
-    (function(){
-        document.querySelectorAll('.project-section').forEach(function(sec){
-            var link = sec.querySelector('.project-client-link');
-            var vc = sec.querySelector('.project-video-container');
-            if (!link || !vc || vc.querySelector('.project-video-link')) return;
-            var href = link.getAttribute('href');
-            if (!href) return;
-            var a = document.createElement('a');
-            a.href = href;
-            if (link.getAttribute('target')) a.setAttribute('target', link.getAttribute('target'));
-            if (link.getAttribute('rel'))    a.setAttribute('rel', link.getAttribute('rel'));
-            a.className = 'project-video-link';
-            var img = link.querySelector('img');
-            a.setAttribute('aria-label', (img && img.alt) ? img.alt : 'view project');
-            a.setAttribute('data-cursor','view');
-            vc.appendChild(a);
-        });
-    })();
-    </script>
-
-
+    <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

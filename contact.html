@@ -28,12 +28,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
-        @font-face {
-            font-family: 'Satoshi';
-            src: url('assets/fonts/Satoshi-Variable.ttf') format('truetype');
-            font-weight: 300 900;
-            font-display: swap;
-        }
 
         /* CSS Variables */
         :root {
@@ -194,9 +188,6 @@
         .menu-overlay.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
 
         
-        .menu-spacer {
-            height: 0.8em;
-        }
 
         .menu-socials {
             display: flex;
@@ -216,12 +207,6 @@
 
 
 
-        .menu-link-bond {
-            font-family: 'Satoshi', sans-serif;
-            font-weight: 500;
-            letter-spacing: -0.03em;
-                    text-transform: none;
-        }
 
         .menu-link:hover {
             opacity: 1 !important;
@@ -285,27 +270,76 @@
         /* ==================== */
         /* CONTACT PAGE */
         /* ==================== */
+        /* Two halves: people on the left, cities big on the right. */
         .contact-page {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 2rem;
+            justify-content: space-between;
+            gap: 3rem;
+            padding: 6rem 2.5rem 5rem;
         }
 
-        .contact-email {
-            font-size: clamp(2rem, 7vw, 6rem);
+        .contact-left { flex: 1 1 50%; min-width: 0; }
+
+        .contact-right {
+            flex: 1 1 50%;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+            gap: 0;
+        }
+
+        .contact-city {
+            font-size: clamp(2.5rem, 7.2vw, 7.5rem);
             font-weight: 700;
-            letter-spacing: -0.07em;
-            line-height: 1.1;
+            letter-spacing: -0.045em;
+            line-height: 0.95;
+            text-transform: uppercase;
+            color: var(--black);
+            white-space: nowrap;
+        }
+
+        .contact-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: clamp(1.4rem, 3vw, 2.4rem);
+        }
+
+        .contact-person { display: flex; flex-direction: column; gap: 0.25rem; }
+
+        .contact-role {
+            font-size: clamp(0.65rem, 0.8vw, 0.8rem);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: var(--black);
+            opacity: 0.5;
+        }
+
+        /* Name shows at rest; hovering swaps in the address in its place. */
+        .contact-swap {
+            display: block;
+            font-size: clamp(1.6rem, 3.4vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
             color: var(--bond-blue);
             text-decoration: none;
-            transition: opacity 0.3s ease;
+            text-transform: none;
         }
+        .contact-swap .contact-mail { display: none; }
+        .contact-swap:hover .contact-name,
+        .contact-swap:focus-visible .contact-name { display: none; }
+        .contact-swap:hover .contact-mail,
+        .contact-swap:focus-visible .contact-mail { display: inline; }
 
-        .contact-email:hover {
-            opacity: 0.7;
-        }
+        .contact-general { margin-top: clamp(0.6rem, 2vw, 1.4rem); }
 
         /* Copy toast */
         .copy-toast {
@@ -476,17 +510,23 @@
             }
 
             .contact-page {
-                height: 100dvh;
-                min-height: unset;
-                text-align: center;
-                padding: 1.5rem;
+                min-height: 100dvh;
+                flex-direction: column;
+                justify-content: center;
+                align-items: stretch;
+                text-align: left;
+                gap: 2.5rem;
+                padding: 6rem 1.5rem 5rem;
             }
 
-            /* hello@ email — fit and center on mobile */
-            .contact-email {
-                font-size: clamp(1.5rem, 6.5vw, 3rem);
-                text-align: center;
-                word-break: break-all;
+            /* stacked on phones: people first, cities beneath, both left-aligned */
+            .contact-right { align-items: flex-start; text-align: left; }
+            .contact-city { font-size: clamp(2.2rem, 12vw, 3.6rem); }
+            .contact-list { align-items: flex-start; }
+            .contact-person { align-items: flex-start; }
+            .contact-swap {
+                font-size: clamp(1.35rem, 7vw, 2.4rem);
+                word-break: break-word;
             }
 
             /* Hide clock and footer — just the email, nothing else */
@@ -529,7 +569,6 @@
             -webkit-text-fill-color: #FF4500;
         }
         body.dark-mode
-        body.dark-mode .menu-link-bond { color: var(--bond-blue) !important; -webkit-text-fill-color: var(--bond-blue); }
 
         body.dark-mode .logo-bottom svg path {
             fill: #FF4500 !important;
@@ -538,7 +577,9 @@
         body.dark-mode .social-link { color: #FF4500 !important; }
         body.dark-mode .site-footer-left { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
 
-        body.dark-mode .contact-email {
+        body.dark-mode .contact-swap,
+        body.dark-mode .contact-city,
+        body.dark-mode .contact-role {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
@@ -717,8 +758,6 @@
             <a href="/roster" class="menu-link">directors</a>
             <a href="about.html" class="menu-link">about</a>
             <a href="contact.html" class="menu-link">contact</a>
-            <div class="menu-spacer"></div>
-            <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
         </div>
         <div class="menu-socials">
             <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
@@ -753,7 +792,42 @@
 
     <!-- Main Content -->
     <main class="contact-page">
-        <a href="mailto:hello@covalentstudios.co" class="contact-email" id="contactEmail">hello@covalentstudios.co</a>
+        <div class="contact-left">
+            <ul class="contact-list">
+                <li class="contact-person">
+                    <span class="contact-role">Founder | Executive Producer</span>
+                    <a href="mailto:ben@covalentstudios.co" class="contact-swap" data-email="ben@covalentstudios.co">
+                        <span class="contact-name">Ben Zebrowski-Rocheleau</span>
+                        <span class="contact-mail">ben@covalentstudios.co</span>
+                    </a>
+                </li>
+                <li class="contact-person">
+                    <span class="contact-role">Founder | Executive Producer</span>
+                    <a href="mailto:jacob@covalentstudios.co" class="contact-swap" data-email="jacob@covalentstudios.co">
+                        <span class="contact-name">Jacob Frost</span>
+                        <span class="contact-mail">jacob@covalentstudios.co</span>
+                    </a>
+                </li>
+                <li class="contact-person">
+                    <span class="contact-role">Founder | Executive Producer</span>
+                    <a href="mailto:jude@covalentstudios.co" class="contact-swap" data-email="jude@covalentstudios.co">
+                        <span class="contact-name">Jude Gabriel Nelson</span>
+                        <span class="contact-mail">jude@covalentstudios.co</span>
+                    </a>
+                </li>
+                <li class="contact-person contact-general">
+                    <a href="mailto:hello@covalentstudios.co" class="contact-swap" id="contactEmail" data-email="hello@covalentstudios.co">
+                        <span class="contact-name">General Inquiries</span>
+                        <span class="contact-mail">hello@covalentstudios.co</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="contact-right" aria-label="Locations">
+            <p class="contact-city">Chicago</p>
+            <p class="contact-city">Los Angeles</p>
+            <p class="contact-city">NYC</p>
+        </div>
     </main>
 
     <!-- Copy toast -->

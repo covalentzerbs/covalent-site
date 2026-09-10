@@ -28,12 +28,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
-        @font-face {
-            font-family: 'Satoshi';
-            src: url('assets/fonts/Satoshi-Variable.ttf') format('truetype');
-            font-weight: 300 900;
-            font-display: swap;
-        }
 
         /* CSS Variables */
         :root {
@@ -194,9 +188,6 @@
         .menu-overlay.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
 
         
-        .menu-spacer {
-            height: 0.8em;
-        }
 
         .menu-socials {
             display: flex;
@@ -216,13 +207,6 @@
 
 
 
-        .menu-link-bond {
-            font-family: 'Satoshi', sans-serif;
-            font-weight: 500;
-            letter-spacing: -0.03em;
-            color: var(--bond-blue);
-                    text-transform: none;
-        }
 
         .menu-link:hover {
             opacity: 1 !important;
@@ -559,7 +543,6 @@
             -webkit-text-fill-color: #FF4500;
         }
         body.dark-mode
-        body.dark-mode .menu-link-bond { color: var(--bond-blue) !important; -webkit-text-fill-color: var(--bond-blue); }
 
         body.dark-mode .logo-bottom svg path {
             fill: #FF4500 !important;
@@ -732,6 +715,29 @@
             width: 100%;
             will-change: transform;
         }
+
+        .about-pronounce {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+        }
+        .about-pronounce .pronounce-word {
+            font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            color: var(--black);
+        }
+        .about-pronounce .pronounce-note {
+            font-size: clamp(0.85rem, 1.1vw, 1rem);
+            font-weight: 500;
+            color: var(--black);
+            opacity: 0.45;
+        }
+        body.dark-mode .about-pronounce .pronounce-word,
+        body.dark-mode .about-pronounce .pronounce-note { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
 
         .about-page .reveal-text {
             font-size: clamp(17px, 2.05vw, 26px);
@@ -952,8 +958,6 @@
             <a href="/roster" class="menu-link">directors</a>
             <a href="about.html" class="menu-link current">about</a>
             <a href="contact.html" class="menu-link">contact</a>
-            <div class="menu-spacer"></div>
-            <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
         </div>
         <div class="menu-socials">
             <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
@@ -992,6 +996,11 @@
         <div class="manifesto-scroll-container" id="manifestoScroll">
             <div class="manifesto-sticky">
                 <div class="manifesto-inner" id="manifestoInner">
+                    <!-- How to say it. People keep getting it wrong. -->
+                    <div class="about-pronounce" aria-label="Pronunciation: kow vay luhnt, like the bond">
+                        <span class="pronounce-word">kow · vay · luhnt</span>
+                        <span class="pronounce-note">like the bond.</span>
+                    </div>
                     <p class="reveal-text" id="manifesto-text">Film is cool. We don't want to make AI videos. We think they're lame.
 
 What's more human than struggle? What's more human than emotion? What's more human than a perfect imperfection? AI takes all of that away. It trades twenty people on a set, exuding their physical and mental strength for the same goal, for a water-cooled computer plant in the middle of Arizona, stealing from real artists so a suit can buy another lake house.

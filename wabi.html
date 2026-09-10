@@ -203,9 +203,6 @@
         .menu-overlay.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
 
         
-        .menu-spacer {
-            height: 0.8em;
-        }
 
         .menu-socials {
             display: flex;
@@ -225,13 +222,6 @@
 
 
 
-        .menu-link-bond {
-            font-family: 'Satoshi', sans-serif;
-            font-weight: 500;
-            letter-spacing: -0.03em;
-            color: var(--bond-blue);
-                    text-transform: none;
-        }
 
         .menu-link:hover {
             opacity: 1 !important;
@@ -523,12 +513,30 @@
             margin-bottom: 1.5rem;
         }
 
-        .director-credit {
+        .project-credits {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            column-gap: 1.25rem;
+            row-gap: 0.35rem;
+            margin: 0 0 1rem;
+        }
+        .project-credits .credit { display: contents; }
+        .project-credits dt {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            opacity: 0.45;
+            align-self: baseline;
+            padding-top: 0.2em;
+        }
+        .project-credits dd {
+            margin: 0;
             font-size: 1.1rem;
             font-weight: 500;
-            letter-spacing: -0.07em;
-            margin-bottom: 1rem;
+            letter-spacing: -0.04em;
         }
+        .project-credits .credit-tbd { opacity: 0.35; }
 
         .case-study-link {
             display: inline-block;
@@ -773,7 +781,6 @@
             -webkit-text-fill-color: #FF4500;
         }
         body.dark-mode
-        body.dark-mode .menu-link-bond { color: var(--bond-blue) !important; -webkit-text-fill-color: var(--bond-blue); }
 
         body.dark-mode .logo-bottom svg path {
             fill: #FF4500 !important;
@@ -832,7 +839,8 @@
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .director-credit {
+        body.dark-mode .project-credits dt,
+        body.dark-mode .project-credits dd {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
@@ -1019,8 +1027,6 @@
             <a href="/roster" class="menu-link">directors</a>
             <a href="about.html" class="menu-link">about</a>
             <a href="contact.html" class="menu-link">contact</a>
-            <div class="menu-spacer"></div>
-            <a href="https://bond.covalentstudios.co" class="menu-link menu-link-bond">Bond.</a>
         </div>
         <div class="menu-socials">
             <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
@@ -1117,9 +1123,12 @@
             <!-- Project Info Section -->
             <div class="project-info">
                 <div class="project-meta">
-                    <!-- DIRECTOR - Change name here -->
-                    <p class="director-credit">directed by jacob frost</p>
-
+                    <!-- credits: add a row per credit, e.g. <div class="credit"><dt>dp</dt><dd>name</dd></div> -->
+                    <dl class="project-credits">
+                        <div class="credit"><dt>director</dt><dd>jacob frost</dd></div>
+                        <div class="credit"><dt>agency</dt><dd class="credit-tbd">tbd</dd></div>
+                        <div class="credit"><dt>client</dt><dd>wabi</dd></div>
+                    </dl>
                 </div>
             </div>
         </main>
