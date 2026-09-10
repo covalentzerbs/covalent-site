@@ -187,7 +187,7 @@
         .work-card:hover .card-text, .work-card.playing .card-text { opacity: 1; }
         .work-card .card-client {
             font-size: clamp(0.8rem, 1.2vw, 1.05rem); font-weight: 400; letter-spacing: -0.04em;
-            line-height: 1.05; text-transform: lowercase; color: var(--white); margin-bottom: 0.15rem;
+            line-height: 1.05; color: var(--white); margin-bottom: 0.15rem;
         }
         .work-card .card-title {
             font-size: 0.55rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
@@ -263,9 +263,9 @@
     <!-- Menu overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
-            <a href="/roster" class="menu-link">directors</a>
-            <a href="/about" class="menu-link">about</a>
-            <a href="/contact" class="menu-link">contact</a>
+            <a href="/roster" class="menu-link">Directors</a>
+            <a href="/about" class="menu-link">About</a>
+            <a href="/contact" class="menu-link">Contact</a>
         </div>
         <div class="menu-socials">
             <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
@@ -294,7 +294,7 @@
 
     <!-- Footer -->
     <footer class="site-footer">
-        <div class="site-footer-left">2026, covalent studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">privacy</a></div>
+        <div class="site-footer-left">2026, Covalent Studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">Privacy</a></div>
         <div class="site-footer-socials">
             <label class="dark-mode-toggle">
                 <input type="checkbox" id="darkModeToggle">
@@ -318,16 +318,16 @@
     // va = native video aspect ratio (w/h); zoom = scale applied so it fills the
     // 16:9 tile nicely; fill = blurred footage fills the side bars (square video).
     const PROJECTS = [
-        { client: "new era", title: "take it easy", href: '/new-era', vimeo: '1221251397', va: 1.775, zoom: 1, thumbnail: 'https://i.vimeocdn.com/video/2193905275-a9be7437ab239aff9ecd325670c7a7fd0eee0feb0195d35f747b884c5fee4003-d_1280?region=us' },
-        { client: "bo house", title: "villa peninsula", href: '/bo-house', vimeo: '1205559620', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2174174962-87f9a5a012a9bd00951a8b149e0debeb596bad2f3b43d4ebab238312fe4bf2c9-d_1280?region=us' },
-        { client: "onco optima", title: "refuse to leave it to chance", href: '/onco-optima', vimeo: '1184586128', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2147773004-bfe04ac45210e7486d3ec60c04f84db2026c53fd35be3f9319ab3f4f770a5d61-d_1280?region=us' },
-        { client: "wabi", title: "when did we stop playing", href: '/wabi', vimeo: '1161268499', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280?region=us' },
-        { client: "aesop", title: "skin", href: '/aesop', vimeo: '1167988129', va: 1.5, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2126179638-f6c354c75518a1be78a136a9d2531222a8d363f2f1dec81d60727825d123bc01-d_1280?region=us' },
-        { client: "pinch", title: "a holiday campaign", href: '/pinch', vimeo: '1140543709', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2089993227-e000ed9b7ef428ebf6588769ae040780042629649a7118b7c81199783dabe96a-d_1280?region=us' },
-        { client: "fare", title: "beyond the bowl", href: '/fare', vimeo: '1175563835', va: 1.775, zoom: 1, thumbnail: 'https://i.vimeocdn.com/video/2136430771-f53c21717a7bbd356033553598ee8ab44587fc7bfb1f902567c96ef2ccf98eb5-d_1280?region=us' },
-        { client: "arc'teryx", title: "a city to summit", href: '/arcteryx', vimeo: '1141586908', va: 1.333, zoom: 1.7, thumbnail: 'https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280?region=us' },
-        { client: "world of hyatt", title: "jess pegula x us open", href: '/hyatt', vimeo: '1149097153', va: 1, zoom: 1.7, fill: true, thumbnail: 'https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280?region=us' },
-        { client: "ever", title: "here to be great", href: '/ever', vimeo: '1141278566', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2099560891-36e638960a316e25a52fbf66821647feab77b29c0a3930becefced787395728d-d_1280?region=us' }
+        { client: "New Era", title: "Take it Easy", href: '/new-era', vimeo: '1221251397', va: 1.775, zoom: 1, thumbnail: 'https://i.vimeocdn.com/video/2193905275-a9be7437ab239aff9ecd325670c7a7fd0eee0feb0195d35f747b884c5fee4003-d_1280?region=us' },
+        { client: "Bo House", title: "Villa Peninsula", href: '/bo-house', vimeo: '1205559620', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2174174962-87f9a5a012a9bd00951a8b149e0debeb596bad2f3b43d4ebab238312fe4bf2c9-d_1280?region=us' },
+        { client: "Onco Optima", title: "Refuse to Leave it to Chance", href: '/onco-optima', vimeo: '1184586128', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2147773004-bfe04ac45210e7486d3ec60c04f84db2026c53fd35be3f9319ab3f4f770a5d61-d_1280?region=us' },
+        { client: "Wabi", title: "When Did We Stop Playing", href: '/wabi', vimeo: '1161268499', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280?region=us' },
+        { client: "Aesop", title: "Skin", href: '/aesop', vimeo: '1167988129', va: 1.5, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2126179638-f6c354c75518a1be78a136a9d2531222a8d363f2f1dec81d60727825d123bc01-d_1280?region=us' },
+        { client: "Pinch", title: "A Holiday Campaign", href: '/pinch', vimeo: '1140543709', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2089993227-e000ed9b7ef428ebf6588769ae040780042629649a7118b7c81199783dabe96a-d_1280?region=us' },
+        { client: "Fare", title: "Beyond the Bowl", href: '/fare', vimeo: '1175563835', va: 1.775, zoom: 1, thumbnail: 'https://i.vimeocdn.com/video/2136430771-f53c21717a7bbd356033553598ee8ab44587fc7bfb1f902567c96ef2ccf98eb5-d_1280?region=us' },
+        { client: "Arc'teryx", title: "A City to Summit", href: '/arcteryx', vimeo: '1141586908', va: 1.333, zoom: 1.7, thumbnail: 'https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280?region=us' },
+        { client: "World of Hyatt", title: "Jess Pegula x Us Open", href: '/hyatt', vimeo: '1149097153', va: 1, zoom: 1.7, fill: true, thumbnail: 'https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280?region=us' },
+        { client: "Ever", title: "Here to Be Great", href: '/ever', vimeo: '1141278566', va: 1.433, zoom: 1.3, thumbnail: 'https://i.vimeocdn.com/video/2099560891-36e638960a316e25a52fbf66821647feab77b29c0a3930becefced787395728d-d_1280?region=us' }
     ];
 
     const grid = document.getElementById('workGrid');
