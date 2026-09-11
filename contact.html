@@ -292,6 +292,23 @@
             gap: 0;
         }
 
+        /* Local time sits just left of each city, small and bold, hidden until
+           it holds a real reading (never the --:-- placeholder). */
+        .city-time {
+            display: inline-block;
+            font-size: clamp(0.7rem, 0.95vw, 0.95rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            vertical-align: middle;
+            margin-right: clamp(0.6rem, 1.2vw, 1.2rem);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            font-variant-numeric: tabular-nums;
+        }
+        .contact-right.ready .city-time { opacity: 0.6; }
+        body.dark-mode .city-time { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
         .contact-city {
             font-size: clamp(2.5rem, 7.2vw, 7.5rem);
             font-weight: 700;
@@ -850,10 +867,10 @@
                 </li>
             </ul>
         </div>
-        <div class="contact-right" aria-label="Locations">
-            <p class="contact-city">Chicago</p>
-            <p class="contact-city">Los Angeles</p>
-            <p class="contact-city">NYC</p>
+        <div class="contact-right" id="contactRight" aria-label="Locations">
+            <p class="contact-city"><span class="city-time" id="clockCHI">--<span class="clock-colon">:</span>--</span>Chicago</p>
+            <p class="contact-city"><span class="city-time" id="clockLA">--<span class="clock-colon">:</span>--</span>Los Angeles</p>
+            <p class="contact-city"><span class="city-time" id="clockNYC">--<span class="clock-colon">:</span>--</span>NYC</p>
         </div>
     </main>
 
@@ -861,20 +878,6 @@
     <div class="copy-toast" id="copyToast">copied to clipboard</div>
 
     <!-- Clock Widget -->
-    <div class="clock-widget" id="clockWidget">
-        <div class="clock-row">
-            <span class="clock-label">NYC</span>
-            <span class="clock-time" id="clockNYC">--<span class="clock-colon">:</span>--</span>
-        </div>
-        <div class="clock-row">
-            <span class="clock-label">CHI</span>
-            <span class="clock-time" id="clockCHI">--<span class="clock-colon">:</span>--</span>
-        </div>
-        <div class="clock-row">
-            <span class="clock-label">LA</span>
-            <span class="clock-time" id="clockLA">--<span class="clock-colon">:</span>--</span>
-        </div>
-    </div>
 
     <!-- Global Footer -->
     <footer class="site-footer">
@@ -998,7 +1001,7 @@
 
         updateClocks();
         // Reveal the clock only once it holds real times, never the "--:--" placeholder.
-        document.getElementById('clockWidget').classList.add('ready');
+        document.getElementById('contactRight').classList.add('ready');
         setInterval(updateClocks, 500);
 
         // ==================== //
