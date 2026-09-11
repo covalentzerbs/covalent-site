@@ -325,19 +325,24 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            gap: clamp(1.4rem, 3vw, 2.4rem);
+            gap: 0;
         }
 
-        .contact-person { display: flex; flex-direction: column; gap: 0.25rem; }
+        .contact-person { display: flex; flex-direction: column; gap: 0; }
 
+        /* Role: a tiny bold caps line tucked right above the name. */
         .contact-role {
-            font-size: clamp(0.65rem, 0.8vw, 0.8rem);
+            display: block;
+            font-size: clamp(0.6rem, 0.8vw, 0.8rem);
             font-weight: 700;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.01em;
+            line-height: 1;
             text-transform: uppercase;
             color: var(--black);
             opacity: 0.5;
+            margin: 0 0 0.35em 0.06em;
         }
+        .contact-person + .contact-person { margin-top: 0.55em; }
 
         /* Name shows at rest; on hover it rolls up and out while the address
            rolls in from below, like a split-flap board. Both lines live in a
@@ -346,14 +351,14 @@
             position: relative;
             display: block;
             overflow: hidden;
-            font-size: clamp(1.6rem, 3.4vw, 3.2rem);
+            font-size: clamp(1.5rem, 2.9vw, 3.6rem);
             font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 1.1;
-            height: 1.1em;
-            color: var(--bond-blue);
+            letter-spacing: -0.045em;
+            line-height: 1;
+            height: 1em;
+            color: var(--black);
             text-decoration: none;
-            text-transform: none;
+            text-transform: uppercase;
         }
         .contact-swap .contact-name,
         .contact-swap .contact-mail {
@@ -409,7 +414,7 @@
         .contact-person.is-copied .copied-tag { opacity: 0.6; transform: translateY(0); }
         body.dark-mode .copied-tag { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
 
-        .contact-general { margin-top: clamp(0.6rem, 2vw, 1.4rem); }
+        .contact-general { margin-top: 0; }
 
         /* Copy toast */
 
@@ -572,7 +577,7 @@
             .contact-city { font-size: clamp(2.2rem, 12vw, 3.6rem); }
             .contact-list { align-items: flex-start; }
             .contact-person { align-items: flex-start; }
-            .contact-swap { font-size: clamp(1.2rem, 6.2vw, 2.4rem); }
+            .contact-swap { font-size: clamp(1.1rem, 5.6vw, 2rem); }
 
             /* Hide clock and footer — just the email, nothing else */
             .clock-widget,
