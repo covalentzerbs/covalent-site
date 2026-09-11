@@ -8,11 +8,6 @@
   ],
   "redirects": [
     {
-      "source": "/directors",
-      "destination": "/roster",
-      "permanent": true
-    },
-    {
       "source": "/directors/jacob-frost",
       "destination": "/directors/jacob",
       "permanent": true
