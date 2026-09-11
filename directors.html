@@ -337,14 +337,15 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            padding: 2.5rem 3.5rem;
+            /* names hug the left edge, in line with the logo */
+            padding: 2.5rem 2.5rem 2.5rem 2rem;
         }
 
         .directors-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
+            align-items: flex-start;
+            text-align: left;
             gap: 0;
         }
 
@@ -410,7 +411,7 @@
             }
 
             .directors-list {
-                padding: 2rem 2.5rem;
+                padding: 2rem 2rem 2rem 1.5rem;
             }
 
             .menu-overlay {
