@@ -300,8 +300,8 @@
             font-weight: 700;
             letter-spacing: -0.02em;
             line-height: 1;
-            vertical-align: middle;
-            margin-right: clamp(0.6rem, 1.2vw, 1.2rem);
+            vertical-align: baseline;   /* sits on the city's bottom line */
+            margin-right: clamp(0.35rem, 0.6vw, 0.6rem);
             opacity: 0;
             transition: opacity 0.5s ease;
             font-variant-numeric: tabular-nums;
@@ -386,31 +386,28 @@
             .contact-swap:hover .contact-mail { transform: translateY(-100%); }
         }
 
+        /* "copied to clipboard" — small and bold beside the address, on its
+           baseline, mirroring the time stamps next to the cities. */
+        .copied-tag {
+            display: inline-block;
+            font-size: clamp(0.7rem, 0.95vw, 0.95rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            vertical-align: baseline;
+            margin-left: clamp(0.5rem, 0.8vw, 0.8rem);
+            color: var(--black);
+            opacity: 0;
+            transform: translateY(0.15em);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+        }
+        .contact-swap.is-copied .copied-tag { opacity: 0.6; transform: translateY(0); }
+        body.dark-mode .copied-tag { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
         .contact-general { margin-top: clamp(0.6rem, 2vw, 1.4rem); }
 
         /* Copy toast */
-        .copy-toast {
-            position: fixed;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: var(--black);
-            color: var(--white);
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: -0.03em;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            z-index: 20000;
-            white-space: nowrap;
-        }
-        .copy-toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
 
         /* ==================== */
         /* ==================== */
@@ -842,27 +839,27 @@
                     <span class="contact-role">Founder | Executive Producer</span>
                     <a href="mailto:ben@covalentstudios.co" class="contact-swap" data-email="ben@covalentstudios.co">
                         <span class="contact-name">Ben Zebrowski-Rocheleau</span>
-                        <span class="contact-mail">ben@covalentstudios.co</span>
+                        <span class="contact-mail">ben@covalentstudios.co<span class="copied-tag" aria-live="polite">copied to clipboard</span></span>
                     </a>
                 </li>
                 <li class="contact-person">
                     <span class="contact-role">Founder | Executive Producer</span>
                     <a href="mailto:jacob@covalentstudios.co" class="contact-swap" data-email="jacob@covalentstudios.co">
                         <span class="contact-name">Jacob Frost</span>
-                        <span class="contact-mail">jacob@covalentstudios.co</span>
+                        <span class="contact-mail">jacob@covalentstudios.co<span class="copied-tag" aria-live="polite">copied to clipboard</span></span>
                     </a>
                 </li>
                 <li class="contact-person">
                     <span class="contact-role">Founder | Executive Producer</span>
                     <a href="mailto:jude@covalentstudios.co" class="contact-swap" data-email="jude@covalentstudios.co">
                         <span class="contact-name">Jude Gabriel Nelson</span>
-                        <span class="contact-mail">jude@covalentstudios.co</span>
+                        <span class="contact-mail">jude@covalentstudios.co<span class="copied-tag" aria-live="polite">copied to clipboard</span></span>
                     </a>
                 </li>
                 <li class="contact-person contact-general">
                     <a href="mailto:hello@covalentstudios.co" class="contact-swap" id="contactEmail" data-email="hello@covalentstudios.co">
                         <span class="contact-name">General Inquiries</span>
-                        <span class="contact-mail">hello@covalentstudios.co</span>
+                        <span class="contact-mail">hello@covalentstudios.co<span class="copied-tag" aria-live="polite">copied to clipboard</span></span>
                     </a>
                 </li>
             </ul>
@@ -874,8 +871,6 @@
         </div>
     </main>
 
-    <!-- Copy toast -->
-    <div class="copy-toast" id="copyToast">copied to clipboard</div>
 
     <!-- Clock Widget -->
 
@@ -1116,24 +1111,39 @@
         })();
     </script>
     <script>
-    // Email — open mailto AND copy to clipboard as fallback
+    // Click an address: copy it and say so, right there on the line.
     (function() {
-        const emailLink = document.getElementById('contactEmail');
-        const toast = document.getElementById('copyToast');
-        let toastTimer;
-
-        emailLink.addEventListener('click', function(e) {
-            // Copy to clipboard (works silently alongside mailto)
+        var timers = new WeakMap();
+        function copied(link) {
+            clearTimeout(timers.get(link));
+            link.classList.add('is-copied');
+            timers.set(link, setTimeout(function() { link.classList.remove('is-copied'); }, 1800));
+        }
+        function legacyCopy(text) {
+            return new Promise(function(resolve, reject) {
+                var ta = document.createElement('textarea');
+                ta.value = text; ta.setAttribute('readonly', '');
+                ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+                document.body.appendChild(ta); ta.select();
+                var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+                ta.remove(); ok ? resolve() : reject();
+            });
+        }
+        // Async clipboard first; if the browser refuses (unfocused tab, old
+        // Safari), the classic execCommand path; only then fall back to mailto.
+        function copyText(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText('hello@covalentstudios.co').then(function() {
-                    clearTimeout(toastTimer);
-                    toast.classList.add('show');
-                    toastTimer = setTimeout(function() {
-                        toast.classList.remove('show');
-                    }, 2000);
-                }).catch(function() {});
+                return navigator.clipboard.writeText(text).catch(function() { return legacyCopy(text); });
             }
-            // Let the mailto: href open naturally — don't preventDefault
+            return legacyCopy(text);
+        }
+        document.querySelectorAll('.contact-swap').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                var email = link.getAttribute('data-email');
+                copyText(email).then(function() { copied(link); })
+                               .catch(function() { window.location.href = 'mailto:' + email; });
+            });
         });
     })();
     </script>
