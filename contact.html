@@ -345,7 +345,9 @@
         .contact-swap {
             position: relative;
             display: block;
-            overflow: hidden;
+            /* clip only the top and bottom so the roll stays tidy but the
+               "copied" tag can hang off the right edge */
+            clip-path: inset(0 -100vw 0 0);
             font-size: clamp(1.6rem, 3.4vw, 3.2rem);
             font-weight: 700;
             letter-spacing: -0.04em;
