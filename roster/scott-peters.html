@@ -13,7 +13,7 @@
     <!-- Roster is unlisted: directors are non-exclusive and not publicly advertised. -->
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>directors.</title>
+    <title>Directors</title>
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
     <script>
@@ -22,7 +22,7 @@
         gtag('js', new Date());
         gtag('config', 'G-T14F8BVFLJ');
     </script>
-    <meta property="og:title" content="directors.">
+    <meta property="og:title" content="Directors">
     <meta property="og:description" content="freelance directors available to bid.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co/roster/scott-peters">
@@ -1763,7 +1763,7 @@
         new MutationObserver(function (records, obs) {
             var name = document.querySelector('.director-name');
             if (!name) return;
-            document.title = name.textContent.toLowerCase() + '.';
+            document.title = name.textContent;
             obs.disconnect();
         }).observe(document.getElementById('rosterContent'), { childList: true });
     })();
