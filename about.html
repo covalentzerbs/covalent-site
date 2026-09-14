@@ -932,6 +932,34 @@
 
 
 
+        /* ==================== */
+        /* ABOUT — UNDER CONSTRUCTION */
+        /* ==================== */
+        main.about-construction {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2.5rem 5rem;
+        }
+        .construction { display: flex; flex-direction: column; gap: 0.6rem; text-align: center; }
+        .construction-title {
+            font-size: clamp(2.5rem, 7vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.045em;
+            line-height: 0.95;
+            color: var(--black);
+        }
+        .construction-note {
+            font-size: clamp(0.8rem, 1vw, 1rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--black);
+            opacity: 0.45;
+        }
+        body.dark-mode .construction-title,
+        body.dark-mode .construction-note { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
         /* Footer link inherits footer colour (kills default visited-link purple) */
         .footer-link, .footer-link:link, .footer-link:visited { color: inherit; }
     </style>
@@ -990,32 +1018,12 @@
     </a>
 
     <!-- Main Content -->
-    <main class="about-page">
-        <!-- 01 MANIFESTO -->
-        <div class="manifesto-scroll-container" id="manifestoScroll">
-            <div class="manifesto-sticky">
-                <div class="manifesto-inner" id="manifestoInner">
-                    <!-- How to say it. People keep getting it wrong. -->
-                    <div class="about-pronounce" aria-label="Pronunciation: kow vay luhnt, like the bond">
-                        <span class="pronounce-word">kow · vay · luhnt</span>
-                        <span class="pronounce-note">Like the bond.</span>
-                    </div>
-                    <p class="reveal-text" id="manifesto-text">Film is cool. We don't want to make AI videos. We think they're lame.
-
-What's more human than struggle? What's more human than emotion? What's more human than a perfect imperfection? AI takes all of that away. It trades twenty people on a set, exuding their physical and mental strength for the same goal, for a water-cooled computer plant in the middle of Arizona, stealing from real artists so a suit can buy another lake house.
-
-New age production companies are racing to swap their workflows for AI-generated content because it's high margin and low effort. That's not what Covalent wants to be. We started Covalent in 2024 to bridge the gap between traditional production knowledge and AI slop. We use AI where it makes us faster, smarter, more efficient, so we have more time for the part that actually matters: the human experience. We're not anti-technology. We're just too snobby to let it try and recreate human emotion.
-Call us old fashioned, or call us luxury. Up for interpretation.
-
-And while we're at it: who decided "we're the new age production company, we're fresh, we're fast, we're different" was a pitch? That's the bare minimum. Not us.
-
-We're artists. We make art. But we're not going to sell you on our creativity, we believe we're in the service business, and we believe this should be a good experience. Our work speaks for itself. You already know we're creative. We don't have to convince you.
-We get your favorite food on set. We send handwritten thank-you notes. We make sure there's wifi. We keep the day on schedule so you're not late to your daughter's volleyball practice.
-People + product = boutique.</p>
-                </div>
-            </div>
+    <main class="about-page about-construction">
+        <!-- Manifesto is parked for now; the reveal script below no-ops without its ids. -->
+        <div class="construction">
+            <p class="construction-title">Under construction.</p>
+            <p class="construction-note">The about page is being rebuilt. Back soon.</p>
         </div>
-
     </main>
 
     <!-- Clock Widget -->
