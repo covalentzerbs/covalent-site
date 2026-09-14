@@ -77,7 +77,7 @@
             border-radius: 50%;
             background: var(--white);
             pointer-events: none;
-            z-index: 10001;
+            z-index: 99999;
             mix-blend-mode: difference;
             transform: translate(-50%, -50%);
             transition: opacity 0.3s ease;
@@ -1003,6 +1003,17 @@
 
         /* Footer link inherits footer colour (kills default visited-link purple) */
         .footer-link, .footer-link:link, .footer-link:visited { color: inherit; }
+        /* Theme switch: a short cross-fade instead of a hard cut. The class is
+           only on <body> for the duration of the fade, so it never fights the
+           site's own transitions the rest of the time. */
+        body.theme-fading,
+        body.theme-fading *,
+        body.theme-fading *::before,
+        body.theme-fading *::after {
+            transition: background-color 0.6s ease, color 0.6s ease, fill 0.6s ease,
+                        stroke 0.6s ease, border-color 0.6s ease,
+                        -webkit-text-fill-color 0.6s ease !important;
+        }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -1527,7 +1538,7 @@
                 toggle.checked = true;
             }
             toggle.addEventListener('change', () => {
-                document.body.classList.toggle('dark-mode');
+                document.body.classList.add('theme-fading'); clearTimeout(window.__themeFadeT); window.__themeFadeT = setTimeout(function(){ document.body.classList.remove('theme-fading'); }, 700); document.body.classList.toggle('dark-mode');
                 localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
             });
 

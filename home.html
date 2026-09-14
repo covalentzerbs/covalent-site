@@ -73,7 +73,7 @@
             border-radius: 50%;
             background: var(--white);
             pointer-events: none;
-            z-index: 10001;
+            z-index: 99999;
             mix-blend-mode: difference;
             transform: translate(-50%, -50%);
         }
@@ -248,6 +248,17 @@
         body.dark-mode ::selection { background: var(--accent); color: var(--space-dark); -webkit-text-fill-color: var(--space-dark); }
         body.dark-mode .menu-overlay.active { background: rgba(26,26,46,0.4); }
 
+        /* Theme switch: a short cross-fade instead of a hard cut. The class is
+           only on <body> for the duration of the fade, so it never fights the
+           site's own transitions the rest of the time. */
+        body.theme-fading,
+        body.theme-fading *,
+        body.theme-fading *::before,
+        body.theme-fading *::after {
+            transition: background-color 0.6s ease, color 0.6s ease, fill 0.6s ease,
+                        stroke 0.6s ease, border-color 0.6s ease,
+                        -webkit-text-fill-color 0.6s ease !important;
+        }
     </style>
 </head>
 <body><script>try{if(localStorage.getItem("darkMode")==="true")document.body.classList.add("dark-mode");}catch(e){}</script>
@@ -434,7 +445,7 @@
         const toggle = document.getElementById('darkModeToggle');
         if (localStorage.getItem('darkMode') === 'true') { document.body.classList.add('dark-mode'); toggle.checked = true; }
         toggle.addEventListener('change', function() {
-            document.body.classList.toggle('dark-mode');
+            document.body.classList.add('theme-fading'); clearTimeout(window.__themeFadeT); window.__themeFadeT = setTimeout(function(){ document.body.classList.remove('theme-fading'); }, 700); document.body.classList.toggle('dark-mode');
             localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
         });
     })();

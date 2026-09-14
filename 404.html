@@ -57,7 +57,7 @@
             border-radius: 50%;
             background: var(--white);
             pointer-events: none;
-            z-index: 10001;
+            z-index: 99999;
             mix-blend-mode: difference;
             transform: translate(-50%, -50%);
         }
@@ -310,6 +310,17 @@
         @media (pointer: coarse) {
             .cursor { display: none !important; }
             * { cursor: auto !important; }
+        }
+        /* Theme switch: a short cross-fade instead of a hard cut. The class is
+           only on <body> for the duration of the fade, so it never fights the
+           site's own transitions the rest of the time. */
+        body.theme-fading,
+        body.theme-fading *,
+        body.theme-fading *::before,
+        body.theme-fading *::after {
+            transition: background-color 0.6s ease, color 0.6s ease, fill 0.6s ease,
+                        stroke 0.6s ease, border-color 0.6s ease,
+                        -webkit-text-fill-color 0.6s ease !important;
         }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
