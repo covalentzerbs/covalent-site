@@ -281,6 +281,18 @@
             padding: 6rem 2.5rem 5rem;
         }
 
+        /* Nothing to scroll here, so kill the trackpad rubber-band that let the
+           whole block drift up and down, and keep the big type from being
+           drag-selected. Phones already lock themselves below. */
+        html, body { overscroll-behavior: none; }
+        @media (min-height: 680px) and (min-width: 769px) {
+            html, body { height: 100%; overflow: hidden; }
+        }
+        .contact-swap, .contact-city, .contact-role, .city-time, .copied-tag {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
         .contact-left { flex: 1 1 50%; min-width: 0; }
 
         .contact-right {
