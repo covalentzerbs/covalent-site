@@ -433,14 +433,19 @@
         .contact-person.is-copied .copied-tag { opacity: 0.6; transform: translate(-100%, 0); }
         body.dark-mode .copied-tag { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
 
-        /* General inquiries: small, tucked bottom-left just above the footer */
-        .contact-general {
+        /* Bottom-left stack: licensing rep above general inquiries, small,
+           just above the footer */
+        .contact-bottom {
             position: absolute;
             left: 2.5rem;
             bottom: 4.75rem;
-            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
         }
-        .contact-general .contact-swap { font-size: clamp(0.9rem, 1.35vw, 1.4rem); }
+        .contact-general { margin: 0; }
+        .contact-bottom .contact-swap { font-size: clamp(0.9rem, 1.35vw, 1.4rem); }
+        .contact-bottom .contact-role { font-size: clamp(0.7rem, 0.85vw, 0.9rem); }
 
         /* Copy toast */
 
@@ -604,8 +609,8 @@
             .contact-list { align-items: flex-start; }
             .contact-person { align-items: flex-start; }
             .contact-swap { font-size: clamp(1.1rem, 5.6vw, 2rem); }
-            .contact-general { position: static; margin-top: 2rem; }
-            .contact-general .contact-swap { font-size: clamp(0.95rem, 4vw, 1.2rem); }
+            .contact-bottom { position: static; margin-top: 2rem; gap: 1.25rem; }
+            .contact-bottom .contact-swap { font-size: clamp(0.95rem, 4vw, 1.2rem); }
 
             /* Hide clock and footer — just the email, nothing else */
             .clock-widget,
@@ -913,12 +918,22 @@
             <p class="contact-city"><span class="city-time" id="clockLA">--<span class="clock-colon">:</span>--</span>Los Angeles</p>
             <p class="contact-city"><span class="city-time" id="clockNYC">--<span class="clock-colon">:</span>--</span>NYC</p>
         </div>
-        <div class="contact-person contact-general">
-            <a href="mailto:hello@covalentstudios.co" class="contact-swap" id="contactEmail" data-email="hello@covalentstudios.co">
-                <span class="contact-name">General Inquiries</span>
-                <span class="contact-mail">hello@covalentstudios.co</span>
-            </a>
-            <span class="copied-tag" aria-live="polite">Email Copied</span>
+        <div class="contact-bottom">
+            <div class="contact-person contact-rep">
+                <span class="contact-role">Licensing Representation: Filmsupply</span>
+                <a href="mailto:roni.hernandez@fm.co" class="contact-swap" data-email="roni.hernandez@fm.co">
+                    <span class="contact-name">Roni Hernandez</span>
+                    <span class="contact-mail">roni.hernandez@fm.co</span>
+                </a>
+                <span class="copied-tag" aria-live="polite">Email Copied</span>
+            </div>
+            <div class="contact-person contact-general">
+                <a href="mailto:hello@covalentstudios.co" class="contact-swap" id="contactEmail" data-email="hello@covalentstudios.co">
+                    <span class="contact-name">General Inquiries</span>
+                    <span class="contact-mail">hello@covalentstudios.co</span>
+                </a>
+                <span class="copied-tag" aria-live="polite">Email Copied</span>
+            </div>
         </div>
     </main>
 
