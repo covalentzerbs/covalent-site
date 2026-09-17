@@ -990,12 +990,9 @@
         body.dark-mode .cs-vol-fill { background-color: #FF4500; }
         body.dark-mode .cs-vol-track { background-color: rgba(255,69,0,0.35); }
 
-        /* Desktop: fit the entire project page in one viewport so the footer is
-           visible under the player with no scroll. The video derives its height
-           from its width, so we cap the width by the available height too. */
+        /* Desktop: the player still fits the first viewport, but this page has a
+           case study underneath, so it scrolls (no single-screen lock here). */
         @media (min-width: 1025px) {
-            html, body { height: 100%; overflow: hidden; }
-            .page-wrapper { height: 100vh; }
             .main-content { padding: 4.5rem 3rem 1.5rem; align-items: center; min-height: 0; }
             .cs-video-hero { width: min(100%, calc((100vh - 12rem) * 16 / 9)); margin: 0 auto; }
             .footer { padding: 1.25rem 3rem; }
@@ -1006,6 +1003,42 @@
 
         /* Footer link inherits footer colour (kills default visited-link purple) */
         .footer-link, .footer-link:link, .footer-link:visited { color: inherit; }
+        /* ==================== */
+        /* CASE STUDY           */
+        /* ==================== */
+        .case-study { grid-column: 1 / -1; width: 100%; max-width: 1200px; margin: 0 auto; padding: 3rem 0 6rem; }
+        .cs-head {
+            display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+            border-top: 1px solid rgba(10, 10, 10, 0.12); padding-top: 2.5rem; margin-bottom: 3.5rem;
+        }
+        .cs-title { font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 700; letter-spacing: -0.045em; line-height: 0.95; color: var(--black); }
+        .cs-meta { list-style: none; margin: 0; padding: 0; display: flex; gap: 2.5rem; flex-wrap: wrap; }
+        .cs-meta li { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.02em; color: var(--black); }
+        .cs-meta span { display: block; font-size: 0.7rem; font-weight: 400; letter-spacing: 0; opacity: 0.5; margin-bottom: 0.25rem; }
+        .cs-block { margin-bottom: 3.5rem; }
+        .cs-h { font-size: clamp(1.4rem, 2.6vw, 2.1rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin: 0 0 1.1rem; color: var(--black); }
+        .cs-block p { max-width: 720px; font-size: 1.05rem; line-height: 1.7; letter-spacing: -0.02em; color: rgba(10, 10, 10, 0.72); margin: 0 0 1rem; }
+        .cs-two { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .cs-crew { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.1rem 2rem; margin: 0; }
+        .cs-crew dt { font-size: 0.7rem; font-weight: 400; opacity: 0.5; margin-bottom: 0.2rem; }
+        .cs-crew dd { margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; color: var(--black); }
+        .cs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .cs-grid img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-radius: 4px; background: #ececec; }
+        .cs-learned { list-style: none; margin: 0; padding: 0; counter-reset: lesson; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+        .cs-learned li { counter-increment: lesson; font-size: 1.05rem; line-height: 1.5; letter-spacing: -0.02em; color: rgba(10, 10, 10, 0.72); padding-top: 0.9rem; border-top: 1px solid rgba(10, 10, 10, 0.12); }
+        .cs-learned li::before { content: counter(lesson, decimal-leading-zero); display: block; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.04em; color: var(--black); margin-bottom: 0.5rem; }
+        body.dark-mode .cs-title, body.dark-mode .cs-h, body.dark-mode .cs-meta li, body.dark-mode .cs-crew dd, body.dark-mode .cs-learned li::before { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .cs-block p, body.dark-mode .cs-learned li { color: rgba(255, 255, 255, 0.6) !important; -webkit-text-fill-color: rgba(255, 255, 255, 0.6); }
+        body.dark-mode .cs-meta span, body.dark-mode .cs-crew dt { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .cs-head, body.dark-mode .cs-learned li { border-color: rgba(255, 69, 0, 0.3); }
+        body.dark-mode .cs-grid img { background: #1a1a1a; }
+        @media (max-width: 900px) { .cs-two { grid-template-columns: 1fr; gap: 2rem; } }
+        @media (max-width: 768px) {
+            .case-study { padding: 1.5rem 0 4rem; }
+            .cs-head { margin-bottom: 2.5rem; }
+            .cs-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .cs-block { margin-bottom: 2.75rem; }
+        }
         /* Theme switch: a short cross-fade instead of a hard cut. The class is
            only on <body> for the duration of the fade, so it never fights the
            site's own transitions the rest of the time. */
@@ -1139,11 +1172,72 @@
                     <!-- credits: add a row per credit, e.g. <div class="credit"><dt>dp</dt><dd>name</dd></div> -->
                     <dl class="project-credits">
                         <div class="credit"><dt>director</dt><dd>Jacob Frost</dd></div>
-                        <div class="credit"><dt>agency</dt><dd class="credit-tbd">TBD</dd></div>
+                        <div class="credit"><dt>agency</dt><dd>Direct to client</dd></div>
                         <div class="credit"><dt>client</dt><dd>Fare</dd></div>
                     </dl>
                 </div>
             </div>
+
+            <!-- Case study -->
+            <section class="case-study" id="caseStudy">
+                <div class="cs-head">
+                    <h2 class="cs-title">Case Study</h2>
+                    <ul class="cs-meta">
+                    <li><span>Client</span>FARE (Direct-to-Client)</li>
+                    <li><span>Production Company</span>Covalent Studios</li>
+                    </ul>
+                </div>
+            <div class="cs-block">
+                <h3 class="cs-h">The Challenge.</h3>
+                <p>In early summer 2025, FARE came to us as they were rolling out a full brand refresh. With new stores opening across the country, they needed a suite of video and motion assets to bring their updated identity to life — both in their digital spaces and inside the store.</p>
+                <p>This project was more than just a rebrand. They were looking for content that would help customers feel the care, intentionality, and values behind their food. That meant creating content that would serve both as a tool for sales and as a reflection of the culture they’re building.</p>
+                <p>We were responsible for both a hero brand video and a full set of digital menu assets to be used in-store. These menus play a big role in how people interact with the food once they’re physically in the space, so it was crucial that the look and feel stayed consistent across all formats.</p>
+            </div>
+            <div class="cs-block cs-two">
+                <div>
+                    <h3 class="cs-h">Creative Development</h3>
+                    <p>We kicked things off in May with moodboards and strategy calls. Most of our conversations were with Britni deLeon, FARE’s Chief Creative Officer. She walked us through the heart of the brand and helped align us with what the team wanted to feel, say, and show. From the very beginning, this felt like a true collaboration.</p>
+                </div>
+                <div>
+                    <h3 class="cs-h">Production Strategy</h3>
+                    <p>We gave ourselves 1, 12 hour day of on site shooting at Soil &amp; Soul farm in Long Grove, IL; about an hour north of Chicago. We had a total of 10 crew members on site. A huge part of our coverage on site was properly shooting the sunrise. Sunrise was at 4:45AM so we had to be camera ready by like 4:30AM. With that being said, our producers, director, and our camera team had to stay over on site and prep the night before.</p>
+                </div>
+            </div>
+            <div class="cs-block">
+                <h3 class="cs-h">Production Team.</h3>
+                <dl class="cs-crew">
+                    <div><dt>Production Company</dt><dd>Covalent Studios</dd></div>
+                    <div><dt>Executive Producer</dt><dd>Ben Zebrowski</dd></div>
+                    <div><dt>Producer / AD</dt><dd>Olivia Goss</dd></div>
+                    <div><dt>Director</dt><dd>Jacob Frost</dd></div>
+                    <div><dt>Director of Photography</dt><dd>Jesse Schroeder</dd></div>
+                    <div><dt>1st AC</dt><dd>Ryan Petrucci</dd></div>
+                    <div><dt>B-Cam Operator</dt><dd>Andrew Pingry</dd></div>
+                    <div><dt>Gaffer</dt><dd>Meredith Smith</dd></div>
+                    <div><dt>Grip</dt><dd>Max Dunn</dd></div>
+                    <div><dt>Sound Mixer</dt><dd>Brendan Reilly</dd></div>
+                    <div><dt>PA / BTS Videographer</dt><dd>Omar Bedier</dd></div>
+                </dl>
+            </div>
+            <div class="cs-block">
+                <h3 class="cs-h">Stills.</h3>
+                <div class="cs-grid">
+                    <img src="assets/case-studies/fare/01.jpg" width="1800" height="1012" alt="FARE still 1" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/fare/02.jpg" width="1800" height="1012" alt="FARE still 2" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/fare/03.jpg" width="1800" height="1012" alt="FARE still 3" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/fare/04.jpg" width="1800" height="1012" alt="FARE still 4" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/fare/05.jpg" width="1800" height="1012" alt="FARE still 5" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/fare/06.jpg" width="1800" height="1012" alt="FARE still 6" loading="lazy" decoding="async">
+                </div>
+            </div>
+            <div class="cs-block">
+                <h3 class="cs-h">What we learned…</h3>
+                <ol class="cs-learned">
+                    <li>Film is still one of the most emotional ways to connect with an audience when used with intention.</li>
+                    <li>In order for the production to go smoothly and quickly, you HAVE to have multi-tool players that are willing to do tasks that they haven’t been hired to do.</li>
+                </ol>
+            </div>
+            </section>
         </main>
 
         <!-- Footer -->

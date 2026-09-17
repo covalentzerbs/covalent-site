@@ -990,12 +990,9 @@
         body.dark-mode .cs-vol-fill { background-color: #FF4500; }
         body.dark-mode .cs-vol-track { background-color: rgba(255,69,0,0.35); }
 
-        /* Desktop: fit the entire project page in one viewport so the footer is
-           visible under the player with no scroll. The video derives its height
-           from its width, so we cap the width by the available height too. */
+        /* Desktop: the player still fits the first viewport, but this page has a
+           case study underneath, so it scrolls (no single-screen lock here). */
         @media (min-width: 1025px) {
-            html, body { height: 100%; overflow: hidden; }
-            .page-wrapper { height: 100vh; }
             .main-content { padding: 4.5rem 3rem 1.5rem; align-items: center; min-height: 0; }
             .cs-video-hero { width: min(100%, calc((100vh - 12rem) * 16 / 9)); margin: 0 auto; }
             .footer { padding: 1.25rem 3rem; }
@@ -1006,6 +1003,42 @@
 
         /* Footer link inherits footer colour (kills default visited-link purple) */
         .footer-link, .footer-link:link, .footer-link:visited { color: inherit; }
+        /* ==================== */
+        /* CASE STUDY           */
+        /* ==================== */
+        .case-study { grid-column: 1 / -1; width: 100%; max-width: 1200px; margin: 0 auto; padding: 3rem 0 6rem; }
+        .cs-head {
+            display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+            border-top: 1px solid rgba(10, 10, 10, 0.12); padding-top: 2.5rem; margin-bottom: 3.5rem;
+        }
+        .cs-title { font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 700; letter-spacing: -0.045em; line-height: 0.95; color: var(--black); }
+        .cs-meta { list-style: none; margin: 0; padding: 0; display: flex; gap: 2.5rem; flex-wrap: wrap; }
+        .cs-meta li { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.02em; color: var(--black); }
+        .cs-meta span { display: block; font-size: 0.7rem; font-weight: 400; letter-spacing: 0; opacity: 0.5; margin-bottom: 0.25rem; }
+        .cs-block { margin-bottom: 3.5rem; }
+        .cs-h { font-size: clamp(1.4rem, 2.6vw, 2.1rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin: 0 0 1.1rem; color: var(--black); }
+        .cs-block p { max-width: 720px; font-size: 1.05rem; line-height: 1.7; letter-spacing: -0.02em; color: rgba(10, 10, 10, 0.72); margin: 0 0 1rem; }
+        .cs-two { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .cs-crew { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.1rem 2rem; margin: 0; }
+        .cs-crew dt { font-size: 0.7rem; font-weight: 400; opacity: 0.5; margin-bottom: 0.2rem; }
+        .cs-crew dd { margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; color: var(--black); }
+        .cs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .cs-grid img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-radius: 4px; background: #ececec; }
+        .cs-learned { list-style: none; margin: 0; padding: 0; counter-reset: lesson; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+        .cs-learned li { counter-increment: lesson; font-size: 1.05rem; line-height: 1.5; letter-spacing: -0.02em; color: rgba(10, 10, 10, 0.72); padding-top: 0.9rem; border-top: 1px solid rgba(10, 10, 10, 0.12); }
+        .cs-learned li::before { content: counter(lesson, decimal-leading-zero); display: block; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.04em; color: var(--black); margin-bottom: 0.5rem; }
+        body.dark-mode .cs-title, body.dark-mode .cs-h, body.dark-mode .cs-meta li, body.dark-mode .cs-crew dd, body.dark-mode .cs-learned li::before { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .cs-block p, body.dark-mode .cs-learned li { color: rgba(255, 255, 255, 0.6) !important; -webkit-text-fill-color: rgba(255, 255, 255, 0.6); }
+        body.dark-mode .cs-meta span, body.dark-mode .cs-crew dt { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .cs-head, body.dark-mode .cs-learned li { border-color: rgba(255, 69, 0, 0.3); }
+        body.dark-mode .cs-grid img { background: #1a1a1a; }
+        @media (max-width: 900px) { .cs-two { grid-template-columns: 1fr; gap: 2rem; } }
+        @media (max-width: 768px) {
+            .case-study { padding: 1.5rem 0 4rem; }
+            .cs-head { margin-bottom: 2.5rem; }
+            .cs-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .cs-block { margin-bottom: 2.75rem; }
+        }
         /* Theme switch: a short cross-fade instead of a hard cut. The class is
            only on <body> for the duration of the fade, so it never fights the
            site's own transitions the rest of the time. */
@@ -1139,11 +1172,82 @@
                     <!-- credits: add a row per credit, e.g. <div class="credit"><dt>dp</dt><dd>name</dd></div> -->
                     <dl class="project-credits">
                         <div class="credit"><dt>director</dt><dd>Jacob Frost</dd></div>
-                        <div class="credit"><dt>agency</dt><dd class="credit-tbd">TBD</dd></div>
+                        <div class="credit"><dt>agency</dt><dd>VML</dd></div>
                         <div class="credit"><dt>client</dt><dd>World of Hyatt</dd></div>
                     </dl>
                 </div>
             </div>
+
+            <!-- Case study -->
+            <section class="case-study" id="caseStudy">
+                <div class="cs-head">
+                    <h2 class="cs-title">Case Study</h2>
+                    <ul class="cs-meta">
+                    <li><span>Client</span>World of Hyatt</li>
+                    <li><span>Agency</span>VML</li>
+                    <li><span>Production Company</span>Covalent Studios</li>
+                    </ul>
+                </div>
+            <div class="cs-block">
+                <h3 class="cs-h">Pre-Production</h3>
+                <p>First, hopped on a call with Wilbert on the 7th, then a PPM on the 11th with the whole team; at that point we knew what the game plan was. Reviewed the deck. Asked some clarifying questions. Shoot day was the 18th so…within 11 days we were put on site. Had to act quick and be intentional with our actions. Every day counted.</p>
+                <p>Shoot day rolls around. Picked up our gear from Greenwood Cine, a rental house in Brooklyn; not a huge order because we flew with a lot of our gear and had a small team. After an early train out there to pick-up and an incredibly expensive and full Uber XXL (and yes, not joking; this is actually a thing) we were back at PHNY getting everything built. We have two lights on roller stands and an easy rig with an FX6…again, as nimble as possible!</p>
+            </div>
+            <div class="cs-block cs-two">
+                <div>
+                    <h3 class="cs-h">Production Strategy</h3>
+                    <p>We did not have that much time with Jessica, originally only 5 hours, then cut down to 4 hours with her media interviews beforehand running a bit long; just how it goes! Nobody’s fault! With that being said, we had to be unbelievably organized and on the same page as a production team. Elise was doing BTS photo as well as stills for World of Hyatt Instagram stories so purely for video production, we had 3 totals individuals working on Cam &amp; GnE…that’s how we roll, super nimble and everyone is a team player. Like our man Dan Campbell says…”we want football players, not position players”.</p>
+                </div>
+                <div>
+                    <h3 class="cs-h">Creative Approach</h3>
+                    <p>We wanted to keep the footage sleek and warm and integrate camera movements that were dynamic and helped the editor with pacing. A combination of still frames were we can see Jess as the subject in the physical space, and quick movements that show the lively nature of NYC and Jess’ lifestyle. The 70/30 subject-to-environment blend gave us room to visually explore the space while still grounding each piece in Jess’s narrative. Tennis motifs; rackets, gear bags, and wardrobe threaded through everything as subtle nods to her identity. We kept the vibe collaborative and pressure-free, guiding Jess through luxury lifestyle moments that felt true to her and natural for camera.</p>
+                </div>
+            </div>
+            <div class="cs-block">
+                <h3 class="cs-h">Production Team.</h3>
+                <dl class="cs-crew">
+                    <div><dt>Agency</dt><dd>VML</dd></div>
+                    <div><dt>Agency Producer</dt><dd>Jordan Jones</dd></div>
+                    <div><dt>Production Company</dt><dd>Covalent Studios</dd></div>
+                    <div><dt>Executive Producer</dt><dd>Wilbert Cheng</dd></div>
+                    <div><dt>Producer / AD</dt><dd>Shannon Kay Lewis</dd></div>
+                    <div><dt>Creative Director</dt><dd>Olivia Lowry</dd></div>
+                    <div><dt>Director</dt><dd>Jacob Frost</dd></div>
+                    <div><dt>Director of Photography</dt><dd>Ben Zebrowski</dd></div>
+                    <div><dt>1st AC / Swing</dt><dd>Kai Reinhard</dd></div>
+                    <div><dt>Edit</dt><dd>Wilbert Cheng</dd></div>
+                    <div><dt>Stills Photographer</dt><dd>Elise Pfister</dd></div>
+                    <div><dt>H/MU</dt><dd>Jodie Meis</dd></div>
+                    <div><dt>Stylist</dt><dd>Marrisa Sallie</dd></div>
+                </dl>
+            </div>
+            <div class="cs-block">
+                <h3 class="cs-h">Stills.</h3>
+                <div class="cs-grid">
+                    <img src="assets/case-studies/hyatt/01.jpg" width="1800" height="1012" alt="World of Hyatt still 1" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/02.jpg" width="1800" height="1012" alt="World of Hyatt still 2" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/03.jpg" width="1800" height="1012" alt="World of Hyatt still 3" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/04.jpg" width="1800" height="1012" alt="World of Hyatt still 4" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/05.jpg" width="1800" height="1012" alt="World of Hyatt still 5" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/06.jpg" width="1800" height="1012" alt="World of Hyatt still 6" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/07.jpg" width="1800" height="1012" alt="World of Hyatt still 7" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/08.jpg" width="1800" height="1012" alt="World of Hyatt still 8" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/09.jpg" width="1800" height="1012" alt="World of Hyatt still 9" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/10.jpg" width="1800" height="1012" alt="World of Hyatt still 10" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/11.jpg" width="1800" height="1012" alt="World of Hyatt still 11" loading="lazy" decoding="async">
+                    <img src="assets/case-studies/hyatt/12.jpg" width="1800" height="1012" alt="World of Hyatt still 12" loading="lazy" decoding="async">
+                </div>
+            </div>
+            <div class="cs-block">
+                <h3 class="cs-h">What we learned…</h3>
+                <ol class="cs-learned">
+                    <li>Pre-Pro is EVERYTHING.</li>
+                    <li>The freedom to think creatively is incredibly important and having that flexibility on set is great but having too many ideas can slow the process; easy to get behind.</li>
+                    <li>That being said, if you are behind schedule, you can always make up time by working more efficiently!</li>
+                    <li>The post-production process is part of the pre-production process.</li>
+                </ol>
+            </div>
+            </section>
         </main>
 
         <!-- Footer -->
