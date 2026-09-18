@@ -26,6 +26,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
         :root {
+            /* One timing for every themed property, so nothing fades out of step. */
+            --theme-transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease, fill 300ms ease, stroke 300ms ease, -webkit-text-fill-color 300ms ease;
             --black:     #0A0A0A;
             --white:     #FFFFFF;
             --gray:      #6B7280;
@@ -328,9 +330,7 @@
         body.theme-fading *,
         body.theme-fading *::before,
         body.theme-fading *::after {
-            transition: background-color 0.6s ease, color 0.6s ease, fill 0.6s ease,
-                        stroke 0.6s ease, border-color 0.6s ease,
-                        -webkit-text-fill-color 0.6s ease !important;
+            transition: var(--theme-transition) !important;
         }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
@@ -939,7 +939,7 @@
     (function initDarkMode() {
         var toggle=document.getElementById('darkModeToggle');
         if(localStorage.getItem('darkMode')==='true'){document.body.classList.add('dark-mode');toggle.checked=true;}
-        toggle.addEventListener('change',function(){document.body.classList.add('theme-fading'); clearTimeout(window.__themeFadeT); window.__themeFadeT = setTimeout(function(){ document.body.classList.remove('theme-fading'); }, 700); document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});
+        toggle.addEventListener('change',function(){document.body.classList.add('theme-fading'); clearTimeout(window.__themeFadeT); window.__themeFadeT = setTimeout(function(){ document.body.classList.remove('theme-fading'); }, 360); document.body.classList.toggle('dark-mode');localStorage.setItem('darkMode',document.body.classList.contains('dark-mode'));});
     })();
 
     (function initPageGate(){

@@ -30,6 +30,8 @@
     <style>
 
         :root {
+            /* One timing for every themed property, so nothing fades out of step. */
+            --theme-transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease, fill 300ms ease, stroke 300ms ease, -webkit-text-fill-color 300ms ease;
             --ice: #FAFBFC;
             --bond-blue: #5979e9;
             --black: #0A0A0A;
@@ -216,7 +218,9 @@
             display: flex; align-items: center; justify-content: space-between;
             padding: 1.1rem 2rem; background: transparent; z-index: 10001;
         }
-        @media (max-width: 820px) { .site-footer { position: relative; background: var(--white); } }
+        /* No background of its own in either theme: the bar shows the body behind
+           it, so there is one fade, not a second translucent layer on top. */
+        @media (max-width: 820px) { .site-footer { position: relative; } }
         body.dark-mode .site-footer-left, body.dark-mode .footer-link { color: var(--accent); }
         .site-footer-left { font-size: 0.8rem; color: var(--black); }
         .footer-link { color: var(--black); text-decoration: none; opacity: 0.7; }
@@ -237,8 +241,7 @@
         /* ===== Dark mode ===== */
         body.dark-mode { background-color: var(--space-dark); color: var(--accent); }
         body.dark-mode .hero-section,
-        body.dark-mode .work-section,
-        body.dark-mode .site-footer { background: var(--space-dark); }
+        body.dark-mode .work-section { background: var(--space-dark); }
         body.dark-mode .plus-icon span { background: var(--accent); }
         body.dark-mode .menu-link,
         body.dark-mode .social-link,
@@ -256,9 +259,7 @@
         body.theme-fading *,
         body.theme-fading *::before,
         body.theme-fading *::after {
-            transition: background-color 0.6s ease, color 0.6s ease, fill 0.6s ease,
-                        stroke 0.6s ease, border-color 0.6s ease,
-                        -webkit-text-fill-color 0.6s ease !important;
+            transition: var(--theme-transition) !important;
         }
     </style>
 </head>
@@ -446,7 +447,7 @@
         const toggle = document.getElementById('darkModeToggle');
         if (localStorage.getItem('darkMode') === 'true') { document.body.classList.add('dark-mode'); toggle.checked = true; }
         toggle.addEventListener('change', function() {
-            document.body.classList.add('theme-fading'); clearTimeout(window.__themeFadeT); window.__themeFadeT = setTimeout(function(){ document.body.classList.remove('theme-fading'); }, 700); document.body.classList.toggle('dark-mode');
+            document.body.classList.add('theme-fading'); clearTimeout(window.__themeFadeT); window.__themeFadeT = setTimeout(function(){ document.body.classList.remove('theme-fading'); }, 360); document.body.classList.toggle('dark-mode');
             localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
         });
     })();
