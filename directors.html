@@ -9,9 +9,9 @@
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" href="favicon.ico">
     <meta name="description" content="Meet the directors at Covalent Studios. A roster of filmmakers creating commercials, branded content, and narrative work.">
-    <link rel="canonical" href="https://covalentstudios.co/directors">
+    <link rel="canonical" href="https://covalentstudios.co/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Directors</title>
+    <title>Covalent Studios</title>
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
     <script>
@@ -20,10 +20,10 @@
         gtag('js', new Date());
         gtag('config', 'G-T14F8BVFLJ');
     </script>
-    <meta property="og:title" content="Directors">
+    <meta property="og:title" content="Covalent Studios">
     <meta property="og:description" content="jacob frost, wilbert cheng, benjamin gugick, jon schwartz, noah keckler.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
-    <meta property="og:url" content="https://covalentstudios.co/directors">
+    <meta property="og:url" content="https://covalentstudios.co/">
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://player.vimeo.com">
     <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
@@ -740,7 +740,6 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-links">
-            <a href="/directors" class="menu-link current">Directors</a>
             <a href="/about"     class="menu-link">About</a>
             <a href="/contact"   class="menu-link">Contact</a>
         </div>
@@ -784,23 +783,17 @@
         <!-- Directors List -->
         <div class="directors-list">
             <div class="directors-container">
+                <div class="director-row" data-director="cam" data-vimeo="1223839056">
+                    <span class="director-name">Cam Erickson</span>
+                </div>
                 <div class="director-row" data-director="jacob" data-vimeo="1170741864">
                     <span class="director-name">Jacob Frost</span>
                 </div>
-                <div class="director-row" data-director="jon" data-vimeo="1163390482">
-                    <span class="director-name">Jon Schwartz</span>
+                <div class="director-row" data-director="max" data-vimeo="1222196280">
+                    <span class="director-name">Max Gilberg</span>
                 </div>
                 <div class="director-row" data-director="noah" data-vimeo="1164768847">
                     <span class="director-name">Noah Keckler</span>
-                </div>
-                <div class="director-row" data-director="wilbert" data-vimeo="1122231476">
-                    <span class="director-name">Wilbert Cheng</span>
-                </div>
-                <div class="director-row" data-director="benjamin" data-vimeo="1170747372">
-                    <span class="director-name">Benjamin Gugick</span>
-                </div>
-                <div class="director-row" data-director="justin" data-vimeo="1163945342">
-                    <span class="director-name">Justin Kaminuma</span>
                 </div>
             </div>
         </div>
@@ -850,13 +843,12 @@
 
     <script>
         // Directors data
+        // page:false = no profile page yet, so the row plays its reel but does not click through
         const directors = [
-            { id: 'jacob',    slug: 'jacob-frost',    name: 'Jacob Frost',     vimeo: '1170741864', zoom: 'slight',    thumbnail: 'https://i.vimeocdn.com/video/2129989125-7bcea3f611dc90b29683cb79b07503543d01abd6db34091368cc53005941e0e5-d_1280x720' },
-            { id: 'jon',      slug: 'jon-schwartz',   name: 'Jon Schwartz',    vimeo: '1163390482', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_1280x720' },
-            { id: 'noah',     slug: 'noah-keckler',   name: 'Noah Keckler',    vimeo: '1164768847', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2121554252-a7004843031d0a0efd0bbbf00cf82995c6b3caf2edaa5224a6466ed1c6918a0c-d_1280x720' },
-            { id: 'wilbert',  slug: 'wilbert-cheng',  name: 'Wilbert Cheng',   vimeo: '1122231476',                   thumbnail: 'https://i.vimeocdn.com/video/2063512119-ff88dce3f6ffff1eaee087dff25574c950eb6bdb44d18e05e6777416ee6bda81-d_1280x720' },
-            { id: 'benjamin', slug: 'benjamin-gugick', name: 'Benjamin Gugick', vimeo: '1170747372', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2129996959-f2ac7c3d5c611ab65be91616235857915f17c53bdfe06b3db27d573ed00df7c7-d_1280x720' },
-            { id: 'justin',   slug: 'justin-kaminuma', name: 'Justin Kaminuma', vimeo: '1163945342', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2121364377-308f63c9cb52df3d75bcc5a2f10a40cdbfa2b0ae8ddff9cfad3ce04ba92f552d-d_1280x720' }
+            { id: 'cam',   slug: 'cam-erickson', name: 'Cam Erickson', vimeo: '1223839056', widescreen: true, page: false, thumbnail: 'https://i.vimeocdn.com/video/2197157994-d2f75b57e2db1ff54e3af79907b2c0f9c67e699873a20789d879f1bcbe78878f-d_1280x720' },
+            { id: 'jacob', slug: 'jacob-frost',  name: 'Jacob Frost',  vimeo: '1170741864', zoom: 'slight',   thumbnail: 'https://i.vimeocdn.com/video/2129989125-7bcea3f611dc90b29683cb79b07503543d01abd6db34091368cc53005941e0e5-d_1280x720' },
+            { id: 'max',   slug: 'max-gilberg',  name: 'Max Gilberg',  vimeo: '1222196280',                   page: false, thumbnail: 'https://i.vimeocdn.com/video/2195092897-9a6785a8fe877ac952a8b7f731dd95660a7d5889dd56aad19942dbe267a083b1-d_1280x720' },
+            { id: 'noah',  slug: 'noah-keckler', name: 'Noah Keckler', vimeo: '1164768847', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2121554252-a7004843031d0a0efd0bbbf00cf82995c6b3caf2edaa5224a6466ed1c6918a0c-d_1280x720' }
         ];
 
         const videoWrapper = document.getElementById('videoWrapper');
@@ -998,7 +990,7 @@
                 const directorId = row.getAttribute('data-director');
                 const director = directors.find(d => d.id === directorId);
 
-                if (director) {
+                if (director && director.page !== false) {
                     window.location.href = '/directors/' + director.id;
                 }
             });
