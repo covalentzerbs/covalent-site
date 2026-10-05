@@ -100,6 +100,21 @@
             z-index: 1000;
         }
 
+        /* Top-right nav: About and Contact stacked, small, in place of the old plus menu */
+        .nav { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+        .nav-link {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0.85;
+            transition: opacity 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.current { opacity: 1; }
+        body.dark-mode .nav-link { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
         .menu-toggle {
             width: 40px;
             height: 40px;
@@ -1020,43 +1035,10 @@
 
     <!-- Navigation - Plus Menu -->
     <nav class="nav">
-        <div class="menu-toggle" id="menuToggle">
-            <div class="plus-icon">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+        <a href="/about" class="nav-link">About</a>
+        <a href="/contact" class="nav-link">Contact</a>
     </nav>
 
-    <!-- Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay">
-        <div class="menu-links">
-            <a href="about.html" class="menu-link">About</a>
-            <a href="contact.html" class="menu-link">Contact</a>
-        </div>
-        <div class="menu-socials">
-            <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
-                </svg>
-            </a>
-            <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                </svg>
-            </a>
-            <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="5" r="2.5" fill="currentColor"/>
-                    <rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/>
-                </svg>
-            </a>
-        </div>
-    </div>
 
 
     <!-- Page Wrapper -->
@@ -1209,12 +1191,12 @@
         const menuToggle = document.getElementById('menuToggle');
         const menuOverlay = document.getElementById('menuOverlay');
 
-        menuToggle.addEventListener('click', () => {
+        menuToggle && menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
         });
 
-        menuOverlay.addEventListener('click', (e) => {
+        menuOverlay && menuOverlay.addEventListener('click', (e) => {
             if (e.target === menuOverlay) {
                 menuToggle.classList.remove('active');
                 menuOverlay.classList.remove('active');
@@ -1222,7 +1204,7 @@
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && menuOverlay.classList.contains('active')) {
+            if (e.key === 'Escape' && (menuOverlay && menuOverlay.classList.contains('active'))) {
                 menuToggle.classList.remove('active');
                 menuOverlay.classList.remove('active');
             }
@@ -1382,7 +1364,7 @@
 
         // Keyboard controls
         document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' && !menuOverlay.classList.contains('active')) {
+            if (e.code === 'Space' && !(menuOverlay && menuOverlay.classList.contains('active'))) {
                 e.preventDefault();
                 togglePlay();
             }

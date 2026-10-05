@@ -8,12 +8,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="shortcut icon" href="/favicon.ico">
-    <meta name="description" content="Covalent Studios creative roster — freelance directors available to bid.">
-    <link rel="canonical" href="https://covalentstudios.co/roster/benjamin-gugick">
-    <!-- Roster is unlisted: directors are non-exclusive and not publicly advertised. -->
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Noah Keckler, director at Covalent Studios. Selected commercial and branded work.">
+    <link rel="canonical" href="https://covalentstudios.co/noah">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Directors</title>
+    <title>Noah Keckler</title>
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
     <script>
@@ -22,10 +20,10 @@
         gtag('js', new Date());
         gtag('config', 'G-T14F8BVFLJ');
     </script>
-    <meta property="og:title" content="Directors">
-    <meta property="og:description" content="freelance directors available to bid.">
+    <meta property="og:title" content="Noah Keckler">
+    <meta property="og:description" content="Noah Keckler, director at Covalent Studios.">
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
-    <meta property="og:url" content="https://covalentstudios.co/roster/benjamin-gugick">
+    <meta property="og:url" content="https://covalentstudios.co/noah">
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -998,8 +996,13 @@
         .roster-name { transition: opacity 0.18s ease, color 0.18s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 
         body.roster-hover .roster-heading,
-        body.roster-hover .roster-disclaimer,
-        body.roster-hover .roster-name { opacity: 0; }
+        body.roster-hover .roster-disclaimer { opacity: 0; }
+        /* the rest of the list stays put, dimmed to 40% black over the footage */
+        body.roster-hover .roster-name {
+            opacity: 0.4;
+            color: #000000 !important;
+            -webkit-text-fill-color: #000000;
+        }
 
         body.roster-hover .roster-item.is-hover .roster-name {
             opacity: 1;
@@ -1165,7 +1168,7 @@
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
-<body>
+<body class="roster-unlocked">
     <!-- Custom Cursor -->
     <div class="cursor" id="cursor"></div>
 
@@ -1183,45 +1186,159 @@
         </svg>
     </a>
 
-    <!-- Full-bleed hover preview lives behind the list -->
-    <div class="roster-bg" id="rosterBg" aria-hidden="true"></div>
-
     <!-- Main Content -->
     <main class="roster-page director-page">
-        <!-- The roster itself is AES-256-GCM encrypted and lives in #rosterPayload
-             below. The password derives the key via PBKDF2, so the names are not
-             present in this file in any readable form. -->
-        <section class="gate" id="gate">
-            <form class="gate-form" id="gateForm" autocomplete="off">
-                <label class="gate-label" for="gatePassword">Password</label>
-                <div class="gate-field">
-                    <!-- Visible by default; the button to the right masks it. -->
-                    <input class="gate-input" id="gatePassword" type="text"
-                           autocomplete="current-password" spellcheck="false"
-                           autocapitalize="off" autocorrect="off" required>
-                    <button class="gate-toggle" type="button" id="gateToggle"
-                            aria-pressed="false" aria-label="Hide password" title="Hide password">
-                        <svg class="gate-eye" viewBox="0 0 24 24" width="20" height="20" fill="none"
-                             stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                             stroke-linejoin="round" aria-hidden="true">
-                            <path d="M1.8 12S5.9 5 12 5s10.2 7 10.2 7-4.1 7-10.2 7S1.8 12 1.8 12Z"/>
-                            <circle cx="12" cy="12" r="3.2"/>
-                        </svg>
-                        <svg class="gate-eye-off" viewBox="0 0 24 24" width="20" height="20" fill="none"
-                             stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                             stroke-linejoin="round" aria-hidden="true">
-                            <path d="M9.9 5.2A9.6 9.6 0 0 1 12 5c6.1 0 10.2 7 10.2 7a17.9 17.9 0 0 1-3.3 4.1M6.2 6.2A17.7 17.7 0 0 0 1.8 12S5.9 19 12 19a9.5 9.5 0 0 0 4-.86"/>
-                            <path d="M9.8 9.8a3.2 3.2 0 0 0 4.4 4.4"/>
-                            <path d="M3 3l18 18"/>
-                        </svg>
-                    </button>
+        <div class="roster-reveal" id="rosterContent">
+        <div class="director-top">
+            <h1 class="director-name">Noah Keckler</h1>
+            <a class="director-back" href="/">Back</a>
+        </div>
+        <ul class="reel-grid">
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1164237342" aria-label="Play Anything but Ordinary">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_640?region=us 640w, https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Anything but Ordinary</p>
+                    <p class="reel-client">RAW</p>
                 </div>
-                <button class="gate-btn" type="submit" id="gateBtn">Enter</button>
-                <p class="gate-error" id="gateError" role="alert" aria-live="polite"></p>
-            </form>
-        </section>
-
-        <div class="roster-reveal" id="rosterContent" hidden></div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1205645142" aria-label="Play Everything, All At Once">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2174285588-abfdd775a00eb6c90e250b9338774bd18be2e07a0cf68d931e954624d1949da1-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2174285588-abfdd775a00eb6c90e250b9338774bd18be2e07a0cf68d931e954624d1949da1-d_640?region=us 640w, https://i.vimeocdn.com/video/2174285588-abfdd775a00eb6c90e250b9338774bd18be2e07a0cf68d931e954624d1949da1-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Everything, All At Once</p>
+                    <p class="reel-client"></p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1205645141" aria-label="Play 2026 Summer Smash">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2174285619-15144c066864a5e3e84b932eecc3e1875b5713875cf9e1bc88c4b940ae64b9c6-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2174285619-15144c066864a5e3e84b932eecc3e1875b5713875cf9e1bc88c4b940ae64b9c6-d_640?region=us 640w, https://i.vimeocdn.com/video/2174285619-15144c066864a5e3e84b932eecc3e1875b5713875cf9e1bc88c4b940ae64b9c6-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">2026 Summer Smash</p>
+                    <p class="reel-client">Lyrical Lemonade</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1164239118" aria-label="Play Elevator Pitch">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_640?region=us 640w, https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Elevator Pitch</p>
+                    <p class="reel-client">Sour Boss</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1164238677" aria-label="Play The Summer Smash">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_640?region=us 640w, https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">The Summer Smash</p>
+                    <p class="reel-client">7Eleven</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1164238342" aria-label="Play The Summer Smash II">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2120794176-610e9718d8bd4cee8da54bc70e0d92540cf34fdecb025f47898e0e72de89cb29-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2120794176-610e9718d8bd4cee8da54bc70e0d92540cf34fdecb025f47898e0e72de89cb29-d_640?region=us 640w, https://i.vimeocdn.com/video/2120794176-610e9718d8bd4cee8da54bc70e0d92540cf34fdecb025f47898e0e72de89cb29-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">The Summer Smash II</p>
+                    <p class="reel-client">7Eleven</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1164237797" aria-label="Play Launch">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2120793664-c5e6350c0e88174f6acebe48e2a135ed34e5aa4a2c5898507e0134e952889c86-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2120793664-c5e6350c0e88174f6acebe48e2a135ed34e5aa4a2c5898507e0134e952889c86-d_640?region=us 640w, https://i.vimeocdn.com/video/2120793664-c5e6350c0e88174f6acebe48e2a135ed34e5aa4a2c5898507e0134e952889c86-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Launch</p>
+                    <p class="reel-client">Chicago Cubs x Lyrical Lemonade</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1164237076" aria-label="Play 2024 Summer Smash - Official Commercial">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_640?region=us 640w, https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">2024 Summer Smash - Official Commercial</p>
+                    <p class="reel-client">Lyrical Lemonade</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1164236894" aria-label="Play 2025 Summer Smash - Official Commercial">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2120792016-491ec444d739543bf2941b228a2a50b41ff89c9edd9be80e3cb8afb06780f85b-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2120792016-491ec444d739543bf2941b228a2a50b41ff89c9edd9be80e3cb8afb06780f85b-d_640?region=us 640w, https://i.vimeocdn.com/video/2120792016-491ec444d739543bf2941b228a2a50b41ff89c9edd9be80e3cb8afb06780f85b-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">2025 Summer Smash - Official Commercial</p>
+                    <p class="reel-client">Lyrical Lemonade</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1164236741" aria-label="Play Let's Go on a Trip">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2120791753-73b95cb3ea3a368180f6f8793d26d7dcfe1fba8d7325635ae1dca4a3628aa6f9-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2120791753-73b95cb3ea3a368180f6f8793d26d7dcfe1fba8d7325635ae1dca4a3628aa6f9-d_640?region=us 640w, https://i.vimeocdn.com/video/2120791753-73b95cb3ea3a368180f6f8793d26d7dcfe1fba8d7325635ae1dca4a3628aa6f9-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Let's Go on a Trip</p>
+                    <p class="reel-client"></p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1164236613" aria-label="Play WS_SPRING_FINAL1">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2120791518-7538fd31598d6891cfbdcf977a6cea3858226ff3cce5a7db611b8b99ff9ae440-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2120791518-7538fd31598d6891cfbdcf977a6cea3858226ff3cce5a7db611b8b99ff9ae440-d_640?region=us 640w, https://i.vimeocdn.com/video/2120791518-7538fd31598d6891cfbdcf977a6cea3858226ff3cce5a7db611b8b99ff9ae440-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">WS_SPRING_FINAL1</p>
+                    <p class="reel-client"></p>
+                </div>
+            </li>
+        </ul>
+        </div>
     </main>
 
     <!-- Global Footer -->
@@ -1450,232 +1567,7 @@
         });
     })();
     </script>
-    <script id="rosterPayload" type="application/json">{"s":"JzQ3cKKZZoeKU8LqqZ4HAA==","i":"AKH5GVfcluJDS6FS","c":"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","n":250000}</script>
-    <script>
-    // Roster unlock. The page ships only ciphertext; the password derives the
-    // AES key, so nothing is revealed by view-source or a plain fetch.
-    (function () {
-        var form    = document.getElementById('gateForm');
-        var input   = document.getElementById('gatePassword');
-        var btn     = document.getElementById('gateBtn');
-        var errorEl = document.getElementById('gateError');
-        var gate    = document.getElementById('gate');
-        var target  = document.getElementById('rosterContent');
-        var payload = JSON.parse(document.getElementById('rosterPayload').textContent);
-        var KEY     = 'covalent.roster.pw';
 
-        function b64(s) {
-            var bin = atob(s), out = new Uint8Array(bin.length);
-            for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
-            return out;
-        }
-
-        async function decrypt(password) {
-            var base = await crypto.subtle.importKey(
-                'raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
-            var key = await crypto.subtle.deriveKey(
-                { name: 'PBKDF2', salt: b64(payload.s), iterations: payload.n, hash: 'SHA-256' },
-                base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
-            var plain = await crypto.subtle.decrypt(
-                { name: 'AES-GCM', iv: b64(payload.i) }, key, b64(payload.c));
-            return new TextDecoder().decode(plain);
-        }
-
-        function reveal(html) {
-            target.innerHTML = html;
-            target.hidden = false;
-            gate.remove();
-            document.body.classList.add('roster-unlocked');
-        }
-
-        async function attempt(password, fromStore) {
-            try {
-                reveal(await decrypt(password));
-                try { sessionStorage.setItem(KEY, password); } catch (e) {}
-                return true;
-            } catch (e) {
-                // a bad password fails the GCM auth tag and lands here
-                if (!fromStore) {
-                    errorEl.textContent = 'Incorrect password.';
-                    input.value = '';
-                    input.focus();
-                }
-                try { if (fromStore) sessionStorage.removeItem(KEY); } catch (e2) {}
-                return false;
-            }
-        }
-
-        // Web Crypto needs a secure context (https or localhost).
-        if (!window.crypto || !crypto.subtle) {
-            errorEl.textContent = 'This page needs a secure (https) connection.';
-            if (btn) btn.disabled = true;
-            return;
-        }
-
-        // stay unlocked while the tab is open
-        var saved = null;
-        try { saved = sessionStorage.getItem(KEY); } catch (e) {}
-        if (saved) attempt(saved, true);
-
-        // Password starts visible; this masks it. Caret position is preserved so
-        // toggling mid-typing does not jump the cursor to the end.
-        var toggle = document.getElementById('gateToggle');
-        toggle.addEventListener('click', function () {
-            var wasMasked = input.type === 'password';
-            var start = input.selectionStart, end = input.selectionEnd;
-            var nowMasked = !wasMasked;
-            input.type = nowMasked ? 'password' : 'text';
-            toggle.classList.toggle('is-masked', nowMasked);
-            toggle.setAttribute('aria-pressed', nowMasked ? 'true' : 'false');
-            var lbl = nowMasked ? 'Show password' : 'Hide password';
-            toggle.setAttribute('aria-label', lbl);
-            toggle.setAttribute('title', lbl);
-            input.focus();
-            try { input.setSelectionRange(start, end); } catch (err) {}
-        });
-
-        form.addEventListener('submit', async function (e) {
-            e.preventDefault();
-            var pw = input.value;
-            if (!pw) return;
-            errorEl.textContent = '';
-            btn.disabled = true;
-            await attempt(pw, false);
-            btn.disabled = false;
-        });
-    })();
-    </script>
-
-    <script>
-    // Hover preview. Names carry data-reel (their reel's first Vimeo id) inside
-    // the encrypted markup, so this is delegated and only wires up post-unlock.
-    // Every reel's player is created once, warmed up paused in the background,
-    // and just toggled on hover - so the clip is already buffered when the
-    // cursor lands on a name.
-    (function () {
-        if (!(window.matchMedia && matchMedia('(hover: hover)').matches)) return;
-        var bg = document.getElementById('rosterBg');
-        var frames = {};        // vimeo id -> iframe
-        var current = null, active = null;
-
-        function post(frame, method, value) {
-            try {
-                frame.contentWindow.postMessage(JSON.stringify(
-                    value === undefined ? { method: method } : { method: method, value: value }), '*');
-            } catch (e) {}
-        }
-
-        function frameFor(item) {
-            var id = item.getAttribute('data-reel');
-            if (!id) return null;
-            if (frames[id]) return frames[id];
-            var hash = item.getAttribute('data-reel-hash');
-            var f = document.createElement('iframe');
-            f.src = 'https://player.vimeo.com/video/' + id +
-                    '?background=1&autoplay=0&loop=1&muted=1&dnt=1&quality=720p' +
-                    (hash ? '&h=' + hash : '');
-            f.setAttribute('allow', 'autoplay');
-            f.setAttribute('tabindex', '-1');
-            f.title = '';
-            f.addEventListener('load', function () {
-                f.dataset.loaded = '1';
-                // background=1 wants to autoplay; hold it until it is hovered
-                if (active !== f) post(f, 'pause');
-                else { post(f, 'play'); f.classList.add('is-ready'); }
-            });
-            bg.appendChild(f);
-            frames[id] = f;
-            return f;
-        }
-
-        function leave() {
-            if (!current) return;
-            current.classList.remove('is-hover');
-            current = null;
-            document.body.classList.remove('roster-hover');
-            bg.classList.remove('is-on');
-            clearTimeout(playCheck);
-            if (active) { post(active, 'pause'); active.classList.remove('is-ready'); active = null; }
-        }
-
-        // The player answers getPaused; if it will not start from the warm
-        // state within a beat, reload it with autoplay on. Slower, but never
-        // a frozen frame.
-        var playCheck = null;
-        function ensurePlaying(f) {
-            clearTimeout(playCheck);
-            var answered = false;
-            function onMsg(e) {
-                if (e.source !== f.contentWindow) return;
-                try {
-                    var d = JSON.parse(e.data);
-                    if (d.method === 'getPaused') {
-                        answered = true;
-                        window.removeEventListener('message', onMsg);
-                        if (d.value === true && active === f) reload(f);
-                    }
-                } catch (err) {}
-            }
-            window.addEventListener('message', onMsg);
-            post(f, 'getPaused');
-            playCheck = setTimeout(function () {
-                window.removeEventListener('message', onMsg);
-                if (!answered && active === f) reload(f);
-            }, 900);
-        }
-        function reload(f) {
-            if (f.dataset.reloaded) return;
-            f.dataset.reloaded = '1';
-            f.src = f.src.replace('autoplay=0', 'autoplay=1');
-        }
-
-        function enter(item) {
-            if (item === current) return;
-            leave();
-            var f = frameFor(item);
-            if (!f) return;
-            current = item;
-            active = f;
-            item.classList.add('is-hover');
-            document.body.classList.add('roster-hover');
-            bg.classList.add('is-on');
-            if (f.dataset.loaded) {
-                post(f, 'play');
-                f.classList.add('is-ready');
-                setTimeout(function () { if (active === f) ensurePlaying(f); }, 250);
-            }
-        }
-
-        // Warm every reel once the list is on the page, one at a time so they
-        // do not all fight for the same connections.
-        function warm() {
-            var items = [].slice.call(document.querySelectorAll('.roster-item[data-reel]'));
-            var i = 0;
-            (function next() {
-                if (i >= items.length) return;
-                frameFor(items[i++]);
-                setTimeout(next, 350);
-            })();
-        }
-        var idle = window.requestIdleCallback || function (cb) { setTimeout(cb, 200); };
-        new MutationObserver(function (records, obs) {
-            if (!document.querySelector('.roster-item[data-reel]')) return;
-            obs.disconnect();
-            idle(warm);
-        }).observe(document.getElementById('rosterContent'), { childList: true });
-
-        document.addEventListener('mouseover', function (e) {
-            var item = e.target.closest && e.target.closest('.roster-item[data-reel]');
-            if (item) enter(item);
-        });
-        document.addEventListener('mouseout', function (e) {
-            var item = e.target.closest && e.target.closest('.roster-item[data-reel]');
-            if (item && item === current && !item.contains(e.relatedTarget)) leave();
-        });
-        document.addEventListener('visibilitychange', function () { if (document.hidden) leave(); });
-        window.addEventListener('pagehide', leave);
-    })();
-    </script>
 
     <script>
     // Reel playback. Tiles ship as thumbnails only; the Vimeo iframe is created
@@ -1735,13 +1627,6 @@
             if (document.hidden) stop();
         });
 
-        // The tab title is generic until the page is unlocked.
-        new MutationObserver(function (records, obs) {
-            var name = document.querySelector('.director-name');
-            if (!name) return;
-            document.title = name.textContent;
-            obs.disconnect();
-        }).observe(document.getElementById('rosterContent'), { childList: true });
     })();
     </script>
 </body>

@@ -96,6 +96,21 @@
             z-index: 10001;
         }
 
+        /* Top-right nav: About and Contact stacked, small, in place of the old plus menu */
+        .nav { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+        .nav-link {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.85;
+            transition: opacity 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.current { opacity: 1; }
+        body.dark-mode .nav-link { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
         .menu-toggle {
             width: 40px;
             height: 40px;
@@ -283,33 +298,26 @@
             position: relative;
         }
 
+        /* Each reel iframe is sized to its clip's own aspect ratio (--va, set by
+           the script) and then enlarged until it covers the viewport in both
+           directions, like object-fit: cover. The clip itself therefore never
+           letterboxes inside the player, so there are no bars on any screen
+           shape. The 4% overscan hides the player's edge pixels. */
         .video-wrapper iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transform: scale(1.33);
-            transform-origin: center center;
+            top: 50%;
+            left: 50%;
+            width: max(100vw, calc(100vh * var(--va, 1.778)));
+            height: max(100vh, calc(100vw / var(--va, 1.778)));
+            width: max(100vw, calc(100dvh * var(--va, 1.778)));
+            height: max(100dvh, calc(100vw / var(--va, 1.778)));
+            transform: translate(-50%, -50%) scale(1.04);
             border: none;
-            object-fit: cover;
             opacity: 0;
             transition: opacity 0.25s ease;
             pointer-events: none;
         }
 
-        .video-wrapper iframe.widescreen {
-            transform: scale(1.12);
-        }
-
-        .video-wrapper iframe.zoom-slight {
-            transform: scale(1.15);
-        }
-
-        /* for 4:3 clips (e.g. justin's yungblud reel) — zoom to fill the 16:9 frame */
-        .video-wrapper iframe.zoom-fill {
-            transform: scale(1.4);
-        }
 
         .video-wrapper iframe.active {
             opacity: 1;
@@ -453,17 +461,6 @@
                 pointer-events: none;
             }
 
-            /* Full-bleed video fix for portrait mobile — same as home.html */
-            .video-background {
-                overflow: hidden;
-            }
-            .video-wrapper iframe {
-                width: 177.78dvh !important;
-                height: 100dvh !important;
-                top: 50% !important;
-                left: 50% !important;
-                transform: translate(-50%, -50%) !important;
-            }
         }
         /* ==================== */
         /* FOOTER */
@@ -729,43 +726,10 @@
 
     <!-- Navigation - Plus Menu -->
     <nav class="nav">
-        <div class="menu-toggle" id="menuToggle">
-            <div class="plus-icon">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+        <a href="/about" class="nav-link">About</a>
+        <a href="/contact" class="nav-link">Contact</a>
     </nav>
 
-    <!-- Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay">
-        <div class="menu-links">
-            <a href="/about"     class="menu-link">About</a>
-            <a href="/contact"   class="menu-link">Contact</a>
-        </div>
-        <div class="menu-socials">
-            <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
-                </svg>
-            </a>
-            <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                </svg>
-            </a>
-            <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="5" r="2.5" fill="currentColor"/>
-                    <rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/>
-                </svg>
-            </a>
-        </div>
-    </div>
 
     <!-- Content Area (logo stays within this, never enters footer) -->
     <div class="content-area">
@@ -843,12 +807,13 @@
 
     <script>
         // Directors data
-        // page:false = no profile page yet, so the row plays its reel but does not click through
+        // va = the clip's own aspect ratio; the iframe is sized to it so it covers the
+        // viewport with no bars, whatever shape the window is
         const directors = [
-            { id: 'cam',   slug: 'cam-erickson', name: 'Cam Erickson', vimeo: '1223839056', widescreen: true, page: false, thumbnail: 'https://i.vimeocdn.com/video/2197157994-d2f75b57e2db1ff54e3af79907b2c0f9c67e699873a20789d879f1bcbe78878f-d_1280x720' },
-            { id: 'jacob', slug: 'jacob-frost',  name: 'Jacob Frost',  vimeo: '1170741864', zoom: 'slight',   thumbnail: 'https://i.vimeocdn.com/video/2129989125-7bcea3f611dc90b29683cb79b07503543d01abd6db34091368cc53005941e0e5-d_1280x720' },
-            { id: 'max',   slug: 'max-gilberg',  name: 'Max Gilberg',  vimeo: '1222196280',                   page: false, thumbnail: 'https://i.vimeocdn.com/video/2195092897-9a6785a8fe877ac952a8b7f731dd95660a7d5889dd56aad19942dbe267a083b1-d_1280x720' },
-            { id: 'noah',  slug: 'noah-keckler', name: 'Noah Keckler', vimeo: '1164768847', widescreen: true, thumbnail: 'https://i.vimeocdn.com/video/2121554252-a7004843031d0a0efd0bbbf00cf82995c6b3caf2edaa5224a6466ed1c6918a0c-d_1280x720' }
+            { id: 'cam',   slug: 'cam-erickson', name: 'Cam Erickson', vimeo: '1223839056', va: 1.778, thumbnail: 'https://i.vimeocdn.com/video/2197157994-d2f75b57e2db1ff54e3af79907b2c0f9c67e699873a20789d879f1bcbe78878f-d_1280x720' },
+            { id: 'jacob', slug: 'jacob-frost',  name: 'Jacob Frost',  vimeo: '1170741864', va: 1.778, thumbnail: 'https://i.vimeocdn.com/video/2129989125-7bcea3f611dc90b29683cb79b07503543d01abd6db34091368cc53005941e0e5-d_1280x720' },
+            { id: 'max',   slug: 'max-gilberg',  name: 'Max Gilberg',  vimeo: '1222196280', va: 1.333, thumbnail: 'https://i.vimeocdn.com/video/2195092897-9a6785a8fe877ac952a8b7f731dd95660a7d5889dd56aad19942dbe267a083b1-d_1280x720' },
+            { id: 'noah',  slug: 'noah-keckler', name: 'Noah Keckler', vimeo: '1164768847', va: 1.778, thumbnail: 'https://i.vimeocdn.com/video/2121554252-a7004843031d0a0efd0bbbf00cf82995c6b3caf2edaa5224a6466ed1c6918a0c-d_1280x720' }
         ];
 
         const videoWrapper = document.getElementById('videoWrapper');
@@ -880,11 +845,7 @@
                 iframe.src = `https://www.youtube.com/embed/${director.youtube}?autoplay=1&loop=1&muted=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=${director.youtube}&playsinline=1`;
             }
 
-            if (director.zoom) {
-                iframe.classList.add('zoom-' + director.zoom);
-            } else if (director.widescreen) {
-                iframe.classList.add('widescreen');
-            }
+            iframe.style.setProperty('--va', director.va || 1.778);
 
             return iframe;
         }
@@ -990,8 +951,8 @@
                 const directorId = row.getAttribute('data-director');
                 const director = directors.find(d => d.id === directorId);
 
-                if (director && director.page !== false) {
-                    window.location.href = '/directors/' + director.id;
+                if (director) {
+                    window.location.href = '/' + director.id;
                 }
             });
         });
@@ -1003,13 +964,13 @@
         }
 
         // Menu toggle
-        menuToggle.addEventListener('click', () => {
+        menuToggle && menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
         });
 
         // Close menu when clicking outside
-        menuOverlay.addEventListener('click', (e) => {
+        menuOverlay && menuOverlay.addEventListener('click', (e) => {
             if (e.target === menuOverlay) {
                 menuToggle.classList.remove('active');
                 menuOverlay.classList.remove('active');
@@ -1018,7 +979,7 @@
 
         // Close menu on escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && menuOverlay.classList.contains('active')) {
+            if (e.key === 'Escape' && (menuOverlay && menuOverlay.classList.contains('active'))) {
                 menuToggle.classList.remove('active');
                 menuOverlay.classList.remove('active');
             }

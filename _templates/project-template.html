@@ -99,6 +99,21 @@
             z-index: 1000;
         }
 
+        /* Top-right nav: About and Contact stacked, small, in place of the old plus menu */
+        .nav { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+        .nav-link {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0.85;
+            transition: opacity 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.current { opacity: 1; }
+        body.dark-mode .nav-link { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
         .menu-toggle {
             width: 48px;
             height: 48px;
@@ -881,21 +896,10 @@
 
     <!-- Navigation - Plus Menu -->
     <nav class="nav">
-        <div class="menu-toggle" id="menuToggle">
-            <div class="plus-icon">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+        <a href="/about" class="nav-link">About</a>
+        <a href="/contact" class="nav-link">Contact</a>
     </nav>
 
-    <!-- Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay">
-        <div class="menu-links">
-            <a href="../work.html" class="menu-link">work</a>
-            <a href="../contact.html" class="menu-link">Contact</a>
-        </div>
-    </div>
 
 
     <!-- Page Wrapper -->
@@ -1033,12 +1037,12 @@
         const menuToggle = document.getElementById('menuToggle');
         const menuOverlay = document.getElementById('menuOverlay');
 
-        menuToggle.addEventListener('click', () => {
+        menuToggle && menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
         });
 
-        menuOverlay.addEventListener('click', (e) => {
+        menuOverlay && menuOverlay.addEventListener('click', (e) => {
             if (e.target === menuOverlay) {
                 menuToggle.classList.remove('active');
                 menuOverlay.classList.remove('active');
@@ -1046,7 +1050,7 @@
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && menuOverlay.classList.contains('active')) {
+            if (e.key === 'Escape' && (menuOverlay && menuOverlay.classList.contains('active'))) {
                 menuToggle.classList.remove('active');
                 menuOverlay.classList.remove('active');
             }
@@ -1234,7 +1238,7 @@
 
         // Keyboard controls
         document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space' && !menuOverlay.classList.contains('active')) {
+            if (e.code === 'Space' && !(menuOverlay && menuOverlay.classList.contains('active'))) {
                 e.preventDefault();
                 togglePlay();
             }

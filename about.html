@@ -88,6 +88,21 @@
             z-index: 10001;
         }
 
+        /* Top-right nav: About and Contact stacked, small, in place of the old plus menu */
+        .nav { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+        .nav-link {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0.85;
+            transition: opacity 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.current { opacity: 1; }
+        body.dark-mode .nav-link { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
         .menu-toggle {
             width: 40px;
             height: 40px;
@@ -716,29 +731,6 @@
             will-change: transform;
         }
 
-        .about-pronounce {
-            display: flex;
-            align-items: baseline;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
-        }
-        .about-pronounce .pronounce-word {
-            font-size: clamp(1.5rem, 2.8vw, 2.4rem);
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1;
-            color: var(--black);
-        }
-        .about-pronounce .pronounce-note {
-            font-size: clamp(0.85rem, 1.1vw, 1rem);
-            font-weight: 700;
-            color: var(--black);
-            opacity: 0.45;
-        }
-        body.dark-mode .about-pronounce .pronounce-word,
-        body.dark-mode .about-pronounce .pronounce-note { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
-
         .about-page .reveal-text {
             font-size: clamp(17px, 2.05vw, 26px);
             font-weight: 700;
@@ -953,43 +945,10 @@
 
     <!-- Navigation - Plus Menu -->
     <nav class="nav">
-        <div class="menu-toggle" id="menuToggle">
-            <div class="plus-icon">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+        <a href="/about" class="nav-link current">About</a>
+        <a href="/contact" class="nav-link">Contact</a>
     </nav>
 
-    <!-- Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay">
-        <div class="menu-links">
-            <a href="about.html" class="menu-link current">About</a>
-            <a href="contact.html" class="menu-link">Contact</a>
-        </div>
-        <div class="menu-socials">
-            <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
-                </svg>
-            </a>
-            <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/>
-                    <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                </svg>
-            </a>
-            <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="5" r="2.5" fill="currentColor"/>
-                    <rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/>
-                </svg>
-            </a>
-        </div>
-    </div>
 
     <!-- Logo Bottom Right -->
     <a href="/" class="logo-bottom">
@@ -1004,11 +963,6 @@
         <div class="manifesto-scroll-container" id="manifestoScroll">
             <div class="manifesto-sticky">
                 <div class="manifesto-inner" id="manifestoInner">
-                    <!-- How to say it. People keep getting it wrong. -->
-                    <div class="about-pronounce" aria-label="Pronunciation: kow vay luhnt, like the bond">
-                        <span class="pronounce-word">kow · vay · luhnt</span>
-                        <span class="pronounce-note">Like the bond.</span>
-                    </div>
                     <p class="reveal-text" id="manifesto-text">Film is made by people. Real people in a room, collaborating toward one vision. The struggle, the creative problem-solving, the split-second decisions, the imperfections that somehow work perfectly. That's where the magic lives, and we started Covalent in 2024 because we believe it's worth protecting. Technology should amplify that process, not replace it. We use every tool at our disposal to be faster, smarter, and more efficient, but always in service of creating time and space for what actually matters: the human experience.
 
 We're a production company that makes things. Commercials, content, films. Every frame is created, not synthesized. We don't ask you to imagine our creativity. You'll see it. What sets us apart isn't what we say about ourselves. It's how you feel when you work with us.
@@ -1102,12 +1056,12 @@ Boutique means we're selective. It means we care about who we work with and what
         const menuToggle = document.getElementById('menuToggle');
         const menuOverlay = document.getElementById('menuOverlay');
 
-        menuToggle.addEventListener('click', () => {
+        menuToggle && menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             menuOverlay.classList.toggle('active');
         });
 
-        menuOverlay.addEventListener('click', (e) => {
+        menuOverlay && menuOverlay.addEventListener('click', (e) => {
             if (e.target === menuOverlay) {
                 menuToggle.classList.remove('active');
                 menuOverlay.classList.remove('active');
@@ -1115,7 +1069,7 @@ Boutique means we're selective. It means we care about who we work with and what
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && menuOverlay.classList.contains('active')) {
+            if (e.key === 'Escape' && (menuOverlay && menuOverlay.classList.contains('active'))) {
                 menuToggle.classList.remove('active');
                 menuOverlay.classList.remove('active');
             }

@@ -13,13 +13,23 @@
       "permanent": false
     },
     {
+      "source": "/directors/jacob",
+      "destination": "/jacob",
+      "permanent": true
+    },
+    {
       "source": "/directors/jacob-frost",
-      "destination": "/directors/jacob",
+      "destination": "/jacob",
+      "permanent": true
+    },
+    {
+      "source": "/directors/noah",
+      "destination": "/noah",
       "permanent": true
     },
     {
       "source": "/directors/noah-keckler",
-      "destination": "/directors/noah",
+      "destination": "/noah",
       "permanent": true
     },
     {

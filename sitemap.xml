@@ -70,4 +70,24 @@
     <priority>0.3</priority>
     <changefreq>yearly</changefreq>
   </url>
+    <url>
+        <loc>https://covalentstudios.co/cam</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://covalentstudios.co/jacob</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://covalentstudios.co/max</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://covalentstudios.co/noah</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>
