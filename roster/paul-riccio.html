@@ -1168,6 +1168,84 @@
         body.theme-fading *::after {
             transition: var(--theme-transition) !important;
         }
+        /* ── Work Viewer ──────────────────────────────────── */
+        .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+        .work-viewer.active { opacity:1; pointer-events:all; }
+        .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); height:calc(90vw * 9 / 16); max-height:90vh; }
+        .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+        .viewer-video-hero { position:absolute; inset:0; }
+        .viewer-click-layer { position:absolute; inset:0; z-index:2; }
+        .viewer-center-icon { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0.7); width:84px; height:84px; border-radius:50%; background:rgba(0,0,0,0.42); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; z-index:4; }
+        .viewer-center-icon .cc-ic { width:38px; height:38px; display:none; }
+        .viewer-center-icon.show-play .cc-play { display:block; }
+        .viewer-center-icon.show-pause .cc-pause { display:block; }
+        .viewer-center-icon.flash { animation:ccFlash 0.6s ease-out; }
+        @keyframes ccFlash { 0%{opacity:0;transform:translate(-50%,-50%) scale(0.7);} 18%{opacity:1;transform:translate(-50%,-50%) scale(1);} 100%{opacity:0;transform:translate(-50%,-50%) scale(1.3);} }
+        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 96px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
+        .viewer-fs-corner { position:absolute; bottom:14px; right:18px; z-index:5; background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
+        .viewer-fs-corner:hover { opacity:1; }
+        /* volume control: corner button left of the expand button, with a pop-up gauge */
+        .viewer-vol { position:absolute; bottom:14px; right:54px; z-index:5; display:flex; align-items:center; justify-content:center; line-height:0; transition:opacity 0.3s ease; }
+        .viewer-vol-btn { background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
+        .viewer-vol-btn:hover { opacity:1; }
+        .viewer-vol-btn .vol-ic { display:none; }
+        .viewer-vol-btn .vol-on { display:block; }
+        .viewer-vol.muted .vol-on { display:none; }
+        .viewer-vol.muted .vol-off { display:block; }
+        .viewer-vol-gauge { position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); opacity:0; pointer-events:none; transition:opacity 0.18s ease; background:rgba(20,20,20,0.72); border-radius:999px; padding:12px 0; }
+        .viewer-vol.show-gauge .viewer-vol-gauge { opacity:1; pointer-events:auto; }
+        .viewer-vol-track { width:4px; height:70px; margin:0 13px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; cursor:none; }
+        .viewer-vol-fill { position:absolute; left:0; right:0; bottom:0; height:0%; background:#fff; border-radius:999px; }
+        .viewer-video-hero.cs-playing .viewer-controls { opacity:0; transform:translateY(6px); pointer-events:none; }
+        .viewer-video-hero.cs-playing.cs-hover .viewer-controls { opacity:1; transform:translateY(0); pointer-events:auto; }
+        /* corner buttons (volume + expand) fade out with the controls when the video isn't being hovered */
+        .viewer-video-hero.cs-playing ~ .viewer-fs-corner, .viewer-video-hero.cs-playing ~ .viewer-vol { opacity:0; pointer-events:none; }
+        .viewer-video-hero.cs-playing.cs-hover ~ .viewer-fs-corner { opacity:0.65; pointer-events:auto; }
+        .viewer-video-hero.cs-playing.cs-hover ~ .viewer-vol { opacity:1; pointer-events:auto; }
+        .viewer-ctrl-btn { background:none; border:none; padding:4px 6px; flex-shrink:0; cursor:none; }
+        .viewer-ctrl-btn .cs-ctrl-icon { display:none; width:14px; height:14px; object-fit:contain; }
+        .viewer-ctrl-btn .cs-icon-play { display:block; }
+        .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-play { display:none; }
+        .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-pause { display:block; }
+        .viewer-progress { flex:1; padding:8px 0; cursor:none; position:relative; }
+        .viewer-progress .cs-progress-track { width:100%; height:2px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; overflow:hidden; transition:height 0.15s ease; }
+        .viewer-progress .cs-progress-fill { position:absolute; left:0; top:0; bottom:0; width:0%; background:#fff; border-radius:999px; }
+        .viewer-progress .cs-progress-thumb { position:absolute; top:50%; left:0; width:11px; height:11px; border-radius:50%; background:#fff; transform:translate(-50%,-50%); opacity:0; transition:opacity 0.15s ease; pointer-events:none; box-shadow:0 1px 5px rgba(0,0,0,0.5); }
+        .viewer-progress:hover .cs-progress-thumb, .viewer-progress.dragging .cs-progress-thumb { opacity:1; }
+        .viewer-progress:hover .cs-progress-track, .viewer-progress.dragging .cs-progress-track { height:4px; }
+        /* scrubber frame preview (mini player seeked to the cursor time) */
+        .scrub-preview { position:absolute; bottom:calc(100% + 14px); left:0; transform:translateX(-50%); width:168px; opacity:0; pointer-events:none; transition:opacity 0.12s ease; z-index:6; }
+        .scrub-preview.show { opacity:1; }
+        .scrub-preview-frame { width:168px; height:95px; border-radius:6px; overflow:hidden; background:#000; box-shadow:0 10px 34px rgba(0,0,0,0.55); position:relative; }
+        .scrub-preview-frame iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100%; height:100%; min-width:169px; min-height:95px; border:none; pointer-events:none; }
+        .scrub-preview-time { display:block; text-align:center; margin-top:5px; font-size:11px; color:#fff; font-family:'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; letter-spacing:-0.03em; text-shadow:0 1px 3px rgba(0,0,0,0.65); }
+        .viewer-time { font-size:11px; color:rgba(255,255,255,0.7); white-space:nowrap; font-family:'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; letter-spacing:-0.04em; }
+        .viewer-close { position:absolute; top:1.5rem; right:1.5rem; z-index:10; background:none; border:none; cursor:none; padding:0.5rem; opacity:0.5; transition:opacity 0.2s; line-height:0; }
+        .viewer-close:hover { opacity:1; }
+        .viewer-meta { position:absolute; bottom:2rem; left:3rem; display:none; flex-direction:column; gap:0.2rem; pointer-events:none; }
+        .viewer-client-label { font-size:0.6rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); }
+        .viewer-title-label { font-size:0.95rem; font-weight:400; color:rgba(255,255,255,0.85); text-transform:lowercase; }
+        .viewer-nav { display:none; position:absolute; top:50%; transform:translateY(-50%); background:none; border:none; cursor:none; padding:1.2rem; opacity:0.4; transition:opacity 0.2s; line-height:0; }
+        .viewer-nav:hover { opacity:1; }
+        .viewer-prev { left:0.5rem; }
+        .viewer-next { right:0.5rem; }
+        /* viewer open: hide page chrome (menu +) and the corner close; clicking the margin closes */
+        body.viewer-open .nav { opacity:0 !important; pointer-events:none !important; }
+        body.viewer-open .logo-bottom, body.viewer-open .site-footer { opacity:0 !important; pointer-events:none !important; }
+        /* fullscreen: let the native cursor show (the custom cursor can't render outside the fullscreen element) */
+        :fullscreen, :fullscreen * { cursor:auto !important; }
+        :-webkit-full-screen, :-webkit-full-screen * { cursor:auto !important; }
+        /* fullscreen idle: hide cursor + controls + expand button after 1s of no movement */
+        #viewerFrame.fs-idle, #viewerFrame.fs-idle * { cursor:none !important; }
+        #viewerFrame.fs-idle .viewer-controls, #viewerFrame.fs-idle .viewer-fs-corner, #viewerFrame.fs-idle .viewer-vol { opacity:0 !important; pointer-events:none !important; }
+        .viewer-close { display:none; }
+        /* EXIT cursor: knockout label shown when the pointer leaves the video bounds */
+        #viewerExitCursor { position:fixed; left:-200px; top:-200px; text-transform:uppercase;
+            transform:translate(-50%,-50%) scale(.85); opacity:0; pointer-events:none; z-index:10080;
+            mix-blend-mode:difference; transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1);
+            will-change:transform,left,top,opacity; }
+        #viewerExitCursor.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
+        body.viewer-exit-active .cursor { opacity:0 !important; }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -1683,6 +1761,271 @@
     })();
     </script>
 
+    <!-- Work Viewer -->
+    <div id="workViewer" class="work-viewer">
+        <div class="viewer-frame" id="viewerFrame">
+            <div class="viewer-video-hero" id="viewerVideoHero">
+                <iframe id="viewerIframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <div class="viewer-click-layer" id="viewerClickLayer"></div>
+                <div class="viewer-center-icon" id="viewerCenterIcon" aria-hidden="true">
+                    <svg class="cc-ic cc-play" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="cc-ic cc-pause" viewBox="0 0 24 24" fill="#fff"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                </div>
+                <div class="viewer-controls" id="viewerControls">
+                    <button class="viewer-ctrl-btn" id="viewerPlayPause" data-cursor="play">
+                        <img src="/assets/logos/covalent_white_play_button.png" width="128" height="128" alt="Play" class="cs-ctrl-icon cs-icon-play">
+                        <img src="/assets/logos/pause_button.png" width="128" height="128" alt="Pause" class="cs-ctrl-icon cs-icon-pause">
+                    </button>
+                    <div class="viewer-progress" id="viewerProgress">
+                        <div class="scrub-preview" id="scrubPreview"><div class="scrub-preview-frame" id="scrubPreviewFrame"></div><span class="scrub-preview-time" id="scrubPreviewTime">0:00</span></div>
+                        <div class="cs-progress-track"><div class="cs-progress-fill" id="viewerFill"></div></div>
+                        <div class="cs-progress-thumb" id="viewerThumb"></div>
+                    </div>
+                    <div class="viewer-time" id="viewerTime">00:00 / 00:00</div>
+                </div>
+            </div>
+            <div class="viewer-vol muted" id="viewerVol">
+                <div class="viewer-vol-gauge" id="viewerVolGauge">
+                    <div class="viewer-vol-track" id="viewerVolTrack"><div class="viewer-vol-fill" id="viewerVolFill"></div></div>
+                </div>
+                <button class="viewer-vol-btn" id="viewerVolBtn" data-cursor="unmute" aria-label="Volume">
+                    <svg class="vol-ic vol-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+                    <svg class="vol-ic vol-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
+                </button>
+            </div>
+            <button class="viewer-fs-corner" id="viewerFsBtn" aria-label="Fullscreen" data-cursor="expand">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+        </div>
+        <button class="viewer-close" id="viewerClose" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="2" y1="2" x2="16" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="2" x2="2" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="viewer-meta">
+            <span class="viewer-client-label" id="viewerClient"></span>
+            <span class="viewer-title-label" id="viewerTitleText"></span>
+        </div>
+        <button class="viewer-nav viewer-prev" id="viewerPrev" aria-label="Previous">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none"><polyline points="13,2 3,14 13,26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="viewer-nav viewer-next" id="viewerNext" aria-label="Next">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none"><polyline points="3,2 13,14 3,26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+    </div>
+
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <script>
+    // ===== Work Viewer (ported from the editor profile pages) =====
+    var openViewer;
+    (function initWorkViewer() {
+        // The viewer plays whichever tile was clicked; items are read from the
+        // grid at open time, so gated pages (tiles arrive after the unlock) work too.
+        var viewerItems = [];
+        function collectItems() {
+            return Array.prototype.map.call(document.querySelectorAll('.reel-item'), function (li) {
+                var m = li.querySelector('.reel-media');
+                return { vimeo: m.getAttribute('data-vimeo'), hash: m.getAttribute('data-hash') || '',
+                         client: (li.querySelector('.reel-client') || {}).textContent || '',
+                         title: (li.querySelector('.reel-title') || {}).textContent || '' };
+            });
+        }
+        var viewer   = document.getElementById('workViewer');
+        var frame    = document.getElementById('viewerFrame');
+        var vHero    = document.getElementById('viewerVideoHero');
+        var iframe   = document.getElementById('viewerIframe');
+        var clientEl = document.getElementById('viewerClient');
+        var titleEl  = document.getElementById('viewerTitleText');
+        var closeBtn = document.getElementById('viewerClose');
+        var prevBtn  = document.getElementById('viewerPrev');
+        var nextBtn  = document.getElementById('viewerNext');
+        var ppBtn    = document.getElementById('viewerPlayPause');
+        var progEl   = document.getElementById('viewerProgress');
+        var fillEl   = document.getElementById('viewerFill');
+        var thumb    = document.getElementById('viewerThumb');
+        var timeEl   = document.getElementById('viewerTime');
+        var fsBtn    = document.getElementById('viewerFsBtn');
+        var clickLayer = document.getElementById('viewerClickLayer');
+        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false, vVolume = 1, vMuted = false, volDragging = false;
+        // EXIT cursor: knockout "EXIT" label shown over the margin around the video
+        var exitCur = document.createElement('div');
+        exitCur.id='viewerExitCursor'; exitCur.setAttribute('aria-hidden','true');
+        (function(){ var w=Math.round('EXIT'.length*8.6+28), h=26;
+            exitCur.innerHTML='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="exitCurMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">EXIT</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#exitCurMask)"/></svg>';
+        })();
+        document.body.appendChild(exitCur);
+        function ptrInsideFrame(e){ var r=frame.getBoundingClientRect(); return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
+        viewer.addEventListener('mousemove', function(e){
+            if(!viewer.classList.contains('active')) return;
+            var overNav = e.target && e.target.closest && e.target.closest('.viewer-nav');
+            if(ptrInsideFrame(e) || overNav){ exitCur.classList.remove('show'); document.body.classList.remove('viewer-exit-active'); }
+            else { exitCur.style.left=e.clientX+'px'; exitCur.style.top=e.clientY+'px'; exitCur.classList.add('show'); document.body.classList.add('viewer-exit-active'); }
+        }, {passive:true});
+        function fmt(s) { var m=Math.floor(s/60),sec=Math.floor(s%60); return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec; }
+        function setPlaying(p) { vPlaying=p; vHero.classList.toggle('cs-playing',p); if(ppBtn) ppBtn.setAttribute('data-cursor', p?'pause':'play'); }
+        function resetPlayer() {
+            if (vPlayer) { try { vPlayer.destroy(); } catch(e){} vPlayer=null; }
+            var stray=vHero.querySelector('iframe'); if(stray) stray.remove();
+            vPlaying=false; vDuration=0;
+            vHero.classList.remove('cs-playing','cs-hover');
+            if (fillEl) fillEl.style.width='0%';
+            if (thumb) thumb.style.left='0%';
+            if (timeEl) timeEl.textContent='00:00 / 00:00';
+            hidePrev(); teardownPrev();
+        }
+        function bindPlayer(p) {
+            p.getDuration().then(function(d){ vDuration=d; if(timeEl&&d) timeEl.textContent='00:00 / '+fmt(d); }).catch(function(){});
+            p.on('play',  function(){ setPlaying(true); });
+            p.on('pause', function(){ setPlaying(false); });
+            p.on('ended', function(){ setPlaying(false); });
+            p.on('timeupdate', function(data){ if(!vDuration||!fillEl||dragging)return; var pc=data.seconds/vDuration*100; fillEl.style.width=pc+'%'; if(thumb) thumb.style.left=pc+'%'; if(timeEl) timeEl.textContent=fmt(data.seconds)+' / '+fmt(vDuration); });
+        }
+        function whenVimeoReady(cb){
+            if(window.Vimeo){ cb(); return; }
+            var n=0; (function poll(){ if(window.Vimeo) return cb(); if(n++>120) return; setTimeout(poll,50); })();
+        }
+        openViewer = function(idx) { viewerItems=collectItems(); vMuted=false; if(vVolume===0) vVolume=1; renderVol();
+            current=idx; var item=viewerItems[idx];
+            resetPlayer();
+            // Build a fresh iframe each open — Vimeo's player.destroy() removes the
+            // iframe from the DOM, so reusing one breaks every reopen (the prod bug).
+            iframe=document.createElement('iframe');
+            iframe.id='viewerIframe';
+            iframe.setAttribute('frameborder','0');
+            iframe.setAttribute('allow','autoplay; fullscreen; picture-in-picture');
+            iframe.setAttribute('allowfullscreen','');
+            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&muted=0&controls=0&dnt=1&playsinline=1';
+            vHero.insertBefore(iframe, vHero.firstChild);
+            clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
+            viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
+            prevBtn.style.opacity=idx>0?'0.6':'0.15';
+            nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
+            // Bind the player as soon as the SDK is ready — don't depend on iframe.onload
+            // (the onload+SDK race is what left the controls dead in production).
+            whenVimeoReady(function(){
+                try{
+                    vPlayer=new Vimeo.Player(iframe);
+                    bindPlayer(vPlayer);
+                    vPlayer.ready().then(function(){ vPlayer.play().catch(function(){}); applyVol(); }).catch(function(){});
+                }catch(e){}
+            });
+        };
+        function closeViewer() {
+            viewer.classList.remove('active');
+            document.body.classList.remove('viewer-open','viewer-exit-active');
+            if(exitCur) exitCur.classList.remove('show');
+            clearTimeout(idleTimer); resetPlayer();
+            document.body.style.overflow='';
+        }
+        var centerIcon=document.getElementById('viewerCenterIcon');
+        function flashCenter(playing){ if(!centerIcon)return; centerIcon.classList.remove('flash','show-play','show-pause'); void centerIcon.offsetWidth; centerIcon.classList.add(playing?'show-play':'show-pause','flash'); }
+        function togglePlay(flash) { if(!vPlayer)return; var willPlay=!vPlaying; if(vPlaying) vPlayer.pause(); else vPlayer.play(); if(flash) flashCenter(willPlay); }
+        clickLayer.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(true); });
+        ppBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(false); });
+        // scrubber: click + drag with a visible thumb that tracks the cursor
+        function scrubPct(e){ var r=progEl.getBoundingClientRect(); return Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)); }
+        function scrubPreview(p){ if(fillEl) fillEl.style.width=(p*100)+'%'; if(thumb) thumb.style.left=(p*100)+'%'; if(timeEl&&vDuration) timeEl.textContent=fmt(p*vDuration)+' / '+fmt(vDuration); }
+        // frame preview: a 2nd hidden Vimeo player seeked to the cursor time (Vimeo is
+        // cross-origin, so a seeked mini-player is the only way to show the actual frame)
+        var scrubPrev=document.getElementById('scrubPreview'), scrubPrevFrame=document.getElementById('scrubPreviewFrame'), scrubPrevTime=document.getElementById('scrubPreviewTime');
+        var prevPlayer=null, prevReady=false, prevVimeo=null, prevSeeking=false, prevPending=null;
+        function teardownPrev(){ if(prevPlayer){ try{prevPlayer.destroy();}catch(e){} } prevPlayer=null; prevReady=false; prevVimeo=null; prevSeeking=false; prevPending=null; if(scrubPrevFrame) scrubPrevFrame.innerHTML=''; }
+        function buildPrev(){
+            var item=viewerItems[current]; if(!item||!item.vimeo||!scrubPrevFrame) return;
+            if(prevVimeo===item.vimeo && prevPlayer) return;
+            teardownPrev(); prevVimeo=item.vimeo;
+            var pf=document.createElement('iframe'); pf.setAttribute('frameborder','0'); pf.setAttribute('allow','autoplay');
+            pf.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'background=1&muted=1&controls=0&dnt=1';
+            scrubPrevFrame.appendChild(pf);
+            whenVimeoReady(function(){ try{ prevPlayer=new Vimeo.Player(pf); prevPlayer.ready().then(function(){ prevReady=true; if(prevPending!=null){ var t=prevPending; prevPending=null; seekPrev(t); } }).catch(function(){}); }catch(e){} });
+        }
+        function seekPrev(t){
+            if(!prevReady||!prevPlayer){ prevPending=t; return; }
+            if(prevSeeking){ prevPending=t; return; }
+            prevSeeking=true;
+            prevPlayer.setCurrentTime(t).then(function(){ prevSeeking=false; if(prevPending!=null){ var n=prevPending; prevPending=null; seekPrev(n); } }).catch(function(){ prevSeeking=false; });
+        }
+        function showPrev(e){
+            if(!vDuration||!scrubPrev) return;
+            buildPrev();
+            var p=scrubPct(e), r=progEl.getBoundingClientRect();
+            scrubPrev.style.left=Math.max(84, Math.min(r.width-84, e.clientX-r.left))+'px';
+            if(scrubPrevTime) scrubPrevTime.textContent=fmt(p*vDuration);
+            scrubPrev.classList.add('show');
+            seekPrev(p*vDuration);
+        }
+        function hidePrev(){ if(scrubPrev) scrubPrev.classList.remove('show'); }
+        progEl.addEventListener('mousedown', function(e){
+            if(!vPlayer||!vDuration)return;
+            e.preventDefault(); e.stopPropagation();
+            dragging=true; progEl.classList.add('dragging'); scrubPreview(scrubPct(e)); showPrev(e);
+        });
+        progEl.addEventListener('mousemove', function(e){ if(!dragging) showPrev(e); }, {passive:true});
+        progEl.addEventListener('mouseleave', function(){ if(!dragging) hidePrev(); }, {passive:true});
+        document.addEventListener('mousemove', function(e){ if(dragging){ scrubPreview(scrubPct(e)); showPrev(e); } }, {passive:true});
+        document.addEventListener('mouseup', function(e){
+            if(!dragging)return;
+            dragging=false; progEl.classList.remove('dragging');
+            var p=scrubPct(e); if(vPlayer&&vDuration) vPlayer.setCurrentTime(p*vDuration).catch(function(){});
+            hidePrev();
+        });
+        fsBtn.addEventListener('click', function(e){
+            e.stopPropagation();
+            var target=frame||viewer;
+            if(document.fullscreenElement) document.exitFullscreen().catch(function(){});
+            else target.requestFullscreen().catch(function(){});
+        });
+        // fullscreen: hide cursor + controls + expand button after 1s of no movement
+        var fsIdleTimer=null;
+        function inFs(){ return document.fullscreenElement||document.webkitFullscreenElement; }
+        function fsIdleHide(){ if(inFs()) frame.classList.add('fs-idle'); }
+        function fsPoke(){ if(fsIdleTimer)clearTimeout(fsIdleTimer); frame.classList.remove('fs-idle'); if(inFs()) fsIdleTimer=setTimeout(fsIdleHide,1000); }
+        function fsLeave(){ frame.classList.remove('fs-idle'); if(fsIdleTimer){clearTimeout(fsIdleTimer);fsIdleTimer=null;} }
+        document.addEventListener('mousemove', function(){ if(inFs()) fsPoke(); }, {passive:true});
+        document.addEventListener('fullscreenchange', function(){ inFs()?fsPoke():fsLeave(); });
+        document.addEventListener('webkitfullscreenchange', function(){ inFs()?fsPoke():fsLeave(); });
+        // volume: mute toggle + draggable gauge (videos autoplay muted, so this is how sound comes on)
+        var volWrap=document.getElementById('viewerVol'), volBtn=document.getElementById('viewerVolBtn'),
+            volTrack=document.getElementById('viewerVolTrack'), volFill=document.getElementById('viewerVolFill'), volHideT=null;
+        function renderVol(){ var off=(vMuted||vVolume===0); volWrap.classList.toggle('muted',off); volFill.style.height=((off?0:vVolume)*100)+'%'; volBtn.setAttribute('data-cursor',off?'unmute':'mute'); }
+        function applyVol(){ if(!vPlayer)return; var off=(vMuted||vVolume===0); try{ if(vPlayer.setMuted) vPlayer.setMuted(off); }catch(e){} try{ vPlayer.setVolume(off?0:vVolume).catch(function(){}); }catch(e){} renderVol(); }
+        function showGauge(){ clearTimeout(volHideT); volWrap.classList.add('show-gauge'); }
+        function hideGaugeSoon(){ clearTimeout(volHideT); volHideT=setTimeout(function(){ if(!volDragging) volWrap.classList.remove('show-gauge'); },500); }
+        function volFromY(e){ var r=volTrack.getBoundingClientRect(); return Math.max(0,Math.min(1, 1-(e.clientY-r.top)/r.height)); }
+        volBtn.addEventListener('click', function(e){ e.stopPropagation(); vMuted=!vMuted; if(!vMuted&&vVolume===0) vVolume=1; applyVol(); showGauge(); });
+        volWrap.addEventListener('mouseenter', showGauge);
+        volWrap.addEventListener('mouseleave', hideGaugeSoon);
+        volTrack.addEventListener('mousedown', function(e){ e.preventDefault(); e.stopPropagation(); volDragging=true; var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); });
+        document.addEventListener('mousemove', function(e){ if(volDragging){ var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); } }, {passive:true});
+        document.addEventListener('mouseup', function(){ volDragging=false; });
+        renderVol();
+        // Keep the controls + corner buttons alive while the cursor is anywhere in the
+        // frame (incl. the volume/expand buttons, which are siblings of the video-hero).
+        // Don't auto-hide while the volume gauge is open or being dragged.
+        function csIdleHide(){ if(!volWrap.classList.contains('show-gauge') && !volDragging) vHero.classList.remove('cs-hover'); }
+        function csPoke(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(csIdleHide,2000); }
+        frame.addEventListener('mouseenter', csPoke);
+        frame.addEventListener('mousemove',  csPoke);
+        frame.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
+        if(closeBtn) closeBtn.addEventListener('click',closeViewer);
+        // click anywhere outside the video bounds closes (the EXIT cursor signals this)
+        viewer.addEventListener('click',function(e){
+            if(!viewer.classList.contains('active'))return;
+            if(e.target && e.target.closest && e.target.closest('.viewer-nav')) return;
+            if(!ptrInsideFrame(e)) closeViewer();
+        });
+        prevBtn.addEventListener('click',function(e){e.stopPropagation();if(current>0)openViewer(current-1);});
+        nextBtn.addEventListener('click',function(e){e.stopPropagation();if(current<viewerItems.length-1)openViewer(current+1);});
+        document.addEventListener('keydown',function(e){
+            if(!viewer.classList.contains('active'))return;
+            if(e.key==='Escape')closeViewer();
+            if(e.key==='ArrowLeft'&&current>0)openViewer(current-1);
+            if(e.key==='ArrowRight'&&current<viewerItems.length-1)openViewer(current+1);
+            if(e.key===' '){e.preventDefault();togglePlay(true);}
+            if(e.key==='m'||e.key==='M'){vMuted=!vMuted;if(!vMuted&&vVolume===0)vVolume=1;applyVol();showGauge();}
+        });
+    })();
+    </script>
+
     <script>
     // Reel playback. Every tile's player is created paused as the tile scrolls
     // into view (a few at a time), so hovering a tile plays a player that is
@@ -1755,8 +2098,11 @@
             if (!frame) return;
             media.classList.add('is-playing');
             playing = media;
-            // a warm player that will not start from a pause gets reloaded playing
-            if (frame.dataset.loaded && !frame.dataset.reloaded) {
+            // A warm player that will not start from a pause gets reloaded playing.
+            // Asked after a beat: asking the instant after "play" reports paused
+            // (play is async) and the reload made the clip visibly restart.
+            if (frame.dataset.loaded && !frame.dataset.reloaded) setTimeout(function () {
+                if (media !== playing) return;
                 var answered = false;
                 var onMsg = function (e) {
                     if (e.source !== frame.contentWindow) return;
@@ -1775,7 +2121,7 @@
                     window.removeEventListener('message', onMsg);
                     if (!answered && media === playing) reload(frame);
                 }, 900);
-            }
+            }, 600);
         }
 
         // Warm every tile, in order, one every 250ms. A paused background player
@@ -1799,10 +2145,14 @@
             });
         }
 
+        // A click opens the tile in the full-screen viewer (custom player, sound on).
         document.addEventListener('click', function (e) {
             var media = e.target.closest && e.target.closest('.reel-media');
             if (!media) return;
-            if (media === playing) stop(); else play(media);
+            e.preventDefault();
+            var idx = Array.prototype.indexOf.call(document.querySelectorAll('.reel-media'), media);
+            stop();
+            if (typeof openViewer === 'function' && idx !== -1) openViewer(idx);
         });
 
         document.addEventListener('visibilitychange', function () {
