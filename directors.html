@@ -101,7 +101,8 @@
         .nav-link {
             font-size: 0.8rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
             line-height: 1;
             color: var(--white);
             text-decoration: none;
@@ -314,7 +315,9 @@
             transform: translate(-50%, -50%) scale(1.04);
             border: none;
             opacity: 0;
-            transition: opacity 0.25s ease;
+            /* every player is already running behind the names, so a hover is a
+               hard cut to it, no fade */
+            transition: none;
             pointer-events: none;
         }
 
@@ -376,7 +379,8 @@
             /* No transition on base — hover-off snaps instantly, no white flash */
             transition: none;
             opacity: 0.35;
-            letter-spacing: -0.07em;
+            /* the site's tracking; tight, but pairs like "ck" and "rs" keep clear */
+            letter-spacing: -0.04em;
         }
 
         /* Only CSS :hover controls the blue highlight — no .active class here.
@@ -838,6 +842,15 @@
             iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
             iframe.setAttribute('allowfullscreen', '');
             iframe.setAttribute('loading', 'eager');
+            // once the player is in, its poster is never needed again
+            iframe.addEventListener('load', () => {
+                iframe.dataset.loaded = '1';
+                const poster = videoWrapper.querySelector(`.director-poster[data-director="${director.id}"]`);
+                if (poster && poster.style.opacity === '1') {
+                    poster.style.transition = 'opacity 0.6s ease';
+                    poster.style.opacity = '0';
+                }
+            });
 
             if (director.vimeo) {
                 iframe.src = `https://player.vimeo.com/video/${director.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1`;
@@ -896,20 +909,24 @@
             // Lazy-create the iframe on first hover (after that it's cached in the DOM)
             const newIframe = ensureVideo(directorId);
 
-            // Show poster immediately to cover black frames while video loads
+            // The blurred poster only covers the gap while a player is still
+            // loading (first paint). Loaded players switch instantly, no poster.
             clearTimeout(posterTimer);
             videoWrapper.querySelectorAll('.director-poster').forEach(p => {
-                p.style.transition = 'opacity 0.3s ease';
+                p.style.transition = 'none';
                 p.style.opacity = '0';
             });
-            const newPoster = videoWrapper.querySelector(`.director-poster[data-director="${directorId}"]`);
-            if (newPoster) {
-                newPoster.style.transition = 'opacity 0.15s ease';
-                newPoster.style.opacity = '1';
-                posterTimer = setTimeout(() => {
-                    newPoster.style.transition = 'opacity 0.8s ease';
-                    newPoster.style.opacity = '0';
-                }, 1500);
+            if (!newIframe || !newIframe.dataset.loaded) {
+                const newPoster = videoWrapper.querySelector(`.director-poster[data-director="${directorId}"]`);
+                if (newPoster) {
+                    newPoster.style.transition = 'none';
+                    newPoster.style.opacity = '1';
+                    // safety net if the load event never comes
+                    posterTimer = setTimeout(() => {
+                        newPoster.style.transition = 'opacity 0.6s ease';
+                        newPoster.style.opacity = '0';
+                    }, 4000);
+                }
             }
 
             // True crossfade: remove active from all, add to new one simultaneously
@@ -935,16 +952,9 @@
                 switchVideo(directorId);
             }, { passive: true });
 
+            // no debounce: the moment the cursor lands on a name, its reel is up
             row.addEventListener('mouseenter', () => {
-                const directorId = row.getAttribute('data-director');
-                clearTimeout(switchTimer);
-                switchTimer = setTimeout(() => {
-                    switchVideo(directorId);
-                }, 50);
-            });
-
-            row.addEventListener('mouseleave', () => {
-                clearTimeout(switchTimer);
+                switchVideo(row.getAttribute('data-director'));
             });
 
             row.addEventListener('click', () => {
