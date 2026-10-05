@@ -1100,7 +1100,7 @@
             height: 100%;
             border: 0;
             opacity: 0;
-            transition: opacity 0.35s ease;
+            transition: none;   /* the player is already running: a hover is a cut */
             pointer-events: none;
         }
 
@@ -1566,16 +1566,64 @@
 
 
     <script>
-    // Reel playback. Tiles ship as thumbnails only; the Vimeo iframe is created
-    // on demand and torn down again, so 40+ clips never load at once. One clip
-    // plays at a time.
+    // Reel playback. Every tile's player is created paused as the tile scrolls
+    // into view (a few at a time), so hovering a tile plays a player that is
+    // already loaded: no wait. One clip plays at a time.
     (function () {
-        var playing = null;
+        var playing = null, warmQueue = [], warming = false;
+
+        function post(frame, method) {
+            try { frame.contentWindow.postMessage(JSON.stringify({ method: method }), '*'); } catch (e) {}
+        }
+
+        function frameOf(media) { return media.querySelector('.reel-frame'); }
+
+        function build(media, autoplay) {
+            var id = media.getAttribute('data-vimeo');
+            if (!id) return null;
+            var hash = media.getAttribute('data-hash');   // unlisted videos carry one
+            var frame = document.createElement('iframe');
+            frame.className = 'reel-frame';
+            frame.src = 'https://player.vimeo.com/video/' + id +
+                        '?background=1&autoplay=' + (autoplay ? 1 : 0) + '&loop=1&muted=1&dnt=1&quality=540p' +
+                        (hash ? '&h=' + hash : '');
+            frame.setAttribute('frameborder', '0');
+            frame.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+            frame.setAttribute('tabindex', '-1');
+            frame.setAttribute('aria-hidden', 'true');
+            frame.title = '';
+            frame.addEventListener('load', function () {
+                frame.dataset.loaded = '1';
+                // background=1 starts on its own; hold it until it is hovered
+                post(frame, media === playing ? 'play' : 'pause');
+            });
+            media.appendChild(frame);
+            return frame;
+        }
+
+        // warm one tile at a time so they do not all fight for the same connections
+        function warm(media) {
+            if (frameOf(media) || warmQueue.indexOf(media) !== -1) return;
+            warmQueue.push(media);
+            if (!warming) drain();
+        }
+        function drain() {
+            var media = warmQueue.shift();
+            if (!media) { warming = false; return; }
+            warming = true;
+            if (!frameOf(media)) build(media, false);
+            setTimeout(drain, 250);
+        }
+
+        function reload(frame) {
+            frame.dataset.reloaded = '1';
+            frame.src = frame.src.replace('autoplay=0', 'autoplay=1');
+        }
 
         function stop() {
             if (!playing) return;
-            var frame = playing.querySelector('.reel-frame');
-            if (frame) frame.remove();
+            var frame = frameOf(playing);
+            if (frame) post(frame, 'pause');
             playing.classList.remove('is-playing');
             playing = null;
         }
@@ -1583,23 +1631,43 @@
         function play(media) {
             if (media === playing) return;
             stop();
-            var id = media.getAttribute('data-vimeo');
-            if (!id) return;
-            var hash = media.getAttribute('data-hash');   // unlisted videos carry one
-            var frame = document.createElement('iframe');
-            frame.className = 'reel-frame';
-            frame.src = 'https://player.vimeo.com/video/' + id +
-                        '?background=1&autoplay=1&loop=1&muted=1&dnt=1&quality=540p' +
-                        (hash ? '&h=' + hash : '');
-            frame.setAttribute('frameborder', '0');
-            frame.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
-            frame.setAttribute('tabindex', '-1');
-            frame.setAttribute('aria-hidden', 'true');
-            frame.title = '';
-            media.appendChild(frame);
+            var frame = frameOf(media);
+            if (!frame) frame = build(media, true);      // not warmed yet: load it already playing
+            else if (frame.dataset.loaded) post(frame, 'play');
+            if (!frame) return;
             media.classList.add('is-playing');
             playing = media;
+            // a warm player that will not start from a pause gets reloaded playing
+            if (frame.dataset.loaded && !frame.dataset.reloaded) {
+                var answered = false;
+                var onMsg = function (e) {
+                    if (e.source !== frame.contentWindow) return;
+                    try {
+                        var d = JSON.parse(e.data);
+                        if (d.method === 'getPaused') {
+                            answered = true;
+                            window.removeEventListener('message', onMsg);
+                            if (d.value === true && media === playing) reload(frame);
+                        }
+                    } catch (err) {}
+                };
+                window.addEventListener('message', onMsg);
+                post(frame, 'getPaused');
+                setTimeout(function () {
+                    window.removeEventListener('message', onMsg);
+                    if (!answered && media === playing) reload(frame);
+                }, 900);
+            }
         }
+
+        // Warm every tile, in order, one every 250ms. A paused background player
+        // is light, and it means any tile the cursor lands on is already there.
+        var warmAll = function () {
+            document.querySelectorAll('.reel-media').forEach(warm);
+        };
+        warmAll();
+        var target = document.getElementById('rosterContent');   // gated pages: tiles arrive after the unlock
+        if (target) new MutationObserver(warmAll).observe(target, { childList: true });
 
         // Delegated, so it works on markup that only appears after the unlock.
         if (window.matchMedia && matchMedia('(hover: hover)').matches) {
