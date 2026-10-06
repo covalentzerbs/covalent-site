@@ -1093,13 +1093,18 @@
            not grey, so the bars match the ones the Vimeo player draws on hover
            and the tile does not read as a hole in the mosaic. */
         .reel-media.is-portrait { background: #000; }
-        .reel-media.is-portrait .reel-thumb { object-fit: contain; }
+        .reel-media.is-portrait .reel-thumb { object-fit: cover; }   /* previews always fill the window */
 
+        /* The player is sized to the clip's own aspect ratio (--va) and enlarged
+           until it covers the 16:9 window, so 4:3 and square clips fill the tile
+           instead of sitting in bars. The viewer shows them at their true shape. */
         .reel-frame {
             position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            width: max(100%, calc(100% * 0.5625 * var(--va, 1.778)));
+            height: max(100%, calc(100% * 1.7778 / var(--va, 1.778)));
+            transform: translate(-50%, -50%) scale(1.02);
             border: 0;
             opacity: 0;
             transition: none;   /* the player is already running: a hover is a cut */
@@ -1272,7 +1277,7 @@
         <ul class="reel-grid">
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1208625811" data-hash="2c1db8183d" aria-label="Play Rest Your Case">
+                        data-vimeo="1208625811" data-hash="2c1db8183d" data-va="1.433" aria-label="Play Rest Your Case">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2177992177-ff6affcdca2550650f6a055291bcdafb072e11ca19c4dcf68f5032ed4c784003-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2177992177-ff6affcdca2550650f6a055291bcdafb072e11ca19c4dcf68f5032ed4c784003-d_640?region=us 640w, https://i.vimeocdn.com/video/2177992177-ff6affcdca2550650f6a055291bcdafb072e11ca19c4dcf68f5032ed4c784003-d_1280?region=us 1280w"
@@ -1285,7 +1290,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1222851398" data-roster="1" aria-label="Play Flying Cars">
+                        data-vimeo="1222851398" data-va="1.433" data-roster="1" aria-label="Play Flying Cars">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2195916042-fb29e964cb17f498220a12e72e51a13f1c4d58ff99bc2a731a103cc9f4320dbb-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2195916042-fb29e964cb17f498220a12e72e51a13f1c4d58ff99bc2a731a103cc9f4320dbb-d_640?region=us 640w, https://i.vimeocdn.com/video/2195916042-fb29e964cb17f498220a12e72e51a13f1c4d58ff99bc2a731a103cc9f4320dbb-d_1280?region=us 1280w"
@@ -1298,7 +1303,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1141278566" aria-label="Play Here To Be Great">
+                        data-vimeo="1141278566" data-va="1.433" aria-label="Play Here To Be Great">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2099560891-36e638960a316e25a52fbf66821647feab77b29c0a3930becefced787395728d-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2099560891-36e638960a316e25a52fbf66821647feab77b29c0a3930becefced787395728d-d_640?region=us 640w, https://i.vimeocdn.com/video/2099560891-36e638960a316e25a52fbf66821647feab77b29c0a3930becefced787395728d-d_1280?region=us 1280w"
@@ -1311,7 +1316,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1184586128" aria-label="Play Refuse To Leave It To Chance">
+                        data-vimeo="1184586128" data-va="1.433" aria-label="Play Refuse To Leave It To Chance">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2147773004-bfe04ac45210e7486d3ec60c04f84db2026c53fd35be3f9319ab3f4f770a5d61-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2147773004-bfe04ac45210e7486d3ec60c04f84db2026c53fd35be3f9319ab3f4f770a5d61-d_640?region=us 640w, https://i.vimeocdn.com/video/2147773004-bfe04ac45210e7486d3ec60c04f84db2026c53fd35be3f9319ab3f4f770a5d61-d_1280?region=us 1280w"
@@ -1324,7 +1329,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1161268499" aria-label="Play When Did We Stop Playing">
+                        data-vimeo="1161268499" data-va="1.433" aria-label="Play When Did We Stop Playing">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_640?region=us 640w, https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280?region=us 1280w"
@@ -1337,7 +1342,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1170047221" data-hash="6ac82c19db" aria-label="Play Launch">
+                        data-vimeo="1170047221" data-hash="6ac82c19db" data-va="1.775" aria-label="Play Launch">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2129030620-e34b7e0c8001f6efcbcb482157f38106e4e2d3c1037a7a1a0a6c7c923f294342-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2129030620-e34b7e0c8001f6efcbcb482157f38106e4e2d3c1037a7a1a0a6c7c923f294342-d_640?region=us 640w, https://i.vimeocdn.com/video/2129030620-e34b7e0c8001f6efcbcb482157f38106e4e2d3c1037a7a1a0a6c7c923f294342-d_1280?region=us 1280w"
@@ -1350,7 +1355,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1149097153" aria-label="Play Park Hyatt NYC x US Open ft. Jessica Pegula">
+                        data-vimeo="1149097153" data-va="1.000" aria-label="Play Park Hyatt NYC x US Open ft. Jessica Pegula">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_640?region=us 640w, https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280?region=us 1280w"
@@ -1363,7 +1368,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1222851523" aria-label="Play Just Get the Door">
+                        data-vimeo="1222851523" data-va="1.433" aria-label="Play Just Get the Door">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2195916217-ee2a7cfc96ab8c78534ffd3afa01665545877052f7fcfb0f14516a209f228157-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2195916217-ee2a7cfc96ab8c78534ffd3afa01665545877052f7fcfb0f14516a209f228157-d_640?region=us 640w, https://i.vimeocdn.com/video/2195916217-ee2a7cfc96ab8c78534ffd3afa01665545877052f7fcfb0f14516a209f228157-d_1280?region=us 1280w"
@@ -1376,7 +1381,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1222851861" aria-label="Play Behind The Bowl">
+                        data-vimeo="1222851861" data-va="1.508" aria-label="Play Behind The Bowl">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2195916594-1bd9691db02a64b986ce1d76df37acde76d565d4091969888dc3c03f9dd72f4a-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2195916594-1bd9691db02a64b986ce1d76df37acde76d565d4091969888dc3c03f9dd72f4a-d_640?region=us 640w, https://i.vimeocdn.com/video/2195916594-1bd9691db02a64b986ce1d76df37acde76d565d4091969888dc3c03f9dd72f4a-d_1280?region=us 1280w"
@@ -1389,7 +1394,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1141586908" aria-label="Play A City to Summit">
+                        data-vimeo="1141586908" data-va="1.333" aria-label="Play A City to Summit">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_640?region=us 640w, https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280?region=us 1280w"
@@ -1402,7 +1407,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1200282915" data-hash="ffeabc1665" aria-label="Play Here's Your F**king Money">
+                        data-vimeo="1200282915" data-hash="ffeabc1665" data-va="1.775" aria-label="Play Here's Your F**king Money">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2167332209-2e6e17f30b93c08b842d27b71c059107ec92ba441d1f37f630c59ddbab7e6362-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2167332209-2e6e17f30b93c08b842d27b71c059107ec92ba441d1f37f630c59ddbab7e6362-d_640?region=us 640w, https://i.vimeocdn.com/video/2167332209-2e6e17f30b93c08b842d27b71c059107ec92ba441d1f37f630c59ddbab7e6362-d_1280?region=us 1280w"
@@ -1708,7 +1713,7 @@
         function collectItems() {
             return Array.prototype.map.call(document.querySelectorAll('.reel-item'), function (li) {
                 var m = li.querySelector('.reel-media');
-                return { vimeo: m.getAttribute('data-vimeo'), hash: m.getAttribute('data-hash') || '',
+                return { vimeo: m.getAttribute('data-vimeo'), hash: m.getAttribute('data-hash') || '', va: parseFloat(m.getAttribute('data-va')) || 1.778,
                          client: (li.querySelector('.reel-client') || {}).textContent || '',
                          title: (li.querySelector('.reel-title') || {}).textContent || '' };
             });
@@ -1779,6 +1784,9 @@
             iframe.setAttribute('allowfullscreen','');
             iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&muted=0&controls=0&dnt=1&playsinline=1';
             vHero.insertBefore(iframe, vHero.firstChild);
+            // the viewer frame takes the clip's true shape: as large as fits, no crop
+            frame.style.width='min(90vw, calc(90vh * '+(item.va||1.778)+'))'; frame.style.height='min(90vh, calc(90vw / '+(item.va||1.778)+'))';
+            frame.style.maxWidth='none'; frame.style.maxHeight='none';
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
             viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
             prevBtn.style.opacity=idx>0?'0.6':'0.15';
@@ -1937,6 +1945,7 @@
             frame.setAttribute('tabindex', '-1');
             frame.setAttribute('aria-hidden', 'true');
             frame.title = '';
+            frame.style.setProperty('--va', media.getAttribute('data-va') || '1.778');
             frame.addEventListener('load', function () {
                 frame.dataset.loaded = '1';
                 // background=1 starts on its own; hold it until it is hovered

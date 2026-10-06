@@ -1098,13 +1098,18 @@
            not grey, so the bars match the ones the Vimeo player draws on hover
            and the tile does not read as a hole in the mosaic. */
         .reel-media.is-portrait { background: #000; }
-        .reel-media.is-portrait .reel-thumb { object-fit: contain; }
+        .reel-media.is-portrait .reel-thumb { object-fit: cover; }   /* previews always fill the window */
 
+        /* The player is sized to the clip's own aspect ratio (--va) and enlarged
+           until it covers the 16:9 window, so 4:3 and square clips fill the tile
+           instead of sitting in bars. The viewer shows them at their true shape. */
         .reel-frame {
             position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            width: max(100%, calc(100% * 0.5625 * var(--va, 1.778)));
+            height: max(100%, calc(100% * 1.7778 / var(--va, 1.778)));
+            transform: translate(-50%, -50%) scale(1.02);
             border: 0;
             opacity: 0;
             transition: none;   /* the player is already running: a hover is a cut */
@@ -1277,7 +1282,7 @@
         <ul class="reel-grid">
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164237342" aria-label="Play Anything but Ordinary">
+                        data-vimeo="1164237342" data-va="1.333" aria-label="Play Anything but Ordinary">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_640?region=us 640w, https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_1280?region=us 1280w"
@@ -1290,7 +1295,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1205645142" aria-label="Play Everything, All At Once">
+                        data-vimeo="1205645142" data-va="1.775" aria-label="Play Everything, All At Once">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2174285588-abfdd775a00eb6c90e250b9338774bd18be2e07a0cf68d931e954624d1949da1-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2174285588-abfdd775a00eb6c90e250b9338774bd18be2e07a0cf68d931e954624d1949da1-d_640?region=us 640w, https://i.vimeocdn.com/video/2174285588-abfdd775a00eb6c90e250b9338774bd18be2e07a0cf68d931e954624d1949da1-d_1280?region=us 1280w"
@@ -1303,7 +1308,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1205645141" aria-label="Play 2026 Summer Smash">
+                        data-vimeo="1205645141" data-va="1.450" aria-label="Play 2026 Summer Smash">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2174285619-15144c066864a5e3e84b932eecc3e1875b5713875cf9e1bc88c4b940ae64b9c6-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2174285619-15144c066864a5e3e84b932eecc3e1875b5713875cf9e1bc88c4b940ae64b9c6-d_640?region=us 640w, https://i.vimeocdn.com/video/2174285619-15144c066864a5e3e84b932eecc3e1875b5713875cf9e1bc88c4b940ae64b9c6-d_1280?region=us 1280w"
@@ -1316,7 +1321,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164239118" aria-label="Play Elevator Pitch">
+                        data-vimeo="1164239118" data-va="1.450" aria-label="Play Elevator Pitch">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_640?region=us 640w, https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_1280?region=us 1280w"
@@ -1329,7 +1334,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164238677" aria-label="Play The Summer Smash">
+                        data-vimeo="1164238677" data-va="1.367" aria-label="Play The Summer Smash">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_640?region=us 640w, https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_1280?region=us 1280w"
@@ -1342,7 +1347,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164238342" aria-label="Play The Summer Smash II">
+                        data-vimeo="1164238342" data-va="1.450" aria-label="Play The Summer Smash II">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2120794176-610e9718d8bd4cee8da54bc70e0d92540cf34fdecb025f47898e0e72de89cb29-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2120794176-610e9718d8bd4cee8da54bc70e0d92540cf34fdecb025f47898e0e72de89cb29-d_640?region=us 640w, https://i.vimeocdn.com/video/2120794176-610e9718d8bd4cee8da54bc70e0d92540cf34fdecb025f47898e0e72de89cb29-d_1280?region=us 1280w"
@@ -1355,7 +1360,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164237797" aria-label="Play Launch">
+                        data-vimeo="1164237797" data-va="1.333" aria-label="Play Launch">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2120793664-c5e6350c0e88174f6acebe48e2a135ed34e5aa4a2c5898507e0134e952889c86-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2120793664-c5e6350c0e88174f6acebe48e2a135ed34e5aa4a2c5898507e0134e952889c86-d_640?region=us 640w, https://i.vimeocdn.com/video/2120793664-c5e6350c0e88174f6acebe48e2a135ed34e5aa4a2c5898507e0134e952889c86-d_1280?region=us 1280w"
@@ -1368,7 +1373,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164237076" aria-label="Play 2024 Summer Smash - Official Commercial">
+                        data-vimeo="1164237076" data-va="1.458" aria-label="Play 2024 Summer Smash - Official Commercial">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_640?region=us 640w, https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_1280?region=us 1280w"
@@ -1381,7 +1386,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164236894" aria-label="Play 2025 Summer Smash - Official Commercial">
+                        data-vimeo="1164236894" data-va="1.333" aria-label="Play 2025 Summer Smash - Official Commercial">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2120792016-491ec444d739543bf2941b228a2a50b41ff89c9edd9be80e3cb8afb06780f85b-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2120792016-491ec444d739543bf2941b228a2a50b41ff89c9edd9be80e3cb8afb06780f85b-d_640?region=us 640w, https://i.vimeocdn.com/video/2120792016-491ec444d739543bf2941b228a2a50b41ff89c9edd9be80e3cb8afb06780f85b-d_1280?region=us 1280w"
@@ -1394,7 +1399,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164236741" aria-label="Play Let's Go on a Trip">
+                        data-vimeo="1164236741" data-va="1.333" aria-label="Play Let's Go on a Trip">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2120791753-73b95cb3ea3a368180f6f8793d26d7dcfe1fba8d7325635ae1dca4a3628aa6f9-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2120791753-73b95cb3ea3a368180f6f8793d26d7dcfe1fba8d7325635ae1dca4a3628aa6f9-d_640?region=us 640w, https://i.vimeocdn.com/video/2120791753-73b95cb3ea3a368180f6f8793d26d7dcfe1fba8d7325635ae1dca4a3628aa6f9-d_1280?region=us 1280w"
@@ -1407,7 +1412,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164236613" aria-label="Play WS_SPRING_FINAL1">
+                        data-vimeo="1164236613" data-va="1.333" aria-label="Play WS_SPRING_FINAL1">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2120791518-7538fd31598d6891cfbdcf977a6cea3858226ff3cce5a7db611b8b99ff9ae440-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2120791518-7538fd31598d6891cfbdcf977a6cea3858226ff3cce5a7db611b8b99ff9ae440-d_640?region=us 640w, https://i.vimeocdn.com/video/2120791518-7538fd31598d6891cfbdcf977a6cea3858226ff3cce5a7db611b8b99ff9ae440-d_1280?region=us 1280w"
@@ -1713,7 +1718,7 @@
         function collectItems() {
             return Array.prototype.map.call(document.querySelectorAll('.reel-item'), function (li) {
                 var m = li.querySelector('.reel-media');
-                return { vimeo: m.getAttribute('data-vimeo'), hash: m.getAttribute('data-hash') || '',
+                return { vimeo: m.getAttribute('data-vimeo'), hash: m.getAttribute('data-hash') || '', va: parseFloat(m.getAttribute('data-va')) || 1.778,
                          client: (li.querySelector('.reel-client') || {}).textContent || '',
                          title: (li.querySelector('.reel-title') || {}).textContent || '' };
             });
@@ -1784,6 +1789,9 @@
             iframe.setAttribute('allowfullscreen','');
             iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&muted=0&controls=0&dnt=1&playsinline=1';
             vHero.insertBefore(iframe, vHero.firstChild);
+            // the viewer frame takes the clip's true shape: as large as fits, no crop
+            frame.style.width='min(90vw, calc(90vh * '+(item.va||1.778)+'))'; frame.style.height='min(90vh, calc(90vw / '+(item.va||1.778)+'))';
+            frame.style.maxWidth='none'; frame.style.maxHeight='none';
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
             viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
             prevBtn.style.opacity=idx>0?'0.6':'0.15';
@@ -1942,6 +1950,7 @@
             frame.setAttribute('tabindex', '-1');
             frame.setAttribute('aria-hidden', 'true');
             frame.title = '';
+            frame.style.setProperty('--va', media.getAttribute('data-va') || '1.778');
             frame.addEventListener('load', function () {
                 frame.dataset.loaded = '1';
                 // background=1 starts on its own; hold it until it is hovered
