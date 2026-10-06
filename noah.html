@@ -1865,12 +1865,14 @@
             var p=scrubPct(e); if(vPlayer&&vDuration) vPlayer.setCurrentTime(p*vDuration).catch(function(){});
             hidePrev();
         });
-        fsBtn.addEventListener('click', function(e){
-            e.stopPropagation();
+        // F toggles fullscreen too (and brings it back out), same as the corner button
+        function toggleFs(){
             var target=frame||viewer;
-            if(document.fullscreenElement) document.exitFullscreen().catch(function(){});
-            else target.requestFullscreen().catch(function(){});
-        });
+            var inFsNow=document.fullscreenElement||document.webkitFullscreenElement;
+            if(inFsNow){ (document.exitFullscreen||document.webkitExitFullscreen).call(document); }
+            else { var req=target.requestFullscreen||target.webkitRequestFullscreen; if(req){ var p=req.call(target); if(p&&p.catch) p.catch(function(){}); } }
+        }
+        fsBtn.addEventListener('click', function(e){ e.stopPropagation(); toggleFs(); });
         // fullscreen: hide cursor + controls + expand button after 1s of no movement
         var fsIdleTimer=null;
         function inFs(){ return document.fullscreenElement||document.webkitFullscreenElement; }
@@ -1919,6 +1921,7 @@
             if(e.key==='ArrowRight'&&current<viewerItems.length-1)openViewer(current+1);
             if(e.key===' '){e.preventDefault();togglePlay(true);}
             if(e.key==='m'||e.key==='M'){vMuted=!vMuted;if(!vMuted&&vVolume===0)vVolume=1;applyVol();showGauge();}
+            if(e.key==='f'||e.key==='F'){e.preventDefault();toggleFs();}
         });
     })();
     </script>
