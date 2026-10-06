@@ -110,10 +110,12 @@
             color: var(--black);
             text-decoration: none;
             opacity: 0.85;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.2s ease, color 0.2s ease;
         }
         .nav-link:hover, .nav-link.current { opacity: 1; }
+        .nav-link:hover { color: #FF4500; -webkit-text-fill-color: #FF4500; }
         body.dark-mode .nav-link { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .nav-link:hover { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF; }
 
         .menu-toggle {
             width: 48px;
@@ -653,9 +655,8 @@
             transition: opacity 0.3s ease;
         }
 
-        .logo-bottom:hover {
-            opacity: 0.7;
-        }
+        .logo-bottom:hover { opacity: 1; }
+        .logo-bottom:hover svg path { fill: #FF4500; }
 
         .logo-bottom svg {
             width: 40px;
@@ -663,7 +664,7 @@
         }
 
         .logo-bottom svg path {
-            fill: var(--black);
+            fill: var(--black); transition: fill 0.2s ease;
         }
 
         /* ==================== */
@@ -760,6 +761,7 @@
         body.dark-mode .logo-bottom svg path {
             fill: #FF4500 !important;
         }
+        body.dark-mode .logo-bottom:hover svg path { fill: #FFFFFF !important; }
 
         body.dark-mode .footer {
             background: #0A0A0A !important;
