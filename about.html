@@ -424,54 +424,11 @@
             align-items: center;
         }
 
-        /* ==================== */
-        /* CLOCK */
-        /* ==================== */
-        .clock-widget {
-            position: fixed;
-            bottom: 5rem;
-            right: 3rem;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.15rem;
-            font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-        }
 
-        .clock-row {
-            display: flex;
-            align-items: baseline;
-            gap: 0.4rem;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--black);
-            letter-spacing: -0.07em;
-        }
 
-        .clock-label {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: -0.07em;
-            min-width: 2rem;
-            text-align: right;
-        }
 
-        .clock-time {
-            font-variant-numeric: tabular-nums;
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
 
-        .clock-colon {
-            opacity: 1;
-            transition: opacity 0.15s ease;
-        }
 
-        .clock-colon.blink {
-            opacity: 0;
-        }
 
         /* ==================== */
         /* RESPONSIVE */
@@ -490,10 +447,6 @@
                 padding: 6rem 2.5rem 2.5rem;
             }
 
-            .clock-widget {
-                bottom: 4.5rem;
-                right: 2.5rem;
-            }
         }
 
         @media (max-width: 768px) {
@@ -524,9 +477,6 @@
                 gap: 1.5rem;
             }
 
-            .clock-widget {
-                display: none !important;
-            }
         }
 
         /* Hide dot cursor on touch devices */
@@ -575,10 +525,6 @@
             -webkit-text-fill-color: #FF4500;
         }
 
-        body.dark-mode .clock-row {
-            color: #FF4500 !important;
-            -webkit-text-fill-color: #FF4500;
-        }
 
         body.dark-mode .about-text {
             color: #FF4500 !important;
@@ -978,21 +924,6 @@ Boutique means we're selective. It means we care about who we work with and what
         </div>
     </main>
 
-    <!-- Clock Widget -->
-    <div class="clock-widget" id="clockWidget">
-        <div class="clock-row">
-            <span class="clock-label">NYC</span>
-            <span class="clock-time" id="clockNYC">--<span class="clock-colon">:</span>--</span>
-        </div>
-        <div class="clock-row">
-            <span class="clock-label">CHI</span>
-            <span class="clock-time" id="clockCHI">--<span class="clock-colon">:</span>--</span>
-        </div>
-        <div class="clock-row">
-            <span class="clock-label">LA</span>
-            <span class="clock-time" id="clockLA">--<span class="clock-colon">:</span>--</span>
-        </div>
-    </div>
 
     <!-- Global Footer -->
     <footer class="site-footer">
@@ -1082,40 +1013,6 @@ Boutique means we're selective. It means we care about who we work with and what
         // MENU LINK GRADIENT SPREAD EFFECT
         // ==================== //
         // (menu hover handled by CSS only)
-
-        // ==================== //
-        // CLOCK WIDGET
-        // ==================== //
-        function updateClocks() {
-            const now = new Date();
-
-            const timezones = [
-                { id: 'clockNYC', tz: 'America/New_York' },
-                { id: 'clockCHI', tz: 'America/Chicago' },
-                { id: 'clockLA', tz: 'America/Los_Angeles' }
-            ];
-
-            const seconds = now.getSeconds();
-            const colonVisible = seconds % 2 === 0;
-
-            timezones.forEach(({ id, tz }) => {
-                const el = document.getElementById(id);
-                const hours = new Intl.DateTimeFormat('en-US', {
-                    timeZone: tz, hour: '2-digit', hour12: false
-                }).format(now);
-                const minutes = new Intl.DateTimeFormat('en-US', {
-                    timeZone: tz, minute: '2-digit'
-                }).format(now);
-
-                const h = hours.padStart(2, '0');
-                const m = minutes.padStart(2, '0');
-                const colonClass = colonVisible ? 'clock-colon' : 'clock-colon blink';
-                el.innerHTML = h + '<span class="' + colonClass + '">:</span>' + m;
-            });
-        }
-
-        updateClocks();
-        setInterval(updateClocks, 500);
 
         // ==================== //
         // VIRUS SPREADING TEXT EFFECT (footer)
