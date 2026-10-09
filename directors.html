@@ -754,15 +754,22 @@
         <!-- Directors List -->
         <div class="directors-list">
             <div class="directors-container">
+                <!-- Cam and Max are parked for now (2026-10-09). To bring one back,
+                     uncomment the row here AND the matching line in the directors
+                     array below; the public page at /cam and /max is still live. -->
+                <!--
                 <div class="director-row" data-director="cam" data-vimeo="1223839056">
                     <span class="director-name">Cam Erickson</span>
                 </div>
+                -->
                 <div class="director-row" data-director="jacob" data-vimeo="1170741864">
                     <span class="director-name">Jacob Frost</span>
                 </div>
+                <!--
                 <div class="director-row" data-director="max" data-vimeo="1222196280">
                     <span class="director-name">Max Gilberg</span>
                 </div>
+                -->
                 <div class="director-row" data-director="noah" data-vimeo="1164768847">
                     <span class="director-name">Noah Keckler</span>
                 </div>
@@ -817,9 +824,9 @@
         // va = the clip's own aspect ratio; the iframe is sized to it so it covers the
         // viewport with no bars, whatever shape the window is
         const directors = [
-            { id: 'cam',   slug: 'cam-erickson', name: 'Cam Erickson', vimeo: '1223839056', va: 1.778, thumbnail: 'https://i.vimeocdn.com/video/2197157994-d2f75b57e2db1ff54e3af79907b2c0f9c67e699873a20789d879f1bcbe78878f-d_1280x720' },
+            // parked: { id: 'cam',   slug: 'cam-erickson', name: 'Cam Erickson', vimeo: '1223839056', va: 1.778, thumbnail: 'https://i.vimeocdn.com/video/2197157994-d2f75b57e2db1ff54e3af79907b2c0f9c67e699873a20789d879f1bcbe78878f-d_1280x720' },
             { id: 'jacob', slug: 'jacob-frost',  name: 'Jacob Frost',  vimeo: '1170741864', va: 1.778, thumbnail: 'https://i.vimeocdn.com/video/2129989125-7bcea3f611dc90b29683cb79b07503543d01abd6db34091368cc53005941e0e5-d_1280x720' },
-            { id: 'max',   slug: 'max-gilberg',  name: 'Max Gilberg',  vimeo: '1222196280', va: 1.333, thumbnail: 'https://i.vimeocdn.com/video/2195092897-9a6785a8fe877ac952a8b7f731dd95660a7d5889dd56aad19942dbe267a083b1-d_1280x720' },
+            // parked: { id: 'max',   slug: 'max-gilberg',  name: 'Max Gilberg',  vimeo: '1222196280', va: 1.333, thumbnail: 'https://i.vimeocdn.com/video/2195092897-9a6785a8fe877ac952a8b7f731dd95660a7d5889dd56aad19942dbe267a083b1-d_1280x720' },
             { id: 'noah',  slug: 'noah-keckler', name: 'Noah Keckler', vimeo: '1164768847', va: 1.778, thumbnail: 'https://i.vimeocdn.com/video/2121554252-a7004843031d0a0efd0bbbf00cf82995c6b3caf2edaa5224a6466ed1c6918a0c-d_1280x720' }
         ];
 
