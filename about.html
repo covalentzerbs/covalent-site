@@ -656,6 +656,24 @@
             color: var(--gray);
         }
 
+        /* ---- Made by / Humans. ---- */
+        .about-hero {
+            margin: 0;
+            padding: 6rem 96px 2.5rem;
+        }
+        .about-hero-line {
+            display: block;
+            width: max-content;          /* measures as the text's own width */
+            font-size: 21vw;             /* fallback; script fits each line to the column */
+            font-weight: 700;
+            letter-spacing: -0.055em;
+            line-height: 0.86;
+            text-transform: none;
+            white-space: nowrap;
+            color: var(--black);
+        }
+        body.dark-mode .about-hero-line { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
         .about-page .manifesto-scroll-container {
             position: relative;
             /* 250vh - 100vh pinned = 150vh reveal runway (~3 scrolls, was 2). */
@@ -776,6 +794,7 @@
 
         @media (max-width: 768px) {
             .about-page .about-page-wrap { padding: 0 24px; }
+            .about-hero { padding: 5rem 24px 1.25rem; }
             .about-page .manifesto-scroll-container { height: auto; }
             .about-page .manifesto-sticky {
                 position: static;
@@ -908,6 +927,13 @@
 
     <!-- Main Content -->
     <main class="about-page">
+        <!-- Made by / Humans. Each line is sized by the script below so it runs
+             the full column width; the vw size is only the no-JS fallback. -->
+        <h1 class="about-hero" aria-label="Made by Humans.">
+            <span class="about-hero-line">Made by</span>
+            <span class="about-hero-line">Humans.</span>
+        </h1>
+
         <!-- 01 MANIFESTO -->
         <div class="manifesto-scroll-container" id="manifestoScroll">
             <div class="manifesto-sticky">
@@ -1288,6 +1314,27 @@ Boutique means we're selective. It means we care about who we work with and what
         document.addEventListener('visibilitychange', function() {
             if (!document.hidden) enforceNoCursor();
         });
+    })();
+    </script>
+
+    <script>
+    // Fit "Made by" and "Humans." so each line runs the full column width.
+    (function fitHero() {
+        var hero = document.querySelector('.about-hero');
+        if (!hero) return;
+        var lines = hero.querySelectorAll('.about-hero-line');
+        function fit() {
+            var cs = getComputedStyle(hero);
+            var width = hero.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+            lines.forEach(function (line) {
+                line.style.fontSize = '100px';
+                var w = line.getBoundingClientRect().width;
+                if (w > 0) line.style.fontSize = (100 * width / w) + 'px';
+            });
+        }
+        fit();
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+        window.addEventListener('resize', fit);
     })();
     </script>
 </body>
