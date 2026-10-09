@@ -31,6 +31,20 @@
     <link rel="preconnect" href="https://f.vimeocdn.com" crossorigin>
     <link rel="preconnect" href="https://vod-adaptive-ak.vimeocdn.com" crossorigin>
     <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
+    <script>
+    // The loading screen shows once per tab session. Coming back to the home
+    // from About, Contact or a director page skips it; the flag is set here,
+    // before the overlay is even parsed, so there is no flash either way.
+    (function () {
+        try {
+            if (sessionStorage.getItem('covalent.loader') === '1') {
+                document.documentElement.classList.add('no-loader');
+            } else {
+                sessionStorage.setItem('covalent.loader', '1');
+            }
+        } catch (e) {}
+    })();
+    </script>
     <style>
 
         /* CSS Variables */
@@ -519,6 +533,7 @@
             animation: siteLoaderAutoHide 0.4s ease 5s forwards;
         }
         .site-loader.is-done { opacity: 0; pointer-events: none; }
+        html.no-loader .site-loader { display: none; animation: none; }
         .site-loader-text {
             width: max-content;
             font-size: 18vw;              /* fallback; the inline script fits it exactly */
