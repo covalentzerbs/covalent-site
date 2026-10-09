@@ -25,11 +25,12 @@
     <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
     <meta property="og:url" content="https://covalentstudios.co/">
     <meta property="og:type" content="website">
+    <!-- the three origins a Vimeo background embed goes through: the player page,
+         its script bundle, and the video segments -->
     <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://f.vimeocdn.com" crossorigin>
+    <link rel="preconnect" href="https://vod-adaptive-ak.vimeocdn.com" crossorigin>
     <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
-    <link rel="dns-prefetch" href="https://f.vimeocdn.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
 
         /* CSS Variables */
@@ -845,14 +846,11 @@
             iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
             iframe.setAttribute('allowfullscreen', '');
             iframe.setAttribute('loading', 'eager');
-            // once the player is in, its poster is never needed again
+            // ask the player to report play/pause; the poster comes off on the
+            // first real frame, not when the player document happens to load
             iframe.addEventListener('load', () => {
                 iframe.dataset.loaded = '1';
-                const poster = videoWrapper.querySelector(`.director-poster[data-director="${director.id}"]`);
-                if (poster && poster.style.opacity === '1') {
-                    poster.style.transition = 'opacity 0.6s ease';
-                    poster.style.opacity = '0';
-                }
+                subscribe(iframe);
             });
 
             if (director.vimeo) {
@@ -872,27 +870,95 @@
             if (iframe) return iframe;
             const director = directors.find(d => d.id === directorId);
             if (!director || (!director.vimeo && !director.youtube)) return null;
+            ensurePoster(directorId);
             iframe = createVideoElement(director);
             videoWrapper.appendChild(iframe);
             return iframe;
         }
 
-        // Load all director videos immediately so hover switches are instant
-        directors.forEach(d => {
-            if (d.vimeo || d.youtube) ensureVideo(d.id);
+        // ---- talking to the players ----
+        // Vimeo's embed answers postMessage: we subscribe each player to its own
+        // play/pause events, keep the poster up until the first real frame, and
+        // park every player that is not on screen so only one stream runs.
+        function post(iframe, method, value) {
+            try {
+                iframe.contentWindow.postMessage(JSON.stringify(
+                    value === undefined ? { method } : { method, value }), 'https://player.vimeo.com');
+            } catch (e) {}
+        }
+        function subscribe(iframe) {
+            post(iframe, 'addEventListener', 'play');
+            post(iframe, 'addEventListener', 'pause');
+        }
+        function iframeFor(source) {
+            return Array.from(videoWrapper.querySelectorAll('iframe')).find(f => f.contentWindow === source) || null;
+        }
+        window.addEventListener('message', (e) => {
+            if (e.origin !== 'https://player.vimeo.com') return;
+            let data; try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (err) { return; }
+            const iframe = iframeFor(e.source);
+            if (!iframe) return;
+            if (data.event === 'ready') subscribe(iframe);
+            if (data.event === 'play') {
+                iframe.dataset.playing = '1';
+                iframe.dataset.hasFrame = '1';   // it has shown a frame; parked later, it still has one
+                if (iframe.dataset.director === currentVideoId) {
+                    hidePoster(iframe.dataset.director);
+                    if (!firstFramePainted) { firstFramePainted = true; loadRest(); }
+                } else {
+                    // buffered and off screen: park it. Hover resumes it instantly.
+                    post(iframe, 'pause');
+                }
+            }
+            if (data.event === 'pause') {
+                iframe.dataset.playing = '';
+                // A player parked a moment before it was hovered must start again.
+                // Bounded, so a browser that refuses playback (background tab)
+                // cannot bounce play/pause forever.
+                const tries = +(iframe.dataset.replays || 0);
+                if (iframe.dataset.director === currentVideoId && document.visibilityState === 'visible' && tries < 2) {
+                    iframe.dataset.replays = String(tries + 1);
+                    post(iframe, 'play');
+                }
+            }
         });
 
-        // Create poster thumbnails synchronously from hardcoded URLs
+        // ---- posters: blurred still that covers a player until it is playing ----
         let posterTimer = null;
-        directors.forEach(d => {
-            if (!d.thumbnail) return;
-            const img = document.createElement('img');
+        function ensurePoster(directorId) {
+            let img = videoWrapper.querySelector(`.director-poster[data-director="${directorId}"]`);
+            if (img) return img;
+            const d = directors.find(x => x.id === directorId);
+            if (!d || !d.thumbnail) return null;
+            img = document.createElement('img');
             img.className = 'director-poster';
             img.setAttribute('data-director', d.id);
             img.src = d.thumbnail;
-            img.width = 1280; img.height = 720; img.alt = '';
+            img.width = 1280; img.height = 720; img.alt = ''; img.decoding = 'async';
             videoWrapper.appendChild(img);
-        });
+            return img;
+        }
+        function hidePoster(directorId) {
+            clearTimeout(posterTimer);
+            const p = videoWrapper.querySelector(`.director-poster[data-director="${directorId}"]`);
+            if (p && p.style.opacity === '1') {
+                p.style.transition = 'opacity 0.5s ease';
+                p.style.opacity = '0';
+            }
+        }
+
+        // ---- load order ----
+        // The first reel gets the whole connection to itself. The others are
+        // created one at a time once it is on screen (or after 1.5s if the
+        // player never says so), autoplay, and park themselves on first frame.
+        let firstFramePainted = false, restLoaded = false;
+        function loadRest() {
+            if (restLoaded) return;
+            restLoaded = true;
+            const rest = directors.filter(d => (d.vimeo || d.youtube) && d.id !== directors[0].id);
+            rest.forEach((d, i) => setTimeout(() => { ensurePoster(d.id); ensureVideo(d.id); }, i * 450));
+        }
+        setTimeout(loadRest, 1500);
 
         // Switch video with crossfade
         let currentVideoId = null;
@@ -907,28 +973,32 @@
 
             if (directorId === currentVideoId) return;
 
+            const leaving = currentVideoId && videoWrapper.querySelector(`iframe[data-director="${currentVideoId}"]`);
             currentVideoId = directorId;
+            videoWrapper.querySelectorAll('iframe').forEach(f => { f.dataset.replays = '0'; });
 
             // Lazy-create the iframe on first hover (after that it's cached in the DOM)
             const newIframe = ensureVideo(directorId);
 
-            // The blurred poster only covers the gap while a player is still
-            // loading (first paint). Loaded players switch instantly, no poster.
+            // Only one stream at a time: park the reel we are leaving, wake the
+            // one we are landing on (parked players resume from their buffer).
+            if (leaving && leaving !== newIframe) post(leaving, 'pause');
+            if (newIframe && newIframe.dataset.loaded && !newIframe.dataset.playing) post(newIframe, 'play');
+
+            // The blurred poster covers a player that has never shown a frame.
+            // A parked player already holds a frame, so it cuts in bare and resumes.
             clearTimeout(posterTimer);
             videoWrapper.querySelectorAll('.director-poster').forEach(p => {
                 p.style.transition = 'none';
                 p.style.opacity = '0';
             });
-            if (!newIframe || !newIframe.dataset.loaded) {
-                const newPoster = videoWrapper.querySelector(`.director-poster[data-director="${directorId}"]`);
+            if (!newIframe || !newIframe.dataset.hasFrame) {
+                const newPoster = ensurePoster(directorId);
                 if (newPoster) {
                     newPoster.style.transition = 'none';
                     newPoster.style.opacity = '1';
-                    // safety net if the load event never comes
-                    posterTimer = setTimeout(() => {
-                        newPoster.style.transition = 'opacity 0.6s ease';
-                        newPoster.style.opacity = '0';
-                    }, 4000);
+                    // safety net if the player never reports a frame
+                    posterTimer = setTimeout(() => hidePoster(directorId), 6000);
                 }
             }
 
