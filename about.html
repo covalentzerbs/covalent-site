@@ -659,7 +659,8 @@
         /* ---- Made by / Humans. ---- */
         .about-hero {
             margin: 0;
-            padding: 6rem 96px 2.5rem;
+            /* runs almost edge to edge: 2rem matches the logo and nav inset */
+            padding: 6rem 2rem 2rem;
         }
         .about-hero-line {
             display: block;
@@ -667,7 +668,7 @@
             font-size: 21vw;             /* fallback; script fits each line to the column */
             font-weight: 700;
             letter-spacing: -0.055em;
-            line-height: 0.86;
+            line-height: 0.78;              /* lines nearly touching; the y of "by" still clears the s of "Humans" */
             text-transform: none;
             white-space: nowrap;
             color: var(--black);
@@ -794,7 +795,7 @@
 
         @media (max-width: 768px) {
             .about-page .about-page-wrap { padding: 0 24px; }
-            .about-hero { padding: 5rem 24px 1.25rem; }
+            .about-hero { padding: 5rem 1rem 1rem; }
             .about-page .manifesto-scroll-container { height: auto; }
             .about-page .manifesto-sticky {
                 position: static;
