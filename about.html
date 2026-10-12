@@ -659,8 +659,10 @@
         /* ---- Made by / Humans. ---- */
         .about-hero {
             margin: 0;
-            /* runs almost edge to edge: 2rem matches the logo and nav inset */
-            padding: 6rem 2rem 2rem;
+            /* ink runs to the very edges: no side padding, and the script shifts
+               each line left by its first glyph's bearing so the letter touches */
+            padding: 6rem 0 2rem;
+            overflow-x: clip;
         }
         .about-hero-line {
             display: block;
@@ -795,7 +797,7 @@
 
         @media (max-width: 768px) {
             .about-page .about-page-wrap { padding: 0 24px; }
-            .about-hero { padding: 5rem 1rem 1rem; }
+            .about-hero { padding: 5rem 0 1rem; }
             .about-page .manifesto-scroll-container { height: auto; }
             .about-page .manifesto-sticky {
                 position: static;
@@ -1319,18 +1321,32 @@ Boutique means we're selective. It means we care about who we work with and what
     </script>
 
     <script>
-    // Fit "Made by" and "Humans." so each line runs the full column width.
+    // Fit "Made by" and "Humans." so the INK of each line spans the viewport
+    // exactly: first letter touching the left edge, last touching the right.
+    // The advance box has side bearings and a trailing letter-space, so the
+    // size is solved on the ink width and the line is shifted by its bearing.
     (function fitHero() {
         var hero = document.querySelector('.about-hero');
         if (!hero) return;
         var lines = hero.querySelectorAll('.about-hero-line');
+        var ctx = document.createElement('canvas').getContext('2d');
         function fit() {
-            var cs = getComputedStyle(hero);
-            var width = hero.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+            var vw = document.documentElement.clientWidth;
             lines.forEach(function (line) {
                 line.style.fontSize = '100px';
-                var w = line.getBoundingClientRect().width;
-                if (w > 0) line.style.fontSize = (100 * width / w) + 'px';
+                line.style.marginLeft = '0px';
+                var cs = getComputedStyle(line);
+                var ls = parseFloat(cs.letterSpacing) || 0;           // per-character spacing at 100px
+                ctx.font = cs.fontWeight + ' 100px ' + cs.fontFamily;
+                var m = ctx.measureText(line.textContent);
+                var inkLeft = -m.actualBoundingBoxLeft;                // origin -> first ink column
+                var rightBearing = m.width - m.actualBoundingBoxRight; // last ink column -> advance end
+                var boxW = line.getBoundingClientRect().width;         // advance width incl. letter-spacing
+                var inkW = (boxW - ls - rightBearing) - inkLeft;
+                if (!(inkW > 0)) return;
+                var k = vw / inkW;
+                line.style.fontSize = (100 * k) + 'px';
+                line.style.marginLeft = (-inkLeft * k) + 'px';
             });
         }
         fit();
