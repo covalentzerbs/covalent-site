@@ -1016,11 +1016,21 @@
         /* chrome flips to white so it survives on top of the footage */
         body.roster-hover .logo-bottom svg path { fill: #FFFFFF !important; }
         body.roster-hover .plus-icon span { background: #FFFFFF !important; }
+        body.roster-hover .nav-link { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF; }
         body.roster-hover .site-footer-left,
         body.roster-hover .social-link { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF; }
 
         /* Footer link inherits footer colour (kills default visited-link purple) */
         .footer-link, .footer-link:link, .footer-link:visited { color: inherit; }
+        /* Theme switch: a short cross-fade instead of a hard cut. The class is
+           only on <body> for the duration of the fade, so it never fights the
+           site's own transitions the rest of the time. */
+        body.theme-fading,
+        body.theme-fading *,
+        body.theme-fading *::before,
+        body.theme-fading *::after {
+            transition: var(--theme-transition) !important;
+        }
 
         /* ==================== */
         /* DIRECTOR REEL        */
@@ -1164,15 +1174,6 @@
 
         body.dark-mode .reel-media { background: #1A1A1A; }
         body.dark-mode .reel-media.is-portrait { background: #000; }
-        /* Theme switch: a short cross-fade instead of a hard cut. The class is
-           only on <body> for the duration of the fade, so it never fights the
-           site's own transitions the rest of the time. */
-        body.theme-fading,
-        body.theme-fading *,
-        body.theme-fading *::before,
-        body.theme-fading *::after {
-            transition: var(--theme-transition) !important;
-        }
         /* ── Work Viewer ──────────────────────────────────── */
         .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
         .work-viewer.active { opacity:1; pointer-events:all; }
@@ -1282,7 +1283,20 @@
         <ul class="reel-grid">
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1223839056" data-va="1.775" aria-label="Play Pepsi">
+                        data-vimeo="1235194484" data-va="1.775" aria-label="Play Smile">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2211376709-a6fd7bc59f338c5548c87992f76b31d372df28a46da1b1a6a630d0be4a182747-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2211376709-a6fd7bc59f338c5548c87992f76b31d372df28a46da1b1a6a630d0be4a182747-d_640?region=us 640w, https://i.vimeocdn.com/video/2211376709-a6fd7bc59f338c5548c87992f76b31d372df28a46da1b1a6a630d0be4a182747-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Smile</p>
+                    <p class="reel-client">Les Miles</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1223839056" data-va="1.775" data-roster="1" aria-label="Play Pepsi">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2197157994-d2f75b57e2db1ff54e3af79907b2c0f9c67e699873a20789d879f1bcbe78878f-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2197157994-d2f75b57e2db1ff54e3af79907b2c0f9c67e699873a20789d879f1bcbe78878f-d_640?region=us 640w, https://i.vimeocdn.com/video/2197157994-d2f75b57e2db1ff54e3af79907b2c0f9c67e699873a20789d879f1bcbe78878f-d_1280?region=us 1280w"
@@ -1524,19 +1538,6 @@
                 </button>
                 <div class="reel-meta">
                     <p class="reel-title">Gut Support (Dailies 1)</p>
-                    <p class="reel-client">Activia</p>
-                </div>
-            </li>
-            <li class="reel-item">
-                <button class="reel-media" type="button"
-                        data-vimeo="1223836528" data-va="1.775" aria-label="Play Gut Support (Dailies 2)">
-                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
-                         src="https://i.vimeocdn.com/video/2197156037-59d4d44969b5eba58dd3ebeb44ce047aaa7821d12279016420e12a85472b7b71-d_640?region=us"
-                         srcset="https://i.vimeocdn.com/video/2197156037-59d4d44969b5eba58dd3ebeb44ce047aaa7821d12279016420e12a85472b7b71-d_640?region=us 640w, https://i.vimeocdn.com/video/2197156037-59d4d44969b5eba58dd3ebeb44ce047aaa7821d12279016420e12a85472b7b71-d_1280?region=us 1280w"
-                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
-                </button>
-                <div class="reel-meta">
-                    <p class="reel-title">Gut Support (Dailies 2)</p>
                     <p class="reel-client">Activia</p>
                 </div>
             </li>
