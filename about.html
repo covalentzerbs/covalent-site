@@ -661,9 +661,21 @@
             margin: 0;
             /* ink runs to the very edges: no side padding, and the script shifts
                each line left by its first glyph's bearing so the letter touches */
-            padding: 6rem 0 2rem;
+            padding: 6rem 0 0;
             overflow-x: clip;
+            /* the headline owns the first screen: it sits on the floor of the
+               viewport so the bottom of "Humans." meets the bottom of the window,
+               and the manifesto waits below the fold */
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
+        /* this page scrolls, so the footer flows after the manifesto instead
+           of sitting over the headline */
+        html, body { height: auto; min-height: 100%; }
+        .site-footer { position: static; margin-top: 4rem; }
         .about-hero-line {
             display: block;
             width: max-content;          /* measures as the text's own width */
@@ -797,7 +809,7 @@
 
         @media (max-width: 768px) {
             .about-page .about-page-wrap { padding: 0 24px; }
-            .about-hero { padding: 5rem 0 1rem; }
+            .about-hero { padding: 5rem 0 0; }
             .about-page .manifesto-scroll-container { height: auto; }
             .about-page .manifesto-sticky {
                 position: static;
@@ -1348,6 +1360,19 @@ Boutique means we're selective. It means we care about who we work with and what
                 line.style.fontSize = (100 * k) + 'px';
                 line.style.marginLeft = (-inkLeft * k) + 'px';
             });
+            // The last line's box ends a little below its baseline. Find the real
+            // baseline with a zero-size inline probe and pull the line down by the
+            // difference, so the flat bottoms of the letters sit on the bottom of
+            // the screen (the round "s" overshoots it a touch, as it should).
+            var last = lines[lines.length - 1];
+            last.style.marginBottom = '0px';
+            var probe = document.createElement('span');
+            probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline;';
+            last.appendChild(probe);
+            var baselineY = probe.getBoundingClientRect().top;
+            last.removeChild(probe);
+            var overshoot = last.getBoundingClientRect().bottom - baselineY;
+            last.style.marginBottom = (-overshoot) + 'px';
         }
         fit();
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
