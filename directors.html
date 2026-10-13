@@ -825,7 +825,7 @@
                 <div class="director-row" data-director="cam" data-vimeo="1223839056">
                     <span class="director-name">Cam Erickson</span>
                 </div>
-                <div class="director-row" data-director="jacob" data-vimeo="1170741864">
+                <div class="director-row" data-director="jacob" data-vimeo="1235519188">
                     <span class="director-name">Jacob Frost</span>
                 </div>
                 <div class="director-row" data-director="max" data-vimeo="1222196280">
@@ -886,7 +886,7 @@
         // viewport with no bars, whatever shape the window is
         const directors = [
             { id: 'cam',   slug: 'cam-erickson', name: 'Cam Erickson', vimeo: '1223839056', va: 1.778, thumbnail: 'https://i.vimeocdn.com/video/2197157994-d2f75b57e2db1ff54e3af79907b2c0f9c67e699873a20789d879f1bcbe78878f-d_1280x720' },
-            { id: 'jacob', slug: 'jacob-frost',  name: 'Jacob Frost',  vimeo: '1170741864', va: 1.778, thumbnail: 'https://i.vimeocdn.com/video/2129989125-7bcea3f611dc90b29683cb79b07503543d01abd6db34091368cc53005941e0e5-d_1280x720' },
+            { id: 'jacob', slug: 'jacob-frost',  name: 'Jacob Frost',  vimeo: '1235519188', hash: '3e5851f454', va: 1.775, thumbnail: 'https://i.vimeocdn.com/video/2211785528-27bb0e2fdd535b3e111ac2bf91720f5fe4c7ecc8b774793ac6d70e466f154b7d-d_1280x720?region=us' },
             { id: 'max',   slug: 'max-gilberg',  name: 'Max Gilberg',  vimeo: '1222196280', va: 1.333, thumbnail: 'https://i.vimeocdn.com/video/2195092897-9a6785a8fe877ac952a8b7f731dd95660a7d5889dd56aad19942dbe267a083b1-d_1280x720' },
             { id: 'noah',  slug: 'noah-keckler', name: 'Noah Keckler', vimeo: '1164768847', va: 1.778, thumbnail: 'https://i.vimeocdn.com/video/2121554252-a7004843031d0a0efd0bbbf00cf82995c6b3caf2edaa5224a6466ed1c6918a0c-d_1280x720' }
         ];
@@ -921,7 +921,8 @@
             });
 
             if (director.vimeo) {
-                iframe.src = `https://player.vimeo.com/video/${director.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p`;
+                iframe.src = `https://player.vimeo.com/video/${director.vimeo}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&controls=0&background=1&dnt=1&quality=720p`
+                    + (director.hash ? `&h=${director.hash}` : '');   // unlisted reels carry a hash
             } else if (director.youtube) {
                 iframe.src = `https://www.youtube.com/embed/${director.youtube}?autoplay=1&loop=1&muted=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=${director.youtube}&playsinline=1`;
             }
