@@ -344,7 +344,9 @@
         }
 
         .video-wrapper .director-poster {
-            position: absolute; inset: 0; width: 100%; height: 100%;
+            /* runs past the viewport on every side so the blur's soft edge never
+               lets the player underneath show through at the screen edge */
+            position: absolute; inset: -24px; width: calc(100% + 48px); height: calc(100% + 48px);
             object-fit: cover; opacity: 0; pointer-events: none; z-index: 1;
             transition: opacity 0.15s ease;
             filter: blur(14px);
@@ -977,6 +979,11 @@
             if (data.event === 'ready') subscribe(iframe);
             if (data.event === 'play') {
                 iframe.dataset.playing = '1';
+                // it is at least trying: frames follow within a beat
+                if (iframe.dataset.director === currentVideoId && !iframe.dataset.hasFrame) {
+                    clearTimeout(posterTimer);
+                    posterTimer = setTimeout(() => hidePoster(iframe.dataset.director), 2500);
+                }
                 // off screen: let it paint a frame, then park it (hover resumes it
                 // instantly). If no frame event ever comes, park after 600ms anyway.
                 if (iframe.dataset.director !== currentVideoId) {
@@ -1050,9 +1057,13 @@
             window.addEventListener('pageshow', (e) => { if (e.persisted) loaderDone(); });
         }
 
+        // On touch there is no hover: a tap creates the player it needs, so the
+        // other three are never pre-created (fewer Vimeo loads per visit, which
+        // also keeps Vimeo's rate limiter from serving its bot-check page).
+        const touchOnly = !!(window.matchMedia && matchMedia('(hover: none)').matches);
         let firstFramePainted = false, restLoaded = false;
         function loadRest() {
-            if (restLoaded) return;
+            if (restLoaded || touchOnly) return;
             restLoaded = true;
             const rest = directors.filter(d => (d.vimeo || d.youtube) && d.id !== directors[0].id);
             rest.forEach((d, i) => setTimeout(() => { ensurePoster(d.id); ensureVideo(d.id); }, i * 450));
@@ -1096,8 +1107,9 @@
                 if (newPoster) {
                     newPoster.style.transition = 'none';
                     newPoster.style.opacity = '1';
-                    // safety net if the player never reports a frame
-                    posterTimer = setTimeout(() => hidePoster(directorId), 6000);
+                    // no blind timeout: if the player never gets going (Vimeo's
+                    // bot-check page, Low Power Mode) the still stays rather than
+                    // exposing an empty player
                 }
             }
 

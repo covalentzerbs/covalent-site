@@ -2143,14 +2143,24 @@
             }, 600);
         }
 
-        // Warm every tile, in order, one every 250ms. A paused background player
-        // is light, and it means any tile the cursor lands on is already there.
-        var warmAll = function () {
-            document.querySelectorAll('.reel-media').forEach(warm);
+        // Warm the first screenful of tiles on load and the rest as they come
+        // near the viewport, one every 250ms. Touch devices skip warming
+        // entirely: there is no hover, a tap opens the viewer, and fewer player
+        // loads keep Vimeo's rate limiter from serving its bot-check page.
+        var canHover = !(window.matchMedia && matchMedia('(hover: none)').matches);
+        function near(el) { var r = el.getBoundingClientRect(); return r.bottom > -400 && r.top < window.innerHeight + 400; }
+        var warmNear = function () {
+            if (!canHover) return;
+            document.querySelectorAll('.reel-media').forEach(function (m, i) {
+                if (frameOf(m)) return;
+                if (i < 9 || near(m)) warm(m);
+            });
         };
-        warmAll();
+        warmNear();
+        window.addEventListener('scroll', warmNear, { passive: true });
+        window.addEventListener('resize', warmNear);
         var target = document.getElementById('rosterContent');   // gated pages: tiles arrive after the unlock
-        if (target) new MutationObserver(warmAll).observe(target, { childList: true });
+        if (target) new MutationObserver(warmNear).observe(target, { childList: true });
 
         // Delegated, so it works on markup that only appears after the unlock.
         if (window.matchMedia && matchMedia('(hover: hover)').matches) {
