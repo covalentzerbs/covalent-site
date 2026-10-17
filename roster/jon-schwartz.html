@@ -1165,7 +1165,7 @@
         .viewer-progress:hover .cs-progress-thumb, .viewer-progress.dragging .cs-progress-thumb { opacity:1; }
         .viewer-progress:hover .cs-progress-track, .viewer-progress.dragging .cs-progress-track { height:4px; }
         /* scrubber frame preview (mini player seeked to the cursor time) */
-        .scrub-preview { position:absolute; bottom:calc(100% + 14px); left:0; transform:translateX(-50%); width:168px; opacity:0; pointer-events:none; transition:opacity 0.12s ease; z-index:6; }
+        .scrub-preview { position:absolute; bottom:calc(100% + 6px); left:0; transform:translateX(-50%); width:168px; opacity:0; pointer-events:none; transition:opacity 0.12s ease; z-index:6; }
         .scrub-preview.show { opacity:1; }
         .scrub-preview-frame { width:168px; height:95px; border-radius:6px; overflow:hidden; background:#000; box-shadow:0 10px 34px rgba(0,0,0,0.55); position:relative; }
         .scrub-preview-frame iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100%; height:100%; min-width:169px; min-height:95px; border:none; pointer-events:none; }
@@ -1190,13 +1190,35 @@
         #viewerFrame.fs-idle, #viewerFrame.fs-idle * { cursor:none !important; }
         #viewerFrame.fs-idle .viewer-controls, #viewerFrame.fs-idle .viewer-fs-corner, #viewerFrame.fs-idle .viewer-vol { opacity:0 !important; pointer-events:none !important; }
         .viewer-close { display:none; }
-        /* EXIT cursor: knockout label shown when the pointer leaves the video bounds */
-        #viewerExitCursor { position:fixed; left:-200px; top:-200px; text-transform:uppercase;
+        /* exit cursor: an X that follows the pointer over the margin around the video */
+        #viewerExitCursor { position:fixed; left:-200px; top:-200px; line-height:0;
             transform:translate(-50%,-50%) scale(.85); opacity:0; pointer-events:none; z-index:10080;
             mix-blend-mode:difference; transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1);
             will-change:transform,left,top,opacity; }
         #viewerExitCursor.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
         body.viewer-exit-active .cursor { opacity:0 !important; }
+        /* scrolling the grid tucks the logo and the About / Contact links away */
+        .nav { transition: opacity 0.3s ease; }
+        body.is-scrolled .nav, body.is-scrolled .logo-bottom { opacity:0; pointer-events:none; }
+        /* bigger hit zones, so wherever the magnetic cursor lands is clickable;
+           negative margins keep the icons exactly where they were */
+        .viewer-ctrl-btn { padding:10px 8px; margin:-6px -2px; transition:transform 0.18s ease; will-change:transform; }
+        .viewer-progress { padding:16px 0; margin:-8px 0; }
+        .viewer-fs-corner { bottom:10px; right:14px; padding:10px; transition:opacity 0.2s ease, transform 0.18s ease; }
+        .viewer-vol { bottom:10px; right:50px; }
+        .viewer-vol-btn { padding:10px; transition:opacity 0.2s ease, transform 0.18s ease; }
+        /* dark mode: the whole player goes orange, line included */
+        body.dark-mode .viewer-progress .cs-progress-track, body.dark-mode .viewer-vol-track { background:rgba(255,69,0,0.3); }
+        body.dark-mode .viewer-progress .cs-progress-fill, body.dark-mode .viewer-progress .cs-progress-thumb, body.dark-mode .viewer-vol-fill { background:#FF4500; }
+        body.dark-mode .viewer-time, body.dark-mode .scrub-preview-time { color:#FF4500; }
+        body.dark-mode .viewer-vol-btn svg { stroke:#FF4500; }
+        body.dark-mode .viewer-fs-corner svg path { stroke:#FF4500; }
+        body.dark-mode .viewer-center-icon svg { fill:#FF4500; }
+        body.dark-mode #viewerExitCursor svg line { stroke:#FF4500; }
+        /* the play / pause PNGs are white on alpha: paint orange through them as a mask */
+        body.dark-mode .viewer-ctrl-btn .cs-ctrl-icon { background:#FF4500; -webkit-mask:var(--ic) center / contain no-repeat; mask:var(--ic) center / contain no-repeat; object-position:-999px -999px; }
+        body.dark-mode .viewer-ctrl-btn .cs-icon-play { --ic:url(/assets/logos/covalent_white_play_button.png); }
+        body.dark-mode .viewer-ctrl-btn .cs-icon-pause { --ic:url(/assets/logos/pause_button.png); }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -1306,9 +1328,20 @@
             mouseY = e.clientY;
         });
 
+        // a page may set window.__cursorMagnet = { x, y, scale } to pull the dot
+        // onto a target (the work viewer's timeline and buttons do this)
+        let magnetScale = 1;
         function animateCursor() {
-            cursorX += (mouseX - cursorX) * 0.35;
-            cursorY += (mouseY - cursorY) * 0.35;
+            const mag = window.__cursorMagnet;
+            const k = mag ? 0.5 : 0.35;
+            cursorX += ((mag ? mag.x : mouseX) - cursorX) * k;
+            cursorY += ((mag ? mag.y : mouseY) - cursorY) * k;
+            const ms = mag ? (mag.scale || 1) : 1;
+            if (ms !== magnetScale) {
+                magnetScale = ms;
+                cursor.style.transition = 'transform 0.2s ease, left 0s, top 0s';
+                cursor.style.transform = 'translate(-50%, -50%) scale(' + ms + ')';
+            }
             cursor.style.left = cursorX + 'px';
             cursor.style.top = cursorY + 'px';
             requestAnimationFrame(animateCursor);
@@ -1632,6 +1665,17 @@
     <script src="https://player.vimeo.com/api/player.js"></script>
 
     <script>
+    // Scrolling the grid tucks the logo and the About / Contact links away;
+    // they come back at the top.
+    (function () {
+        var on = false;
+        function check() { var s = window.scrollY > 40; if (s !== on) { on = s; document.body.classList.toggle('is-scrolled', s); } }
+        window.addEventListener('scroll', check, { passive: true });
+        check();
+    })();
+    </script>
+
+    <script>
     // ===== Work Viewer (ported from the editor profile pages) =====
     var openViewer;
     (function initWorkViewer() {
@@ -1663,12 +1707,10 @@
         var fsBtn    = document.getElementById('viewerFsBtn');
         var clickLayer = document.getElementById('viewerClickLayer');
         var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false, vVolume = 1, vMuted = false, volDragging = false;
-        // EXIT cursor: knockout "EXIT" label shown over the margin around the video
+        // exit cursor: an X that follows the pointer over the margin around the video
         var exitCur = document.createElement('div');
         exitCur.id='viewerExitCursor'; exitCur.setAttribute('aria-hidden','true');
-        (function(){ var w=Math.round('EXIT'.length*8.6+28), h=26;
-            exitCur.innerHTML='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg"><defs><mask id="exitCurMask"><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff"/><text x="'+(w/2)+'" y="14" text-anchor="middle" dominant-baseline="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="700" font-size="12" letter-spacing="-0.2" fill="#000">EXIT</text></mask></defs><rect width="'+w+'" height="'+h+'" rx="5" fill="#fff" mask="url(#exitCurMask)"/></svg>';
-        })();
+        exitCur.innerHTML='<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="3" y1="3" x2="19" y2="19" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="19" y1="3" x2="3" y2="19" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>';
         document.body.appendChild(exitCur);
         function ptrInsideFrame(e){ var r=frame.getBoundingClientRect(); return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
         viewer.addEventListener('mousemove', function(e){
@@ -1677,6 +1719,31 @@
             if(ptrInsideFrame(e) || overNav){ exitCur.classList.remove('show'); document.body.classList.remove('viewer-exit-active'); }
             else { exitCur.style.left=e.clientX+'px'; exitCur.style.top=e.clientY+'px'; exitCur.classList.add('show'); document.body.classList.add('viewer-exit-active'); }
         }, {passive:true});
+        // magnetic cursor: inside the frame the dot is pulled onto the timeline and
+        // onto the buttons (which lean a little toward the pointer), so the cursor
+        // snaps to the thing it is about to use
+        var trackEl=progEl.querySelector('.cs-progress-track');
+        var magBtns=[ppBtn, document.getElementById('viewerVolBtn'), fsBtn];
+        function inRect(e,r){ return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
+        function clearPull(except){ magBtns.forEach(function(b){ if(b&&b!==except&&b.style.transform) b.style.transform=''; }); }
+        function onLine(e,tr){ return { x:Math.max(tr.left,Math.min(tr.right,e.clientX)), y:tr.top+tr.height/2, scale:1.5 }; }
+        function magnet(e){
+            if(!viewer.classList.contains('active')||inFs()||!ptrInsideFrame(e)){ clearPull(); return null; }
+            if(dragging){ clearPull(); return onLine(e, trackEl.getBoundingClientRect()); }
+            if(volDragging){ clearPull(); var vt=volTrack.getBoundingClientRect(); return { x:vt.left+vt.width/2, y:Math.max(vt.top,Math.min(vt.bottom,e.clientY)), scale:1.5 }; }
+            for(var i=0;i<magBtns.length;i++){ var b=magBtns[i]; if(!b) continue; var r=b.getBoundingClientRect();
+                if(r.width&&inRect(e,r)){ var cx=r.left+r.width/2, cy=r.top+r.height/2;
+                    b.style.transform='translate('+((e.clientX-cx)*0.3).toFixed(1)+'px,'+((e.clientY-cy)*0.3).toFixed(1)+'px)';
+                    clearPull(b); return { x:cx, y:cy, scale:1.6 }; } }
+            clearPull();
+            if(volWrap.classList.contains('show-gauge')){ var g=volWrap.querySelector('.viewer-vol-gauge').getBoundingClientRect(), vt2=volTrack.getBoundingClientRect();
+                if(g.width&&inRect(e,g)) return { x:vt2.left+vt2.width/2, y:Math.max(vt2.top,Math.min(vt2.bottom,e.clientY)), scale:1.5 }; }
+            var pr=progEl.getBoundingClientRect();
+            if(pr.width&&inRect(e,pr)) return onLine(e, trackEl.getBoundingClientRect());
+            return null;
+        }
+        document.addEventListener('mousemove', function(e){ window.__cursorMagnet=magnet(e); }, {passive:true});
+        frame.addEventListener('mouseleave', function(){ window.__cursorMagnet=null; clearPull(); }, {passive:true});
         function fmt(s) { var m=Math.floor(s/60),sec=Math.floor(s%60); return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec; }
         function setPlaying(p) { vPlaying=p; vHero.classList.toggle('cs-playing',p); if(ppBtn) ppBtn.setAttribute('data-cursor', p?'pause':'play'); }
         function resetPlayer() {
@@ -1733,6 +1800,7 @@
             viewer.classList.remove('active');
             document.body.classList.remove('viewer-open','viewer-exit-active');
             if(exitCur) exitCur.classList.remove('show');
+            window.__cursorMagnet=null; clearPull();
             clearTimeout(idleTimer); resetPlayer();
             document.body.style.overflow='';
         }
@@ -1756,7 +1824,12 @@
             var pf=document.createElement('iframe'); pf.setAttribute('frameborder','0'); pf.setAttribute('allow','autoplay');
             pf.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'background=1&muted=1&controls=0&dnt=1';
             scrubPrevFrame.appendChild(pf);
-            whenVimeoReady(function(){ try{ prevPlayer=new Vimeo.Player(pf); prevPlayer.ready().then(function(){ prevReady=true; if(prevPending!=null){ var t=prevPending; prevPending=null; seekPrev(t); } }).catch(function(){}); }catch(e){} });
+            whenVimeoReady(function(){ try{ var pp=new Vimeo.Player(pf); prevPlayer=pp;
+                // a background player autoplays and loops: hold it paused, so the
+                // preview is a still of the hovered moment rather than a second playback
+                var hold=function(){ try{ pp.pause().catch(function(){}); }catch(e){} };
+                pp.on('play', hold);
+                pp.ready().then(function(){ prevReady=true; hold(); if(prevPending!=null){ var t=prevPending; prevPending=null; seekPrev(t); } }).catch(function(){}); }catch(e){} });
         }
         function seekPrev(t){
             if(!prevReady||!prevPlayer){ prevPending=t; return; }
@@ -1829,7 +1902,7 @@
         frame.addEventListener('mousemove',  csPoke);
         frame.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
         if(closeBtn) closeBtn.addEventListener('click',closeViewer);
-        // click anywhere outside the video bounds closes (the EXIT cursor signals this)
+        // click anywhere outside the video bounds closes (the X cursor signals this)
         viewer.addEventListener('click',function(e){
             if(!viewer.classList.contains('active'))return;
             if(e.target && e.target.closest && e.target.closest('.viewer-nav')) return;
