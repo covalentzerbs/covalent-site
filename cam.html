@@ -1274,6 +1274,11 @@
         body.dark-mode .viewer-ctrl-btn .cs-ctrl-icon { background:#FF4500; -webkit-mask:var(--ic) center / contain no-repeat; mask:var(--ic) center / contain no-repeat; object-position:-999px -999px; }
         body.dark-mode .viewer-ctrl-btn .cs-icon-play { --ic:url(/assets/logos/covalent_white_play_button.png); }
         body.dark-mode .viewer-ctrl-btn .cs-icon-pause { --ic:url(/assets/logos/pause_button.png); }
+        /* volume gauge: a wider pill, and the whole pill plus a margin around it
+           takes the press, not just the 4px line (fullscreen has no magnet to help) */
+        .viewer-vol-gauge { padding:14px 0; }
+        .viewer-vol-track { margin:0 16px; }
+        .viewer-vol-gauge::before { content:''; position:absolute; inset:-10px -14px; }
     </style>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
@@ -1932,7 +1937,8 @@
                     clearPull(b); return { x:cx, y:cy, scale:1.6 }; } }
             clearPull();
             if(volWrap.classList.contains('show-gauge')){ var g=volWrap.querySelector('.viewer-vol-gauge').getBoundingClientRect(), vt2=volTrack.getBoundingClientRect();
-                if(g.width&&inRect(e,g)) return { x:vt2.left+vt2.width/2, y:Math.max(vt2.top,Math.min(vt2.bottom,e.clientY)), scale:1.5 }; }
+                var gx={ left:g.left-14, right:g.right+14, top:g.top-10, bottom:g.bottom+10 };   // same margin as the gauge's ::before
+                if(g.width&&inRect(e,gx)) return { x:vt2.left+vt2.width/2, y:Math.max(vt2.top,Math.min(vt2.bottom,e.clientY)), scale:1.5 }; }
             var pr=progEl.getBoundingClientRect();
             if(pr.width&&inRect(e,pr)) return onLine(e, trackEl.getBoundingClientRect());
             return null;
@@ -2084,7 +2090,11 @@
         volBtn.addEventListener('click', function(e){ e.stopPropagation(); vMuted=!vMuted; if(!vMuted&&vVolume===0) vVolume=1; applyVol(); showGauge(); });
         volWrap.addEventListener('mouseenter', showGauge);
         volWrap.addEventListener('mouseleave', hideGaugeSoon);
-        volTrack.addEventListener('mousedown', function(e){ e.preventDefault(); e.stopPropagation(); volDragging=true; var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); });
+        // the whole gauge takes the press (its ::before adds a margin); the level
+        // is still read off the line's own height
+        var volGauge=document.getElementById('viewerVolGauge');
+        volGauge.addEventListener('mousedown', function(e){ e.preventDefault(); e.stopPropagation(); volDragging=true; var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); });
+        volGauge.addEventListener('click', function(e){ e.stopPropagation(); });
         document.addEventListener('mousemove', function(e){ if(volDragging){ var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); } }, {passive:true});
         document.addEventListener('mouseup', function(){ volDragging=false; });
         renderVol();
