@@ -77,7 +77,8 @@
             position: fixed;
             top: 0;
             right: 0;
-            padding: 2rem;
+            /* right padding matches the content margin (24px), so the stack lines up with the grid edge */
+            padding: 2rem 1.5rem 2rem 2rem;
             z-index: 10001;
         }
 
@@ -351,6 +352,7 @@
 
     <!-- Navigation - Plus Menu -->
     <nav class="nav">
+        <a href="/" class="nav-link">Directors</a>
         <a href="/about" class="nav-link">About</a>
         <a href="/contact" class="nav-link">Contact</a>
     </nav>

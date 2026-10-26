@@ -96,7 +96,8 @@
             position: fixed;
             top: 0;
             right: 0;
-            padding: 2rem;
+            /* right padding matches the content margin (24px), so the stack lines up with the grid edge */
+            padding: 2rem 1.5rem 2rem 2rem;
             z-index: 1000;
         }
 
@@ -1039,6 +1040,7 @@
 
     <!-- Navigation - Plus Menu -->
     <nav class="nav">
+        <a href="/" class="nav-link">Directors</a>
         <a href="/about" class="nav-link">About</a>
         <a href="/contact" class="nav-link">Contact</a>
     </nav>
@@ -1540,23 +1542,36 @@
     <script src="scripts/analytics.js"></script>
 
     <script>
-    // Re-enforce cursor:none via injected stylesheet (bfcache-safe)
+    // Re-enforce cursor:none via injected stylesheet (bfcache-safe). Coming back
+    // to a page through history, Chrome can keep drawing the arrow until the
+    // cursor property on the hovered element actually changes, so on every
+    // pageshow (and the first movement after it) the rule flips default -> none.
     (function() {
+        var style = null;
+        function setRule(value) {
+            if (!style || !style.parentNode) {
+                var existing = document.getElementById('no-native-cursor');
+                if (existing) existing.remove();
+                style = document.createElement('style');
+                style.id = 'no-native-cursor';
+                document.head.appendChild(style);
+            }
+            style.textContent = 'html, html *, body, body * { cursor: ' + value + ' !important; }';
+        }
         function enforceNoCursor() {
-            var existing = document.getElementById('no-native-cursor');
-            if (existing) existing.remove();
-            var style = document.createElement('style');
-            style.id = 'no-native-cursor';
-            style.textContent = 'html, html *, body, body * { cursor: none !important; }';
-            document.head.appendChild(style);
+            setRule('default');
+            void document.documentElement.offsetWidth;
+            setRule('none');
         }
         enforceNoCursor();
         window.addEventListener('pageshow', function(e) {
             enforceNoCursor();
+            setTimeout(enforceNoCursor, 50);
             var cursor = document.getElementById('cursor');
             if (cursor && !('ontouchstart' in window)) {
                 cursor.style.display = 'block';
             }
+            document.addEventListener('mousemove', enforceNoCursor, { once: true });
         });
         document.addEventListener('visibilitychange', function() {
             if (!document.hidden) enforceNoCursor();
