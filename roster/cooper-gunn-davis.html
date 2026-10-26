@@ -1102,8 +1102,9 @@
             color: var(--black);
         }
 
-        .reel-title { flex: 1 1 auto; min-width: 0; }
-        .reel-client { flex: 0 0 auto; text-align: right; }
+        /* client on the left, title on the right (the markup keeps title first; order swaps them) */
+        .reel-client { order: 0; flex: 0 0 auto; text-align: left; }
+        .reel-title { order: 1; flex: 1 1 auto; min-width: 0; text-align: right; }
 
         @media (max-width: 900px) {
             .reel-grid { grid-template-columns: repeat(2, 1fr); }
