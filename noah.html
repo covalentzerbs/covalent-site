@@ -1072,7 +1072,7 @@
 
         /* commercial / music videos switch: a small iOS-style toggle to the right of the name */
         .reel-switch { display: flex; align-items: center; gap: 0.6rem; margin-right: auto; }
-        .reel-switch-label { background: none; border: 0; padding: 0; font-family: var(--helv); font-weight: 700; font-size: 0.7rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--black); opacity: 0.4; cursor: none; transition: opacity 0.2s ease, transform 0.18s ease; will-change: transform; }
+        .reel-switch-label { background: none; border: 0; padding: 0; font-family: var(--helv); font-weight: 700; font-size: 0.7rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--black); opacity: 0.4; cursor: none; transition: opacity 0.2s ease; }
         .reel-switch-label.is-on, .reel-switch-label:hover { opacity: 1; }
         .reel-switch-track { position: relative; width: 36px; height: 21px; border-radius: 11px; border: 0; padding: 0; background: var(--black); cursor: none; transition: background-color 0.3s ease, transform 0.18s ease; will-change: transform; }
         /* the knob stretches while pressed and springs across on release */
@@ -1202,13 +1202,13 @@
         .viewer-center-icon.show-pause .cc-pause { display:block; }
         .viewer-center-icon.flash { animation:ccFlash 0.6s ease-out; }
         @keyframes ccFlash { 0%{opacity:0;transform:translate(-50%,-50%) scale(0.7);} 18%{opacity:1;transform:translate(-50%,-50%) scale(1);} 100%{opacity:0;transform:translate(-50%,-50%) scale(1.3);} }
-        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 96px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
+        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 134px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
         .viewer-fs-corner { position:absolute; bottom:14px; right:18px; z-index:5; background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
         .viewer-fs-corner:hover { opacity:1; }
         /* AirPlay / Cast: left of the volume button, only shown when the browser has a target */
         .viewer-air { position:absolute; bottom:10px; right:86px; z-index:5; background:none; border:none; cursor:none; padding:10px; opacity:0.65; transition:opacity 0.2s ease, transform 0.18s ease; line-height:0; }
         .viewer-air:hover { opacity:1; }
-        .viewer-air[hidden] { display:none; }
+        .viewer-air.is-ready { opacity:1; }
         /* volume control: corner button left of the expand button, with a pop-up gauge */
         .viewer-vol { position:absolute; bottom:14px; right:54px; z-index:5; display:flex; align-items:center; justify-content:center; line-height:0; transition:opacity 0.3s ease; }
         .viewer-vol-btn { background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
@@ -1324,6 +1324,11 @@
         <div class="roster-reveal" id="rosterContent">
         <div class="director-top">
             <h1 class="director-name">Noah Keckler</h1>
+            <div class="reel-switch" role="group" aria-label="Commercial or music videos">
+                <button class="reel-switch-label is-on" type="button" data-set="commercial">Commercial</button>
+                <button class="reel-switch-track" type="button" role="switch" aria-checked="false" aria-label="Show music videos"><span class="reel-switch-knob"></span></button>
+                <button class="reel-switch-label" type="button" data-set="music">Music Videos</button>
+            </div>
             <a class="director-back" href="/">Back</a>
         </div>
         <ul class="reel-grid" data-set="commercial">
@@ -1331,8 +1336,8 @@
                 <button class="reel-media" type="button"
                         data-vimeo="1164238677" data-va="1.367" aria-label="Play The Summer Smash">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
-                         src="https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_640?region=us"
-                         srcset="https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_640?region=us 640w, https://i.vimeocdn.com/video/2120794793-619abcb90455f2e9f1b7a8cdfef5c5f53dfcc50afca0cab8e63158e86357b50c-d_1280?region=us 1280w"
+                         src="https://i.vimeocdn.com/video/2175521266-3ed99257ed0088a578edb627ee59e6b279f57bed6d461416c39dca3497c30039-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2175521266-3ed99257ed0088a578edb627ee59e6b279f57bed6d461416c39dca3497c30039-d_640?region=us 640w, https://i.vimeocdn.com/video/2175521266-3ed99257ed0088a578edb627ee59e6b279f57bed6d461416c39dca3497c30039-d_1280?region=us 1280w"
                          sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
                 </button>
                 <div class="reel-meta">
@@ -1344,8 +1349,8 @@
                 <button class="reel-media" type="button"
                         data-vimeo="1164239118" data-va="1.450" aria-label="Play Elevator Pitch">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
-                         src="https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_640?region=us"
-                         srcset="https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_640?region=us 640w, https://i.vimeocdn.com/video/2120795362-c082fec35b125bf044942b85965a89ee504446ba9a31d9fa791f8a444a48f4b4-d_1280?region=us 1280w"
+                         src="https://i.vimeocdn.com/video/2175516665-183f9b0933f451afde3290959ff2c5eda961b31b34110404f0e5431d309e17cd-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2175516665-183f9b0933f451afde3290959ff2c5eda961b31b34110404f0e5431d309e17cd-d_640?region=us 640w, https://i.vimeocdn.com/video/2175516665-183f9b0933f451afde3290959ff2c5eda961b31b34110404f0e5431d309e17cd-d_1280?region=us 1280w"
                          sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
                 </button>
                 <div class="reel-meta">
@@ -1357,8 +1362,8 @@
                 <button class="reel-media" type="button"
                         data-vimeo="1164237797" data-va="1.333" aria-label="Play Launch">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
-                         src="https://i.vimeocdn.com/video/2120793664-c5e6350c0e88174f6acebe48e2a135ed34e5aa4a2c5898507e0134e952889c86-d_640?region=us"
-                         srcset="https://i.vimeocdn.com/video/2120793664-c5e6350c0e88174f6acebe48e2a135ed34e5aa4a2c5898507e0134e952889c86-d_640?region=us 640w, https://i.vimeocdn.com/video/2120793664-c5e6350c0e88174f6acebe48e2a135ed34e5aa4a2c5898507e0134e952889c86-d_1280?region=us 1280w"
+                         src="https://i.vimeocdn.com/video/2175520138-70434d76a3eeb185a10d7d2745cec8453695e6aa4934b416f3c13ec14e7728f4-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2175520138-70434d76a3eeb185a10d7d2745cec8453695e6aa4934b416f3c13ec14e7728f4-d_640?region=us 640w, https://i.vimeocdn.com/video/2175520138-70434d76a3eeb185a10d7d2745cec8453695e6aa4934b416f3c13ec14e7728f4-d_1280?region=us 1280w"
                          sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
                 </button>
                 <div class="reel-meta">
@@ -1370,8 +1375,8 @@
                 <button class="reel-media" type="button"
                         data-vimeo="1164237342" data-va="1.333" data-roster="1" aria-label="Play Anything but Ordinary">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
-                         src="https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_640?region=us"
-                         srcset="https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_640?region=us 640w, https://i.vimeocdn.com/video/2120792983-9ef1729b5658133a7561ba26ee28bbf4a1d24b7be767935978543e8deb21b6be-d_1280?region=us 1280w"
+                         src="https://i.vimeocdn.com/video/2175519821-5692f07e73bfe30afa011e37199691c4d9d40d6451e5aadc07bd6db544a5c847-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2175519821-5692f07e73bfe30afa011e37199691c4d9d40d6451e5aadc07bd6db544a5c847-d_640?region=us 640w, https://i.vimeocdn.com/video/2175519821-5692f07e73bfe30afa011e37199691c4d9d40d6451e5aadc07bd6db544a5c847-d_1280?region=us 1280w"
                          sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
                 </button>
                 <div class="reel-meta">
@@ -1383,8 +1388,8 @@
                 <button class="reel-media" type="button"
                         data-vimeo="1205645142" data-va="1.775" aria-label="Play Everything, All At Once">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
-                         src="https://i.vimeocdn.com/video/2174285588-abfdd775a00eb6c90e250b9338774bd18be2e07a0cf68d931e954624d1949da1-d_640?region=us"
-                         srcset="https://i.vimeocdn.com/video/2174285588-abfdd775a00eb6c90e250b9338774bd18be2e07a0cf68d931e954624d1949da1-d_640?region=us 640w, https://i.vimeocdn.com/video/2174285588-abfdd775a00eb6c90e250b9338774bd18be2e07a0cf68d931e954624d1949da1-d_1280?region=us 1280w"
+                         src="https://i.vimeocdn.com/video/2175515992-b386993f2a6d7dcf9179096718e29c164ac4d8ff973bbc326804586b8013621b-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2175515992-b386993f2a6d7dcf9179096718e29c164ac4d8ff973bbc326804586b8013621b-d_640?region=us 640w, https://i.vimeocdn.com/video/2175515992-b386993f2a6d7dcf9179096718e29c164ac4d8ff973bbc326804586b8013621b-d_1280?region=us 1280w"
                          sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
                 </button>
                 <div class="reel-meta">
@@ -1396,8 +1401,8 @@
                 <button class="reel-media" type="button"
                         data-vimeo="1205645141" data-va="1.450" aria-label="Play 2026 Summer Smash">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
-                         src="https://i.vimeocdn.com/video/2174285619-15144c066864a5e3e84b932eecc3e1875b5713875cf9e1bc88c4b940ae64b9c6-d_640?region=us"
-                         srcset="https://i.vimeocdn.com/video/2174285619-15144c066864a5e3e84b932eecc3e1875b5713875cf9e1bc88c4b940ae64b9c6-d_640?region=us 640w, https://i.vimeocdn.com/video/2174285619-15144c066864a5e3e84b932eecc3e1875b5713875cf9e1bc88c4b940ae64b9c6-d_1280?region=us 1280w"
+                         src="https://i.vimeocdn.com/video/2175517564-e98db865532e480a87fae5e155e705da24e80b6dc7f9fd7235ec7cf76d3ece1e-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2175517564-e98db865532e480a87fae5e155e705da24e80b6dc7f9fd7235ec7cf76d3ece1e-d_640?region=us 640w, https://i.vimeocdn.com/video/2175517564-e98db865532e480a87fae5e155e705da24e80b6dc7f9fd7235ec7cf76d3ece1e-d_1280?region=us 1280w"
                          sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
                 </button>
                 <div class="reel-meta">
@@ -1409,8 +1414,8 @@
                 <button class="reel-media" type="button"
                         data-vimeo="1164237076" data-va="1.458" aria-label="Play 2024 Summer Smash - Official Commercial">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
-                         src="https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_640?region=us"
-                         srcset="https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_640?region=us 640w, https://i.vimeocdn.com/video/2120792426-cd5cc323cd3db6af8daecd5c528fcf89ae445c5fbecf78e224726c399c37f42f-d_1280?region=us 1280w"
+                         src="https://i.vimeocdn.com/video/1876407292-3e281d559b4429775b83aa447310c4d1580b902471b3e43cf08e8852691fb3da-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/1876407292-3e281d559b4429775b83aa447310c4d1580b902471b3e43cf08e8852691fb3da-d_640?region=us 640w, https://i.vimeocdn.com/video/1876407292-3e281d559b4429775b83aa447310c4d1580b902471b3e43cf08e8852691fb3da-d_1280?region=us 1280w"
                          sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
                 </button>
                 <div class="reel-meta">
@@ -1422,13 +1427,132 @@
                 <button class="reel-media" type="button"
                         data-vimeo="1164236894" data-va="1.333" aria-label="Play 2025 Summer Smash - Official Commercial">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
-                         src="https://i.vimeocdn.com/video/2120792016-491ec444d739543bf2941b228a2a50b41ff89c9edd9be80e3cb8afb06780f85b-d_640?region=us"
-                         srcset="https://i.vimeocdn.com/video/2120792016-491ec444d739543bf2941b228a2a50b41ff89c9edd9be80e3cb8afb06780f85b-d_640?region=us 640w, https://i.vimeocdn.com/video/2120792016-491ec444d739543bf2941b228a2a50b41ff89c9edd9be80e3cb8afb06780f85b-d_1280?region=us 1280w"
+                         src="https://i.vimeocdn.com/video/2175518422-8c3be9ca53f0bfec3b5baa796d64c99c8d3d6659831c20cd367d5ea4e0af6663-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2175518422-8c3be9ca53f0bfec3b5baa796d64c99c8d3d6659831c20cd367d5ea4e0af6663-d_640?region=us 640w, https://i.vimeocdn.com/video/2175518422-8c3be9ca53f0bfec3b5baa796d64c99c8d3d6659831c20cd367d5ea4e0af6663-d_1280?region=us 1280w"
                          sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
                 </button>
                 <div class="reel-meta">
                     <p class="reel-title">2025 Summer Smash - Official Commercial</p>
                     <p class="reel-client">Lyrical Lemonade</p>
+                </div>
+            </li>
+        </ul>
+        <ul class="reel-grid" data-set="music" hidden>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1207935080" data-va="1.778" aria-label="Play COCONUT (feat. Eem Triplin)">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2177129683-c96f9b6e2424895ed9a7fce82e935720efe6d820f9e0c067d3ca5ac278778bab-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2177129683-c96f9b6e2424895ed9a7fce82e935720efe6d820f9e0c067d3ca5ac278778bab-d_640?region=us 640w, https://i.vimeocdn.com/video/2177129683-c96f9b6e2424895ed9a7fce82e935720efe6d820f9e0c067d3ca5ac278778bab-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">COCONUT (feat. Eem Triplin)</p>
+                    <p class="reel-client">SAILORR</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1207935079" data-va="1.778" aria-label="Play me &amp; you (feat. SoFaygo)">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2177128938-e93a3bc7b841d7133936aaff25fc29c1c9167f8fc1851a8456d35c3414a096e4-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2177128938-e93a3bc7b841d7133936aaff25fc29c1c9167f8fc1851a8456d35c3414a096e4-d_640?region=us 640w, https://i.vimeocdn.com/video/2177128938-e93a3bc7b841d7133936aaff25fc29c1c9167f8fc1851a8456d35c3414a096e4-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">me &amp; you (feat. SoFaygo)</p>
+                    <p class="reel-client">sosocamo</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1207960544" data-va="1.333" aria-label="Play Feel Like Uzi">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2177159019-f66872b40cb7bfe3b6452063418f08fdd3a36b656158cdc88da28f969707ca82-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2177159019-f66872b40cb7bfe3b6452063418f08fdd3a36b656158cdc88da28f969707ca82-d_640?region=us 640w, https://i.vimeocdn.com/video/2177159019-f66872b40cb7bfe3b6452063418f08fdd3a36b656158cdc88da28f969707ca82-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Feel Like Uzi</p>
+                    <p class="reel-client">prettifun</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1207937955" data-va="1.778" aria-label="Play CITY ON FIRE">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2177132265-423e76b62b68fb010b766d3f54c275570cf2a45d6744738b8dc3056f096a30c3-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2177132265-423e76b62b68fb010b766d3f54c275570cf2a45d6744738b8dc3056f096a30c3-d_640?region=us 640w, https://i.vimeocdn.com/video/2177132265-423e76b62b68fb010b766d3f54c275570cf2a45d6744738b8dc3056f096a30c3-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">CITY ON FIRE</p>
+                    <p class="reel-client">Draft Day</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1207940506" data-va="1.333" aria-label="Play Seeking For Connection">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2177157032-f4ec958c6292c102c2cccf0c6409787c16af89122c5377cd1751c0ff6ed7880a-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2177157032-f4ec958c6292c102c2cccf0c6409787c16af89122c5377cd1751c0ff6ed7880a-d_640?region=us 640w, https://i.vimeocdn.com/video/2177157032-f4ec958c6292c102c2cccf0c6409787c16af89122c5377cd1751c0ff6ed7880a-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Seeking For Connection</p>
+                    <p class="reel-client">FIG</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1207937956" data-va="1.896" aria-label="Play GINA">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2177132790-c7d92604fdcab93fa21345953861d9f7947058ed3d515a4901322e7dae0caaeb-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2177132790-c7d92604fdcab93fa21345953861d9f7947058ed3d515a4901322e7dae0caaeb-d_640?region=us 640w, https://i.vimeocdn.com/video/2177132790-c7d92604fdcab93fa21345953861d9f7947058ed3d515a4901322e7dae0caaeb-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">GINA</p>
+                    <p class="reel-client">theMIND</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1207940505" data-va="1.896" aria-label="Play FUNERAL">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2177156092-4b76adaae767758506bd1e6621a1541d85f0ed6c22c13ace005896f62b993f35-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2177156092-4b76adaae767758506bd1e6621a1541d85f0ed6c22c13ace005896f62b993f35-d_640?region=us 640w, https://i.vimeocdn.com/video/2177156092-4b76adaae767758506bd1e6621a1541d85f0ed6c22c13ace005896f62b993f35-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">FUNERAL</p>
+                    <p class="reel-client">Heartgaze</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1207940504" data-va="1.896" aria-label="Play In My Head">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2177156612-92dbd34aa7c81aaa924b06da291c284c219a51f6eb42420d3827081866bb035e-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2177156612-92dbd34aa7c81aaa924b06da291c284c219a51f6eb42420d3827081866bb035e-d_640?region=us 640w, https://i.vimeocdn.com/video/2177156612-92dbd34aa7c81aaa924b06da291c284c219a51f6eb42420d3827081866bb035e-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">In My Head</p>
+                    <p class="reel-client">Dreamer Isioma / The Celestials!</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1207940507" data-va="1.778" aria-label="Play TAMAGOTCHI (feat. Martín Berríos)">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2177155594-01a2c5faec7837a7cd043afb6aba42163d66e38a8db05a50f1047323431f1118-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2177155594-01a2c5faec7837a7cd043afb6aba42163d66e38a8db05a50f1047323431f1118-d_640?region=us 640w, https://i.vimeocdn.com/video/2177155594-01a2c5faec7837a7cd043afb6aba42163d66e38a8db05a50f1047323431f1118-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">TAMAGOTCHI (feat. Martín Berríos)</p>
+                    <p class="reel-client">Heartgaze</p>
                 </div>
             </li>
         </ul>
@@ -1708,7 +1832,7 @@
                     <svg class="vol-ic vol-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
                 </button>
             </div>
-            <button class="viewer-air" id="viewerAirBtn" aria-label="AirPlay" data-cursor="airplay" hidden>
+            <button class="viewer-air" id="viewerAirBtn" aria-label="AirPlay" data-cursor="airplay">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/><path d="m12 15 5 6H7l5-6z"/></svg>
             </button>
             <button class="viewer-fs-corner" id="viewerFsBtn" aria-label="Fullscreen" data-cursor="expand">
@@ -1752,7 +1876,7 @@
                 : t.getAttribute('data-set');
             setSide(side, true);
         });
-        // the cursor dot is drawn to the switch the way it is to the player's controls
+        // the cursor dot is drawn to the switch's knob (not the labels), gently
         // (shared magnet: a script only clears a target it set itself)
         function setMagnet(owner, m) { var cur = window.__cursorMagnet; if (m) { m.owner = owner; window.__cursorMagnet = m; } else if (cur && cur.owner === owner) { window.__cursorMagnet = null; } }
         var leaned = [];
@@ -1760,15 +1884,15 @@
         document.addEventListener('mousemove', function (e) {
             var sw = document.querySelector('.reel-switch');
             if (!sw || document.body.classList.contains('viewer-open')) { clearLean(); setMagnet('switch', null); return; }
-            var parts = sw.querySelectorAll('.reel-switch-label, .reel-switch-track'), pad = 6;
+            var parts = sw.querySelectorAll('.reel-switch-track'), pad = 6;
             for (var i = 0; i < parts.length; i++) {
                 var b = parts[i], r = b.getBoundingClientRect();
                 if (e.clientX < r.left - pad || e.clientX > r.right + pad || e.clientY < r.top - pad || e.clientY > r.bottom + pad) continue;
                 var cx = r.left + r.width / 2, cy = r.top + r.height / 2, tx = cx, ty = cy;
                 if (b.classList.contains('reel-switch-track')) { var k = b.querySelector('.reel-switch-knob').getBoundingClientRect(); tx = k.left + k.width / 2; ty = k.top + k.height / 2; }
-                b.style.transform = 'translate(' + ((e.clientX - cx) * 0.2).toFixed(1) + 'px,' + ((e.clientY - cy) * 0.2).toFixed(1) + 'px)';
+                b.style.transform = 'translate(' + ((e.clientX - cx) * 0.1).toFixed(1) + 'px,' + ((e.clientY - cy) * 0.1).toFixed(1) + 'px)';
                 clearLean(b);
-                setMagnet('switch', { x: tx, y: ty, scale: 1.3, pull: 0.6 });
+                setMagnet('switch', { x: tx, y: ty, scale: 1.15, pull: 0.35 });
                 return;
             }
             clearLean(); setMagnet('switch', null);
@@ -1876,7 +2000,7 @@
             if (thumb) thumb.style.left='0%';
             if (timeEl) timeEl.textContent='00:00 / 00:00';
             hidePrev(); teardownPrev();
-            if (airBtn) airBtn.hidden = true;
+            if (airBtn) airBtn.classList.remove('is-ready');
         }
         function bindPlayer(p) {
             p.getDuration().then(function(d){ vDuration=d; if(timeEl&&d) timeEl.textContent='00:00 / '+fmt(d); }).catch(function(){});
@@ -1885,9 +2009,11 @@
             // at the end: back to the first frame, paused, so Vimeo's own end card
             // ("More from ...") has nothing to sit on
             p.on('ended', function(){ setPlaying(false); p.setCurrentTime(0).then(function(){ return p.pause(); }).catch(function(){}); });
-            // AirPlay / Cast: the button only appears when the browser reports a target
+            // AirPlay / Cast: the button is always there; a click opens the browser's own
+            // picker (AirPlay in Safari, Cast in Chrome). A known target only brightens it.
+            // (The SDK answers this with a boolean, not the documented string.)
             if (airBtn) {
-                var air = function(v){ var s = (v && typeof v === 'object') ? (v.availability || v.remotePlaybackAvailability) : v; airBtn.hidden = (s !== 'available'); };
+                var air = function(v){ var s = (v && typeof v === 'object') ? (v.availability || v.remotePlaybackAvailability) : v; airBtn.classList.toggle('is-ready', s === true || s === 'available'); };
                 if (p.getRemotePlaybackAvailability) p.getRemotePlaybackAvailability().then(air).catch(function(){});
                 p.on('remoteplaybackavailabilitychange', air);
             }

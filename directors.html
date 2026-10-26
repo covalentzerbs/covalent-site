@@ -398,8 +398,11 @@
             /* No transition on base — hover-off snaps instantly, no white flash */
             transition: none;
             opacity: 0.35;
-            /* tight: as close as Helvetica Neue Medium goes before "ck" and "rs" touch */
-            letter-spacing: -0.055em;
+            /* same cut as the director page title (weight 700, -0.035em); grayscale
+               smoothing so white-on-video does not render heavier than black-on-white */
+            letter-spacing: -0.035em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Only CSS :hover controls the blue highlight — no .active class here.

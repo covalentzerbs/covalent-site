@@ -1072,7 +1072,7 @@
 
         /* commercial / music videos switch: a small iOS-style toggle to the right of the name */
         .reel-switch { display: flex; align-items: center; gap: 0.6rem; margin-right: auto; }
-        .reel-switch-label { background: none; border: 0; padding: 0; font-family: var(--helv); font-weight: 700; font-size: 0.7rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--black); opacity: 0.4; cursor: none; transition: opacity 0.2s ease, transform 0.18s ease; will-change: transform; }
+        .reel-switch-label { background: none; border: 0; padding: 0; font-family: var(--helv); font-weight: 700; font-size: 0.7rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--black); opacity: 0.4; cursor: none; transition: opacity 0.2s ease; }
         .reel-switch-label.is-on, .reel-switch-label:hover { opacity: 1; }
         .reel-switch-track { position: relative; width: 36px; height: 21px; border-radius: 11px; border: 0; padding: 0; background: var(--black); cursor: none; transition: background-color 0.3s ease, transform 0.18s ease; will-change: transform; }
         /* the knob stretches while pressed and springs across on release */
@@ -1202,13 +1202,13 @@
         .viewer-center-icon.show-pause .cc-pause { display:block; }
         .viewer-center-icon.flash { animation:ccFlash 0.6s ease-out; }
         @keyframes ccFlash { 0%{opacity:0;transform:translate(-50%,-50%) scale(0.7);} 18%{opacity:1;transform:translate(-50%,-50%) scale(1);} 100%{opacity:0;transform:translate(-50%,-50%) scale(1.3);} }
-        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 96px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
+        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 134px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
         .viewer-fs-corner { position:absolute; bottom:14px; right:18px; z-index:5; background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
         .viewer-fs-corner:hover { opacity:1; }
         /* AirPlay / Cast: left of the volume button, only shown when the browser has a target */
         .viewer-air { position:absolute; bottom:10px; right:86px; z-index:5; background:none; border:none; cursor:none; padding:10px; opacity:0.65; transition:opacity 0.2s ease, transform 0.18s ease; line-height:0; }
         .viewer-air:hover { opacity:1; }
-        .viewer-air[hidden] { display:none; }
+        .viewer-air.is-ready { opacity:1; }
         /* volume control: corner button left of the expand button, with a pop-up gauge */
         .viewer-vol { position:absolute; bottom:14px; right:54px; z-index:5; display:flex; align-items:center; justify-content:center; line-height:0; transition:opacity 0.3s ease; }
         .viewer-vol-btn { background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
@@ -1721,7 +1721,7 @@
                     <svg class="vol-ic vol-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
                 </button>
             </div>
-            <button class="viewer-air" id="viewerAirBtn" aria-label="AirPlay" data-cursor="airplay" hidden>
+            <button class="viewer-air" id="viewerAirBtn" aria-label="AirPlay" data-cursor="airplay">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/><path d="m12 15 5 6H7l5-6z"/></svg>
             </button>
             <button class="viewer-fs-corner" id="viewerFsBtn" aria-label="Fullscreen" data-cursor="expand">
@@ -1765,7 +1765,7 @@
                 : t.getAttribute('data-set');
             setSide(side, true);
         });
-        // the cursor dot is drawn to the switch the way it is to the player's controls
+        // the cursor dot is drawn to the switch's knob (not the labels), gently
         // (shared magnet: a script only clears a target it set itself)
         function setMagnet(owner, m) { var cur = window.__cursorMagnet; if (m) { m.owner = owner; window.__cursorMagnet = m; } else if (cur && cur.owner === owner) { window.__cursorMagnet = null; } }
         var leaned = [];
@@ -1773,15 +1773,15 @@
         document.addEventListener('mousemove', function (e) {
             var sw = document.querySelector('.reel-switch');
             if (!sw || document.body.classList.contains('viewer-open')) { clearLean(); setMagnet('switch', null); return; }
-            var parts = sw.querySelectorAll('.reel-switch-label, .reel-switch-track'), pad = 6;
+            var parts = sw.querySelectorAll('.reel-switch-track'), pad = 6;
             for (var i = 0; i < parts.length; i++) {
                 var b = parts[i], r = b.getBoundingClientRect();
                 if (e.clientX < r.left - pad || e.clientX > r.right + pad || e.clientY < r.top - pad || e.clientY > r.bottom + pad) continue;
                 var cx = r.left + r.width / 2, cy = r.top + r.height / 2, tx = cx, ty = cy;
                 if (b.classList.contains('reel-switch-track')) { var k = b.querySelector('.reel-switch-knob').getBoundingClientRect(); tx = k.left + k.width / 2; ty = k.top + k.height / 2; }
-                b.style.transform = 'translate(' + ((e.clientX - cx) * 0.2).toFixed(1) + 'px,' + ((e.clientY - cy) * 0.2).toFixed(1) + 'px)';
+                b.style.transform = 'translate(' + ((e.clientX - cx) * 0.1).toFixed(1) + 'px,' + ((e.clientY - cy) * 0.1).toFixed(1) + 'px)';
                 clearLean(b);
-                setMagnet('switch', { x: tx, y: ty, scale: 1.3, pull: 0.6 });
+                setMagnet('switch', { x: tx, y: ty, scale: 1.15, pull: 0.35 });
                 return;
             }
             clearLean(); setMagnet('switch', null);
@@ -1889,7 +1889,7 @@
             if (thumb) thumb.style.left='0%';
             if (timeEl) timeEl.textContent='00:00 / 00:00';
             hidePrev(); teardownPrev();
-            if (airBtn) airBtn.hidden = true;
+            if (airBtn) airBtn.classList.remove('is-ready');
         }
         function bindPlayer(p) {
             p.getDuration().then(function(d){ vDuration=d; if(timeEl&&d) timeEl.textContent='00:00 / '+fmt(d); }).catch(function(){});
@@ -1898,9 +1898,11 @@
             // at the end: back to the first frame, paused, so Vimeo's own end card
             // ("More from ...") has nothing to sit on
             p.on('ended', function(){ setPlaying(false); p.setCurrentTime(0).then(function(){ return p.pause(); }).catch(function(){}); });
-            // AirPlay / Cast: the button only appears when the browser reports a target
+            // AirPlay / Cast: the button is always there; a click opens the browser's own
+            // picker (AirPlay in Safari, Cast in Chrome). A known target only brightens it.
+            // (The SDK answers this with a boolean, not the documented string.)
             if (airBtn) {
-                var air = function(v){ var s = (v && typeof v === 'object') ? (v.availability || v.remotePlaybackAvailability) : v; airBtn.hidden = (s !== 'available'); };
+                var air = function(v){ var s = (v && typeof v === 'object') ? (v.availability || v.remotePlaybackAvailability) : v; airBtn.classList.toggle('is-ready', s === true || s === 'available'); };
                 if (p.getRemotePlaybackAvailability) p.getRemotePlaybackAvailability().then(air).catch(function(){});
                 p.on('remoteplaybackavailabilitychange', air);
             }
