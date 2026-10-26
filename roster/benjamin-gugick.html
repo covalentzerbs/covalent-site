@@ -357,7 +357,7 @@
         }
         .site-footer-left {
             font-size: 0.7rem;
-            font-weight: 700;
+            font-weight: 300;
             color: var(--black);
             opacity: 0.5;
         }
@@ -1046,7 +1046,7 @@
 
         .director-back {
             font-family: var(--helv);
-            font-weight: 700;
+            font-weight: 300;
             font-size: 0.8rem;
             letter-spacing: -0.02em;
             text-decoration: none;
@@ -1056,6 +1056,18 @@
         }
 
         .director-back:hover { opacity: 1; }
+
+        /* commercial / music videos switch: an iOS-style toggle with a label on each side */
+        .reel-switch { display: flex; align-items: center; gap: 0.85rem; margin: -0.25rem 0 1.25rem; }
+        .reel-switch-label { background: none; border: 0; padding: 0; font-family: var(--helv); font-weight: 700; font-size: 0.8rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--black); opacity: 0.4; cursor: none; transition: opacity 0.2s ease; }
+        .reel-switch-label.is-on, .reel-switch-label:hover { opacity: 1; }
+        .reel-switch-track { position: relative; width: 44px; height: 26px; border-radius: 13px; border: 0; padding: 0; background: var(--black); cursor: none; transition: background var(--theme-transition, 0.3s ease); }
+        .reel-switch-knob { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--white); transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1), background var(--theme-transition, 0.3s ease); }
+        .reel-switch-track[aria-checked="true"] .reel-switch-knob { transform: translateX(18px); }
+        body.dark-mode .reel-switch-label { color: #FF4500; }
+        body.dark-mode .reel-switch-track { background: #FF4500; }
+        body.dark-mode .reel-switch-knob { background: #0A0A0A; }
+        .reel-grid[hidden] { display: none; }
 
         /* Three across, 5px apart. Every tile is the same 16:9 window so the
            grid reads as one block no matter what the source ratio is. */
@@ -1186,6 +1198,10 @@
         .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 96px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
         .viewer-fs-corner { position:absolute; bottom:14px; right:18px; z-index:5; background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
         .viewer-fs-corner:hover { opacity:1; }
+        /* AirPlay / Cast: left of the volume button, only shown when the browser has a target */
+        .viewer-air { position:absolute; bottom:10px; right:86px; z-index:5; background:none; border:none; cursor:none; padding:10px; opacity:0.65; transition:opacity 0.2s ease, transform 0.18s ease; line-height:0; }
+        .viewer-air:hover { opacity:1; }
+        .viewer-air[hidden] { display:none; }
         /* volume control: corner button left of the expand button, with a pop-up gauge */
         .viewer-vol { position:absolute; bottom:14px; right:54px; z-index:5; display:flex; align-items:center; justify-content:center; line-height:0; transition:opacity 0.3s ease; }
         .viewer-vol-btn { background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
@@ -1201,8 +1217,8 @@
         .viewer-video-hero.cs-playing .viewer-controls { opacity:0; transform:translateY(6px); pointer-events:none; }
         .viewer-video-hero.cs-playing.cs-hover .viewer-controls { opacity:1; transform:translateY(0); pointer-events:auto; }
         /* corner buttons (volume + expand) fade out with the controls when the video isn't being hovered */
-        .viewer-video-hero.cs-playing ~ .viewer-fs-corner, .viewer-video-hero.cs-playing ~ .viewer-vol { opacity:0; pointer-events:none; }
-        .viewer-video-hero.cs-playing.cs-hover ~ .viewer-fs-corner { opacity:0.65; pointer-events:auto; }
+        .viewer-video-hero.cs-playing ~ .viewer-fs-corner, .viewer-video-hero.cs-playing ~ .viewer-vol, .viewer-video-hero.cs-playing ~ .viewer-air { opacity:0; pointer-events:none; }
+        .viewer-video-hero.cs-playing.cs-hover ~ .viewer-fs-corner, .viewer-video-hero.cs-playing.cs-hover ~ .viewer-air { opacity:0.65; pointer-events:auto; }
         .viewer-video-hero.cs-playing.cs-hover ~ .viewer-vol { opacity:1; pointer-events:auto; }
         .viewer-ctrl-btn { background:none; border:none; padding:4px 6px; flex-shrink:0; cursor:none; }
         .viewer-ctrl-btn .cs-ctrl-icon { display:none; width:14px; height:14px; object-fit:contain; }
@@ -1239,7 +1255,7 @@
         :-webkit-full-screen, :-webkit-full-screen * { cursor:auto !important; }
         /* fullscreen idle: hide cursor + controls + expand button after 1s of no movement */
         #viewerFrame.fs-idle, #viewerFrame.fs-idle * { cursor:none !important; }
-        #viewerFrame.fs-idle .viewer-controls, #viewerFrame.fs-idle .viewer-fs-corner, #viewerFrame.fs-idle .viewer-vol { opacity:0 !important; pointer-events:none !important; }
+        #viewerFrame.fs-idle .viewer-controls, #viewerFrame.fs-idle .viewer-fs-corner, #viewerFrame.fs-idle .viewer-vol, #viewerFrame.fs-idle .viewer-air { opacity:0 !important; pointer-events:none !important; }
         .viewer-close { display:none; }
         /* exit cursor: an X that follows the pointer over the margin around the video */
         #viewerExitCursor { position:fixed; left:-200px; top:-200px; line-height:0;
@@ -1263,7 +1279,7 @@
         body.dark-mode .viewer-progress .cs-progress-fill, body.dark-mode .viewer-progress .cs-progress-thumb, body.dark-mode .viewer-vol-fill { background:#FF4500; }
         body.dark-mode .viewer-time, body.dark-mode .scrub-preview-time { color:#FF4500; }
         body.dark-mode .viewer-vol-btn svg { stroke:#FF4500; }
-        body.dark-mode .viewer-fs-corner svg path { stroke:#FF4500; }
+        body.dark-mode .viewer-fs-corner svg path, body.dark-mode .viewer-air svg { stroke:#FF4500; }
         body.dark-mode .viewer-center-icon svg { fill:#FF4500; }
         body.dark-mode #viewerExitCursor svg line { stroke:#FF4500; }
         /* the play / pause PNGs are white on alpha: paint orange through them as a mask */
@@ -1833,6 +1849,9 @@
                     <svg class="vol-ic vol-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
                 </button>
             </div>
+            <button class="viewer-air" id="viewerAirBtn" aria-label="AirPlay" data-cursor="airplay" hidden>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/><path d="m12 15 5 6H7l5-6z"/></svg>
+            </button>
             <button class="viewer-fs-corner" id="viewerFsBtn" aria-label="Fullscreen" data-cursor="expand">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
@@ -1855,6 +1874,33 @@
     <script src="https://player.vimeo.com/api/player.js"></script>
 
     <script>
+    // Commercial / music videos switch. Both grids are in the page; the switch
+    // shows one of them, and #music in the URL opens on the music side.
+    (function () {
+        function setSide(side, push) {
+            var sw = document.querySelector('.reel-switch'); if (!sw) return;
+            document.querySelectorAll('.reel-grid[data-set]').forEach(function (g) { g.hidden = g.getAttribute('data-set') !== side; });
+            sw.querySelectorAll('.reel-switch-label').forEach(function (l) { l.classList.toggle('is-on', l.getAttribute('data-set') === side); });
+            sw.querySelector('.reel-switch-track').setAttribute('aria-checked', side === 'music' ? 'true' : 'false');
+            if (push) { try { history.replaceState(null, '', side === 'music' ? '#music' : location.pathname + location.search); } catch (e) {} }
+            window.dispatchEvent(new Event('reelsetchange'));
+        }
+        document.addEventListener('click', function (e) {
+            var t = e.target.closest && e.target.closest('.reel-switch-label, .reel-switch-track'); if (!t) return;
+            e.preventDefault();
+            var side = t.classList.contains('reel-switch-track')
+                ? (t.getAttribute('aria-checked') === 'true' ? 'commercial' : 'music')
+                : t.getAttribute('data-set');
+            setSide(side, true);
+        });
+        function initial() { if (document.querySelector('.reel-switch')) setSide(location.hash === '#music' ? 'music' : 'commercial', false); }
+        initial();
+        var target = document.getElementById('rosterContent');   // gated pages: the markup arrives after the unlock
+        if (target) new MutationObserver(initial).observe(target, { childList: true });
+    })();
+    </script>
+
+    <script>
     // Scrolling the grid tucks the logo and the About / Contact links away;
     // they come back at the top.
     (function () {
@@ -1873,7 +1919,7 @@
         // grid at open time, so gated pages (tiles arrive after the unlock) work too.
         var viewerItems = [];
         function collectItems() {
-            return Array.prototype.map.call(document.querySelectorAll('.reel-item'), function (li) {
+            return Array.prototype.map.call(document.querySelectorAll('.reel-grid:not([hidden]) .reel-item'), function (li) {
                 var m = li.querySelector('.reel-media');
                 return { vimeo: m.getAttribute('data-vimeo'), hash: m.getAttribute('data-hash') || '', va: parseFloat(m.getAttribute('data-va')) || 1.778,
                          client: (li.querySelector('.reel-client') || {}).textContent || '',
@@ -1895,6 +1941,7 @@
         var thumb    = document.getElementById('viewerThumb');
         var timeEl   = document.getElementById('viewerTime');
         var fsBtn    = document.getElementById('viewerFsBtn');
+        var airBtn   = document.getElementById('viewerAirBtn');
         var clickLayer = document.getElementById('viewerClickLayer');
         var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false, vVolume = 1, vMuted = false, volDragging = false;
         // exit cursor: an X that follows the pointer over the margin around the video
@@ -1913,7 +1960,7 @@
         // onto the buttons (which lean a little toward the pointer), so the cursor
         // snaps to the thing it is about to use
         var trackEl=progEl.querySelector('.cs-progress-track');
-        var magBtns=[ppBtn, document.getElementById('viewerVolBtn'), fsBtn];
+        var magBtns=[ppBtn, document.getElementById('viewerVolBtn'), document.getElementById('viewerAirBtn'), fsBtn];
         function inRect(e,r){ return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
         function clearPull(except){ magBtns.forEach(function(b){ if(b&&b!==except&&b.style.transform) b.style.transform=''; }); }
         function onLine(e,tr){ return { x:Math.max(tr.left,Math.min(tr.right,e.clientX)), y:tr.top+tr.height/2, scale:1.5 }; }
@@ -1946,12 +1993,21 @@
             if (thumb) thumb.style.left='0%';
             if (timeEl) timeEl.textContent='00:00 / 00:00';
             hidePrev(); teardownPrev();
+            if (airBtn) airBtn.hidden = true;
         }
         function bindPlayer(p) {
             p.getDuration().then(function(d){ vDuration=d; if(timeEl&&d) timeEl.textContent='00:00 / '+fmt(d); }).catch(function(){});
             p.on('play',  function(){ setPlaying(true); });
             p.on('pause', function(){ setPlaying(false); });
-            p.on('ended', function(){ setPlaying(false); });
+            // at the end: back to the first frame, paused, so Vimeo's own end card
+            // ("More from ...") has nothing to sit on
+            p.on('ended', function(){ setPlaying(false); p.setCurrentTime(0).then(function(){ return p.pause(); }).catch(function(){}); });
+            // AirPlay / Cast: the button only appears when the browser reports a target
+            if (airBtn) {
+                var air = function(v){ var s = (v && typeof v === 'object') ? (v.availability || v.remotePlaybackAvailability) : v; airBtn.hidden = (s !== 'available'); };
+                if (p.getRemotePlaybackAvailability) p.getRemotePlaybackAvailability().then(air).catch(function(){});
+                p.on('remoteplaybackavailabilitychange', air);
+            }
             p.on('timeupdate', function(data){ if(!vDuration||!fillEl||dragging)return; var pc=data.seconds/vDuration*100; fillEl.style.width=pc+'%'; if(thumb) thumb.style.left=pc+'%'; if(timeEl) timeEl.textContent=fmt(data.seconds)+' / '+fmt(vDuration); });
         }
         function whenVimeoReady(cb){
@@ -2060,6 +2116,7 @@
             else { var req=target.requestFullscreen||target.webkitRequestFullscreen; if(req){ var p=req.call(target); if(p&&p.catch) p.catch(function(){}); } }
         }
         fsBtn.addEventListener('click', function(e){ e.stopPropagation(); toggleFs(); });
+        if (airBtn) airBtn.addEventListener('click', function(e){ e.stopPropagation(); if(vPlayer && vPlayer.remotePlaybackPrompt) vPlayer.remotePlaybackPrompt().catch(function(){}); });
         // fullscreen: hide cursor + controls + expand button after 1s of no movement
         var fsIdleTimer=null;
         function inFs(){ return document.fullscreenElement||document.webkitFullscreenElement; }
@@ -2224,7 +2281,7 @@
         function near(el) { var r = el.getBoundingClientRect(); return r.bottom > -400 && r.top < window.innerHeight + 400; }
         var warmNear = function () {
             if (!canHover) return;
-            document.querySelectorAll('.reel-media').forEach(function (m, i) {
+            document.querySelectorAll('.reel-grid:not([hidden]) .reel-media').forEach(function (m, i) {
                 if (frameOf(m)) return;
                 if (i < 9 || near(m)) warm(m);
             });
@@ -2232,6 +2289,7 @@
         warmNear();
         window.addEventListener('scroll', warmNear, { passive: true });
         window.addEventListener('resize', warmNear);
+        window.addEventListener('reelsetchange', function () { stop(); warmNear(); });
         var target = document.getElementById('rosterContent');   // gated pages: tiles arrive after the unlock
         if (target) new MutationObserver(warmNear).observe(target, { childList: true });
 
@@ -2252,7 +2310,7 @@
             var media = e.target.closest && e.target.closest('.reel-media');
             if (!media) return;
             e.preventDefault();
-            var idx = Array.prototype.indexOf.call(document.querySelectorAll('.reel-media'), media);
+            var idx = Array.prototype.indexOf.call(document.querySelectorAll('.reel-grid:not([hidden]) .reel-media'), media);
             stop();
             if (typeof openViewer === 'function' && idx !== -1) openViewer(idx);
         });
