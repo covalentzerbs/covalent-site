@@ -1074,9 +1074,11 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: max(100%, calc(100% * 0.5625 * var(--va, 1.778)));
-            height: max(100%, calc(100% * 1.7778 / var(--va, 1.778)));
-            transform: translate(-50%, -50%) scale(1.02);
+            /* a 1px bleed on every side hides the player's hairline edge; this used
+               to be a 2% scale, which read as a small zoom when the player cut in */
+            width: calc(max(100%, 100% * 0.5625 * var(--va, 1.778)) + 2px);
+            height: calc(max(100%, 100% * 1.7778 / var(--va, 1.778)) + 2px);
+            transform: translate(-50%, -50%);
             border: 0;
             opacity: 0;
             transition: none;   /* the player is already running: a hover is a cut */
