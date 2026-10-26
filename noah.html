@@ -1075,12 +1075,17 @@
         .reel-switch { display: flex; align-items: center; gap: 0.6rem; margin-right: auto; }
         .reel-switch-label { background: none; border: 0; padding: 0; font-family: var(--helv); font-weight: 700; font-size: 0.7rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--black); opacity: 0.4; cursor: none; transition: opacity 0.2s ease; }
         .reel-switch-label.is-on, .reel-switch-label:hover { opacity: 1; }
-        .reel-switch-track { position: relative; width: 36px; height: 21px; border-radius: 11px; border: 0; padding: 0; background: var(--black); cursor: none; transition: background-color 0.3s ease, transform 0.18s ease; will-change: transform; }
+        .reel-switch-track { position: relative; width: 36px; height: 21px; border-radius: 11px; border: 0; padding: 0; background: var(--black); cursor: none; transition: background-color 0.3s ease, transform 0.18s ease, box-shadow 0.2s ease; will-change: transform; }
         /* the knob stretches while pressed and springs across on release */
-        .reel-switch-knob { position: absolute; top: 2.5px; left: 2.5px; width: 16px; height: 16px; border-radius: 8px; background: var(--white); transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.15s ease, background-color 0.3s ease; }
+        .reel-switch-knob { position: absolute; top: 2.5px; left: 2.5px; width: 16px; height: 16px; border-radius: 8px; background: var(--white); transform: translateX(var(--kx, 0px)) scale(var(--ks, 1)); transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.15s ease, background-color 0.3s ease; }
         .reel-switch-track:active .reel-switch-knob { width: 20px; }
-        .reel-switch-track[aria-checked="true"] .reel-switch-knob { transform: translateX(15px); }
-        .reel-switch-track[aria-checked="true"]:active .reel-switch-knob { transform: translateX(11px); }
+        .reel-switch-track[aria-checked="true"] .reel-switch-knob { --kx: 15px; }
+        .reel-switch-track[aria-checked="true"]:active .reel-switch-knob { --kx: 11px; }
+        /* the cursor is in the toggle: the dot sits inside the knob as a pupil, the
+           knob grows a touch and the track gets a halo */
+        .reel-switch-track.is-hot .reel-switch-knob { --ks: 1.12; }
+        .reel-switch-track.is-hot { box-shadow: 0 0 0 2px var(--white), 0 0 0 3.5px var(--black); }
+        body.dark-mode .reel-switch-track.is-hot { box-shadow: 0 0 0 2px #0A0A0A, 0 0 0 3.5px #FF4500; }
         body.dark-mode .reel-switch-label { color: #FF4500; }
         body.dark-mode .reel-switch-track { background: #FF4500; }
         body.dark-mode .reel-switch-knob { background: #0A0A0A; }
@@ -1900,23 +1905,25 @@
                 : t.getAttribute('data-set');
             setSide(side, true);
         });
-        // the cursor dot is drawn to the switch's knob (not the labels), gently
+        // near the switch the cursor dot snaps into the knob and sits there as a
+        // pupil (is-hot on the track) until the pointer leaves the zone
         // (shared magnet: a script only clears a target it set itself)
         function setMagnet(owner, m) { var cur = window.__cursorMagnet; if (m) { m.owner = owner; window.__cursorMagnet = m; } else if (cur && cur.owner === owner) { window.__cursorMagnet = null; } }
         var leaned = [];
-        function clearLean(except) { leaned.forEach(function (b) { if (b !== except) b.style.transform = ''; }); leaned = except ? [except] : []; }
+        function clearLean(except) { leaned.forEach(function (b) { if (b !== except) { b.style.transform = ''; b.classList.remove('is-hot'); } }); leaned = except ? [except] : []; }
         document.addEventListener('mousemove', function (e) {
             var sw = document.querySelector('.reel-switch');
             if (!sw || document.body.classList.contains('viewer-open')) { clearLean(); setMagnet('switch', null); return; }
-            var parts = sw.querySelectorAll('.reel-switch-track'), pad = 6;
+            var parts = sw.querySelectorAll('.reel-switch-track'), pad = 14;
             for (var i = 0; i < parts.length; i++) {
                 var b = parts[i], r = b.getBoundingClientRect();
                 if (e.clientX < r.left - pad || e.clientX > r.right + pad || e.clientY < r.top - pad || e.clientY > r.bottom + pad) continue;
                 var cx = r.left + r.width / 2, cy = r.top + r.height / 2, tx = cx, ty = cy;
                 if (b.classList.contains('reel-switch-track')) { var k = b.querySelector('.reel-switch-knob').getBoundingClientRect(); tx = k.left + k.width / 2; ty = k.top + k.height / 2; }
-                b.style.transform = 'translate(' + ((e.clientX - cx) * 0.1).toFixed(1) + 'px,' + ((e.clientY - cy) * 0.1).toFixed(1) + 'px)';
+                b.style.transform = 'translate(' + ((e.clientX - cx) * 0.08).toFixed(1) + 'px,' + ((e.clientY - cy) * 0.08).toFixed(1) + 'px)';
+                b.classList.add('is-hot');
                 clearLean(b);
-                setMagnet('switch', { x: tx, y: ty, scale: 1.15, pull: 0.35 });
+                setMagnet('switch', { x: tx, y: ty, scale: 1.2, pull: 1 });
                 return;
             }
             clearLean(); setMagnet('switch', null);
