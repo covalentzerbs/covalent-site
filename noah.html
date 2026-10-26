@@ -1906,6 +1906,7 @@
                 ? (t.getAttribute('aria-checked') === 'true' ? 'commercial' : 'music')
                 : t.getAttribute('data-set');
             setSide(side, true);
+            followKnob();
         });
         // near the switch the cursor dot snaps into the knob and sits there as a
         // pupil (is-hot on the track) until the pointer leaves the zone
@@ -1913,23 +1914,31 @@
         function setMagnet(owner, m) { var cur = window.__cursorMagnet; if (m) { m.owner = owner; window.__cursorMagnet = m; } else if (cur && cur.owner === owner) { window.__cursorMagnet = null; } }
         var leaned = [];
         function clearLean(except) { leaned.forEach(function (b) { if (b !== except) { b.style.transform = ''; b.classList.remove('is-hot'); } }); leaned = except ? [except] : []; }
-        document.addEventListener('mousemove', function (e) {
+        var lastX = null, lastY = null;
+        function track(x, y) {
             var sw = document.querySelector('.reel-switch');
             if (!sw || document.body.classList.contains('viewer-open')) { clearLean(); setMagnet('switch', null); return; }
             var parts = sw.querySelectorAll('.reel-switch-track'), pad = 14;
             for (var i = 0; i < parts.length; i++) {
                 var b = parts[i], r = b.getBoundingClientRect();
-                if (e.clientX < r.left - pad || e.clientX > r.right + pad || e.clientY < r.top - pad || e.clientY > r.bottom + pad) continue;
-                var cx = r.left + r.width / 2, cy = r.top + r.height / 2, tx = cx, ty = cy;
-                if (b.classList.contains('reel-switch-track')) { var k = b.querySelector('.reel-switch-knob').getBoundingClientRect(); tx = k.left + k.width / 2; ty = k.top + k.height / 2; }
-                b.style.transform = 'translate(' + ((e.clientX - cx) * 0.08).toFixed(1) + 'px,' + ((e.clientY - cy) * 0.08).toFixed(1) + 'px)';
+                if (x < r.left - pad || x > r.right + pad || y < r.top - pad || y > r.bottom + pad) continue;
+                var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+                var k = b.querySelector('.reel-switch-knob').getBoundingClientRect(), tx = k.left + k.width / 2, ty = k.top + k.height / 2;
+                b.style.transform = 'translate(' + ((x - cx) * 0.08).toFixed(1) + 'px,' + ((y - cy) * 0.08).toFixed(1) + 'px)';
                 b.classList.add('is-hot');
                 clearLean(b);
                 setMagnet('switch', { x: tx, y: ty, scale: 1.2, pull: 1 });
                 return;
             }
             clearLean(); setMagnet('switch', null);
-        }, { passive: true });
+        }
+        document.addEventListener('mousemove', function (e) { lastX = e.clientX; lastY = e.clientY; track(lastX, lastY); }, { passive: true });
+        // after a click the knob slides for a third of a second while the pointer
+        // sits still: keep re-reading the knob so the dot rides across with it
+        function followKnob() {
+            var until = performance.now() + 500;
+            (function step() { if (lastX !== null) track(lastX, lastY); if (performance.now() < until) requestAnimationFrame(step); })();
+        }
         function initial() { if (document.querySelector('.reel-switch')) setSide(location.hash === '#music' ? 'music' : 'commercial', false); }
         initial();
         var target = document.getElementById('rosterContent');   // gated pages: the markup arrives after the unlock
