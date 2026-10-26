@@ -1150,9 +1150,11 @@
         let magnetScale = 1;
         function animateCursor() {
             const mag = window.__cursorMagnet;
-            const k = mag ? 0.5 : 0.35;
-            cursorX += ((mag ? mag.x : mouseX) - cursorX) * k;
-            cursorY += ((mag ? mag.y : mouseY) - cursorY) * k;
+            // pull: how far toward the target the dot settles (1 = dead on it)
+            const pull = mag ? (mag.pull == null ? 1 : mag.pull) : 0;
+            const k = mag ? 0.4 : 0.35;
+            cursorX += ((mag ? mouseX + (mag.x - mouseX) * pull : mouseX) - cursorX) * k;
+            cursorY += ((mag ? mouseY + (mag.y - mouseY) * pull : mouseY) - cursorY) * k;
             const ms = mag ? (mag.scale || 1) : 1;
             if (ms !== magnetScale) {
                 magnetScale = ms;

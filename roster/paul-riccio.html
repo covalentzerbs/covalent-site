@@ -1062,13 +1062,16 @@
 
         .director-back:hover { opacity: 1; }
 
-        /* commercial / music videos switch: an iOS-style toggle with a label on each side */
-        .reel-switch { display: flex; align-items: center; gap: 0.85rem; margin: -0.25rem 0 1.25rem; }
-        .reel-switch-label { background: none; border: 0; padding: 0; font-family: var(--helv); font-weight: 700; font-size: 0.8rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--black); opacity: 0.4; cursor: none; transition: opacity 0.2s ease; }
+        /* commercial / music videos switch: a small iOS-style toggle to the right of the name */
+        .reel-switch { display: flex; align-items: center; gap: 0.6rem; margin-right: auto; }
+        .reel-switch-label { background: none; border: 0; padding: 0; font-family: var(--helv); font-weight: 700; font-size: 0.7rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--black); opacity: 0.4; cursor: none; transition: opacity 0.2s ease, transform 0.18s ease; will-change: transform; }
         .reel-switch-label.is-on, .reel-switch-label:hover { opacity: 1; }
-        .reel-switch-track { position: relative; width: 44px; height: 26px; border-radius: 13px; border: 0; padding: 0; background: var(--black); cursor: none; transition: background var(--theme-transition, 0.3s ease); }
-        .reel-switch-knob { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--white); transition: transform 0.3s cubic-bezier(0.76, 0, 0.24, 1), background var(--theme-transition, 0.3s ease); }
-        .reel-switch-track[aria-checked="true"] .reel-switch-knob { transform: translateX(18px); }
+        .reel-switch-track { position: relative; width: 36px; height: 21px; border-radius: 11px; border: 0; padding: 0; background: var(--black); cursor: none; transition: background-color 0.3s ease, transform 0.18s ease; will-change: transform; }
+        /* the knob stretches while pressed and springs across on release */
+        .reel-switch-knob { position: absolute; top: 2.5px; left: 2.5px; width: 16px; height: 16px; border-radius: 8px; background: var(--white); transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.15s ease, background-color 0.3s ease; }
+        .reel-switch-track:active .reel-switch-knob { width: 20px; }
+        .reel-switch-track[aria-checked="true"] .reel-switch-knob { transform: translateX(15px); }
+        .reel-switch-track[aria-checked="true"]:active .reel-switch-knob { transform: translateX(11px); }
         body.dark-mode .reel-switch-label { color: #FF4500; }
         body.dark-mode .reel-switch-track { background: #FF4500; }
         body.dark-mode .reel-switch-knob { background: #0A0A0A; }
@@ -1413,9 +1416,11 @@
         let magnetScale = 1;
         function animateCursor() {
             const mag = window.__cursorMagnet;
-            const k = mag ? 0.5 : 0.35;
-            cursorX += ((mag ? mag.x : mouseX) - cursorX) * k;
-            cursorY += ((mag ? mag.y : mouseY) - cursorY) * k;
+            // pull: how far toward the target the dot settles (1 = dead on it)
+            const pull = mag ? (mag.pull == null ? 1 : mag.pull) : 0;
+            const k = mag ? 0.4 : 0.35;
+            cursorX += ((mag ? mouseX + (mag.x - mouseX) * pull : mouseX) - cursorX) * k;
+            cursorY += ((mag ? mouseY + (mag.y - mouseY) * pull : mouseY) - cursorY) * k;
             const ms = mag ? (mag.scale || 1) : 1;
             if (ms !== magnetScale) {
                 magnetScale = ms;
@@ -1898,6 +1903,27 @@
                 : t.getAttribute('data-set');
             setSide(side, true);
         });
+        // the cursor dot is drawn to the switch the way it is to the player's controls
+        // (shared magnet: a script only clears a target it set itself)
+        function setMagnet(owner, m) { var cur = window.__cursorMagnet; if (m) { m.owner = owner; window.__cursorMagnet = m; } else if (cur && cur.owner === owner) { window.__cursorMagnet = null; } }
+        var leaned = [];
+        function clearLean(except) { leaned.forEach(function (b) { if (b !== except) b.style.transform = ''; }); leaned = except ? [except] : []; }
+        document.addEventListener('mousemove', function (e) {
+            var sw = document.querySelector('.reel-switch');
+            if (!sw || document.body.classList.contains('viewer-open')) { clearLean(); setMagnet('switch', null); return; }
+            var parts = sw.querySelectorAll('.reel-switch-label, .reel-switch-track'), pad = 6;
+            for (var i = 0; i < parts.length; i++) {
+                var b = parts[i], r = b.getBoundingClientRect();
+                if (e.clientX < r.left - pad || e.clientX > r.right + pad || e.clientY < r.top - pad || e.clientY > r.bottom + pad) continue;
+                var cx = r.left + r.width / 2, cy = r.top + r.height / 2, tx = cx, ty = cy;
+                if (b.classList.contains('reel-switch-track')) { var k = b.querySelector('.reel-switch-knob').getBoundingClientRect(); tx = k.left + k.width / 2; ty = k.top + k.height / 2; }
+                b.style.transform = 'translate(' + ((e.clientX - cx) * 0.2).toFixed(1) + 'px,' + ((e.clientY - cy) * 0.2).toFixed(1) + 'px)';
+                clearLean(b);
+                setMagnet('switch', { x: tx, y: ty, scale: 1.3, pull: 0.6 });
+                return;
+            }
+            clearLean(); setMagnet('switch', null);
+        }, { passive: true });
         function initial() { if (document.querySelector('.reel-switch')) setSide(location.hash === '#music' ? 'music' : 'commercial', false); }
         initial();
         var target = document.getElementById('rosterContent');   // gated pages: the markup arrives after the unlock
@@ -1965,28 +1991,31 @@
         // onto the buttons (which lean a little toward the pointer), so the cursor
         // snaps to the thing it is about to use
         var trackEl=progEl.querySelector('.cs-progress-track');
+        // the magnet is shared with the page (the reel switch uses it too): a script
+        // only clears a target it set itself
+        function setMagnet(owner, m){ var cur=window.__cursorMagnet; if(m){ m.owner=owner; window.__cursorMagnet=m; } else if(cur&&cur.owner===owner){ window.__cursorMagnet=null; } }
         var magBtns=[ppBtn, document.getElementById('viewerVolBtn'), document.getElementById('viewerAirBtn'), fsBtn];
         function inRect(e,r){ return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
         function clearPull(except){ magBtns.forEach(function(b){ if(b&&b!==except&&b.style.transform) b.style.transform=''; }); }
-        function onLine(e,tr){ return { x:Math.max(tr.left,Math.min(tr.right,e.clientX)), y:tr.top+tr.height/2, scale:1.5 }; }
+        function onLine(e,tr){ return { x:Math.max(tr.left,Math.min(tr.right,e.clientX)), y:tr.top+tr.height/2, scale:1.35, pull:0.85 }; }
         function magnet(e){
             if(!viewer.classList.contains('active')||inFs()||!ptrInsideFrame(e)){ clearPull(); return null; }
             if(dragging){ clearPull(); return onLine(e, trackEl.getBoundingClientRect()); }
-            if(volDragging){ clearPull(); var vt=volTrack.getBoundingClientRect(); return { x:vt.left+vt.width/2, y:Math.max(vt.top,Math.min(vt.bottom,e.clientY)), scale:1.5 }; }
+            if(volDragging){ clearPull(); var vt=volTrack.getBoundingClientRect(); return { x:vt.left+vt.width/2, y:Math.max(vt.top,Math.min(vt.bottom,e.clientY)), scale:1.35, pull:0.85 }; }
             for(var i=0;i<magBtns.length;i++){ var b=magBtns[i]; if(!b) continue; var r=b.getBoundingClientRect();
                 if(r.width&&inRect(e,r)){ var cx=r.left+r.width/2, cy=r.top+r.height/2;
-                    b.style.transform='translate('+((e.clientX-cx)*0.3).toFixed(1)+'px,'+((e.clientY-cy)*0.3).toFixed(1)+'px)';
-                    clearPull(b); return { x:cx, y:cy, scale:1.6 }; } }
+                    b.style.transform='translate('+((e.clientX-cx)*0.2).toFixed(1)+'px,'+((e.clientY-cy)*0.2).toFixed(1)+'px)';
+                    clearPull(b); return { x:cx, y:cy, scale:1.4, pull:0.6 }; } }
             clearPull();
             if(volWrap.classList.contains('show-gauge')){ var g=volWrap.querySelector('.viewer-vol-gauge').getBoundingClientRect(), vt2=volTrack.getBoundingClientRect();
                 var gx={ left:g.left-14, right:g.right+14, top:g.top-10, bottom:g.bottom+10 };   // same margin as the gauge's ::before
-                if(g.width&&inRect(e,gx)) return { x:vt2.left+vt2.width/2, y:Math.max(vt2.top,Math.min(vt2.bottom,e.clientY)), scale:1.5 }; }
+                if(g.width&&inRect(e,gx)) return { x:vt2.left+vt2.width/2, y:Math.max(vt2.top,Math.min(vt2.bottom,e.clientY)), scale:1.35, pull:0.85 }; }
             var pr=progEl.getBoundingClientRect();
             if(pr.width&&inRect(e,pr)) return onLine(e, trackEl.getBoundingClientRect());
             return null;
         }
-        document.addEventListener('mousemove', function(e){ window.__cursorMagnet=magnet(e); }, {passive:true});
-        frame.addEventListener('mouseleave', function(){ window.__cursorMagnet=null; clearPull(); }, {passive:true});
+        document.addEventListener('mousemove', function(e){ setMagnet('viewer', magnet(e)); }, {passive:true});
+        frame.addEventListener('mouseleave', function(){ setMagnet('viewer', null); clearPull(); }, {passive:true});
         function fmt(s) { var m=Math.floor(s/60),sec=Math.floor(s%60); return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec; }
         function setPlaying(p) { vPlaying=p; vHero.classList.toggle('cs-playing',p); if(ppBtn) ppBtn.setAttribute('data-cursor', p?'pause':'play'); }
         function resetPlayer() {
@@ -2052,7 +2081,7 @@
             viewer.classList.remove('active');
             document.body.classList.remove('viewer-open','viewer-exit-active');
             if(exitCur) exitCur.classList.remove('show');
-            window.__cursorMagnet=null; clearPull();
+            setMagnet('viewer', null); clearPull();
             clearTimeout(idleTimer); resetPlayer();
             document.body.style.overflow='';
         }
