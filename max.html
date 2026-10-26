@@ -2063,10 +2063,22 @@
     // already loaded: no wait. One clip plays at a time.
     (function () {
         var playing = null, warmQueue = [], warming = false;
+        // Hover previews start this many seconds in: a few spots open on black or a
+        // slow fade, which reads as a broken site when it is the first thing seen.
+        var START = 5;
 
-        function post(frame, method) {
-            try { frame.contentWindow.postMessage(JSON.stringify({ method: method }), '*'); } catch (e) {}
+        function post(frame, method, value) {
+            try { frame.contentWindow.postMessage(JSON.stringify(value === undefined ? { method: method } : { method: method, value: value }), '*'); } catch (e) {}
         }
+        // When a looping preview wraps back to 0, push it to START again.
+        window.addEventListener('message', function (e) {
+            if (e.origin !== 'https://player.vimeo.com') return;
+            var d; try { d = JSON.parse(e.data); } catch (err) { return; }
+            if (d.event !== 'timeupdate' || !d.data) return;
+            if (d.data.seconds >= START - 0.5 || (d.data.duration && d.data.duration < START + 2)) return;
+            var frames = document.querySelectorAll('.reel-frame');
+            for (var i = 0; i < frames.length; i++) if (frames[i].contentWindow === e.source) { post(frames[i], 'setCurrentTime', START); break; }
+        });
 
         function frameOf(media) { return media.querySelector('.reel-frame'); }
 
@@ -2078,7 +2090,7 @@
             frame.className = 'reel-frame';
             frame.src = 'https://player.vimeo.com/video/' + id +
                         '?background=1&autoplay=' + (autoplay ? 1 : 0) + '&loop=1&muted=1&dnt=1&quality=540p' +
-                        (hash ? '&h=' + hash : '');
+                        (hash ? '&h=' + hash : '') + '#t=' + START + 's';
             frame.setAttribute('frameborder', '0');
             frame.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
             frame.setAttribute('tabindex', '-1');
@@ -2089,6 +2101,7 @@
                 frame.dataset.loaded = '1';
                 // background=1 starts on its own; hold it until it is hovered
                 post(frame, media === playing ? 'play' : 'pause');
+                post(frame, 'addEventListener', 'timeupdate');
             });
             media.appendChild(frame);
             return frame;
