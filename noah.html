@@ -1288,6 +1288,8 @@
             will-change:transform,left,top,opacity; }
         #viewerExitCursor.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
         body.viewer-exit-active .cursor { opacity:0 !important; }
+        /* in the reel switch the dot goes away; the halo on the track is the cue */
+        body.switch-hot .cursor { opacity:0 !important; }
         /* scrolling the grid tucks the logo and the About / Contact links away */
         .nav { transition: opacity 0.3s ease; }
         body.is-scrolled .nav, body.is-scrolled .logo-bottom { opacity:0; pointer-events:none; }
@@ -1908,8 +1910,8 @@
             setSide(side, true);
             followKnob();
         });
-        // near the switch the cursor dot snaps into the knob and sits there as a
-        // pupil (is-hot on the track) until the pointer leaves the zone
+        // near the switch the cursor dot snaps to the knob and disappears; the halo
+        // on the track (is-hot) says the pointer is in, and the dot pops back out on leaving
         // (shared magnet: a script only clears a target it set itself)
         function setMagnet(owner, m) { var cur = window.__cursorMagnet; if (m) { m.owner = owner; window.__cursorMagnet = m; } else if (cur && cur.owner === owner) { window.__cursorMagnet = null; } }
         var leaned = [];
@@ -1917,7 +1919,7 @@
         var lastX = null, lastY = null;
         function track(x, y) {
             var sw = document.querySelector('.reel-switch');
-            if (!sw || document.body.classList.contains('viewer-open')) { clearLean(); setMagnet('switch', null); return; }
+            if (!sw || document.body.classList.contains('viewer-open')) { clearLean(); setMagnet('switch', null); document.body.classList.remove('switch-hot'); return; }
             var parts = sw.querySelectorAll('.reel-switch-track'), pad = 14;
             for (var i = 0; i < parts.length; i++) {
                 var b = parts[i], r = b.getBoundingClientRect();
@@ -1925,12 +1927,12 @@
                 var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
                 var k = b.querySelector('.reel-switch-knob').getBoundingClientRect(), tx = k.left + k.width / 2, ty = k.top + k.height / 2;
                 b.style.transform = 'translate(' + ((x - cx) * 0.08).toFixed(1) + 'px,' + ((y - cy) * 0.08).toFixed(1) + 'px)';
-                b.classList.add('is-hot');
+                b.classList.add('is-hot'); document.body.classList.add('switch-hot');
                 clearLean(b);
                 setMagnet('switch', { x: tx, y: ty, scale: 1.2, pull: 1 });
                 return;
             }
-            clearLean(); setMagnet('switch', null);
+            clearLean(); setMagnet('switch', null); document.body.classList.remove('switch-hot');
         }
         document.addEventListener('mousemove', function (e) { lastX = e.clientX; lastY = e.clientY; track(lastX, lastY); }, { passive: true });
         // after a click the knob slides for a third of a second while the pointer
