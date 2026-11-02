@@ -304,7 +304,9 @@
         /* Nothing to scroll here, so kill the trackpad rubber-band that let the
            whole block drift up and down, and keep the big type from being
            drag-selected. Phones already lock themselves below. */
-        html, body { overscroll-behavior: none; }
+        /* no vertical rubber-band on the locked contact page, but the sideways
+           overscroll stays on so the two-finger swipe back still works */
+        html, body { overscroll-behavior-y: none; overscroll-behavior-x: auto; }
         @media (min-height: 680px) and (min-width: 769px) {
             html, body { height: 100%; overflow: hidden; }
         }
