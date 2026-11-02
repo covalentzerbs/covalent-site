@@ -1153,7 +1153,10 @@
 
         /* The thumbnail stays put underneath the iframe - fading it out first
            would flash the empty tile while the player boots. */
-        .reel-media.is-playing .reel-frame { opacity: 1; }
+        /* The player only shows once it reports real frames (is-live). Before its first
+           play, Vimeo draws a blurry, scaled-up placeholder of the frame; cutting to that
+           read as a small zoom hop on hover, so the sharp still stays up until then. */
+        .reel-media.is-live .reel-frame { opacity: 1; }
 
         /* Title left, client right, on one line under the video. */
         .reel-meta {
@@ -2319,14 +2322,21 @@
         function post(frame, method, value) {
             try { frame.contentWindow.postMessage(JSON.stringify(value === undefined ? { method: method } : { method: method, value: value }), '*'); } catch (e) {}
         }
-        // When a looping preview wraps back to 0, push it to START again.
+        // Player events: the hovered tile's player is revealed on its first real frame
+        // ('playing' / 'timeupdate'), and a looping preview that wraps back to 0 is
+        // pushed to START again.
         window.addEventListener('message', function (e) {
             if (e.origin !== 'https://player.vimeo.com') return;
             var d; try { d = JSON.parse(e.data); } catch (err) { return; }
+            if (d.event !== 'timeupdate' && d.event !== 'playing') return;
+            var frames = document.querySelectorAll('.reel-frame'), frame = null;
+            for (var i = 0; i < frames.length; i++) if (frames[i].contentWindow === e.source) { frame = frames[i]; break; }
+            if (!frame) return;
+            var media = frame.parentNode;
+            if (media === playing) media.classList.add('is-live');
             if (d.event !== 'timeupdate' || !d.data) return;
             if (d.data.seconds >= START - 0.5 || (d.data.duration && d.data.duration < START + 2)) return;
-            var frames = document.querySelectorAll('.reel-frame');
-            for (var i = 0; i < frames.length; i++) if (frames[i].contentWindow === e.source) { post(frames[i], 'setCurrentTime', START); break; }
+            post(frame, 'setCurrentTime', START);
         });
 
         function frameOf(media) { return media.querySelector('.reel-frame'); }
@@ -2351,6 +2361,7 @@
                 // background=1 starts on its own; hold it until it is hovered
                 post(frame, media === playing ? 'play' : 'pause');
                 post(frame, 'addEventListener', 'timeupdate');
+                post(frame, 'addEventListener', 'playing');
             });
             media.appendChild(frame);
             return frame;
@@ -2379,7 +2390,7 @@
             if (!playing) return;
             var frame = frameOf(playing);
             if (frame) post(frame, 'pause');
-            playing.classList.remove('is-playing');
+            playing.classList.remove('is-playing', 'is-live');
             playing = null;
         }
 
