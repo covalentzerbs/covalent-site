@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="description" content="Jon Schwartz, director at Covalent Studios. Selected commercial and branded work.">
+    <link rel="canonical" href="https://covalentstudios.co/jon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jon Schwartz</title>
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-T14F8BVFLJ');
+    </script>
+    <meta property="og:title" content="Jon Schwartz">
+    <meta property="og:description" content="Jon Schwartz, director at Covalent Studios.">
+    <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
+    <meta property="og:url" content="https://covalentstudios.co/jon">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+
+        /* CSS Variables */
+        :root {
+            /* One timing for every themed property, so nothing fades out of step. */
+            --theme-transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease, fill 300ms ease, stroke 300ms ease, -webkit-text-fill-color 300ms ease;
+            --ice: #FAFBFC;
+            --bond-blue: #5979e9;
+            --black: #0A0A0A;
+            --gray: #6B7280;
+            /* Roster type: Bold Helvetica Neue, with a sane cross-platform fallback */
+            --helv: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+            --white: #FFFFFF;
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        ::selection {
+            background: var(--black);
+            color: var(--white);
+            -webkit-text-fill-color: var(--white);
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--white);
+            pointer-events: none;
+            z-index: 99999;
+            mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+            letter-spacing: -0.04em;
+        }
+
+        /* Navigation - Plus Menu */
+        .nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            /* right padding matches the content margin (24px), so the stack lines up with the grid edge */
+            padding: 2rem 1.5rem 2rem 2rem;
+            z-index: 10001;
+        }
+
+        /* Top-right nav: About and Contact stacked, small, in place of the old plus menu */
+        .nav { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+        .nav-link {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            line-height: 1;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0.85;
+            transition: opacity 0.2s ease, color 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.current { opacity: 1; }
+        .nav-link:hover { color: #FF4500; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .nav-link { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .nav-link:hover { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF; }
+
+        .menu-toggle {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-toggle.active {
+            transform: rotate(45deg);
+        }
+
+        .plus-icon {
+            width: 18px;
+            height: 18px;
+            position: relative;
+        }
+
+        .plus-icon span {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--black);
+            top: 50%;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .plus-icon span:first-child {
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .plus-icon span:last-child {
+            transform: translateY(-50%);
+        }
+
+        /* Expanded Menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 3rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .menu-overlay.active {
+            pointer-events: auto;
+            opacity: 1;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .menu-link {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 700;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: -0.07em;
+            line-height: 1.05;
+        }
+
+        .menu-overlay.active .menu-link {
+            opacity: 0.6;
+            transform: translateX(0);
+        }
+
+        .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.05s; }
+        .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.1s; }
+        .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.15s; }
+        .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.25s; }
+        .menu-overlay.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
+
+        
+
+        .menu-socials {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-overlay.active .menu-socials {
+            opacity: 0.5;
+            transform: translateX(0);
+            transition-delay: 0.3s;
+        }
+
+
+
+
+        .menu-link:hover {
+            opacity: 1 !important;
+        }
+
+        .menu-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-link-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
+            mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
+            opacity: 0;
+            transition: opacity 0s;
+        }
+
+        .menu-link:hover .menu-link-gradient {
+            opacity: 1;
+        }
+
+        .menu-link.current {
+            opacity: 1 !important;
+        }
+
+        /* Logo Bottom Right */
+        .logo-bottom {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-bottom:hover { opacity: 1; }
+        .logo-bottom:hover svg path { fill: #FF4500; }
+
+        .logo-bottom svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-bottom svg path {
+            fill: var(--black); transition: fill 0.2s ease;
+        }
+
+        /* ==================== */
+        /* CONTACT PAGE */
+        /* ==================== */
+        .contact-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .contact-email {
+            font-size: clamp(2rem, 7vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.07em;
+            line-height: 1.1;
+            color: var(--bond-blue);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-email:hover {
+            opacity: 0.7;
+        }
+
+        /* Copy toast */
+        .copy-toast {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--black);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 20000;
+            white-space: nowrap;
+        }
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ==================== */
+        /* ==================== */
+        /* GLOBAL FOOTER        */
+        /* ==================== */
+        .site-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1001;
+            opacity: 1;
+        }
+        .site-footer-left {
+            font-size: 0.7rem;
+            font-weight: 300;
+            color: var(--black);
+            opacity: 0.5;
+        }
+        .site-footer-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            opacity: 0.5;
+        }
+        .site-footer-socials {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .social-link {
+            color: var(--black);
+            display: flex;
+            align-items: center;
+        }
+
+        /* ==================== */
+        /* CLOCK */
+        /* ==================== */
+        .clock-widget {
+            position: fixed;
+            bottom: 5rem;
+            right: 3rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.15rem;
+            font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+            /* Hidden until JS fills the times, then fade in -
+               avoids a flash of the "--:--" placeholder. */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .clock-widget.ready {
+            opacity: 1;
+        }
+
+        .clock-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--black);
+            letter-spacing: -0.07em;
+        }
+
+        .clock-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.07em;
+            min-width: 2rem;
+            text-align: right;
+        }
+
+        .clock-time {
+            font-variant-numeric: tabular-nums;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .clock-colon {
+            opacity: 1;
+            transition: opacity 0.15s ease;
+        }
+
+        .clock-colon.blink {
+            opacity: 0;
+        }
+
+        /* ==================== */
+        /* RESPONSIVE */
+        /* ==================== */
+        @media (max-width: 1024px) {
+            .nav {
+                padding: 1.5rem;
+            }
+
+            .logo-bottom {
+                top: 1.5rem;
+                left: 1.5rem;
+            }
+
+            .menu-overlay {
+                padding: 6rem 2.5rem 2.5rem;
+            }
+
+            .clock-widget {
+                bottom: 4.5rem;
+                right: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1.5rem 1.5rem;
+            }
+
+            .logo-bottom {
+                top: 1.5rem;
+                left: 1.5rem;
+            }
+
+            .logo-bottom svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            .menu-overlay {
+                padding: 5rem 1.5rem 1.5rem;
+            }
+
+            .roster-page {
+                padding: 7rem 1.5rem 3rem;
+            }
+
+        }
+
+        /* Hide dot cursor on touch devices */
+        @media (pointer: coarse) {
+            .cursor { display: none !important; }
+            * { cursor: auto !important; }
+        }
+        /* ==================== */
+        /* DARK MODE OVERRIDES */
+        /* ==================== */
+        body.dark-mode {
+            background-color: #0A0A0A !important;
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode ::selection {
+            background: #FF4500 !important;
+            color: #0A0A0A !important;
+            -webkit-text-fill-color: #0A0A0A !important;
+        }
+
+        body.dark-mode .cursor {
+            background: #FF4500 !important;
+        }
+
+        body.dark-mode .plus-icon span {
+            background: #FF4500 !important;
+        }
+
+        body.dark-mode .menu-link {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .logo-bottom svg path {
+            fill: #FF4500 !important;
+        }
+        body.dark-mode .logo-bottom:hover svg path { fill: #FFFFFF !important; }
+
+        body.dark-mode .social-link { color: #FF4500 !important; }
+        body.dark-mode .site-footer-left { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
+        body.dark-mode .contact-email {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .clock-row {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .about-text {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .project-client {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .project-subtitle {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .scroll-progress-segment {
+            background: #FF4500 !important;
+        }
+
+        body.dark-mode .director-name {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .director-credit {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .case-study-link {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .case-study-link::after {
+            background: #FF4500 !important;
+        }
+
+        body.dark-mode .hero-logo svg path {
+            fill: #FF4500 !important;
+        }
+
+        /* ==================== */
+        /* DARK MODE TOGGLE */
+        /* ==================== */
+        .dark-mode-toggle {
+            cursor: none;
+        }
+
+        .dark-mode-toggle input {
+            display: none;
+        }
+
+        .toggle-track {
+            width: 28px;
+            height: 16px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            position: relative;
+            transition: background 0.3s ease;
+            cursor: none;
+            display: block;
+        }
+
+        .toggle-track::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 12px;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-mode-toggle input:checked + .toggle-track {
+            background: rgba(255, 69, 0, 0.8);
+        }
+
+        .dark-mode-toggle input:checked + .toggle-track::after {
+            transform: translateX(12px);
+            background: #FF4500;
+        }
+        /* SOCIAL ICON BRAND HOVER */
+        /* SOCIAL ICON BRAND HOVER - high-saturation feedback */
+        .social-link {
+            transition: color 0.18s ease, opacity 0.18s ease, transform 0.18s ease, filter 0.18s ease;
+            transform-origin: center;
+        }
+        .social-link[aria-label="Instagram"]:hover {
+            color: #E1306C !important;
+            opacity: 1 !important;
+            transform: scale(1.22);
+            filter: drop-shadow(0 0 10px rgba(225, 48, 108, 0.55)) saturate(1.4);
+        }
+        .social-link[aria-label="LinkedIn"]:hover {
+            color: #0A66C2 !important;
+            opacity: 1 !important;
+            transform: scale(1.22);
+            filter: drop-shadow(0 0 10px rgba(10, 102, 194, 0.6)) saturate(1.4);
+        }
+        .social-link.social-link-ionic:hover {
+            color: #714BDD !important;
+            opacity: 1 !important;
+            transform: scale(1.22);
+            filter: drop-shadow(0 0 10px rgba(113, 75, 221, 0.6)) saturate(1.4);
+        }
+        /* Lift the muted .menu-socials row so the hovered icon shows full color */
+        .menu-overlay.active .menu-socials:hover { opacity: 1 !important; }
+        /* BRANDED SCROLLBAR - replaces the native macOS overlay scrollbar
+           with a thin Bond-Blue line on the right edge of the page. */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(89, 121, 233, 0.45) transparent;
+        }
+        html::-webkit-scrollbar {
+            width: 6px;
+        }
+        html::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        html::-webkit-scrollbar-thumb {
+            background: rgba(89, 121, 233, 0.35);
+            border-radius: 3px;
+            border: 1px solid transparent;
+            background-clip: padding-box;
+            transition: background-color 0.2s ease;
+        }
+        html::-webkit-scrollbar-thumb:hover {
+            background: var(--bond-blue, #5979e9);
+        }
+
+        /* Dark mode: paint the root element so the canvas stays dark while
+           scrolling. body height:100% means its background does not reach the
+           canvas once the page scrolls, leaving the root white. */
+        html:has(body.dark-mode) {
+            background-color: #0A0A0A;
+        }
+
+        /* ==================== */
+        /* CREATIVE ROSTER      */
+        /* ==================== */
+        /* Page scrolls, so the footer flows after the content instead of
+           being pinned like the single-screen pages. */
+        html, body { height: auto; min-height: 100%; }
+        .site-footer { position: static; margin-top: 4rem; }
+
+        .roster-page {
+            width: 100%;
+            /* full-bleed: every px of width buys a larger name before it wraps */
+            padding: 9rem 2.5rem 4rem;
+        }
+
+        .roster-heading {
+            font-family: var(--helv);
+            font-weight: 700;
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            letter-spacing: -0.035em;
+            line-height: 0.95;
+            text-transform: none;
+            color: var(--black);
+            margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+        }
+
+        /* ── 5 across x 3 down ── */
+        .roster-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* rows sit tight: roughly a quarter of a line between names */
+            gap: clamp(0.5rem, 0.9vw, 1.1rem) clamp(0.9rem, 1.6vw, 1.75rem);
+            align-items: start;
+        }
+
+        .roster-item {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .roster-name {
+            font-family: var(--helv);
+            font-weight: 700;
+            font-size: clamp(1.25rem, 3.45vw, 4.75rem);
+            letter-spacing: -0.04em;
+            line-height: 0.92;
+            /* names are proper nouns — never fold to the site-wide lowercase */
+            text-transform: none;
+            color: var(--black);
+            opacity: 0.55;
+            display: block;
+            /* one line per name, always */
+            white-space: nowrap;
+            transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .roster-item:hover .roster-name {
+            opacity: 1;
+            transform: translateX(3px);
+        }
+
+        /* Respect users who prefer no motion — keep the opacity cue, drop the slide. */
+        @media (prefers-reduced-motion: reduce) {
+            .roster-name { transition: opacity 0.25s ease; }
+            .roster-item:hover .roster-name { transform: none; }
+        }
+
+        /* Touch devices get no hover — show names at full strength instead. */
+        @media (pointer: coarse) {
+            .roster-name { opacity: 1; }
+        }
+
+        /* Column count steps down so names always stay on one line.
+           These must come after the base .roster-list rule to win the cascade. */
+        @media (max-width: 900px) {
+            .roster-list { grid-template-columns: repeat(2, 1fr); row-gap: clamp(0.4rem, 1.2vw, 0.9rem); }
+            .roster-name { font-size: clamp(1.1rem, 5.15vw, 3rem); }
+        }
+        /* Phones: one column, so every name stays on a single line at one
+           consistent size. Spacing is pulled in tight so 16 names do not turn
+           into an endless scroll. */
+        @media (max-width: 600px) {
+            .roster-page { padding: 5.5rem 1.25rem 2rem; }
+            .roster-heading { margin-bottom: 1.5rem; }
+            .roster-list {
+                grid-template-columns: 1fr;
+                gap: 0.35rem 0;
+            }
+            .roster-name { font-size: clamp(1.25rem, 7.6vw, 2.5rem); }
+            .roster-disclaimer { margin-top: 2.25rem; }
+        }
+
+        /* ── Dark mode ── */
+        /* ==================== */
+        /* PASSWORD GATE        */
+        /* ==================== */
+        .gate {
+            min-height: 55vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .gate-form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+            width: min(100%, 340px);
+        }
+
+        .gate-label {
+            font-family: var(--helv);
+            font-weight: 700;
+            font-size: clamp(1.75rem, 4vw, 3rem);
+            letter-spacing: -0.035em;
+            line-height: 1;
+            text-transform: none;
+            color: var(--black);
+        }
+
+        .gate-field {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.25);
+            transition: border-color 0.2s ease;
+        }
+
+        .gate-field:focus-within {
+            border-bottom-color: var(--black);
+        }
+
+        .gate-input {
+            font-family: var(--helv);
+            font-weight: 400;
+            font-size: 1rem;
+            /* near-normal tracking — the page-wide -0.07em is unreadable at input size */
+            letter-spacing: 0;
+            flex: 1 1 auto;
+            min-width: 0;
+            padding: 0.65rem 0;
+            color: var(--black);
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .gate-toggle {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.35rem;
+            background: transparent;
+            border: none;
+            color: var(--black);
+            opacity: 0.4;
+            transition: opacity 0.2s ease;
+        }
+
+        .gate-toggle:hover,
+        .gate-toggle:focus-visible { opacity: 0.85; }
+
+        /* Icon swap is class-driven, not attribute-driven: `hidden` is an IDL
+           property of HTMLElement, so `svg.hidden = true` sets a JS expando and
+           never reaches the DOM, and the UA rule [hidden]{display:none} does not
+           apply to the SVG namespace either. */
+        .gate-toggle .gate-eye { display: block; }
+        .gate-toggle .gate-eye-off { display: none; }
+        .gate-toggle.is-masked .gate-eye { display: none; }
+        .gate-toggle.is-masked .gate-eye-off { display: block; }
+
+        .gate-btn {
+            font-family: var(--helv);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: var(--white);
+            background: var(--black);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            margin-top: 0.5rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .gate-btn:hover { opacity: 0.75; }
+        .gate-btn:disabled { opacity: 0.4; }
+
+        .gate-error {
+            font-family: var(--helv);
+            font-weight: 400;
+            font-size: 0.8rem;
+            letter-spacing: 0;
+            line-height: 1.5;
+            color: var(--black);
+            opacity: 0.55;
+            min-height: 1.2em;
+        }
+
+        body.dark-mode .gate-label,
+        body.dark-mode .gate-input,
+        body.dark-mode .gate-error {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+        body.dark-mode .gate-field { border-bottom-color: rgba(255, 69, 0, 0.4); }
+        body.dark-mode .gate-field:focus-within { border-bottom-color: #FF4500; }
+        body.dark-mode .gate-toggle { color: #FF4500 !important; }
+        body.dark-mode .gate-btn {
+            background: #FF4500 !important;
+            color: #0A0A0A !important;
+            -webkit-text-fill-color: #0A0A0A;
+        }
+
+        /* Mobile gate. Must come after the base .gate rules above to win the
+           cascade — otherwise min-height/align-items fall back to desktop. */
+        @media (max-width: 600px) {
+            /* Footer is static on this page, so when the gate is short the page
+               stops well before the fold and the footer floats mid-screen. Make
+               the body fill the viewport and let main absorb the slack. */
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100svh;
+            }
+            .roster-page { flex: 1 0 auto; }
+            .site-footer { margin-top: auto; }
+
+            /* Locked only: centre the gate in the space main occupies. Scoped
+               off .roster-unlocked so the 16-name list still flows from the top
+               and scrolls normally once revealed. */
+            body:not(.roster-unlocked) .roster-page {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+            body:not(.roster-unlocked) .gate {
+                min-height: auto;
+                padding-top: 0;
+                align-items: center;
+            }
+
+            .gate {
+                min-height: auto;
+                padding-top: 0.5rem;
+                align-items: flex-start;
+            }
+            .gate-form { width: 100%; gap: 0.6rem; }
+            .gate-label { font-size: clamp(1.75rem, 8vw, 2.25rem); }
+            /* 16px stops iOS zooming the viewport when the field is focused */
+            .gate-input { font-size: 16px; padding: 0.55rem 0; }
+            .gate-btn { padding: 0.8rem 1.5rem; }
+            /* comfortable tap target */
+            .gate-toggle { padding: 0.5rem; }
+        }
+
+        /* Fine print. Regular weight rather than the bold used for the names,
+           and normal tracking — the page-wide -0.07em is far too tight at this size. */
+        .roster-disclaimer {
+            font-family: var(--helv);
+            font-weight: 400;
+            font-size: clamp(0.7rem, 0.8vw, 0.8rem);
+            line-height: 1.65;
+            letter-spacing: -0.005em;
+            text-transform: none;
+            color: var(--black);
+            opacity: 0.4;
+            max-width: none;
+            margin-top: clamp(3.5rem, 7vw, 6rem);
+        }
+
+        body.dark-mode .roster-heading,
+        body.dark-mode .roster-name,
+        body.dark-mode .roster-disclaimer {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+
+
+
+
+        /* ==================== */
+        /* ROSTER HOVER PREVIEW */
+        /* ==================== */
+        /* Hovering a name that has a reel plays that reel's first clip full
+           bleed behind the list; the name goes white and everything else
+           steps out of the way. */
+        .roster-page { position: relative; z-index: 1; }
+
+        .roster-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: #000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        .roster-bg.is-on { opacity: 1; }
+        /* 16:9 cover, whatever the viewport shape */
+        .roster-bg iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: max(100vw, 177.78vh);
+            height: max(100vh, 56.25vw);
+            transform: translate(-50%, -50%);
+            border: 0;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .roster-bg iframe.is-ready { opacity: 1; }
+
+        .roster-name { transition: opacity 0.18s ease, color 0.18s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        body.roster-hover .roster-heading,
+        body.roster-hover .roster-disclaimer { opacity: 0; }
+        /* the rest of the list stays put, dimmed to 40% black over the footage */
+        body.roster-hover .roster-name {
+            opacity: 0.75;
+            color: #000000 !important;
+            -webkit-text-fill-color: #000000;
+        }
+
+        body.roster-hover .roster-item.is-hover .roster-name {
+            opacity: 1;
+            color: #FFFFFF !important;
+            -webkit-text-fill-color: #FFFFFF;
+        }
+
+        /* chrome flips to white so it survives on top of the footage */
+        body.roster-hover .logo-bottom svg path { fill: #FFFFFF !important; }
+        body.roster-hover .plus-icon span { background: #FFFFFF !important; }
+        body.roster-hover .nav-link { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF; }
+        body.roster-hover .site-footer-left,
+        body.roster-hover .social-link { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF; }
+
+        /* Footer link inherits footer colour (kills default visited-link purple) */
+        .footer-link, .footer-link:link, .footer-link:visited { color: inherit; }
+        /* Theme switch: a short cross-fade instead of a hard cut. The class is
+           only on <body> for the duration of the fade, so it never fights the
+           site's own transitions the rest of the time. */
+        body.theme-fading,
+        body.theme-fading *,
+        body.theme-fading *::before,
+        body.theme-fading *::after {
+            transition: var(--theme-transition) !important;
+        }
+
+        /* ==================== */
+        /* DIRECTOR REEL        */
+        /* ==================== */
+        /* Tight edges - the work should own as much of the page as possible. */
+        .director-page { padding: 7rem 1.5rem 3rem; }
+
+        .director-top {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.25rem;
+        }
+
+        .director-name {
+            font-family: var(--helv);
+            font-weight: 700;
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            letter-spacing: -0.035em;
+            line-height: 0.95;
+            text-transform: none;
+            color: var(--black);
+        }
+
+        .director-back {
+            font-family: var(--helv);
+            font-weight: 300;
+            font-size: 0.8rem;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            color: var(--black);
+            opacity: 0.45;
+            transition: opacity 0.25s ease;
+        }
+
+        .director-back:hover { opacity: 1; }
+
+        /* commercial / music videos switch: a small iOS-style toggle to the right of the name */
+        .reel-switch { display: flex; align-items: center; gap: 0.6rem; margin-right: auto; }
+        .reel-switch-label { background: none; border: 0; padding: 0; font-family: var(--helv); font-weight: 700; font-size: 0.7rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--black); opacity: 0.4; cursor: none; transition: opacity 0.2s ease; }
+        .reel-switch-label.is-on, .reel-switch-label:hover { opacity: 1; }
+        .reel-switch-track { position: relative; width: 36px; height: 21px; border-radius: 11px; border: 0; padding: 0; background: var(--black); cursor: none; transition: background-color 0.3s ease, transform 0.18s ease, box-shadow 0.2s ease; will-change: transform; }
+        /* the knob stretches while pressed and springs across on release */
+        .reel-switch-knob { position: absolute; top: 2.5px; left: 2.5px; width: 16px; height: 16px; border-radius: 8px; background: var(--white); transform: translateX(var(--kx, 0px)) scale(var(--ks, 1)); transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.15s ease, background-color 0.3s ease; }
+        .reel-switch-track:active .reel-switch-knob { width: 20px; }
+        .reel-switch-track[aria-checked="true"] .reel-switch-knob { --kx: 15px; }
+        .reel-switch-track[aria-checked="true"]:active .reel-switch-knob { --kx: 11px; }
+        /* the cursor is in the toggle: the dot sits inside the knob as a pupil, the
+           knob grows a touch and the track gets a halo */
+        .reel-switch-track.is-hot .reel-switch-knob { --ks: 1.12; }
+        .reel-switch-track.is-hot { box-shadow: 0 0 0 2px var(--white), 0 0 0 3.5px var(--black); }
+        body.dark-mode .reel-switch-track.is-hot { box-shadow: 0 0 0 2px #0A0A0A, 0 0 0 3.5px #FF4500; }
+        body.dark-mode .reel-switch-label { color: #FF4500; }
+        body.dark-mode .reel-switch-track { background: #FF4500; }
+        body.dark-mode .reel-switch-knob { background: #0A0A0A; }
+        .reel-grid[hidden] { display: none; }
+
+        /* Three across, 5px apart. Every tile is the same 16:9 window so the
+           grid reads as one block no matter what the source ratio is. */
+        .reel-grid {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+        }
+
+        .reel-media {
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: #ECECEC;
+            color: inherit;
+            font: inherit;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .reel-thumb {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* Verticals are letterboxed rather than cropped to a sliver. Black,
+           not grey, so the bars match the ones the Vimeo player draws on hover
+           and the tile does not read as a hole in the mosaic. */
+        .reel-media.is-portrait { background: #000; }
+        .reel-media.is-portrait .reel-thumb { object-fit: cover; }   /* previews always fill the window */
+
+        /* The player is sized to the clip's own aspect ratio (--va) and enlarged
+           until it covers the 16:9 window, so 4:3 and square clips fill the tile
+           instead of sitting in bars. The viewer shows them at their true shape. */
+        .reel-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* a 1px bleed on every side hides the player's hairline edge; this used
+               to be a 2% scale, which read as a small zoom when the player cut in */
+            width: calc(max(100%, 100% * 0.5625 * var(--va, 1.778)) + 2px);
+            height: calc(max(100%, 100% * 1.7778 / var(--va, 1.778)) + 2px);
+            transform: translate(-50%, -50%);
+            border: 0;
+            opacity: 0;
+            transition: none;   /* the player is already running: a hover is a cut */
+            pointer-events: none;
+        }
+
+        /* The thumbnail stays put underneath the iframe - fading it out first
+           would flash the empty tile while the player boots. */
+        .reel-media.is-playing .reel-frame { opacity: 1; }
+
+        /* Title left, client right, on one line under the video. */
+        .reel-meta {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-top: 5px;
+        }
+
+        .reel-title,
+        .reel-client {
+            font-family: var(--helv);
+            font-weight: 700;
+            font-size: clamp(0.7rem, 0.75vw, 0.85rem);
+            letter-spacing: 0.01em;
+            line-height: 1.25;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        /* client on the left, title on the right (the markup keeps title first; order swaps them) */
+        .reel-client { order: 0; flex: 0 0 auto; text-align: left; }
+        .reel-title { order: 1; flex: 1 1 auto; min-width: 0; text-align: right; }
+
+        @media (max-width: 900px) {
+            .reel-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .director-page { padding: 5.5rem 1rem 2rem; }
+            .director-top { margin-bottom: 1rem; }
+            .reel-grid { grid-template-columns: 1fr; gap: 5px; }
+            .reel-title, .reel-client { font-size: 0.72rem; }
+        }
+
+        body.dark-mode .director-name,
+        body.dark-mode .director-back,
+        body.dark-mode .reel-title,
+        body.dark-mode .reel-client {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .reel-media { background: #1A1A1A; }
+        body.dark-mode .reel-media.is-portrait { background: #000; }
+        /* ── Work Viewer ──────────────────────────────────── */
+        .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+        .work-viewer.active { opacity:1; pointer-events:all; }
+        .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); height:calc(90vw * 9 / 16); max-height:90vh; }
+        .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+        .viewer-video-hero { position:absolute; inset:0; }
+        .viewer-click-layer { position:absolute; inset:0; z-index:2; }
+        /* play / pause flash: the word PLAY or PAUSE in the middle of the picture, in
+           the site's caps; it rises a touch, holds, and fades (Ben's pick). */
+        .viewer-center-icon { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-family:'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; font-weight:700; font-size:0.85rem; letter-spacing:0.06em; text-transform:uppercase; line-height:1; color:#fff; text-shadow:0 1px 8px rgba(0,0,0,0.55); opacity:0; pointer-events:none; z-index:4; will-change:transform,opacity; }
+        .viewer-center-icon .cc-ic { display:none; }
+        .viewer-center-icon.show-play::after { content:'Play'; }
+        .viewer-center-icon.show-pause::after { content:'Pause'; }
+        .viewer-center-icon.flash { animation:ccFlash 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        @keyframes ccFlash {
+            0%   { opacity:0; transform:translate(-50%,-50%) translateY(6px); }
+            20%  { opacity:1; transform:translate(-50%,-50%); }
+            75%  { opacity:1; transform:translate(-50%,-50%); }
+            100% { opacity:0; transform:translate(-50%,-50%) translateY(-4px); }
+        }
+        .viewer-controls { position:absolute; left:0; right:0; bottom:0; padding:48px 134px 16px 20px; display:flex; align-items:center; gap:10px; background:linear-gradient(transparent,rgba(0,0,0,0.6)); z-index:3; transition:opacity .3s ease,transform .3s ease; }
+        .viewer-fs-corner { position:absolute; bottom:14px; right:18px; z-index:5; background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
+        .viewer-fs-corner:hover { opacity:1; }
+        /* AirPlay / Cast: left of the volume button, only shown when the browser has a target */
+        .viewer-air { position:absolute; bottom:10px; right:86px; z-index:5; background:none; border:none; cursor:none; padding:10px; opacity:0.65; transition:opacity 0.2s ease, transform 0.18s ease; line-height:0; }
+        .viewer-air:hover { opacity:1; }
+        .viewer-air.is-ready { opacity:1; }
+        /* volume control: corner button left of the expand button, with a pop-up gauge */
+        .viewer-vol { position:absolute; bottom:14px; right:54px; z-index:5; display:flex; align-items:center; justify-content:center; line-height:0; transition:opacity 0.3s ease; }
+        .viewer-vol-btn { background:none; border:none; cursor:none; padding:6px; opacity:0.65; transition:opacity 0.2s ease; line-height:0; }
+        .viewer-vol-btn:hover { opacity:1; }
+        .viewer-vol-btn .vol-ic { display:none; }
+        .viewer-vol-btn .vol-on { display:block; }
+        .viewer-vol.muted .vol-on { display:none; }
+        .viewer-vol.muted .vol-off { display:block; }
+        .viewer-vol-gauge { position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); opacity:0; pointer-events:none; transition:opacity 0.18s ease; background:rgba(20,20,20,0.72); border-radius:999px; padding:12px 0; }
+        .viewer-vol.show-gauge .viewer-vol-gauge { opacity:1; pointer-events:auto; }
+        .viewer-vol-track { width:4px; height:70px; margin:0 13px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; cursor:none; }
+        .viewer-vol-fill { position:absolute; left:0; right:0; bottom:0; height:0%; background:#fff; border-radius:999px; }
+        .viewer-video-hero.cs-playing .viewer-controls { opacity:0; transform:translateY(6px); pointer-events:none; }
+        .viewer-video-hero.cs-playing.cs-hover .viewer-controls { opacity:1; transform:translateY(0); pointer-events:auto; }
+        /* corner buttons (volume + expand) fade out with the controls when the video isn't being hovered */
+        .viewer-video-hero.cs-playing ~ .viewer-fs-corner, .viewer-video-hero.cs-playing ~ .viewer-vol, .viewer-video-hero.cs-playing ~ .viewer-air { opacity:0; pointer-events:none; }
+        .viewer-video-hero.cs-playing.cs-hover ~ .viewer-fs-corner, .viewer-video-hero.cs-playing.cs-hover ~ .viewer-air { opacity:0.65; pointer-events:auto; }
+        .viewer-video-hero.cs-playing.cs-hover ~ .viewer-vol { opacity:1; pointer-events:auto; }
+        .viewer-ctrl-btn { background:none; border:none; padding:4px 6px; flex-shrink:0; cursor:none; }
+        /* the bar's play / pause icons sit on top of each other and crossfade with a small spring */
+        .viewer-ctrl-btn .cs-ctrl-icon { display:block; position:absolute; left:8px; top:10px; width:14px; height:14px; object-fit:contain; opacity:0; transform:scale(0.5); transition:opacity 0.18s ease, transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .viewer-ctrl-btn .cs-icon-play { opacity:1; transform:scale(1); }
+        .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-play { opacity:0; transform:scale(0.5); }
+        .viewer-video-hero.cs-playing .viewer-ctrl-btn .cs-icon-pause { opacity:1; transform:scale(1); }
+        .viewer-progress { flex:1; padding:8px 0; cursor:none; position:relative; }
+        .viewer-progress .cs-progress-track { width:100%; height:2px; background:rgba(255,255,255,0.3); border-radius:999px; position:relative; overflow:hidden; transition:height 0.15s ease; }
+        .viewer-progress .cs-progress-fill { position:absolute; left:0; top:0; bottom:0; width:0%; background:#fff; border-radius:999px; }
+        .viewer-progress .cs-progress-thumb { position:absolute; top:50%; left:0; width:11px; height:11px; border-radius:50%; background:#fff; transform:translate(-50%,-50%); opacity:0; transition:opacity 0.15s ease; pointer-events:none; box-shadow:0 1px 5px rgba(0,0,0,0.5); }
+        .viewer-progress:hover .cs-progress-thumb, .viewer-progress.dragging .cs-progress-thumb { opacity:1; }
+        .viewer-progress:hover .cs-progress-track, .viewer-progress.dragging .cs-progress-track { height:4px; }
+        /* scrubber frame preview (mini player seeked to the cursor time) */
+        .scrub-preview { position:absolute; bottom:calc(100% + 6px); left:0; transform:translateX(-50%); width:168px; opacity:0; pointer-events:none; transition:opacity 0.12s ease; z-index:6; }
+        .scrub-preview.show { opacity:1; }
+        .scrub-preview-frame { width:168px; height:95px; border-radius:6px; overflow:hidden; background:#000; box-shadow:0 10px 34px rgba(0,0,0,0.55); position:relative; }
+        .scrub-preview-frame iframe { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:100%; height:100%; min-width:169px; min-height:95px; border:none; pointer-events:none; }
+        .scrub-preview-time { display:block; text-align:center; margin-top:5px; font-size:11px; color:#fff; font-family:'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; letter-spacing:-0.03em; text-shadow:0 1px 3px rgba(0,0,0,0.65); }
+        .viewer-time { font-size:11px; color:rgba(255,255,255,0.7); white-space:nowrap; font-family:'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; letter-spacing:-0.04em; }
+        .viewer-close { position:absolute; top:1.5rem; right:1.5rem; z-index:10; background:none; border:none; cursor:none; padding:0.5rem; opacity:0.5; transition:opacity 0.2s; line-height:0; }
+        .viewer-close:hover { opacity:1; }
+        .viewer-meta { position:absolute; bottom:2rem; left:3rem; display:none; flex-direction:column; gap:0.2rem; pointer-events:none; }
+        .viewer-client-label { font-size:0.6rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.4); }
+        .viewer-title-label { font-size:0.95rem; font-weight:400; color:rgba(255,255,255,0.85); text-transform:lowercase; }
+        .viewer-nav { display:none; position:absolute; top:50%; transform:translateY(-50%); background:none; border:none; cursor:none; padding:1.2rem; opacity:0.4; transition:opacity 0.2s; line-height:0; }
+        .viewer-nav:hover { opacity:1; }
+        .viewer-prev { left:0.5rem; }
+        .viewer-next { right:0.5rem; }
+        /* viewer open: hide page chrome (menu +) and the corner close; clicking the margin closes */
+        body.viewer-open .nav { opacity:0 !important; pointer-events:none !important; }
+        body.viewer-open .logo-bottom, body.viewer-open .site-footer { opacity:0 !important; pointer-events:none !important; }
+        /* fullscreen: let the native cursor show (the custom cursor can't render outside the fullscreen element) */
+        :fullscreen, :fullscreen * { cursor:auto !important; }
+        :-webkit-full-screen, :-webkit-full-screen * { cursor:auto !important; }
+        /* fullscreen idle: hide cursor + controls + expand button after 1s of no movement */
+        #viewerFrame.fs-idle, #viewerFrame.fs-idle * { cursor:none !important; }
+        #viewerFrame.fs-idle .viewer-controls, #viewerFrame.fs-idle .viewer-fs-corner, #viewerFrame.fs-idle .viewer-vol, #viewerFrame.fs-idle .viewer-air { opacity:0 !important; pointer-events:none !important; }
+        .viewer-close { display:none; }
+        /* exit cursor: an X that follows the pointer over the margin around the video */
+        #viewerExitCursor { position:fixed; left:-200px; top:-200px; line-height:0;
+            transform:translate(-50%,-50%) scale(.85); opacity:0; pointer-events:none; z-index:10080;
+            mix-blend-mode:difference; transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1);
+            will-change:transform,left,top,opacity; }
+        #viewerExitCursor.show { opacity:1; transform:translate(-50%,-50%) scale(1); }
+        body.viewer-exit-active .cursor { opacity:0 !important; }
+        /* in the reel switch the dot goes away; the halo on the track is the cue */
+        body.switch-hot .cursor { opacity:0 !important; }
+        /* scrolling the grid tucks the logo and the About / Contact links away */
+        .nav { transition: opacity 0.3s ease; }
+        body.is-scrolled .nav, body.is-scrolled .logo-bottom { opacity:0; pointer-events:none; }
+        /* bigger hit zones, so wherever the magnetic cursor lands is clickable;
+           negative margins keep the icons exactly where they were */
+        .viewer-ctrl-btn { position:relative; display:inline-block; box-sizing:border-box; width:30px; height:34px; padding:10px 8px; margin:-6px -2px; transition:transform 0.18s ease; will-change:transform; }
+        .viewer-progress { padding:16px 0; margin:-8px 0; }
+        .viewer-fs-corner { bottom:10px; right:14px; padding:10px; transition:opacity 0.2s ease, transform 0.18s ease; }
+        .viewer-vol { bottom:10px; right:50px; }
+        .viewer-vol-btn { padding:10px; transition:opacity 0.2s ease, transform 0.18s ease; }
+        /* dark mode: the whole player goes orange, line included */
+        body.dark-mode .viewer-progress .cs-progress-track, body.dark-mode .viewer-vol-track { background:rgba(255,69,0,0.3); }
+        body.dark-mode .viewer-progress .cs-progress-fill, body.dark-mode .viewer-progress .cs-progress-thumb, body.dark-mode .viewer-vol-fill { background:#FF4500; }
+        body.dark-mode .viewer-time, body.dark-mode .scrub-preview-time { color:#FF4500; }
+        body.dark-mode .viewer-vol-btn svg { stroke:#FF4500; }
+        body.dark-mode .viewer-fs-corner svg path, body.dark-mode .viewer-air svg { stroke:#FF4500; }
+        body.dark-mode .viewer-center-icon { color:#FF4500; }
+        body.dark-mode #viewerExitCursor svg line { stroke:#FF4500; }
+        /* the play / pause PNGs are white on alpha: paint orange through them as a mask */
+        body.dark-mode .viewer-ctrl-btn .cs-ctrl-icon { background:#FF4500; -webkit-mask:var(--ic) center / contain no-repeat; mask:var(--ic) center / contain no-repeat; object-position:-999px -999px; }
+        body.dark-mode .viewer-ctrl-btn .cs-icon-play { --ic:url(/assets/logos/covalent_white_play_button.png); }
+        body.dark-mode .viewer-ctrl-btn .cs-icon-pause { --ic:url(/assets/logos/pause_button.png); }
+        /* volume gauge: a wider pill, and the whole pill plus a margin around it
+           takes the press, not just the 4px line (fullscreen has no magnet to help) */
+        .viewer-vol-gauge { padding:14px 0; }
+        .viewer-vol-track { margin:0 16px; }
+        .viewer-vol-gauge::before { content:''; position:absolute; inset:-10px -14px; }
+    </style>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body class="roster-unlocked">
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Navigation - Plus Menu -->
+    <nav class="nav">
+        <a href="/about" class="nav-link">About</a>
+        <a href="/contact" class="nav-link">Contact</a>
+    </nav>
+
+
+    <!-- Logo Bottom Right -->
+    <a href="/" class="logo-bottom">
+        <svg viewBox="0 0 160 160" fill="none">
+            <path d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+        </svg>
+    </a>
+
+    <!-- Main Content -->
+    <main class="roster-page director-page">
+        <div class="roster-reveal" id="rosterContent">
+        <div class="director-top">
+            <h1 class="director-name">Jon Schwartz</h1>
+            <a class="director-back" href="/">Back</a>
+        </div>
+        <ul class="reel-grid" data-set="commercial">
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1163390482" data-va="1.778" aria-label="Play Your Project, Your Way">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_640?region=us 640w, https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Your Project, Your Way</p>
+                    <p class="reel-client">True Value</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1163384182" data-va="1.778" aria-label="Play Dialed In">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2119572983-69df01103d13ebd094d13d900c46811a6593cd216e062a110c8db70e9876d76f-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2119572983-69df01103d13ebd094d13d900c46811a6593cd216e062a110c8db70e9876d76f-d_640?region=us 640w, https://i.vimeocdn.com/video/2119572983-69df01103d13ebd094d13d900c46811a6593cd216e062a110c8db70e9876d76f-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Dialed In</p>
+                    <p class="reel-client">Joybird</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1163391188" data-va="1.456" aria-label="Play Summer Trend">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2119582199-472fab5f51cb7067e67690e5c9cb646647faccb37fb535daaeab7e140722e139-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2119582199-472fab5f51cb7067e67690e5c9cb646647faccb37fb535daaeab7e140722e139-d_640?region=us 640w, https://i.vimeocdn.com/video/2119582199-472fab5f51cb7067e67690e5c9cb646647faccb37fb535daaeab7e140722e139-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Summer Trend</p>
+                    <p class="reel-client">Walmart</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1208506341" data-va="1.778" aria-label="Play Fresh Tour">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2177842612-1140d7efc92ea4f38ea54b1eef0380818bdc60202f8f25989884d3f61fb0b396-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2177842612-1140d7efc92ea4f38ea54b1eef0380818bdc60202f8f25989884d3f61fb0b396-d_640?region=us 640w, https://i.vimeocdn.com/video/2177842612-1140d7efc92ea4f38ea54b1eef0380818bdc60202f8f25989884d3f61fb0b396-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Fresh Tour</p>
+                    <p class="reel-client">Febreze</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1223819583" data-va="1.778" aria-label="Play Full House of Rewards">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2197133143-934bf4fda3566ce7414f7a70885b2c30722b84a75c55dc46e573d19dac8337a9-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2197133143-934bf4fda3566ce7414f7a70885b2c30722b84a75c55dc46e573d19dac8337a9-d_640?region=us 640w, https://i.vimeocdn.com/video/2197133143-934bf4fda3566ce7414f7a70885b2c30722b84a75c55dc46e573d19dac8337a9-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Full House of Rewards</p>
+                    <p class="reel-client">USAA</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1163382779" data-va="1.778" aria-label="Play Getaways">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2119568926-449d11f54e69995fe60be558e93a5316d31e524ad5ed703f4b1e2edaf69614af-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2119568926-449d11f54e69995fe60be558e93a5316d31e524ad5ed703f4b1e2edaf69614af-d_640?region=us 640w, https://i.vimeocdn.com/video/2119568926-449d11f54e69995fe60be558e93a5316d31e524ad5ed703f4b1e2edaf69614af-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Getaways</p>
+                    <p class="reel-client">Airbnb</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1206678657" data-va="1.778" aria-label="Play Travel">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2175588663-bd65dc02bb100e88838e36ab4dc75000fb85c02f5eaa038f6180dc1cdc54ab76-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2175588663-bd65dc02bb100e88838e36ab4dc75000fb85c02f5eaa038f6180dc1cdc54ab76-d_640?region=us 640w, https://i.vimeocdn.com/video/2175588663-bd65dc02bb100e88838e36ab4dc75000fb85c02f5eaa038f6180dc1cdc54ab76-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Travel</p>
+                    <p class="reel-client">Google</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1163390792" data-va="1.456" aria-label="Play Summer Entertaining">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2119581202-7150d90091578a27562849f1b74999c89a63fe464202aea20afc39a7f299f579-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2119581202-7150d90091578a27562849f1b74999c89a63fe464202aea20afc39a7f299f579-d_640?region=us 640w, https://i.vimeocdn.com/video/2119581202-7150d90091578a27562849f1b74999c89a63fe464202aea20afc39a7f299f579-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Summer Entertaining</p>
+                    <p class="reel-client">Walmart</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1206678348" data-va="1.778" aria-label="Play Love How You Live">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2175588492-f6ea69ddafea78ebccb4233978c043d24553cfce560591cd236e0279b5d80470-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2175588492-f6ea69ddafea78ebccb4233978c043d24553cfce560591cd236e0279b5d80470-d_640?region=us 640w, https://i.vimeocdn.com/video/2175588492-f6ea69ddafea78ebccb4233978c043d24553cfce560591cd236e0279b5d80470-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Love How You Live</p>
+                    <p class="reel-client">Cortland</p>
+                </div>
+            </li>
+            <li class="reel-item">
+                <button class="reel-media" type="button"
+                        data-vimeo="1206678656" data-va="2.000" aria-label="Play Barbershop">
+                    <img class="reel-thumb" alt="" loading="lazy" decoding="async"
+                         src="https://i.vimeocdn.com/video/2175588793-fd6e62c7dbbf59ad38317e129dab3bd0ad72e9fa4cdaf0e86b8e03634ba52aa1-d_640?region=us"
+                         srcset="https://i.vimeocdn.com/video/2175588793-fd6e62c7dbbf59ad38317e129dab3bd0ad72e9fa4cdaf0e86b8e03634ba52aa1-d_640?region=us 640w, https://i.vimeocdn.com/video/2175588793-fd6e62c7dbbf59ad38317e129dab3bd0ad72e9fa4cdaf0e86b8e03634ba52aa1-d_1280?region=us 1280w"
+                         sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
+                </button>
+                <div class="reel-meta">
+                    <p class="reel-title">Barbershop</p>
+                    <p class="reel-client">Helium</p>
+                </div>
+            </li>
+        </ul>
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="site-footer">
+        <div class="site-footer-left">2026, Covalent Studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">Privacy</a></div>
+        <div class="site-footer-right">
+            <div class="site-footer-socials">
+                <label class="dark-mode-toggle">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="toggle-track"></span>
+                </label>
+                <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                </a>
+                <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="5" r="2.5" fill="currentColor"/>
+                        <rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== //
+        // CUSTOM CURSOR
+        // ==================== //
+        const cursor = document.getElementById('cursor');
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            cursor.style.display = 'none';
+        }
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // a page may set window.__cursorMagnet = { x, y, scale } to pull the dot
+        // onto a target (the work viewer's timeline and buttons do this)
+        let magnetScale = 1;
+        function animateCursor() {
+            const mag = window.__cursorMagnet;
+            // pull: how far toward the target the dot settles (1 = dead on it)
+            const pull = mag ? (mag.pull == null ? 1 : mag.pull) : 0;
+            const k = mag ? 0.4 : 0.35;
+            cursorX += ((mag ? mouseX + (mag.x - mouseX) * pull : mouseX) - cursorX) * k;
+            cursorY += ((mag ? mouseY + (mag.y - mouseY) * pull : mouseY) - cursorY) * k;
+            const ms = mag ? (mag.scale || 1) : 1;
+            if (ms !== magnetScale) {
+                magnetScale = ms;
+                cursor.style.transition = 'transform 0.2s ease, left 0s, top 0s';
+                cursor.style.transform = 'translate(-50%, -50%) scale(' + ms + ')';
+            }
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // ==================== //
+        // MENU TOGGLE
+        // ==================== //
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuToggle && menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        menuOverlay && menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuToggle.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && (menuOverlay && menuOverlay.classList.contains('active'))) {
+                menuToggle.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        // ==================== //
+        // MENU LINK GRADIENT SPREAD EFFECT
+        // ==================== //
+        // (menu hover handled by CSS only)
+
+        // ==================== //
+        // VIRUS SPREADING TEXT EFFECT (footer)
+        // ==================== //
+        const virusLinks = document.querySelectorAll('.footer-link');
+
+        virusLinks.forEach(link => {
+            const text = link.textContent;
+            link.textContent = '';
+
+            const chars = [];
+            for (let i = 0; i < text.length; i++) {
+                const char = document.createElement('span');
+                char.className = 'char';
+                char.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+                link.appendChild(char);
+                chars.push(char);
+            }
+
+            let isInfected = false;
+
+            link.addEventListener('mouseenter', (e) => {
+                if (isInfected) return;
+                isInfected = true;
+
+                const rect = link.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                const charDistances = chars.map((char, index) => {
+                    const charRect = char.getBoundingClientRect();
+                    const charCenterX = charRect.left - rect.left + charRect.width / 2;
+                    const charCenterY = charRect.top - rect.top + charRect.height / 2;
+                    const distance = Math.sqrt(
+                        Math.pow(charCenterX - mouseX, 2) +
+                        Math.pow(charCenterY - mouseY, 2)
+                    );
+                    return { char, distance, index };
+                });
+
+                charDistances.sort((a, b) => a.distance - b.distance);
+
+                charDistances.forEach((item, i) => {
+                    setTimeout(() => {
+                        item.char.classList.add('infected');
+                        if (i === charDistances.length - 1) {
+                            link.classList.add('fully-infected');
+                        }
+                    }, i * 30);
+                });
+            });
+
+            link.addEventListener('mouseleave', (e) => {
+                const rect = link.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                const charDistances = chars.map((char, index) => {
+                    const charRect = char.getBoundingClientRect();
+                    const charCenterX = charRect.left - rect.left + charRect.width / 2;
+                    const charCenterY = charRect.top - rect.top + charRect.height / 2;
+                    const distance = Math.sqrt(
+                        Math.pow(charCenterX - mouseX, 2) +
+                        Math.pow(charCenterY - mouseY, 2)
+                    );
+                    return { char, distance, index };
+                });
+
+                charDistances.sort((a, b) => b.distance - a.distance);
+                link.classList.remove('fully-infected');
+
+                charDistances.forEach((item, i) => {
+                    setTimeout(() => {
+                        item.char.classList.remove('infected');
+                        if (i === charDistances.length - 1) {
+                            isInfected = false;
+                        }
+                    }, i * 25);
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // ==================== //
+        // DARK MODE TOGGLE
+        // ==================== //
+        (function() {
+            const toggle = document.getElementById('darkModeToggle');
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                toggle.checked = true;
+            }
+            toggle.addEventListener('change', () => {
+                document.body.classList.add('theme-fading'); clearTimeout(window.__themeFadeT); window.__themeFadeT = setTimeout(function(){ document.body.classList.remove('theme-fading'); }, 360); document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+
+            // Cursor inflate on toggle hover
+            const cursorEl = document.getElementById('cursor');
+            const toggleLabel = document.querySelector('.dark-mode-toggle');
+            toggleLabel.addEventListener('mouseenter', () => {
+                cursorEl.style.transform = 'translate(-50%, -50%) scale(1.8)';
+                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
+            });
+            toggleLabel.addEventListener('mouseleave', () => {
+                cursorEl.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
+            });
+        })();
+    </script>
+    <script src="/scripts/analytics.js"></script>
+    <script src="/scripts/scroll.js"></script>
+
+    <script>
+    // Re-enforce cursor:none via injected stylesheet (bfcache-safe). Coming back
+    // to a page through history, Chrome can keep drawing the arrow until the
+    // cursor property on the hovered element actually changes, so on every
+    // pageshow (and the first movement after it) the rule flips default -> none.
+    (function() {
+        var style = null;
+        function setRule(value) {
+            if (!style || !style.parentNode) {
+                var existing = document.getElementById('no-native-cursor');
+                if (existing) existing.remove();
+                style = document.createElement('style');
+                style.id = 'no-native-cursor';
+                document.head.appendChild(style);
+            }
+            style.textContent = 'html, html *, body, body * { cursor: ' + value + ' !important; }';
+        }
+        function enforceNoCursor() {
+            setRule('default');
+            void document.documentElement.offsetWidth;
+            setRule('none');
+        }
+        enforceNoCursor();
+        window.addEventListener('pageshow', function(e) {
+            enforceNoCursor();
+            setTimeout(enforceNoCursor, 50);
+            var cursor = document.getElementById('cursor');
+            if (cursor && !('ontouchstart' in window)) {
+                cursor.style.display = 'block';
+            }
+            document.addEventListener('mousemove', enforceNoCursor, { once: true });
+        });
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) enforceNoCursor();
+        });
+    })();
+    </script>
+
+
+    <!-- Work Viewer -->
+    <div id="workViewer" class="work-viewer">
+        <div class="viewer-frame" id="viewerFrame">
+            <div class="viewer-video-hero" id="viewerVideoHero">
+                <iframe id="viewerIframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                <div class="viewer-click-layer" id="viewerClickLayer"></div>
+                <div class="viewer-center-icon" id="viewerCenterIcon" aria-hidden="true">
+                    <svg class="cc-ic cc-play" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="cc-ic cc-pause" viewBox="0 0 24 24" fill="#fff"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                </div>
+                <div class="viewer-controls" id="viewerControls">
+                    <button class="viewer-ctrl-btn" id="viewerPlayPause" data-cursor="play">
+                        <img src="/assets/logos/covalent_white_play_button.png" width="128" height="128" alt="Play" class="cs-ctrl-icon cs-icon-play">
+                        <img src="/assets/logos/pause_button.png" width="128" height="128" alt="Pause" class="cs-ctrl-icon cs-icon-pause">
+                    </button>
+                    <div class="viewer-progress" id="viewerProgress">
+                        <div class="scrub-preview" id="scrubPreview"><div class="scrub-preview-frame" id="scrubPreviewFrame"></div><span class="scrub-preview-time" id="scrubPreviewTime">0:00</span></div>
+                        <div class="cs-progress-track"><div class="cs-progress-fill" id="viewerFill"></div></div>
+                        <div class="cs-progress-thumb" id="viewerThumb"></div>
+                    </div>
+                    <div class="viewer-time" id="viewerTime">00:00 / 00:00</div>
+                </div>
+            </div>
+            <div class="viewer-vol muted" id="viewerVol">
+                <div class="viewer-vol-gauge" id="viewerVolGauge">
+                    <div class="viewer-vol-track" id="viewerVolTrack"><div class="viewer-vol-fill" id="viewerVolFill"></div></div>
+                </div>
+                <button class="viewer-vol-btn" id="viewerVolBtn" data-cursor="unmute" aria-label="Volume">
+                    <svg class="vol-ic vol-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+                    <svg class="vol-ic vol-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="16" y1="9" x2="22" y2="15"/><line x1="22" y1="9" x2="16" y2="15"/></svg>
+                </button>
+            </div>
+            <button class="viewer-air" id="viewerAirBtn" aria-label="AirPlay" data-cursor="airplay">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/><path d="m12 15 5 6H7l5-6z"/></svg>
+            </button>
+            <button class="viewer-fs-corner" id="viewerFsBtn" aria-label="Fullscreen" data-cursor="expand">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+        </div>
+        <button class="viewer-close" id="viewerClose" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="2" y1="2" x2="16" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="2" x2="2" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="viewer-meta">
+            <span class="viewer-client-label" id="viewerClient"></span>
+            <span class="viewer-title-label" id="viewerTitleText"></span>
+        </div>
+        <button class="viewer-nav viewer-prev" id="viewerPrev" aria-label="Previous">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none"><polyline points="13,2 3,14 13,26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="viewer-nav viewer-next" id="viewerNext" aria-label="Next">
+            <svg width="16" height="28" viewBox="0 0 16 28" fill="none"><polyline points="3,2 13,14 3,26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+    </div>
+
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <script>
+    // Commercial / music videos switch. Both grids are in the page; the switch
+    // shows one of them, and #music in the URL opens on the music side.
+    (function () {
+        function setSide(side, push) {
+            var sw = document.querySelector('.reel-switch'); if (!sw) return;
+            document.querySelectorAll('.reel-grid[data-set]').forEach(function (g) { g.hidden = g.getAttribute('data-set') !== side; });
+            sw.querySelectorAll('.reel-switch-label').forEach(function (l) { l.classList.toggle('is-on', l.getAttribute('data-set') === side); });
+            sw.querySelector('.reel-switch-track').setAttribute('aria-checked', side === 'music' ? 'true' : 'false');
+            if (push) { try { history.replaceState(null, '', side === 'music' ? '#music' : location.pathname + location.search); } catch (e) {} }
+            window.dispatchEvent(new Event('reelsetchange'));
+        }
+        document.addEventListener('click', function (e) {
+            var t = e.target.closest && e.target.closest('.reel-switch-label, .reel-switch-track'); if (!t) return;
+            e.preventDefault();
+            var side = t.classList.contains('reel-switch-track')
+                ? (t.getAttribute('aria-checked') === 'true' ? 'commercial' : 'music')
+                : t.getAttribute('data-set');
+            setSide(side, true);
+            followKnob();
+        });
+        // near the switch the cursor dot snaps to the knob and disappears; the halo
+        // on the track (is-hot) says the pointer is in, and the dot pops back out on leaving
+        // (shared magnet: a script only clears a target it set itself)
+        function setMagnet(owner, m) { var cur = window.__cursorMagnet; if (m) { m.owner = owner; window.__cursorMagnet = m; } else if (cur && cur.owner === owner) { window.__cursorMagnet = null; } }
+        var leaned = [];
+        function clearLean(except) { leaned.forEach(function (b) { if (b !== except) { b.style.transform = ''; b.classList.remove('is-hot'); } }); leaned = except ? [except] : []; }
+        var lastX = null, lastY = null;
+        function track(x, y) {
+            var sw = document.querySelector('.reel-switch');
+            if (!sw || document.body.classList.contains('viewer-open')) { clearLean(); setMagnet('switch', null); document.body.classList.remove('switch-hot'); return; }
+            var parts = sw.querySelectorAll('.reel-switch-track'), pad = 14;
+            for (var i = 0; i < parts.length; i++) {
+                var b = parts[i], r = b.getBoundingClientRect();
+                if (x < r.left - pad || x > r.right + pad || y < r.top - pad || y > r.bottom + pad) continue;
+                var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+                var k = b.querySelector('.reel-switch-knob').getBoundingClientRect(), tx = k.left + k.width / 2, ty = k.top + k.height / 2;
+                b.style.transform = 'translate(' + ((x - cx) * 0.08).toFixed(1) + 'px,' + ((y - cy) * 0.08).toFixed(1) + 'px)';
+                b.classList.add('is-hot'); document.body.classList.add('switch-hot');
+                clearLean(b);
+                setMagnet('switch', { x: tx, y: ty, scale: 1.2, pull: 1 });
+                return;
+            }
+            clearLean(); setMagnet('switch', null); document.body.classList.remove('switch-hot');
+        }
+        document.addEventListener('mousemove', function (e) { lastX = e.clientX; lastY = e.clientY; track(lastX, lastY); }, { passive: true });
+        // after a click the knob slides for a third of a second while the pointer
+        // sits still: keep re-reading the knob so the dot rides across with it
+        function followKnob() {
+            var until = performance.now() + 500;
+            (function step() { if (lastX !== null) track(lastX, lastY); if (performance.now() < until) requestAnimationFrame(step); })();
+        }
+        function initial() { if (document.querySelector('.reel-switch')) setSide(location.hash === '#music' ? 'music' : 'commercial', false); }
+        initial();
+        var target = document.getElementById('rosterContent');   // gated pages: the markup arrives after the unlock
+        if (target) new MutationObserver(initial).observe(target, { childList: true });
+    })();
+    </script>
+
+    <script>
+    // Scrolling the grid tucks the logo and the About / Contact links away;
+    // they come back at the top.
+    (function () {
+        var on = false;
+        function check() { var s = window.scrollY > 40; if (s !== on) { on = s; document.body.classList.toggle('is-scrolled', s); } }
+        window.addEventListener('scroll', check, { passive: true });
+        check();
+    })();
+    </script>
+
+    <script>
+    // ===== Work Viewer (ported from the editor profile pages) =====
+    var openViewer;
+    (function initWorkViewer() {
+        // The viewer plays whichever tile was clicked; items are read from the
+        // grid at open time, so gated pages (tiles arrive after the unlock) work too.
+        var viewerItems = [];
+        function collectItems() {
+            return Array.prototype.map.call(document.querySelectorAll('.reel-grid:not([hidden]) .reel-item'), function (li) {
+                var m = li.querySelector('.reel-media');
+                return { vimeo: m.getAttribute('data-vimeo'), hash: m.getAttribute('data-hash') || '', va: parseFloat(m.getAttribute('data-va')) || 1.778,
+                         client: (li.querySelector('.reel-client') || {}).textContent || '',
+                         title: (li.querySelector('.reel-title') || {}).textContent || '' };
+            });
+        }
+        var viewer   = document.getElementById('workViewer');
+        var frame    = document.getElementById('viewerFrame');
+        var vHero    = document.getElementById('viewerVideoHero');
+        var iframe   = document.getElementById('viewerIframe');
+        var clientEl = document.getElementById('viewerClient');
+        var titleEl  = document.getElementById('viewerTitleText');
+        var closeBtn = document.getElementById('viewerClose');
+        var prevBtn  = document.getElementById('viewerPrev');
+        var nextBtn  = document.getElementById('viewerNext');
+        var ppBtn    = document.getElementById('viewerPlayPause');
+        var progEl   = document.getElementById('viewerProgress');
+        var fillEl   = document.getElementById('viewerFill');
+        var thumb    = document.getElementById('viewerThumb');
+        var timeEl   = document.getElementById('viewerTime');
+        var fsBtn    = document.getElementById('viewerFsBtn');
+        var airBtn   = document.getElementById('viewerAirBtn');
+        var clickLayer = document.getElementById('viewerClickLayer');
+        var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false, vVolume = 1, vMuted = false, volDragging = false;
+        // exit cursor: an X that follows the pointer over the margin around the video
+        var exitCur = document.createElement('div');
+        exitCur.id='viewerExitCursor'; exitCur.setAttribute('aria-hidden','true');
+        exitCur.innerHTML='<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="3" y1="3" x2="19" y2="19" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="19" y1="3" x2="3" y2="19" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>';
+        document.body.appendChild(exitCur);
+        function ptrInsideFrame(e){ var r=frame.getBoundingClientRect(); return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
+        viewer.addEventListener('mousemove', function(e){
+            if(!viewer.classList.contains('active')) return;
+            var overNav = e.target && e.target.closest && e.target.closest('.viewer-nav');
+            if(ptrInsideFrame(e) || overNav){ exitCur.classList.remove('show'); document.body.classList.remove('viewer-exit-active'); }
+            else { exitCur.style.left=e.clientX+'px'; exitCur.style.top=e.clientY+'px'; exitCur.classList.add('show'); document.body.classList.add('viewer-exit-active'); }
+        }, {passive:true});
+        // magnetic cursor: inside the frame the dot is pulled onto the timeline and
+        // onto the buttons (which lean a little toward the pointer), so the cursor
+        // snaps to the thing it is about to use
+        var trackEl=progEl.querySelector('.cs-progress-track');
+        // the magnet is shared with the page (the reel switch uses it too): a script
+        // only clears a target it set itself
+        function setMagnet(owner, m){ var cur=window.__cursorMagnet; if(m){ m.owner=owner; window.__cursorMagnet=m; } else if(cur&&cur.owner===owner){ window.__cursorMagnet=null; } }
+        var magBtns=[ppBtn, document.getElementById('viewerVolBtn'), document.getElementById('viewerAirBtn'), fsBtn];
+        function inRect(e,r){ return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
+        function clearPull(except){ magBtns.forEach(function(b){ if(b&&b!==except&&b.style.transform) b.style.transform=''; }); }
+        function onLine(e,tr){ return { x:Math.max(tr.left,Math.min(tr.right,e.clientX)), y:tr.top+tr.height/2, scale:1.35, pull:0.85 }; }
+        function magnet(e){
+            if(!viewer.classList.contains('active')||inFs()||!ptrInsideFrame(e)){ clearPull(); return null; }
+            if(dragging){ clearPull(); return onLine(e, trackEl.getBoundingClientRect()); }
+            if(volDragging){ clearPull(); var vt=volTrack.getBoundingClientRect(); return { x:vt.left+vt.width/2, y:Math.max(vt.top,Math.min(vt.bottom,e.clientY)), scale:1.35, pull:0.85 }; }
+            for(var i=0;i<magBtns.length;i++){ var b=magBtns[i]; if(!b) continue; var r=b.getBoundingClientRect();
+                if(r.width&&inRect(e,r)){ var cx=r.left+r.width/2, cy=r.top+r.height/2;
+                    b.style.transform='translate('+((e.clientX-cx)*0.2).toFixed(1)+'px,'+((e.clientY-cy)*0.2).toFixed(1)+'px)';
+                    clearPull(b); return { x:cx, y:cy, scale:1.4, pull:0.6 }; } }
+            clearPull();
+            if(volWrap.classList.contains('show-gauge')){ var g=volWrap.querySelector('.viewer-vol-gauge').getBoundingClientRect(), vt2=volTrack.getBoundingClientRect();
+                var gx={ left:g.left-14, right:g.right+14, top:g.top-10, bottom:g.bottom+10 };   // same margin as the gauge's ::before
+                if(g.width&&inRect(e,gx)) return { x:vt2.left+vt2.width/2, y:Math.max(vt2.top,Math.min(vt2.bottom,e.clientY)), scale:1.35, pull:0.85 }; }
+            var pr=progEl.getBoundingClientRect();
+            if(pr.width&&inRect(e,pr)) return onLine(e, trackEl.getBoundingClientRect());
+            return null;
+        }
+        document.addEventListener('mousemove', function(e){ setMagnet('viewer', magnet(e)); }, {passive:true});
+        frame.addEventListener('mouseleave', function(){ setMagnet('viewer', null); clearPull(); }, {passive:true});
+        function fmt(s) { var m=Math.floor(s/60),sec=Math.floor(s%60); return (m<10?'0':'')+m+':'+(sec<10?'0':'')+sec; }
+        function setPlaying(p) { vPlaying=p; vHero.classList.toggle('cs-playing',p); if(ppBtn) ppBtn.setAttribute('data-cursor', p?'pause':'play'); }
+        function resetPlayer() {
+            if (vPlayer) { try { vPlayer.destroy(); } catch(e){} vPlayer=null; }
+            var stray=vHero.querySelector('iframe'); if(stray) stray.remove();
+            vPlaying=false; vDuration=0;
+            vHero.classList.remove('cs-playing','cs-hover');
+            if (fillEl) fillEl.style.width='0%';
+            if (thumb) thumb.style.left='0%';
+            if (timeEl) timeEl.textContent='00:00 / 00:00';
+            hidePrev(); teardownPrev();
+            if (airBtn) airBtn.classList.remove('is-ready');
+        }
+        function bindPlayer(p) {
+            p.getDuration().then(function(d){ vDuration=d; if(timeEl&&d) timeEl.textContent='00:00 / '+fmt(d); }).catch(function(){});
+            p.on('play',  function(){ setPlaying(true); });
+            p.on('pause', function(){ setPlaying(false); });
+            // at the end: back to the first frame, paused, so Vimeo's own end card
+            // ("More from ...") has nothing to sit on
+            p.on('ended', function(){ setPlaying(false); p.setCurrentTime(0).then(function(){ return p.pause(); }).catch(function(){}); });
+            // AirPlay / Cast: the button is always there; a click opens the browser's own
+            // picker (AirPlay in Safari, Cast in Chrome). A known target only brightens it.
+            // (The SDK answers this with a boolean, not the documented string.)
+            if (airBtn) {
+                var air = function(v){ var s = (v && typeof v === 'object') ? (v.availability || v.remotePlaybackAvailability) : v; airBtn.classList.toggle('is-ready', s === true || s === 'available'); };
+                if (p.getRemotePlaybackAvailability) p.getRemotePlaybackAvailability().then(air).catch(function(){});
+                p.on('remoteplaybackavailabilitychange', air);
+            }
+            p.on('timeupdate', function(data){ if(!vDuration||!fillEl||dragging)return; var pc=data.seconds/vDuration*100; fillEl.style.width=pc+'%'; if(thumb) thumb.style.left=pc+'%'; if(timeEl) timeEl.textContent=fmt(data.seconds)+' / '+fmt(vDuration); });
+        }
+        function whenVimeoReady(cb){
+            if(window.Vimeo){ cb(); return; }
+            var n=0; (function poll(){ if(window.Vimeo) return cb(); if(n++>120) return; setTimeout(poll,50); })();
+        }
+        openViewer = function(idx) { viewerItems=collectItems(); vMuted=false; if(vVolume===0) vVolume=1; renderVol();
+            current=idx; var item=viewerItems[idx];
+            resetPlayer();
+            // Build a fresh iframe each open — Vimeo's player.destroy() removes the
+            // iframe from the DOM, so reusing one breaks every reopen (the prod bug).
+            iframe=document.createElement('iframe');
+            iframe.id='viewerIframe';
+            iframe.setAttribute('frameborder','0');
+            iframe.setAttribute('allow','autoplay; fullscreen; picture-in-picture');
+            iframe.setAttribute('allowfullscreen','');
+            iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&muted=0&controls=0&dnt=1&playsinline=1';
+            vHero.insertBefore(iframe, vHero.firstChild);
+            // the viewer frame takes the clip's true shape: as large as fits, no crop
+            frame.style.width='min(90vw, calc(90vh * '+(item.va||1.778)+'))'; frame.style.height='min(90vh, calc(90vw / '+(item.va||1.778)+'))';
+            frame.style.maxWidth='none'; frame.style.maxHeight='none';
+            clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
+            viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
+            prevBtn.style.opacity=idx>0?'0.6':'0.15';
+            nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
+            // Bind the player as soon as the SDK is ready — don't depend on iframe.onload
+            // (the onload+SDK race is what left the controls dead in production).
+            whenVimeoReady(function(){
+                try{
+                    vPlayer=new Vimeo.Player(iframe);
+                    bindPlayer(vPlayer);
+                    vPlayer.ready().then(function(){ vPlayer.play().catch(function(){}); applyVol(); }).catch(function(){});
+                }catch(e){}
+            });
+        };
+        function closeViewer() {
+            viewer.classList.remove('active');
+            document.body.classList.remove('viewer-open','viewer-exit-active');
+            if(exitCur) exitCur.classList.remove('show');
+            setMagnet('viewer', null); clearPull();
+            clearTimeout(idleTimer); resetPlayer();
+            document.body.style.overflow='';
+        }
+        var centerIcon=document.getElementById('viewerCenterIcon');
+        function flashCenter(playing){ if(!centerIcon)return; centerIcon.classList.remove('flash','show-play','show-pause'); void centerIcon.offsetWidth; centerIcon.classList.add(playing?'show-play':'show-pause','flash'); }
+        function togglePlay(flash) { if(!vPlayer)return; var willPlay=!vPlaying; if(vPlaying) vPlayer.pause(); else vPlayer.play(); if(flash) flashCenter(willPlay); }
+        clickLayer.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(true); });
+        ppBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePlay(false); });
+        // scrubber: click + drag with a visible thumb that tracks the cursor
+        function scrubPct(e){ var r=progEl.getBoundingClientRect(); return Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)); }
+        function scrubPreview(p){ if(fillEl) fillEl.style.width=(p*100)+'%'; if(thumb) thumb.style.left=(p*100)+'%'; if(timeEl&&vDuration) timeEl.textContent=fmt(p*vDuration)+' / '+fmt(vDuration); }
+        // frame preview: a 2nd hidden Vimeo player seeked to the cursor time (Vimeo is
+        // cross-origin, so a seeked mini-player is the only way to show the actual frame)
+        var scrubPrev=document.getElementById('scrubPreview'), scrubPrevFrame=document.getElementById('scrubPreviewFrame'), scrubPrevTime=document.getElementById('scrubPreviewTime');
+        var prevPlayer=null, prevReady=false, prevVimeo=null, prevSeeking=false, prevPending=null;
+        function teardownPrev(){ if(prevPlayer){ try{prevPlayer.destroy();}catch(e){} } prevPlayer=null; prevReady=false; prevVimeo=null; prevSeeking=false; prevPending=null; if(scrubPrevFrame) scrubPrevFrame.innerHTML=''; }
+        function buildPrev(){
+            var item=viewerItems[current]; if(!item||!item.vimeo||!scrubPrevFrame) return;
+            if(prevVimeo===item.vimeo && prevPlayer) return;
+            teardownPrev(); prevVimeo=item.vimeo;
+            var pf=document.createElement('iframe'); pf.setAttribute('frameborder','0'); pf.setAttribute('allow','autoplay');
+            pf.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'background=1&muted=1&controls=0&dnt=1';
+            scrubPrevFrame.appendChild(pf);
+            whenVimeoReady(function(){ try{ var pp=new Vimeo.Player(pf); prevPlayer=pp;
+                // a background player autoplays and loops: hold it paused, so the
+                // preview is a still of the hovered moment rather than a second playback
+                var hold=function(){ try{ pp.pause().catch(function(){}); }catch(e){} };
+                pp.on('play', hold);
+                pp.ready().then(function(){ prevReady=true; hold(); if(prevPending!=null){ var t=prevPending; prevPending=null; seekPrev(t); } }).catch(function(){}); }catch(e){} });
+        }
+        function seekPrev(t){
+            if(!prevReady||!prevPlayer){ prevPending=t; return; }
+            if(prevSeeking){ prevPending=t; return; }
+            prevSeeking=true;
+            prevPlayer.setCurrentTime(t).then(function(){ prevSeeking=false; if(prevPending!=null){ var n=prevPending; prevPending=null; seekPrev(n); } }).catch(function(){ prevSeeking=false; });
+        }
+        function showPrev(e){
+            if(!vDuration||!scrubPrev) return;
+            buildPrev();
+            var p=scrubPct(e), r=progEl.getBoundingClientRect();
+            scrubPrev.style.left=Math.max(84, Math.min(r.width-84, e.clientX-r.left))+'px';
+            if(scrubPrevTime) scrubPrevTime.textContent=fmt(p*vDuration);
+            scrubPrev.classList.add('show');
+            seekPrev(p*vDuration);
+        }
+        function hidePrev(){ if(scrubPrev) scrubPrev.classList.remove('show'); }
+        progEl.addEventListener('mousedown', function(e){
+            if(!vPlayer||!vDuration)return;
+            e.preventDefault(); e.stopPropagation();
+            dragging=true; progEl.classList.add('dragging'); scrubPreview(scrubPct(e)); showPrev(e);
+        });
+        progEl.addEventListener('mousemove', function(e){ if(!dragging) showPrev(e); }, {passive:true});
+        progEl.addEventListener('mouseleave', function(){ if(!dragging) hidePrev(); }, {passive:true});
+        document.addEventListener('mousemove', function(e){ if(dragging){ scrubPreview(scrubPct(e)); showPrev(e); } }, {passive:true});
+        document.addEventListener('mouseup', function(e){
+            if(!dragging)return;
+            dragging=false; progEl.classList.remove('dragging');
+            var p=scrubPct(e); if(vPlayer&&vDuration) vPlayer.setCurrentTime(p*vDuration).catch(function(){});
+            hidePrev();
+        });
+        // F toggles fullscreen too (and brings it back out), same as the corner button
+        function toggleFs(){
+            var target=frame||viewer;
+            var inFsNow=document.fullscreenElement||document.webkitFullscreenElement;
+            if(inFsNow){ (document.exitFullscreen||document.webkitExitFullscreen).call(document); }
+            else { var req=target.requestFullscreen||target.webkitRequestFullscreen; if(req){ var p=req.call(target); if(p&&p.catch) p.catch(function(){}); } }
+        }
+        fsBtn.addEventListener('click', function(e){ e.stopPropagation(); toggleFs(); });
+        if (airBtn) airBtn.addEventListener('click', function(e){ e.stopPropagation(); if(vPlayer && vPlayer.remotePlaybackPrompt) vPlayer.remotePlaybackPrompt().catch(function(){}); });
+        // fullscreen: hide cursor + controls + expand button after 1s of no movement
+        var fsIdleTimer=null;
+        function inFs(){ return document.fullscreenElement||document.webkitFullscreenElement; }
+        function fsIdleHide(){ if(inFs()) frame.classList.add('fs-idle'); }
+        function fsPoke(){ if(fsIdleTimer)clearTimeout(fsIdleTimer); frame.classList.remove('fs-idle'); if(inFs()) fsIdleTimer=setTimeout(fsIdleHide,1000); }
+        function fsLeave(){ frame.classList.remove('fs-idle'); if(fsIdleTimer){clearTimeout(fsIdleTimer);fsIdleTimer=null;} }
+        document.addEventListener('mousemove', function(){ if(inFs()) fsPoke(); }, {passive:true});
+        document.addEventListener('fullscreenchange', function(){ inFs()?fsPoke():fsLeave(); });
+        document.addEventListener('webkitfullscreenchange', function(){ inFs()?fsPoke():fsLeave(); });
+        // volume: mute toggle + draggable gauge (videos autoplay muted, so this is how sound comes on)
+        var volWrap=document.getElementById('viewerVol'), volBtn=document.getElementById('viewerVolBtn'),
+            volTrack=document.getElementById('viewerVolTrack'), volFill=document.getElementById('viewerVolFill'), volHideT=null;
+        function renderVol(){ var off=(vMuted||vVolume===0); volWrap.classList.toggle('muted',off); volFill.style.height=((off?0:vVolume)*100)+'%'; volBtn.setAttribute('data-cursor',off?'unmute':'mute'); }
+        function applyVol(){ if(!vPlayer)return; var off=(vMuted||vVolume===0); try{ if(vPlayer.setMuted) vPlayer.setMuted(off); }catch(e){} try{ vPlayer.setVolume(off?0:vVolume).catch(function(){}); }catch(e){} renderVol(); }
+        function showGauge(){ clearTimeout(volHideT); volWrap.classList.add('show-gauge'); }
+        function hideGaugeSoon(){ clearTimeout(volHideT); volHideT=setTimeout(function(){ if(!volDragging) volWrap.classList.remove('show-gauge'); },500); }
+        function volFromY(e){ var r=volTrack.getBoundingClientRect(); return Math.max(0,Math.min(1, 1-(e.clientY-r.top)/r.height)); }
+        volBtn.addEventListener('click', function(e){ e.stopPropagation(); vMuted=!vMuted; if(!vMuted&&vVolume===0) vVolume=1; applyVol(); showGauge(); });
+        volWrap.addEventListener('mouseenter', showGauge);
+        volWrap.addEventListener('mouseleave', hideGaugeSoon);
+        // the whole gauge takes the press (its ::before adds a margin); the level
+        // is still read off the line's own height
+        var volGauge=document.getElementById('viewerVolGauge');
+        volGauge.addEventListener('mousedown', function(e){ e.preventDefault(); e.stopPropagation(); volDragging=true; var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); });
+        volGauge.addEventListener('click', function(e){ e.stopPropagation(); });
+        document.addEventListener('mousemove', function(e){ if(volDragging){ var v=volFromY(e); vVolume=v; vMuted=(v===0); applyVol(); } }, {passive:true});
+        document.addEventListener('mouseup', function(){ volDragging=false; });
+        renderVol();
+        // Keep the controls + corner buttons alive while the cursor is anywhere in the
+        // frame (incl. the volume/expand buttons, which are siblings of the video-hero).
+        // Don't auto-hide while the volume gauge is open or being dragged.
+        function csIdleHide(){ if(!volWrap.classList.contains('show-gauge') && !volDragging) vHero.classList.remove('cs-hover'); }
+        function csPoke(){ vHero.classList.add('cs-hover'); clearTimeout(idleTimer); if(vPlaying) idleTimer=setTimeout(csIdleHide,2000); }
+        frame.addEventListener('mouseenter', csPoke);
+        frame.addEventListener('mousemove',  csPoke);
+        frame.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
+        if(closeBtn) closeBtn.addEventListener('click',closeViewer);
+        // click anywhere outside the video bounds closes (the X cursor signals this)
+        viewer.addEventListener('click',function(e){
+            if(!viewer.classList.contains('active'))return;
+            if(e.target && e.target.closest && e.target.closest('.viewer-nav')) return;
+            if(!ptrInsideFrame(e)) closeViewer();
+        });
+        prevBtn.addEventListener('click',function(e){e.stopPropagation();if(current>0)openViewer(current-1);});
+        nextBtn.addEventListener('click',function(e){e.stopPropagation();if(current<viewerItems.length-1)openViewer(current+1);});
+        document.addEventListener('keydown',function(e){
+            if(!viewer.classList.contains('active'))return;
+            if(e.key==='Escape')closeViewer();
+            if(e.key==='ArrowLeft'&&current>0)openViewer(current-1);
+            if(e.key==='ArrowRight'&&current<viewerItems.length-1)openViewer(current+1);
+            if(e.key===' '){e.preventDefault();togglePlay(true);}
+            if(e.key==='m'||e.key==='M'){vMuted=!vMuted;if(!vMuted&&vVolume===0)vVolume=1;applyVol();showGauge();}
+            if(e.key==='f'||e.key==='F'){e.preventDefault();toggleFs();}
+        });
+    })();
+    </script>
+
+    <script>
+    // Reel playback. Every tile's player is created paused as the tile scrolls
+    // into view (a few at a time), so hovering a tile plays a player that is
+    // already loaded: no wait. One clip plays at a time.
+    (function () {
+        var playing = null, warmQueue = [], warming = false;
+        // Hover previews start this many seconds in: a few spots open on black or a
+        // slow fade, which reads as a broken site when it is the first thing seen.
+        var START = 5;
+
+        function post(frame, method, value) {
+            try { frame.contentWindow.postMessage(JSON.stringify(value === undefined ? { method: method } : { method: method, value: value }), '*'); } catch (e) {}
+        }
+        // When a looping preview wraps back to 0, push it to START again.
+        window.addEventListener('message', function (e) {
+            if (e.origin !== 'https://player.vimeo.com') return;
+            var d; try { d = JSON.parse(e.data); } catch (err) { return; }
+            if (d.event !== 'timeupdate' || !d.data) return;
+            if (d.data.seconds >= START - 0.5 || (d.data.duration && d.data.duration < START + 2)) return;
+            var frames = document.querySelectorAll('.reel-frame');
+            for (var i = 0; i < frames.length; i++) if (frames[i].contentWindow === e.source) { post(frames[i], 'setCurrentTime', START); break; }
+        });
+
+        function frameOf(media) { return media.querySelector('.reel-frame'); }
+
+        function build(media, autoplay) {
+            var id = media.getAttribute('data-vimeo');
+            if (!id) return null;
+            var hash = media.getAttribute('data-hash');   // unlisted videos carry one
+            var frame = document.createElement('iframe');
+            frame.className = 'reel-frame';
+            frame.src = 'https://player.vimeo.com/video/' + id +
+                        '?background=1&autoplay=' + (autoplay ? 1 : 0) + '&loop=1&muted=1&dnt=1&quality=540p' +
+                        (hash ? '&h=' + hash : '') + '#t=' + START + 's';
+            frame.setAttribute('frameborder', '0');
+            frame.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+            frame.setAttribute('tabindex', '-1');
+            frame.setAttribute('aria-hidden', 'true');
+            frame.title = '';
+            frame.style.setProperty('--va', media.getAttribute('data-va') || '1.778');
+            frame.addEventListener('load', function () {
+                frame.dataset.loaded = '1';
+                // background=1 starts on its own; hold it until it is hovered
+                post(frame, media === playing ? 'play' : 'pause');
+                post(frame, 'addEventListener', 'timeupdate');
+            });
+            media.appendChild(frame);
+            return frame;
+        }
+
+        // warm one tile at a time so they do not all fight for the same connections
+        function warm(media) {
+            if (frameOf(media) || warmQueue.indexOf(media) !== -1) return;
+            warmQueue.push(media);
+            if (!warming) drain();
+        }
+        function drain() {
+            var media = warmQueue.shift();
+            if (!media) { warming = false; return; }
+            warming = true;
+            if (!frameOf(media)) build(media, false);
+            setTimeout(drain, 250);
+        }
+
+        function reload(frame) {
+            frame.dataset.reloaded = '1';
+            frame.src = frame.src.replace('autoplay=0', 'autoplay=1');
+        }
+
+        function stop() {
+            if (!playing) return;
+            var frame = frameOf(playing);
+            if (frame) post(frame, 'pause');
+            playing.classList.remove('is-playing');
+            playing = null;
+        }
+
+        function play(media) {
+            if (media === playing) return;
+            stop();
+            var frame = frameOf(media);
+            if (!frame) frame = build(media, true);      // not warmed yet: load it already playing
+            else if (frame.dataset.loaded) post(frame, 'play');
+            if (!frame) return;
+            media.classList.add('is-playing');
+            playing = media;
+            // A warm player that will not start from a pause gets reloaded playing.
+            // Asked after a beat: asking the instant after "play" reports paused
+            // (play is async) and the reload made the clip visibly restart.
+            if (frame.dataset.loaded && !frame.dataset.reloaded) setTimeout(function () {
+                if (media !== playing) return;
+                var answered = false;
+                var onMsg = function (e) {
+                    if (e.source !== frame.contentWindow) return;
+                    try {
+                        var d = JSON.parse(e.data);
+                        if (d.method === 'getPaused') {
+                            answered = true;
+                            window.removeEventListener('message', onMsg);
+                            if (d.value === true && media === playing) reload(frame);
+                        }
+                    } catch (err) {}
+                };
+                window.addEventListener('message', onMsg);
+                post(frame, 'getPaused');
+                setTimeout(function () {
+                    window.removeEventListener('message', onMsg);
+                    if (!answered && media === playing) reload(frame);
+                }, 900);
+            }, 600);
+        }
+
+        // Warm the first screenful of tiles on load and the rest as they come
+        // near the viewport, one every 250ms. Touch devices skip warming
+        // entirely: there is no hover, a tap opens the viewer, and fewer player
+        // loads keep Vimeo's rate limiter from serving its bot-check page.
+        var canHover = !(window.matchMedia && matchMedia('(hover: none)').matches);
+        function near(el) { var r = el.getBoundingClientRect(); return r.bottom > -400 && r.top < window.innerHeight + 400; }
+        var warmNear = function () {
+            if (!canHover) return;
+            document.querySelectorAll('.reel-grid:not([hidden]) .reel-media').forEach(function (m, i) {
+                if (frameOf(m)) return;
+                if (i < 9 || near(m)) warm(m);
+            });
+        };
+        warmNear();
+        window.addEventListener('scroll', warmNear, { passive: true });
+        window.addEventListener('resize', warmNear);
+        window.addEventListener('reelsetchange', function () { stop(); warmNear(); });
+        var target = document.getElementById('rosterContent');   // gated pages: tiles arrive after the unlock
+        if (target) new MutationObserver(warmNear).observe(target, { childList: true });
+
+        // Delegated, so it works on markup that only appears after the unlock.
+        if (window.matchMedia && matchMedia('(hover: hover)').matches) {
+            document.addEventListener('mouseover', function (e) {
+                var media = e.target.closest && e.target.closest('.reel-media');
+                if (media) play(media);
+            });
+            document.addEventListener('mouseout', function (e) {
+                var media = e.target.closest && e.target.closest('.reel-media');
+                if (media && media === playing && !media.contains(e.relatedTarget)) stop();
+            });
+        }
+
+        // A click opens the tile in the full-screen viewer (custom player, sound on).
+        document.addEventListener('click', function (e) {
+            var media = e.target.closest && e.target.closest('.reel-media');
+            if (!media) return;
+            e.preventDefault();
+            var idx = Array.prototype.indexOf.call(document.querySelectorAll('.reel-grid:not([hidden]) .reel-media'), media);
+            stop();
+            if (typeof openViewer === 'function' && idx !== -1) openViewer(idx);
+        });
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) stop();
+        });
+
+    })();
+    </script>
+</body>
+</html>

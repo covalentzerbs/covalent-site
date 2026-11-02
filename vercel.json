@@ -38,8 +38,13 @@
       "permanent": true
     },
     {
+      "source": "/directors/jon",
+      "destination": "/jon",
+      "permanent": true
+    },
+    {
       "source": "/directors/jon-schwartz",
-      "destination": "/directors/jon",
+      "destination": "/jon",
       "permanent": true
     },
     {
