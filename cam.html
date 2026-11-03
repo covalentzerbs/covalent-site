@@ -1098,8 +1098,55 @@
         body.dark-mode .reel-media { background: #1A1A1A; }
         body.dark-mode .reel-media.is-portrait { background: #000; }
         /* ── Work Viewer ──────────────────────────────────── */
-        .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+        /* The viewer is a black page that scrolls: the player and its Production Company /
+           Client / Director row fill the first screen; a spot's case study and credits, when it
+           has them, sit below behind two tabs. */
+        .work-viewer { position:fixed; inset:0; z-index:1005; background:#000; display:block; overflow-y:auto; overflow-x:hidden; overscroll-behavior-y:contain; opacity:0; pointer-events:none; transition:opacity 0.3s ease;
+            --fh: min(calc(90vw / var(--va, 1.778)), calc(100svh - 170px)); --fw: calc(var(--fh) * var(--va, 1.778)); }
         .work-viewer.active { opacity:1; pointer-events:all; }
+        .viewer-stage { min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:56px 0 28px; box-sizing:border-box; }
+        .work-viewer.has-detail .viewer-stage { min-height:calc(100svh - 56px); padding-bottom:8px; }   /* the tabs peek at the bottom */
+        #viewerFrame { width:var(--fw); height:var(--fh); max-width:none; max-height:none; flex:0 0 auto; }
+        .viewer-info { width:var(--fw); display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; font-family:'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; }
+        .vi-cell { display:flex; flex-direction:column; gap:4px; min-width:0; }
+        .vi-cell[data-k="client"] { align-items:center; text-align:center; }
+        .vi-cell[data-k="director"] { align-items:flex-end; text-align:right; }
+        .vi-cell.is-empty { visibility:hidden; }
+        .vi-label { font-size:0.66rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:rgba(255,255,255,0.45); }
+        .vi-value { font-size:clamp(0.85rem, 1vw, 1.05rem); font-weight:700; letter-spacing:-0.01em; text-transform:uppercase; color:#fff; overflow-wrap:anywhere; }
+        .viewer-detail { display:flex; justify-content:center; padding:8px 0 120px; font-family:'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; }
+        .viewer-detail[hidden], .vd-panel[hidden], .vd-tab[hidden] { display:none !important; }
+        .vd-inner { width:var(--fw); min-width:0; }
+        .vd-tabs { display:flex; gap:1.6rem; border-bottom:1px solid rgba(255,255,255,0.14); margin-bottom:3rem; }
+        .vd-tab { background:none; border:0; border-bottom:2px solid transparent; padding:0 0 12px; margin-bottom:-1px; font:700 0.78rem/1 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif; letter-spacing:0.04em; text-transform:uppercase; color:#fff; opacity:0.4; cursor:none; transition:opacity 0.2s ease, border-color 0.2s ease; }
+        .vd-tab:hover { opacity:0.8; }
+        .vd-tab.is-on { opacity:1; border-bottom-color:#fff; }
+        .vd-draft { display:inline-block; font-size:0.68rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:#000; background:#FF4500; padding:5px 8px; margin:0 0 2rem; }
+        .vd-head { margin-bottom:2.5rem; }
+        .vd-title { font-size:clamp(2rem, 4.5vw, 3.5rem); font-weight:700; letter-spacing:-0.045em; line-height:0.95; color:#fff; margin:0 0 0.7rem; }
+        .vd-client { font-size:0.78rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:rgba(255,255,255,0.45); margin:0; }
+        .vd-intro { max-width:760px; font-size:clamp(1.15rem, 1.6vw, 1.45rem); line-height:1.45; letter-spacing:-0.025em; color:#fff; margin:0 0 3rem; }
+        .vd-block { margin-bottom:3rem; }
+        .vd-h { font-size:clamp(1.3rem, 2.2vw, 1.9rem); font-weight:700; letter-spacing:-0.04em; line-height:1; color:#fff; margin:0 0 1rem; }
+        .vd-block p { max-width:720px; font-size:1.02rem; line-height:1.7; letter-spacing:-0.02em; color:rgba(255,255,255,0.62); margin:0 0 1rem; }
+        .vd-stills { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin:0 0 3rem; }
+        .vd-stills img { width:100%; aspect-ratio:16 / 9; object-fit:cover; display:block; background:#111; }
+        .vd-credits { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1.4rem 2rem; margin:0; }
+        .vd-credit dt { font-size:0.68rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:rgba(255,255,255,0.45); margin:0 0 0.3rem; }
+        .vd-credit dd { margin:0; font-size:1rem; font-weight:700; letter-spacing:-0.02em; color:#fff; }
+        @media (max-width: 768px) {
+            .work-viewer { --fh: min(calc(92vw / var(--va, 1.778)), calc(100svh - 200px)); }
+            .vi-value { font-size:0.78rem; }
+            .vd-tabs { margin-bottom:2rem; }
+            .vd-stills { grid-template-columns:repeat(2, 1fr); }
+        }
+        /* dark mode: the page-wide orange text fill would tint everything, so set it per role */
+        body.dark-mode .vi-value, body.dark-mode .vd-title, body.dark-mode .vd-h, body.dark-mode .vd-intro, body.dark-mode .vd-credit dd, body.dark-mode .vd-tab { color:#FF4500; -webkit-text-fill-color:#FF4500; }
+        body.dark-mode .vi-label, body.dark-mode .vd-client, body.dark-mode .vd-credit dt { color:rgba(255,69,0,0.6); -webkit-text-fill-color:rgba(255,69,0,0.6); }
+        body.dark-mode .vd-block p { color:rgba(255,255,255,0.62); -webkit-text-fill-color:rgba(255,255,255,0.62); }
+        body.dark-mode .vd-draft { -webkit-text-fill-color:#000; }
+        body.dark-mode .vd-tab.is-on { border-bottom-color:#FF4500; }
+        body.dark-mode .vd-tabs { border-bottom-color:rgba(255,69,0,0.3); }
         .viewer-frame { position:relative; width:90vw; max-width:calc(90vh * 16 / 9); height:calc(90vw * 9 / 16); max-height:90vh; }
         .viewer-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
         .viewer-video-hero { position:absolute; inset:0; }
@@ -1662,6 +1709,7 @@
 
     <!-- Work Viewer -->
     <div id="workViewer" class="work-viewer">
+        <div class="viewer-stage" id="viewerStage">
         <div class="viewer-frame" id="viewerFrame">
             <div class="viewer-video-hero" id="viewerVideoHero">
                 <iframe id="viewerIframe" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
@@ -1699,6 +1747,22 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
         </div>
+        <div class="viewer-info" id="viewerInfo">
+            <div class="vi-cell" data-k="prodco"><span class="vi-label">Production Company</span><span class="vi-value" id="viewerProdco"></span></div>
+            <div class="vi-cell" data-k="client"><span class="vi-label">Client</span><span class="vi-value" id="viewerInfoClient"></span></div>
+            <div class="vi-cell" data-k="director"><span class="vi-label">Director</span><span class="vi-value" id="viewerDirector"></span></div>
+        </div>
+        </div>
+        <section class="viewer-detail" id="viewerDetail" hidden>
+            <div class="vd-inner">
+                <div class="vd-tabs" role="tablist">
+                    <button class="vd-tab is-on" type="button" role="tab" data-tab="case" aria-selected="true">Case Study</button>
+                    <button class="vd-tab" type="button" role="tab" data-tab="credits" aria-selected="false">Credits</button>
+                </div>
+                <div class="vd-panel" id="viewerCase" role="tabpanel"></div>
+                <div class="vd-panel" id="viewerCredits" role="tabpanel" hidden></div>
+            </div>
+        </section>
         <button class="viewer-close" id="viewerClose" aria-label="Close">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><line x1="2" y1="2" x2="16" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/><line x1="16" y1="2" x2="2" y2="16" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
@@ -1796,9 +1860,12 @@
         function collectItems() {
             return Array.prototype.map.call(document.querySelectorAll('.reel-grid:not([hidden]) .reel-item'), function (li) {
                 var m = li.querySelector('.reel-media');
+                var md = li.querySelector('script.reel-detail'), detail = null;
+                if (md) { try { detail = JSON.parse(md.textContent); } catch (e) {} }
                 return { vimeo: m.getAttribute('data-vimeo'), hash: m.getAttribute('data-hash') || '', va: parseFloat(m.getAttribute('data-va')) || 1.778,
                          client: (li.querySelector('.reel-client') || {}).textContent || '',
-                         title: (li.querySelector('.reel-title') || {}).textContent || '' };
+                         title: (li.querySelector('.reel-title') || {}).textContent || '',
+                         prodco: m.getAttribute('data-prodco') || '', detail: detail };
             });
         }
         var viewer   = document.getElementById('workViewer');
@@ -1818,6 +1885,56 @@
         var fsBtn    = document.getElementById('viewerFsBtn');
         var airBtn   = document.getElementById('viewerAirBtn');
         var clickLayer = document.getElementById('viewerClickLayer');
+        // Below the player: Production Company / Client / Director, then (when a spot has one) a
+        // Case Study and a Credits tab. A spot whose detail is marked draft shows it
+        // only with ?preview in the address, so work in progress never reaches visitors.
+        var infoProdco = document.getElementById('viewerProdco'), infoClient = document.getElementById('viewerInfoClient'), infoDirector = document.getElementById('viewerDirector');
+        var detailEl = document.getElementById('viewerDetail'), casePanel = document.getElementById('viewerCase'), creditsPanel = document.getElementById('viewerCredits');
+        var preview = /(^|&)preview(=|&|$)/.test(location.search.slice(1));
+        function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+        function setCell(node, value) { node.textContent = value || ''; node.parentNode.classList.toggle('is-empty', !value); }
+        function showTab(name) {
+            detailEl.querySelectorAll('.vd-tab').forEach(function (t) { var on = t.getAttribute('data-tab') === name; t.classList.toggle('is-on', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+            casePanel.hidden = name !== 'case'; creditsPanel.hidden = name !== 'credits';
+        }
+        detailEl.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('.vd-tab'); if (!t) return; e.stopPropagation(); showTab(t.getAttribute('data-tab')); });
+        function renderInfo(item) {
+            var d = item.detail && (!item.detail.draft || preview) ? item.detail : null;
+            var dir = (document.querySelector('.director-name') || {}).textContent || '';
+            setCell(infoProdco, item.prodco || (d && d.prodco) || '');
+            setCell(infoClient, item.client);
+            setCell(infoDirector, dir.trim());
+            casePanel.innerHTML = ''; creditsPanel.innerHTML = '';
+            var cs = (d && d.caseStudy) || {}, sections = cs.sections || [], credits = (d && d.credits) || [];
+            var hasCase = !!(cs.intro || sections.length), hasCredits = credits.length > 0;
+            var show = !!d && (hasCase || hasCredits);
+            viewer.classList.toggle('has-detail', show);
+            detailEl.hidden = !show;
+            if (!show) return;
+            detailEl.querySelector('[data-tab="case"]').hidden = !hasCase;
+            detailEl.querySelector('[data-tab="credits"]').hidden = !hasCredits;
+            [casePanel, creditsPanel].forEach(function (p) { if (d.draft) p.appendChild(el('p', 'vd-draft', 'Draft preview, only visible with ?preview in the address')); });
+            var head = el('div', 'vd-head'); head.appendChild(el('h2', 'vd-title', item.title)); head.appendChild(el('p', 'vd-client', item.client));
+            casePanel.appendChild(head);
+            if (cs.intro) casePanel.appendChild(el('p', 'vd-intro', cs.intro));
+            sections.forEach(function (s) {
+                if (s.stills) {
+                    var g = el('div', 'vd-stills');
+                    s.stills.forEach(function (src) { var im = el('img'); im.loading = 'lazy'; im.decoding = 'async'; im.alt = ''; im.src = String(src).replace('{w}', '1280'); g.appendChild(im); });
+                    casePanel.appendChild(g); return;
+                }
+                var b = el('div', 'vd-block');
+                if (s.heading) b.appendChild(el('h3', 'vd-h', s.heading));
+                (s.text || []).forEach(function (p) { b.appendChild(el('p', null, p)); });
+                casePanel.appendChild(b);
+            });
+            var dl = el('dl', 'vd-credits');
+            credits.forEach(function (c) { var w = el('div', 'vd-credit'); w.appendChild(el('dt', null, c[0])); w.appendChild(el('dd', null, c[1])); dl.appendChild(w); });
+            creditsPanel.appendChild(dl);
+            showTab(hasCase ? 'case' : 'credits');
+        }
+        // the X cursor and click-to-close belong to the black around the content
+        function onBackdrop(e) { var t = e.target; return !(t && t.closest && t.closest('#viewerFrame, .viewer-info, .vd-inner, .viewer-nav')); }
         var current = -1, vPlayer = null, vDuration = 0, vPlaying = false, idleTimer = null, dragging = false, vVolume = 1, vMuted = false, volDragging = false;
         // exit cursor: an X that follows the pointer over the margin around the video
         var exitCur = document.createElement('div');
@@ -1827,10 +1944,10 @@
         function ptrInsideFrame(e){ var r=frame.getBoundingClientRect(); return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom; }
         viewer.addEventListener('mousemove', function(e){
             if(!viewer.classList.contains('active')) return;
-            var overNav = e.target && e.target.closest && e.target.closest('.viewer-nav');
-            if(ptrInsideFrame(e) || overNav){ exitCur.classList.remove('show'); document.body.classList.remove('viewer-exit-active'); }
+            if(!onBackdrop(e)){ exitCur.classList.remove('show'); document.body.classList.remove('viewer-exit-active'); }
             else { exitCur.style.left=e.clientX+'px'; exitCur.style.top=e.clientY+'px'; exitCur.classList.add('show'); document.body.classList.add('viewer-exit-active'); }
         }, {passive:true});
+        viewer.addEventListener('scroll', function(){ exitCur.classList.remove('show'); document.body.classList.remove('viewer-exit-active'); }, {passive:true});
         // magnetic cursor: inside the frame the dot is pulled onto the timeline and
         // onto the buttons (which lean a little toward the pointer), so the cursor
         // snaps to the thing it is about to use
@@ -1906,10 +2023,10 @@
             iframe.setAttribute('allowfullscreen','');
             iframe.src='https://player.vimeo.com/video/'+item.vimeo+'?'+(item.hash?'h='+item.hash+'&':'')+'autoplay=1&muted=0&controls=0&dnt=1&playsinline=1';
             vHero.insertBefore(iframe, vHero.firstChild);
-            // the viewer frame takes the clip's true shape: as large as fits, no crop
-            frame.style.width='min(90vw, calc(90vh * '+(item.va||1.778)+'))'; frame.style.height='min(90vh, calc(90vw / '+(item.va||1.778)+'))';
-            frame.style.maxWidth='none'; frame.style.maxHeight='none';
+            // the frame takes the clip's true shape, as large as fits above the info row (CSS --fw / --fh)
+            viewer.style.setProperty('--va', item.va||1.778);
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
+            renderInfo(item); viewer.scrollTop=0;
             viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
             prevBtn.style.opacity=idx>0?'0.6':'0.15';
             nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
@@ -2034,11 +2151,10 @@
         frame.addEventListener('mousemove',  csPoke);
         frame.addEventListener('mouseleave', function(){ vHero.classList.remove('cs-hover'); clearTimeout(idleTimer); });
         if(closeBtn) closeBtn.addEventListener('click',closeViewer);
-        // click anywhere outside the video bounds closes (the X cursor signals this)
+        // a click on the black around the content closes (the X cursor signals this)
         viewer.addEventListener('click',function(e){
             if(!viewer.classList.contains('active'))return;
-            if(e.target && e.target.closest && e.target.closest('.viewer-nav')) return;
-            if(!ptrInsideFrame(e)) closeViewer();
+            if(onBackdrop(e)) closeViewer();
         });
         prevBtn.addEventListener('click',function(e){e.stopPropagation();if(current>0)openViewer(current-1);});
         nextBtn.addEventListener('click',function(e){e.stopPropagation();if(current<viewerItems.length-1)openViewer(current+1);});
