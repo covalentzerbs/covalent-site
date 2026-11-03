@@ -469,7 +469,7 @@
         /* Behind-the-scenes slideshow (desktop and tablet only; phones keep the stacked page) */
         .contact-bts { position: relative; display: none; overflow: hidden; background: #ececec; }
         .contact-bts.is-on { display: block; }
-        .contact-bts img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.9s ease; }
+        .contact-bts img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 2.2s ease-in-out; }
         .contact-bts img.is-shown { opacity: 1; }
         body.dark-mode .contact-bts { background: #1a1a1a; }
         @media (prefers-reduced-motion: reduce) { .contact-bts img { transition: none; } }
@@ -492,7 +492,15 @@
                 padding: 6rem 2.5rem 4.75rem;
             }
             .contact-left { display: contents; }
-            .contact-bts { grid-area: photos; align-self: start; justify-self: start; width: 100%; aspect-ratio: 4 / 3; max-height: 100%; }
+            /* The photos are pinned to the page's top-left margins and sized by script:
+               3:2, as tall as the room above the contact stack allows, so the frame's
+               bottom-right corner reaches in under the cities and the names. */
+            .contact-bts { position: absolute; z-index: 0; }
+            /* Type that can sit over the photos inverts there: white ink in a difference
+               blend reads black on the page and the opposite tone over the photo. The
+               blend is on the containers so each block blends with the photo as a whole. */
+            .contact-right, .contact-list { position: relative; z-index: 1; mix-blend-mode: difference; --black: #FFFFFF; }
+            body.dark-mode .contact-right, body.dark-mode .contact-list { mix-blend-mode: normal; }
             .contact-right { grid-area: cities; align-self: start; }
             .contact-list { grid-area: people; align-self: end; align-items: flex-end; text-align: right; }
             .contact-list .contact-person { align-items: flex-end; }
@@ -1231,13 +1239,17 @@
     <script src="scripts/analytics.js"></script>
     <script src="/scripts/scroll.js"></script>
     <script>
-    // Behind-the-scenes slideshow (photos in /assets/bts, 01 to 21), top left of the
-    // page; the CSS grid places and sizes it. Two layers crossfade, the show starts
-    // on a random photo, and only the current and next photo are ever loaded.
+    // Behind-the-scenes slideshow (photos in /assets/bts, 01 to 21). The frame is pinned
+    // to the page's top-left margins; it is 3:2 and as tall as the room above the
+    // contact stack allows (capped at the page width). The new photo fades in over the
+    // old one (2.2s), so the frame never dips to grey; each photo then holds ~2.7s.
+    // The show starts on a random photo; only the current and next are ever loaded.
     (function () {
         var box = document.getElementById('contactBts');
-        if (!box) return;
-        var N = 21, HOLD = 3600;
+        var page = document.querySelector('.contact-page');
+        var stack = document.querySelector('.contact-bottom');
+        if (!box || !page || !stack) return;
+        var N = 21, FADE = 2200, HOLD = FADE + 2700;
         var srcs = []; for (var i = 1; i <= N; i++) srcs.push('/assets/bts/' + (i < 10 ? '0' : '') + i + '.jpg');
         var layers = [document.createElement('img'), document.createElement('img')];
         layers.forEach(function (im) { im.alt = ''; im.decoding = 'async'; box.appendChild(im); });
@@ -1245,14 +1257,27 @@
 
         function fit() {
             var on = window.innerWidth > 768;   // phones keep the stacked page without photos
+            if (on) {
+                var cs = getComputedStyle(page), p = page.getBoundingClientRect(), k = stack.getBoundingClientRect();
+                var left = parseFloat(cs.paddingLeft), top = parseFloat(cs.paddingTop), right = parseFloat(cs.paddingRight);
+                var h = k.top - p.top - top - 32, w = h * 1.5, maxW = p.width - left - right;
+                if (w > maxW) { w = maxW; h = w / 1.5; }
+                on = h >= 160;
+                box.style.left = left + 'px'; box.style.top = top + 'px';
+                box.style.width = Math.round(w) + 'px'; box.style.height = Math.round(h) + 'px';
+            }
             box.classList.toggle('is-on', on);
             if (on && !started) { started = true; show(at, true); schedule(); }
         }
         function show(i, first) {
-            var next = layers[first ? front : 1 - front];
+            var next = layers[first ? front : 1 - front], prev = layers[front];
             next.onload = function () {
-                if (!first) { layers[front].classList.remove('is-shown'); front = 1 - front; }
+                next.style.zIndex = 2; prev.style.zIndex = 1;   // the new photo fades in on top
                 next.classList.add('is-shown');
+                if (!first) {
+                    front = 1 - front;
+                    setTimeout(function () { if (prev !== layers[front]) prev.classList.remove('is-shown'); }, FADE + 50);   // drop the old one once covered
+                }
                 new Image().src = srcs[(i + 1) % N];   // warm the one after
             };
             next.src = srcs[i];
