@@ -24,6 +24,8 @@
     <link rel="dns-prefetch" href="https://f.vimeocdn.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/assets/css/footer.css">
+    <script src="/scripts/newsletter.js" defer></script>
     <style>
         :root {
             /* One timing for every themed property, so nothing fades out of step. */
@@ -178,25 +180,12 @@
         .card-text { position:absolute; bottom:1.4rem; left:1.5rem; z-index:3; opacity:0; transition:opacity 0.3s ease; }
         .card-client { font-size:clamp(1.05rem,2.1vw,1.5rem); font-weight:400; color:var(--white); letter-spacing:-0.04em; line-height:1.05; margin-bottom:0.25rem; }
         .card-title { font-size:0.65rem; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; color:rgba(255,255,255,0.55); line-height:1.1; }
-        .site-footer { position:fixed; bottom:0; left:0; right:0; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1001; }
-        .site-footer-left { font-size:0.7rem; font-weight:700; color:var(--white); opacity:0.5; transition:color 0.3s ease; }
-        .footer-link { color:inherit; text-decoration:none; transition:color 0.2s ease; }
-        .footer-link:hover { color:var(--bond-blue); }
-        .site-footer-right { display:flex; align-items:center; gap:1.5rem; opacity:0.5; }
-        .site-footer-socials { display:flex; align-items:center; gap:1rem; }
-        .social-link { color:var(--white); display:flex; align-items:center; transition:color 0.18s ease,opacity 0.18s ease,transform 0.18s ease,filter 0.18s ease; transform-origin:center; }
+
         .site-footer.on-light .site-footer-left { color:#0A0A0A !important; -webkit-text-fill-color:#0A0A0A; }
         .site-footer.on-light .social-link { color:#0A0A0A !important; -webkit-text-fill-color:#0A0A0A; transition:color 0.3s ease,-webkit-text-fill-color 0.3s ease; }
-        .social-link[aria-label="Instagram"]:hover { color:#E1306C !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(225,48,108,0.55)) saturate(1.4); }
-        .social-link[aria-label="LinkedIn"]:hover { color:#0A66C2 !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(10,102,194,0.6)) saturate(1.4); }
-        .social-link.social-link-ionic:hover { color:#714BDD !important; opacity:1 !important; transform:scale(1.22); filter:drop-shadow(0 0 10px rgba(113,75,221,0.6)) saturate(1.4); }
+
         .menu-overlay.active .menu-socials:hover { opacity:1 !important; }
-        .dark-mode-toggle { cursor:none; }
-        .dark-mode-toggle input { display:none; }
-        .toggle-track { width:28px; height:16px; background:rgba(0,0,0,0.15); border-radius:8px; position:relative; transition:background 0.3s ease; cursor:none; display:block; }
-        .toggle-track::after { content:''; position:absolute; top:2px; left:2px; width:12px; height:12px; background:rgba(0,0,0,0.4); border-radius:50%; transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); }
-        .dark-mode-toggle input:checked + .toggle-track { background:rgba(255,69,0,0.8); }
-        .dark-mode-toggle input:checked + .toggle-track::after { transform:translateX(12px); background:#FF4500; }
+
         /* ── light mode: white background + dark text (dark mode keeps black/orange) ── */
         body:not(.dark-mode) { background-color:var(--white); color:var(--black); }
         body:not(.dark-mode) .dir-header { background:var(--white); border-bottom-color:rgba(0,0,0,0.08); }
@@ -210,8 +199,7 @@
         body:not(.dark-mode) .menu-link-lab { color:#A6FF8E; }
         body:not(.dark-mode) .plus-icon span { background:var(--black); }
         body:not(.dark-mode) .logo-top svg path { fill:var(--black); }
-        body:not(.dark-mode) .site-footer-left { color:var(--black); }
-        body:not(.dark-mode) .social-link { color:var(--black); }
+
         body.dark-mode { background-color:#0A0A0A !important; color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
         body.dark-mode ::selection { background:#FF4500 !important; color:#0A0A0A !important; -webkit-text-fill-color:#0A0A0A !important; }
         body.dark-mode .cursor { background:#FF4500 !important; }
@@ -219,8 +207,7 @@
         body.dark-mode .menu-link { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
         body.dark-mode .menu-link-lab { color:#A6FF8E !important; -webkit-text-fill-color:#A6FF8E; }
         body.dark-mode .logo-top svg path { fill:#FF4500 !important; }
-        body.dark-mode .social-link { color:#FF4500 !important; }
-        body.dark-mode .site-footer-left { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
+
         body.dark-mode .hero-name { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
         body.dark-mode .hero-location { color:rgba(255,69,0,0.7) !important; -webkit-text-fill-color:rgba(255,69,0,0.7); }
         body.dark-mode .card-title, body.dark-mode .card-client { color:#FF4500 !important; -webkit-text-fill-color:#FF4500; }
@@ -387,8 +374,18 @@
         <div class="work-grid" id="workGrid"></div>
     </section>
 
-    <footer class="site-footer">
-        <div class="site-footer-left">2026, Covalent Studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">Privacy</a></div>
+    <footer class="site-footer site-footer--fixed">
+        <div class="site-footer-left">2026, Covalent Studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">Privacy</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/terms" class="footer-link">Terms</a></div>
+        <form class="newsletter-form" action="/api/newsletter/subscribe" method="post" novalidate>
+            <label class="newsletter-label" for="newsletterEmail">Newsletter</label>
+            <input class="newsletter-input" id="newsletterEmail" type="email" name="email" placeholder="Email" autocomplete="email" required>
+            <div class="newsletter-hp" aria-hidden="true">
+                <label for="newsletterCompany">Leave this empty</label>
+                <input id="newsletterCompany" type="text" name="company" tabindex="-1" autocomplete="off">
+            </div>
+            <button class="newsletter-submit" type="submit" aria-label="Subscribe">&rarr;</button>
+            <p class="newsletter-status" role="status" aria-live="polite"></p>
+        </form>
         <div class="site-footer-right">
             <div class="site-footer-socials">
                 <label class="dark-mode-toggle">
@@ -396,13 +393,24 @@
                     <span class="toggle-track"></span>
                 </label>
                 <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+                    </svg>
                 </a>
                 <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
                 </a>
                 <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2.5" fill="currentColor"/><rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="5" r="2.5" fill="currentColor"/>
+                        <rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/>
+                    </svg>
                 </a>
             </div>
         </div>
