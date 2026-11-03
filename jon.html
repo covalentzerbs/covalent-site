@@ -1134,6 +1134,12 @@
         .vd-credits { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1.4rem 2rem; margin:0; }
         .vd-credit dt { font-size:0.68rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:rgba(255,255,255,0.45); margin:0 0 0.3rem; }
         .vd-credit dd { margin:0; font-size:1rem; font-weight:700; letter-spacing:-0.02em; color:#fff; }
+        .vd-credit dd + dd { margin-top:0.2rem; }
+        .vd-credit-group { margin:0 0 2.8rem; }
+        .vd-group { font-size:clamp(1.05rem, 1.4vw, 1.3rem); font-weight:700; letter-spacing:-0.03em; color:#fff; margin:0 0 1.2rem; padding-bottom:0.7rem; border-bottom:1px solid rgba(255,255,255,0.14); }
+        .vd-handle { color:inherit; text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.2s ease; }
+        .vd-handle:hover { border-bottom-color:currentColor; }
+        body.dark-mode .vd-group { color:#FF4500; -webkit-text-fill-color:#FF4500; border-bottom-color:rgba(255,69,0,0.3); }
         @media (max-width: 768px) {
             .work-viewer { --fh: min(calc(92vw / var(--va, 1.778)), calc(100svh - 200px)); }
             .vi-value { font-size:0.78rem; }
@@ -1294,7 +1300,7 @@
         <ul class="reel-grid" data-set="commercial">
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1163390482" data-va="1.778" aria-label="Play Your Project, Your Way">
+                        data-vimeo="1163390482" data-va="1.778" data-prodco="Broderville" aria-label="Play Your Project, Your Way">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_640?region=us 640w, https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_1280?region=us 1280w"
@@ -1304,7 +1310,7 @@
                     <p class="reel-title">Your Project, Your Way</p>
                     <p class="reel-client">True Value</p>
                 </div>
-                <script type="application/json" class="reel-detail">{"draft":true,"prodco":"TBC","caseStudy":{"intro":"Draft intro. One or two lines on the spot: what it is and why it works.","sections":[{"heading":"The Brief","text":["Draft. What True Value asked for, who it was for, and what the spot had to do. Two or three sentences."]},{"stills":["/assets/reels/jon/true-value/01-{w}.jpg","/assets/reels/jon/true-value/02-{w}.jpg","/assets/reels/jon/true-value/03-{w}.jpg"]},{"heading":"The Approach","text":["Draft. How Jon cracked it: the idea, the look, the casting and the choices on set."]},{"stills":["/assets/reels/jon/true-value/04-{w}.jpg","/assets/reels/jon/true-value/05-{w}.jpg","/assets/reels/jon/true-value/06-{w}.jpg"]},{"heading":"The Result","text":["Draft. Where it ran and how it landed: placements, numbers or a line from the client."]}]},"credits":[["Client","True Value"],["Production Company","TBC"],["Agency","TBC"],["Director","Jon Schwartz"],["Executive Producer","TBC"],["Producer","TBC"],["Director of Photography","TBC"],["Production Designer","TBC"],["Editor","TBC"],["Colorist","TBC"],["Sound","TBC"]]}</script>
+                <script type="application/json" class="reel-detail">{"caseStudy":{"intro":"Draft intro. One or two lines on the spot: what it is and why it works.","sections":[{"heading":"The Brief","text":["Draft. What True Value asked for, who it was for, and what the spot had to do. Two or three sentences."]},{"stills":["/assets/reels/jon/true-value/01-{w}.jpg","/assets/reels/jon/true-value/02-{w}.jpg","/assets/reels/jon/true-value/03-{w}.jpg"]},{"heading":"The Approach","text":["Draft. How Jon cracked it: the idea, the look, the casting and the choices on set."]},{"stills":["/assets/reels/jon/true-value/04-{w}.jpg","/assets/reels/jon/true-value/05-{w}.jpg","/assets/reels/jon/true-value/06-{w}.jpg"]},{"heading":"The Result","text":["Draft. Where it ran and how it landed: placements, numbers or a line from the client."]}],"draft":true},"credits":[{"group":"Production","items":[["Client","True Value"],["Production Company","@broderville"],["Director","Jon Schwartz"],["Executive Producer","Rebecca Wray"],["Producer","Michelle Hughes"],["Production Manager","Jill Van Buren"],["Production Coordinator","Sean Callahan"],["Assistant Director","Kevin Marquardt"]]},{"group":"Camera","items":[["Director of Photography","@patrickouziel"],["1st AC","@imcavoy"],["2nd AC","@wellman.leah"]]},{"group":"Grip and Electric","items":[["Gaffer","@bearaldrich"],["Key Grip","@floresv53"],["Dolly Grip","@bicknasty"],["Best Boy Grip","@j.s.h.gripstufff"],["Best Boy Electric","Luke Sacksteder"]]},{"group":"Art","items":[["Production Designer","Giovanna Aguirre"],["Leadman","@rob.castilla"],["Prop Master","Sam George"],["Set Dressers",["Rosie McDonald","John Mokate"]],["Art Assistant","Emma McJessey"],["Art PA","Jose Jimenez"]]},{"group":"Video Playback","items":[["VTR",["Nolan Treolo","Brandon Sweet"]]]},{"group":"Stills","items":[["Photographer","@lucianmcafeephoto"],["Photo Assistant","John Ruzich"]]},{"group":"Wardrobe and Makeup","items":[["Stylist","Halley Sharp"],["Assistant Stylist","Sarah Albrecht"],["Makeup","Kristin Williamson"]]},{"group":"Locations and Crew","items":[["Locations","Dan Marcus"],["Medic","Scott Marshall"],["Craft Services","Marlon Bracamontes"],["Production Assistants",["Patrick Jennings","Trevor Jackson","Cynthia Morales","Andrew Calvo","Anthony Nava"]]]},{"group":"Talent","items":[["Voiceover","Jay Preston"],["Talent",["@matthewdouglaslamson","@andrephillipstv","@jesimullins","@honigclown"]]]}]}</script>
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
@@ -1729,9 +1735,9 @@
             </button>
         </div>
         <div class="viewer-info" id="viewerInfo">
-            <div class="vi-cell" data-k="prodco"><span class="vi-label">Production Company</span><span class="vi-value" id="viewerProdco"></span></div>
-            <div class="vi-cell" data-k="client"><span class="vi-label">Client</span><span class="vi-value" id="viewerInfoClient"></span></div>
-            <div class="vi-cell" data-k="director"><span class="vi-label">Director</span><span class="vi-value" id="viewerDirector"></span></div>
+            <div class="vi-cell" data-k="prodco"><span class="vi-value" id="viewerProdco"></span></div>
+            <div class="vi-cell" data-k="client"><span class="vi-value" id="viewerInfoClient"></span></div>
+            <div class="vi-cell" data-k="director"><span class="vi-value" id="viewerDirector"></span></div>
         </div>
         </div>
         <section class="viewer-detail" id="viewerDetail" hidden>
@@ -1880,13 +1886,17 @@
         }
         detailEl.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('.vd-tab'); if (!t) return; e.stopPropagation(); showTab(t.getAttribute('data-tab')); });
         function renderInfo(item) {
-            var d = item.detail && (!item.detail.draft || preview) ? item.detail : null;
+            var det = item.detail || null;
+            var d = det && (!det.draft || preview) ? det : null;              // draft: the whole block waits for ?preview
             var dir = (document.querySelector('.director-name') || {}).textContent || '';
             setCell(infoProdco, item.prodco || (d && d.prodco) || '');
             setCell(infoClient, item.client);
             setCell(infoDirector, dir.trim());
             casePanel.innerHTML = ''; creditsPanel.innerHTML = '';
-            var cs = (d && d.caseStudy) || {}, sections = cs.sections || [], credits = (d && d.credits) || [];
+            var csAll = (d && d.caseStudy) || {};
+            var cs = (!csAll.draft || preview) ? csAll : {};                 // caseStudy.draft: only the case study waits
+            var sections = cs.sections || [];
+            var credits = (d && (!d.creditsDraft || preview) && d.credits) || [];
             var hasCase = !!(cs.intro || sections.length), hasCredits = credits.length > 0;
             var show = !!d && (hasCase || hasCredits);
             viewer.classList.toggle('has-detail', show);
@@ -1894,7 +1904,9 @@
             if (!show) return;
             detailEl.querySelector('[data-tab="case"]').hidden = !hasCase;
             detailEl.querySelector('[data-tab="credits"]').hidden = !hasCredits;
-            [casePanel, creditsPanel].forEach(function (p) { if (d.draft) p.appendChild(el('p', 'vd-draft', 'Draft preview, only visible with ?preview in the address')); });
+            var badge = function () { return el('p', 'vd-draft', 'Draft preview, only visible with ?preview in the address'); };
+            if (preview && (d.draft || csAll.draft)) casePanel.appendChild(badge());
+            if (preview && (d.draft || d.creditsDraft)) creditsPanel.appendChild(badge());
             var head = el('div', 'vd-head'); head.appendChild(el('h2', 'vd-title', item.title)); head.appendChild(el('p', 'vd-client', item.client));
             casePanel.appendChild(head);
             if (cs.intro) casePanel.appendChild(el('p', 'vd-intro', cs.intro));
@@ -1909,9 +1921,30 @@
                 (s.text || []).forEach(function (p) { b.appendChild(el('p', null, p)); });
                 casePanel.appendChild(b);
             });
-            var dl = el('dl', 'vd-credits');
-            credits.forEach(function (c) { var w = el('div', 'vd-credit'); w.appendChild(el('dt', null, c[0])); w.appendChild(el('dd', null, c[1])); dl.appendChild(w); });
-            creditsPanel.appendChild(dl);
+            // a name that starts with @ is an Instagram handle and links to it
+            function nameNode(n) {
+                n = String(n);
+                if (n.charAt(0) !== '@') return document.createTextNode(n);
+                var a = el('a', 'vd-handle', n); a.href = 'https://www.instagram.com/' + encodeURIComponent(n.slice(1)) + '/'; a.target = '_blank'; a.rel = 'noopener';
+                return a;
+            }
+            function creditList(rows) {
+                var dl = el('dl', 'vd-credits');
+                rows.forEach(function (c) {
+                    var w = el('div', 'vd-credit'); w.appendChild(el('dt', null, c[0]));
+                    [].concat(c[1]).forEach(function (n) { var dd = el('dd'); dd.appendChild(nameNode(n)); w.appendChild(dd); });
+                    dl.appendChild(w);
+                });
+                return dl;
+            }
+            if (hasCredits && credits[0] && credits[0].items) {
+                credits.forEach(function (g) {
+                    var sec = el('div', 'vd-credit-group');
+                    if (g.group) sec.appendChild(el('h3', 'vd-group', g.group));
+                    sec.appendChild(creditList(g.items || []));
+                    creditsPanel.appendChild(sec);
+                });
+            } else if (hasCredits) creditsPanel.appendChild(creditList(credits));
             showTab(hasCase ? 'case' : 'credits');
         }
         // the X cursor and click-to-close belong to the black around the content
