@@ -465,6 +465,45 @@
             gap: 1.1rem;
         }
         .contact-general { margin: 0; }
+
+        /* Behind-the-scenes slideshow (desktop and tablet only; phones keep the stacked page) */
+        .contact-bts { position: relative; display: none; overflow: hidden; background: #ececec; }
+        .contact-bts.is-on { display: block; }
+        .contact-bts img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.9s ease; }
+        .contact-bts img.is-shown { opacity: 1; }
+        body.dark-mode .contact-bts { background: #1a1a1a; }
+        @media (prefers-reduced-motion: reduce) { .contact-bts img { transition: none; } }
+
+        /* Desktop layout (Ben's sketch): a 2 x 2 grid.
+             photos (top left)          cities (top right)
+             Roni / General / News      Ben / Jude / Jacob, right-aligned
+           The right column takes the width of the cities; the photos get the rest. */
+        @media (min-width: 769px) {
+            .contact-page {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                grid-template-rows: minmax(0, 1fr) auto;
+                grid-template-areas: "photos cities" "stack people";
+                column-gap: 4rem;
+                row-gap: 2rem;
+                align-items: stretch;
+                justify-content: stretch;
+                box-sizing: border-box;
+                padding: 6rem 2.5rem 4.75rem;
+            }
+            .contact-left { display: contents; }
+            .contact-bts { grid-area: photos; align-self: start; justify-self: start; width: 100%; aspect-ratio: 4 / 3; max-height: 100%; }
+            .contact-right { grid-area: cities; align-self: start; }
+            .contact-list { grid-area: people; align-self: end; align-items: flex-end; text-align: right; }
+            .contact-list .contact-person { align-items: flex-end; }
+            .contact-list .contact-role { margin: 0 0.06em 0.35em 0; }
+            .contact-list .contact-swap { text-align: right; clip-path: inset(0 -100vw 0 -100vw); }
+            .contact-list .contact-swap .contact-mail { left: auto; right: 0; }
+            .contact-bottom { grid-area: stack; position: static; align-self: end; }
+        }
+        @media (min-width: 769px) and (min-height: 680px) {
+            .contact-page { height: 100vh; min-height: 0; }
+        }
         .contact-bottom .contact-swap { font-size: clamp(0.9rem, 1.35vw, 1.4rem); }
         .contact-bottom .contact-role { font-size: clamp(0.7rem, 0.85vw, 0.9rem); }
 
@@ -507,9 +546,9 @@
             padding: 0;
             transition: transform 0.2s ease, color 0.2s ease;
         }
-        /* Open arrow with the logomark's cuts: square ends, 45° head, stroke as heavy as the caps */
-        .newsletter-submit svg { display: block; width: 0.8em; height: 0.8em; }
-        .newsletter-submit:hover { transform: translateX(0.15em); color: #FF4500; -webkit-text-fill-color: #FF4500; }
+        /* No arrow: Enter in the field submits. The button stays for the form and the
+           script (it is disabled while sending) but takes no space and is not seen. */
+        .newsletter-submit { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
         .newsletter-submit:disabled { opacity: 0.4; }
         .newsletter-input:focus-visible,
         .newsletter-submit:focus-visible { outline: 1px solid currentColor; outline-offset: 3px; }
@@ -894,13 +933,12 @@
                         <label for="newsletterCompany">Leave this empty</label>
                         <input id="newsletterCompany" type="text" name="company" tabindex="-1" autocomplete="off">
                     </div>
-                    <button class="newsletter-submit" type="submit" aria-label="Subscribe">
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M1 12H21M13 4l8 8-8 8" stroke="currentColor" stroke-width="3.4" stroke-linecap="butt" stroke-linejoin="miter"/></svg>
-                    </button>
+                    <button class="newsletter-submit" type="submit" tabindex="-1">Subscribe</button>
                     <p class="newsletter-status" role="status" aria-live="polite"></p>
                 </form>
             </div>
         </div>
+        <div class="contact-bts" id="contactBts" aria-hidden="true"></div>
     </main>
 
 
@@ -1192,6 +1230,47 @@
     </script>
     <script src="scripts/analytics.js"></script>
     <script src="/scripts/scroll.js"></script>
+    <script>
+    // Behind-the-scenes slideshow (photos in /assets/bts, 01 to 21), top left of the
+    // page; the CSS grid places and sizes it. Two layers crossfade, the show starts
+    // on a random photo, and only the current and next photo are ever loaded.
+    (function () {
+        var box = document.getElementById('contactBts');
+        if (!box) return;
+        var N = 21, HOLD = 3600;
+        var srcs = []; for (var i = 1; i <= N; i++) srcs.push('/assets/bts/' + (i < 10 ? '0' : '') + i + '.jpg');
+        var layers = [document.createElement('img'), document.createElement('img')];
+        layers.forEach(function (im) { im.alt = ''; im.decoding = 'async'; box.appendChild(im); });
+        var at = Math.floor(Math.random() * N), front = 0, timer = null, paused = false, started = false;
+
+        function fit() {
+            var on = window.innerWidth > 768;   // phones keep the stacked page without photos
+            box.classList.toggle('is-on', on);
+            if (on && !started) { started = true; show(at, true); schedule(); }
+        }
+        function show(i, first) {
+            var next = layers[first ? front : 1 - front];
+            next.onload = function () {
+                if (!first) { layers[front].classList.remove('is-shown'); front = 1 - front; }
+                next.classList.add('is-shown');
+                new Image().src = srcs[(i + 1) % N];   // warm the one after
+            };
+            next.src = srcs[i];
+        }
+        function schedule() {
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                if (!paused && !document.hidden && box.classList.contains('is-on')) { at = (at + 1) % N; show(at, false); }
+                schedule();
+            }, HOLD);
+        }
+        box.addEventListener('mouseenter', function () { paused = true; });
+        box.addEventListener('mouseleave', function () { paused = false; });
+        window.addEventListener('resize', fit);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+        fit();
+    })();
+    </script>
 
     <script>
     // Re-enforce cursor:none via injected stylesheet (bfcache-safe). Coming back
