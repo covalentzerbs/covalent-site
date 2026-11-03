@@ -1133,15 +1133,20 @@
         .vd-block p { max-width:720px; font-size:1.02rem; line-height:1.7; letter-spacing:-0.02em; color:rgba(255,255,255,0.62); margin:0 0 1rem; }
         .vd-stills { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin:0 0 3rem; }
         .vd-stills img { width:100%; aspect-ratio:16 / 9; object-fit:cover; display:block; background:#111; }
-        .vd-credits { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:1.4rem 2rem; margin:0; }
-        .vd-credit dt { font-size:0.68rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:rgba(255,255,255,0.45); margin:0 0 0.3rem; }
-        .vd-credit dd { margin:0; font-size:1rem; font-weight:700; letter-spacing:-0.02em; color:#fff; }
-        .vd-credit dd + dd { margin-top:0.2rem; }
-        .vd-credit-group { margin:0 0 2.8rem; }
-        .vd-group { font-size:clamp(1.05rem, 1.4vw, 1.3rem); font-weight:700; letter-spacing:-0.03em; color:#fff; margin:0 0 1.2rem; padding-bottom:0.7rem; border-bottom:1px solid rgba(255,255,255,0.14); }
+        /* credits read like a film's end roll: one plain line per role, role and name in the
+           same type, several names joined with commas, a blank line between groups */
+        .vd-credits { display:block; margin:0; }
+        .vd-credit { margin:0; font-size:0.92rem; font-weight:400; line-height:1.6; letter-spacing:-0.01em; color:#fff; }
+        .vd-credit dt, .vd-credit dd { display:inline; margin:0; font:inherit; color:inherit; letter-spacing:inherit; text-transform:none; }
+        .vd-credit dt::after { content:'\00a0\00a0'; }
+        .vd-credit dd + dd::before { content:', '; }
+        .vd-credit dd { text-transform:uppercase; letter-spacing:0.02em; }   /* names in capitals, titles as written */
+        .vd-credit-group { margin:0 0 1.6em; }
+        .vd-group { font-size:0.92rem; font-weight:400; line-height:1.6; letter-spacing:-0.01em; color:#fff; margin:0; padding:0; border:0; }
         .vd-handle { color:inherit; text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.2s ease; }
         .vd-handle:hover { border-bottom-color:currentColor; }
         body.dark-mode .vd-group { color:#FF4500; -webkit-text-fill-color:#FF4500; border-bottom-color:rgba(255,69,0,0.3); }
+        body.dark-mode .vd-credits .vd-credit dt { color:#FF4500; -webkit-text-fill-color:#FF4500; }   /* outranks the muted label rule below */
         @media (max-width: 768px) {
             .work-viewer { --fh: min(calc(92vw / var(--va, 1.778)), calc(100svh - 200px)); }
             .vi-value { font-size:0.78rem; }
