@@ -507,6 +507,8 @@
             padding: 0;
             transition: transform 0.2s ease, color 0.2s ease;
         }
+        /* Solid arrow cut like the logomark: flat fill, 45° head, head as tall as the caps */
+        .newsletter-submit svg { display: block; width: 1em; height: 1em; }
         .newsletter-submit:hover { transform: translateX(0.15em); color: #FF4500; -webkit-text-fill-color: #FF4500; }
         .newsletter-submit:disabled { opacity: 0.4; }
         .newsletter-input:focus-visible,
@@ -838,7 +840,7 @@
         <div class="contact-left">
             <ul class="contact-list">
                 <li class="contact-person">
-                    <span class="contact-role">Founding Partner | Executive Producer</span>
+                    <span class="contact-role">Cofounder | Managing Director</span>
                     <a href="mailto:ben@covalentstudios.co" class="contact-swap" data-email="ben@covalentstudios.co">
                         <span class="contact-name">Ben Zebrowski-Rocheleau</span>
                         <span class="contact-mail">ben@covalentstudios.co</span>
@@ -892,7 +894,9 @@
                         <label for="newsletterCompany">Leave this empty</label>
                         <input id="newsletterCompany" type="text" name="company" tabindex="-1" autocomplete="off">
                     </div>
-                    <button class="newsletter-submit" type="submit" aria-label="Subscribe">&rarr;</button>
+                    <button class="newsletter-submit" type="submit" aria-label="Subscribe">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 10.3h11.5V3.5L23 12l-10.5 8.5v-6.8H1z" fill="currentColor"/></svg>
+                    </button>
                     <p class="newsletter-status" role="status" aria-live="polite"></p>
                 </form>
             </div>
