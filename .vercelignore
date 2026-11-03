@@ -1,5 +1,5 @@
-# Not part of the public site
+# Not part of the public site. Leading slash = repo root only, so
+# api/newsletter/ and assets/newsletter/ still deploy.
 .env
 .env*.local
-newsletter/
-covalent-newsletter/
+/newsletter/
