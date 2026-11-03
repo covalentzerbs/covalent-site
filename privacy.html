@@ -710,6 +710,9 @@
             opacity: 0.5;
         }
         .privacy-legal span { display: block; }
+        /* long copy scrolls under the fixed logo and links: tuck them away once the page moves */
+        .nav { transition: opacity 0.3s ease; }
+        body.is-scrolled .nav, body.is-scrolled .logo-bottom { opacity: 0; pointer-events: none; }
 
         body.dark-mode .privacy-heading,
         body.dark-mode .privacy-body p {
@@ -781,7 +784,7 @@
 
     <!-- Global Footer -->
     <footer class="site-footer">
-        <div class="site-footer-left">2026, Covalent Studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">Privacy</a></div>
+        <div class="site-footer-left">2026, Covalent Studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">Privacy</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/terms" class="footer-link">Terms</a></div>
         <div class="site-footer-right">
             <div class="site-footer-socials">
                 <label class="dark-mode-toggle">
@@ -981,6 +984,15 @@
     </script>
     <script src="scripts/analytics.js"></script>
     <script src="/scripts/scroll.js"></script>
+    <script>
+    // Scrolling tucks the logo and the About / Contact links away; they come back at the top.
+    (function () {
+        var on = false;
+        function check() { var s = window.scrollY > 40; if (s !== on) { on = s; document.body.classList.toggle('is-scrolled', s); } }
+        window.addEventListener('scroll', check, { passive: true });
+        check();
+    })();
+    </script>
 
     <script>
     // Re-enforce cursor:none via injected stylesheet (bfcache-safe). Coming back

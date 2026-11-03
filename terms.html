@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="description" content="Terms of Use for covalentstudios.co, operated by Covalent Creative Productions and Studios, LLC.">
+    <link rel="canonical" href="https://covalentstudios.co/terms">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use</title>
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T14F8BVFLJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-T14F8BVFLJ');
+    </script>
+    <meta property="og:title" content="Terms of Use">
+    <meta property="og:description" content="Terms of Use for covalentstudios.co, operated by Covalent Creative Productions and Studios, LLC.">
+    <meta property="og:image" content="https://covalentstudios.co/assets/images/og-image.png">
+    <meta property="og:url" content="https://covalentstudios.co/terms">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+
+        /* CSS Variables */
+        :root {
+            /* One timing for every themed property, so nothing fades out of step. */
+            --theme-transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease, fill 300ms ease, stroke 300ms ease, -webkit-text-fill-color 300ms ease;
+            --ice: #FAFBFC;
+            --bond-blue: #5979e9;
+            --black: #0A0A0A;
+            --gray: #6B7280;
+            --white: #FFFFFF;
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        ::selection {
+            background: var(--black);
+            color: var(--white);
+            -webkit-text-fill-color: var(--white);
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--white);
+            pointer-events: none;
+            z-index: 99999;
+            mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
+        }
+
+        body {
+            font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+            letter-spacing: -0.04em;
+        }
+
+        /* Navigation - Plus Menu */
+        .nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            /* right padding matches the content margin (24px), so the stack lines up with the grid edge */
+            padding: 2rem 1.5rem 2rem 2rem;
+            z-index: 10001;
+        }
+
+        /* Top-right nav: About and Contact stacked, small, in place of the old plus menu */
+        .nav { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+        .nav-link {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            line-height: 1;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0.85;
+            transition: opacity 0.2s ease, color 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.current { opacity: 1; }
+        .nav-link:hover { color: #FF4500; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .nav-link { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+        body.dark-mode .nav-link:hover { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF; }
+
+        .menu-toggle {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-toggle.active {
+            transform: rotate(45deg);
+        }
+
+        .plus-icon {
+            width: 18px;
+            height: 18px;
+            position: relative;
+        }
+
+        .plus-icon span {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--black);
+            top: 50%;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .plus-icon span:first-child {
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .plus-icon span:last-child {
+            transform: translateY(-50%);
+        }
+
+        /* Expanded Menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 3rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .menu-overlay.active {
+            pointer-events: auto;
+            opacity: 1;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .menu-link {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 700;
+            color: var(--black);
+            text-decoration: none;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: -0.07em;
+            line-height: 1.05;
+        }
+
+        .menu-overlay.active .menu-link {
+            opacity: 0.6;
+            transform: translateX(0);
+        }
+
+        .menu-overlay.active .menu-link:nth-child(1) { transition-delay: 0.05s; }
+        .menu-overlay.active .menu-link:nth-child(2) { transition-delay: 0.1s; }
+        .menu-overlay.active .menu-link:nth-child(3) { transition-delay: 0.15s; }
+        .menu-overlay.active .menu-link:nth-child(4) { transition-delay: 0.25s; }
+        .menu-overlay.active .menu-link:nth-child(5) { transition-delay: 0.3s; }
+
+        
+
+        .menu-socials {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-overlay.active .menu-socials {
+            opacity: 0.5;
+            transform: translateX(0);
+            transition-delay: 0.3s;
+        }
+
+
+
+
+        .menu-link:hover {
+            opacity: 1 !important;
+        }
+
+        .menu-link {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-link-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #5979e9, #7B93FF, #5979e9, #3A5BD4);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+            pointer-events: none;
+            -webkit-mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
+            mask-image: radial-gradient(circle at var(--mx, 0px) var(--my, 0px), black var(--spread, 0%), transparent var(--spread, 0%));
+            opacity: 0;
+            transition: opacity 0s;
+        }
+
+        .menu-link:hover .menu-link-gradient {
+            opacity: 1;
+        }
+
+        .menu-link.current {
+            opacity: 1 !important;
+        }
+
+        /* Logo Bottom Right */
+        .logo-bottom {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-bottom:hover { opacity: 1; }
+        .logo-bottom:hover svg path { fill: #FF4500; }
+
+        .logo-bottom svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-bottom svg path {
+            fill: var(--black); transition: fill 0.2s ease;
+        }
+
+        /* ==================== */
+        /* CONTACT PAGE */
+        /* ==================== */
+        .contact-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .contact-email {
+            font-size: clamp(2rem, 7vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.07em;
+            line-height: 1.1;
+            color: var(--bond-blue);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-email:hover {
+            opacity: 0.7;
+        }
+
+        /* Copy toast */
+        .copy-toast {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--black);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 20000;
+            white-space: nowrap;
+        }
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ==================== */
+        /* ==================== */
+        /* GLOBAL FOOTER        */
+        /* ==================== */
+        .site-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1001;
+            opacity: 1;
+        }
+        .site-footer-left {
+            font-size: 0.7rem;
+            font-weight: 300;
+            color: var(--black);
+            opacity: 0.5;
+        }
+        .site-footer-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            opacity: 0.5;
+        }
+        .site-footer-socials {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .social-link {
+            color: var(--black);
+            display: flex;
+            align-items: center;
+        }
+
+        /* ==================== */
+        /* CLOCK */
+        /* ==================== */
+        .clock-widget {
+            position: fixed;
+            bottom: 5rem;
+            right: 3rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.15rem;
+            font-family: 'Helvetica Neue', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+            /* Hidden until JS fills the times, then fade in -
+               avoids a flash of the "--:--" placeholder. */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .clock-widget.ready {
+            opacity: 1;
+        }
+
+        .clock-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--black);
+            letter-spacing: -0.07em;
+        }
+
+        .clock-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.07em;
+            min-width: 2rem;
+            text-align: right;
+        }
+
+        .clock-time {
+            font-variant-numeric: tabular-nums;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .clock-colon {
+            opacity: 1;
+            transition: opacity 0.15s ease;
+        }
+
+        .clock-colon.blink {
+            opacity: 0;
+        }
+
+        /* ==================== */
+        /* RESPONSIVE */
+        /* ==================== */
+        @media (max-width: 1024px) {
+            .nav {
+                padding: 1.5rem;
+            }
+
+            .logo-bottom {
+                top: 1.5rem;
+                left: 1.5rem;
+            }
+
+            .menu-overlay {
+                padding: 6rem 2.5rem 2.5rem;
+            }
+
+            .clock-widget {
+                bottom: 4.5rem;
+                right: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1.5rem 1.5rem;
+            }
+
+            .logo-bottom {
+                top: 1.5rem;
+                left: 1.5rem;
+            }
+
+            .logo-bottom svg {
+                width: 32px;
+                height: 32px;
+            }
+
+            .menu-overlay {
+                padding: 5rem 1.5rem 1.5rem;
+            }
+
+            .privacy-page {
+                padding: 7rem 1.5rem 2.5rem;
+            }
+        }
+
+        /* Hide dot cursor on touch devices */
+        @media (pointer: coarse) {
+            .cursor { display: none !important; }
+            * { cursor: auto !important; }
+        }
+        /* ==================== */
+        /* DARK MODE OVERRIDES */
+        /* ==================== */
+        body.dark-mode {
+            background-color: #0A0A0A !important;
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode ::selection {
+            background: #FF4500 !important;
+            color: #0A0A0A !important;
+            -webkit-text-fill-color: #0A0A0A !important;
+        }
+
+        body.dark-mode .cursor {
+            background: #FF4500 !important;
+        }
+
+        body.dark-mode .plus-icon span {
+            background: #FF4500 !important;
+        }
+
+        body.dark-mode .menu-link {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .logo-bottom svg path {
+            fill: #FF4500 !important;
+        }
+        body.dark-mode .logo-bottom:hover svg path { fill: #FFFFFF !important; }
+
+        body.dark-mode .social-link { color: #FF4500 !important; }
+        body.dark-mode .site-footer-left { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
+
+        body.dark-mode .contact-email {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .clock-row {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .about-text {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .project-client {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .project-subtitle {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .scroll-progress-segment {
+            background: #FF4500 !important;
+        }
+
+        body.dark-mode .director-name {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .director-credit {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .case-study-link {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .case-study-link::after {
+            background: #FF4500 !important;
+        }
+
+        body.dark-mode .hero-logo svg path {
+            fill: #FF4500 !important;
+        }
+
+        /* ==================== */
+        /* DARK MODE TOGGLE */
+        /* ==================== */
+        .dark-mode-toggle {
+            cursor: none;
+        }
+
+        .dark-mode-toggle input {
+            display: none;
+        }
+
+        .toggle-track {
+            width: 28px;
+            height: 16px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            position: relative;
+            transition: background 0.3s ease;
+            cursor: none;
+            display: block;
+        }
+
+        .toggle-track::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 12px;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark-mode-toggle input:checked + .toggle-track {
+            background: rgba(255, 69, 0, 0.8);
+        }
+
+        .dark-mode-toggle input:checked + .toggle-track::after {
+            transform: translateX(12px);
+            background: #FF4500;
+        }
+        /* SOCIAL ICON BRAND HOVER */
+        /* SOCIAL ICON BRAND HOVER - high-saturation feedback */
+        .social-link {
+            transition: color 0.18s ease, opacity 0.18s ease, transform 0.18s ease, filter 0.18s ease;
+            transform-origin: center;
+        }
+        .social-link[aria-label="Instagram"]:hover {
+            color: #E1306C !important;
+            opacity: 1 !important;
+            transform: scale(1.22);
+            filter: drop-shadow(0 0 10px rgba(225, 48, 108, 0.55)) saturate(1.4);
+        }
+        .social-link[aria-label="LinkedIn"]:hover {
+            color: #0A66C2 !important;
+            opacity: 1 !important;
+            transform: scale(1.22);
+            filter: drop-shadow(0 0 10px rgba(10, 102, 194, 0.6)) saturate(1.4);
+        }
+        .social-link.social-link-ionic:hover {
+            color: #714BDD !important;
+            opacity: 1 !important;
+            transform: scale(1.22);
+            filter: drop-shadow(0 0 10px rgba(113, 75, 221, 0.6)) saturate(1.4);
+        }
+        /* Lift the muted .menu-socials row so the hovered icon shows full color */
+        .menu-overlay.active .menu-socials:hover { opacity: 1 !important; }
+        /* BRANDED SCROLLBAR - replaces the native macOS overlay scrollbar
+           with a thin Bond-Blue line on the right edge of the page. */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(89, 121, 233, 0.45) transparent;
+        }
+        html::-webkit-scrollbar {
+            width: 6px;
+        }
+        html::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        html::-webkit-scrollbar-thumb {
+            background: rgba(89, 121, 233, 0.35);
+            border-radius: 3px;
+            border: 1px solid transparent;
+            background-clip: padding-box;
+            transition: background-color 0.2s ease;
+        }
+        html::-webkit-scrollbar-thumb:hover {
+            background: var(--bond-blue, #5979e9);
+        }
+
+        /* Dark mode: paint the root element so the canvas stays dark while
+           scrolling. body height:100% means its background does not reach the
+           canvas once the page scrolls, leaving the root white. */
+        html:has(body.dark-mode) {
+            background-color: #0A0A0A;
+        }
+
+        /* ==================== */
+        /* PRIVACY PAGE         */
+        /* ==================== */
+        /* This page scrolls (long copy), so the footer flows after the
+           content instead of being pinned like the single-screen pages. */
+        html, body { height: auto; min-height: 100%; }
+        .site-footer { position: static; margin-top: 4rem; }
+
+        .privacy-page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 9rem 2rem 4rem;
+        }
+        .privacy-heading {
+            font-size: clamp(3rem, 9vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.07em;
+            line-height: 0.95;
+            margin-bottom: 2.5rem;
+        }
+        .privacy-body p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--black);
+            margin-bottom: 1.4rem;
+            max-width: 60ch;
+        }
+        .privacy-body a {
+            color: var(--bond-blue);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        .privacy-body a:hover { opacity: 0.7; }
+        .privacy-legal {
+            margin-top: 2.5rem;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            opacity: 0.5;
+        }
+        .privacy-legal span { display: block; }
+        /* long copy scrolls under the fixed logo and links: tuck them away once the page moves */
+        .nav { transition: opacity 0.3s ease; }
+        body.is-scrolled .nav, body.is-scrolled .logo-bottom { opacity: 0; pointer-events: none; }
+        /* terms: numbered section heads, the date line and the address block */
+        .terms-page .privacy-heading { margin-bottom: 1rem; }
+        .terms-updated { font-size: 0.8rem !important; opacity: 0.5; margin-bottom: 2.5rem !important; }
+        .privacy-body h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            color: var(--black);
+            margin: 2.6rem 0 0.9rem;
+        }
+        .terms-address span { display: block; }
+        body.dark-mode .privacy-body h2 {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+        body.dark-mode .privacy-heading,
+        body.dark-mode .privacy-body p {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+
+
+
+
+
+        /* Footer link inherits footer colour (kills default visited-link purple) */
+        .footer-link, .footer-link:link, .footer-link:visited { color: inherit; }
+        /* Theme switch: a short cross-fade instead of a hard cut. The class is
+           only on <body> for the duration of the fade, so it never fights the
+           site's own transitions the rest of the time. */
+        body.theme-fading,
+        body.theme-fading *,
+        body.theme-fading *::before,
+        body.theme-fading *::after {
+            transition: var(--theme-transition) !important;
+        }
+    </style>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Navigation - Plus Menu -->
+    <nav class="nav">
+        <a href="/about" class="nav-link">About</a>
+        <a href="/contact" class="nav-link">Contact</a>
+    </nav>
+
+
+    <!-- Logo Bottom Right -->
+    <a href="/" class="logo-bottom">
+        <svg viewBox="0 0 160 160" fill="none">
+            <path d="M48.29,31.85l22.39,22.31c3.68-3.73,8.72-6.28,13.93-7.03,16.55-2.35,30.61,11.71,28.26,28.26-.74,5.21-3.3,10.26-7.03,13.93l22.28,22.28c.05.06.03.1,0,.16-.06.12-.72.73-.88.88-8.37,8.12-19.88,13.58-31.45,15.11-35.8,4.72-66.71-24.61-63.87-60.59,1.05-13.25,6.98-25.99,16.37-35.32ZM70.61,54.25c-8.62,8.49-9.63,22.25-2.56,32.07,8.54,11.86,26.04,13.97,36.87,3.93.14-.13.75-.7.8-.8.05-.09.04-.13-.04-.2l-35.07-34.99Z"/>
+        </svg>
+    </a>
+
+    <!-- Main Content -->
+    <main class="privacy-page terms-page">
+        <h1 class="privacy-heading">Terms of Use</h1>
+        <div class="privacy-body">
+            <p class="terms-updated">Last updated: November 2, 2026</p>
+
+            <p>These Terms of Use govern your use of covalentstudios.co (the "Site"), operated by Covalent Creative Productions and Studios, LLC, an Illinois limited liability company ("Covalent," "we," "us," or "our"). By using the Site, you agree to these Terms. If you do not agree, please do not use the Site.</p>
+
+            <h2>1. Ownership of Work Shown on This Site</h2>
+            <p>The commercials, films, photographs, and other creative work displayed on the Site (the "Work") are owned by the brands, agencies, directors, and other rights holders who commissioned or created them. Covalent displays the Work solely to illustrate its production experience and the work of the directors it collaborates with. Display of the Work on the Site does not transfer any ownership or license to you.</p>
+            <p>All brand names, logos, and trademarks appearing on the Site belong to their respective owners. Their appearance does not imply endorsement of Covalent by, or affiliation with, those owners beyond the production services provided.</p>
+            <p>The Site's design, text, graphics, and other original content created by Covalent are owned by Covalent and protected by copyright and other intellectual property laws.</p>
+            <p>You may view the Work through the Site's embedded players for personal or professional reference. You may not download, copy, reproduce, distribute, modify, publicly display, or otherwise use any Work or Site content without prior written permission from Covalent and the applicable rights holder.</p>
+            <p>If you are a rights holder and would like a piece of Work removed or credited differently, please contact us at <a href="mailto:hello@covalentstudios.co">hello@covalentstudios.co</a> and we will respond promptly.</p>
+
+            <h2>2. No Offer or Binding Agreement</h2>
+            <p>The Site is provided for informational purposes only. Nothing on the Site, including descriptions of services, capabilities, rates, availability, or past projects, constitutes an offer, quote, bid, or commitment to provide services. Any engagement of Covalent is governed solely by a separate written agreement, bid, or estimate signed by Covalent. Information on the Site may change at any time without notice.</p>
+
+            <h2>3. Directors and Talent</h2>
+            <p>Directors and other talent featured on the Site work with Covalent under individual arrangements, which may be exclusive or non-exclusive and may vary by director, territory, and type of work. Inclusion on the Site does not guarantee any director's availability for, or participation in, a particular project, and our roster may change without notice. Credits and project information are provided in good faith based on the information available to us. If you believe a credit is inaccurate, please contact us.</p>
+
+            <h2>4. Unsolicited Submissions</h2>
+            <p>Covalent does not accept unsolicited scripts, treatments, concepts, or other creative ideas through the Site or by email. If you send us unsolicited material, you agree that it is not confidential, that Covalent has no obligation to review, return, or compensate you for it, and that Covalent may already be developing, or may later develop, similar ideas independently without any obligation to you. This section does not apply to materials provided under a separate written agreement or process, such as a signed NDA or an agency bid.</p>
+
+            <h2>5. Site Provided "As Is"</h2>
+            <p>The Site and all of its content are provided "as is" and "as available," without warranties of any kind, express or implied, including warranties of merchantability, fitness for a particular purpose, accuracy, and non-infringement. We do not warrant that the Site will be uninterrupted, error-free, or free of viruses or other harmful components.</p>
+
+            <h2>6. Limitation of Liability</h2>
+            <p>To the fullest extent permitted by law, Covalent and its members, employees, and representatives will not be liable for any indirect, incidental, special, consequential, or punitive damages, or for any loss of data, profits, or business opportunity, arising out of or related to your use of or inability to use the Site, even if advised of the possibility of such damages.</p>
+
+            <h2>7. Third-Party Content and Links</h2>
+            <p>The Site may include embedded media and links to third-party websites and services, such as Vimeo and social media platforms. Covalent does not control and is not responsible for the content, policies, or practices of those third parties. Your use of third-party services is governed by their own terms and policies.</p>
+
+            <h2>8. Governing Law</h2>
+            <p>These Terms are governed by the laws of the State of Illinois, without regard to its conflict of law principles. Any dispute arising from these Terms or your use of the Site will be brought exclusively in the state or federal courts located in Cook County, Illinois.</p>
+
+            <h2>9. Changes to These Terms</h2>
+            <p>We may update these Terms from time to time. The "Last updated" date above reflects the most recent revision. Your continued use of the Site after changes are posted constitutes acceptance of the revised Terms.</p>
+
+            <h2>10. Contact</h2>
+            <p class="terms-address">
+                <span>Covalent Creative Productions and Studios, LLC</span>
+                <span>2128 N Sheffield Ave, Rear 2</span>
+                <span>Chicago, IL 60614</span>
+                <span><a href="mailto:hello@covalentstudios.co">hello@covalentstudios.co</a></span>
+            </p>
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="site-footer">
+        <div class="site-footer-left">2026, Covalent Studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">Privacy</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/terms" class="footer-link">Terms</a></div>
+        <div class="site-footer-right">
+            <div class="site-footer-socials">
+                <label class="dark-mode-toggle">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="toggle-track"></span>
+                </label>
+                <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/company/covalent-studios/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                </a>
+                <a href="https://ionicpost.co" target="_blank" rel="noopener" class="social-link social-link-ionic" aria-label="Ionic Post">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="5" r="2.5" fill="currentColor"/>
+                        <rect x="9.5" y="9" width="5" height="13" rx="1" fill="currentColor"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ==================== //
+        // CUSTOM CURSOR
+        // ==================== //
+        const cursor = document.getElementById('cursor');
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            cursor.style.display = 'none';
+        }
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.35;
+            cursorY += (mouseY - cursorY) * 0.35;
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // ==================== //
+        // MENU TOGGLE
+        // ==================== //
+        const menuToggle = document.getElementById('menuToggle');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        menuToggle && menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        menuOverlay && menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuToggle.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && (menuOverlay && menuOverlay.classList.contains('active'))) {
+                menuToggle.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        // ==================== //
+        // MENU LINK GRADIENT SPREAD EFFECT
+        // ==================== //
+        // (menu hover handled by CSS only)
+
+        // ==================== //
+        // VIRUS SPREADING TEXT EFFECT (footer)
+        // ==================== //
+        const virusLinks = document.querySelectorAll('.footer-link');
+
+        virusLinks.forEach(link => {
+            const text = link.textContent;
+            link.textContent = '';
+
+            const chars = [];
+            for (let i = 0; i < text.length; i++) {
+                const char = document.createElement('span');
+                char.className = 'char';
+                char.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+                link.appendChild(char);
+                chars.push(char);
+            }
+
+            let isInfected = false;
+
+            link.addEventListener('mouseenter', (e) => {
+                if (isInfected) return;
+                isInfected = true;
+
+                const rect = link.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                const charDistances = chars.map((char, index) => {
+                    const charRect = char.getBoundingClientRect();
+                    const charCenterX = charRect.left - rect.left + charRect.width / 2;
+                    const charCenterY = charRect.top - rect.top + charRect.height / 2;
+                    const distance = Math.sqrt(
+                        Math.pow(charCenterX - mouseX, 2) +
+                        Math.pow(charCenterY - mouseY, 2)
+                    );
+                    return { char, distance, index };
+                });
+
+                charDistances.sort((a, b) => a.distance - b.distance);
+
+                charDistances.forEach((item, i) => {
+                    setTimeout(() => {
+                        item.char.classList.add('infected');
+                        if (i === charDistances.length - 1) {
+                            link.classList.add('fully-infected');
+                        }
+                    }, i * 30);
+                });
+            });
+
+            link.addEventListener('mouseleave', (e) => {
+                const rect = link.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                const charDistances = chars.map((char, index) => {
+                    const charRect = char.getBoundingClientRect();
+                    const charCenterX = charRect.left - rect.left + charRect.width / 2;
+                    const charCenterY = charRect.top - rect.top + charRect.height / 2;
+                    const distance = Math.sqrt(
+                        Math.pow(charCenterX - mouseX, 2) +
+                        Math.pow(charCenterY - mouseY, 2)
+                    );
+                    return { char, distance, index };
+                });
+
+                charDistances.sort((a, b) => b.distance - a.distance);
+                link.classList.remove('fully-infected');
+
+                charDistances.forEach((item, i) => {
+                    setTimeout(() => {
+                        item.char.classList.remove('infected');
+                        if (i === charDistances.length - 1) {
+                            isInfected = false;
+                        }
+                    }, i * 25);
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // ==================== //
+        // DARK MODE TOGGLE
+        // ==================== //
+        (function() {
+            const toggle = document.getElementById('darkModeToggle');
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                toggle.checked = true;
+            }
+            toggle.addEventListener('change', () => {
+                document.body.classList.add('theme-fading'); clearTimeout(window.__themeFadeT); window.__themeFadeT = setTimeout(function(){ document.body.classList.remove('theme-fading'); }, 360); document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+            });
+
+            // Cursor inflate on toggle hover
+            const cursorEl = document.getElementById('cursor');
+            const toggleLabel = document.querySelector('.dark-mode-toggle');
+            toggleLabel.addEventListener('mouseenter', () => {
+                cursorEl.style.transform = 'translate(-50%, -50%) scale(1.8)';
+                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
+            });
+            toggleLabel.addEventListener('mouseleave', () => {
+                cursorEl.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorEl.style.transition = 'transform 0.2s ease, left 0s, top 0s';
+            });
+        })();
+    </script>
+    <script src="scripts/analytics.js"></script>
+    <script src="/scripts/scroll.js"></script>
+    <script>
+    // Scrolling tucks the logo and the About / Contact links away; they come back at the top.
+    (function () {
+        var on = false;
+        function check() { var s = window.scrollY > 40; if (s !== on) { on = s; document.body.classList.toggle('is-scrolled', s); } }
+        window.addEventListener('scroll', check, { passive: true });
+        check();
+    })();
+    </script>
+
+    <script>
+    // Re-enforce cursor:none via injected stylesheet (bfcache-safe). Coming back
+    // to a page through history, Chrome can keep drawing the arrow until the
+    // cursor property on the hovered element actually changes, so on every
+    // pageshow (and the first movement after it) the rule flips default -> none.
+    (function() {
+        var style = null;
+        function setRule(value) {
+            if (!style || !style.parentNode) {
+                var existing = document.getElementById('no-native-cursor');
+                if (existing) existing.remove();
+                style = document.createElement('style');
+                style.id = 'no-native-cursor';
+                document.head.appendChild(style);
+            }
+            style.textContent = 'html, html *, body, body * { cursor: ' + value + ' !important; }';
+        }
+        function enforceNoCursor() {
+            setRule('default');
+            void document.documentElement.offsetWidth;
+            setRule('none');
+        }
+        enforceNoCursor();
+        window.addEventListener('pageshow', function(e) {
+            enforceNoCursor();
+            setTimeout(enforceNoCursor, 50);
+            var cursor = document.getElementById('cursor');
+            if (cursor && !('ontouchstart' in window)) {
+                cursor.style.display = 'block';
+            }
+            document.addEventListener('mousemove', enforceNoCursor, { once: true });
+        });
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) enforceNoCursor();
+        });
+    })();
+    </script>
+</body>
+</html>
