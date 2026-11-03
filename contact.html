@@ -1258,7 +1258,7 @@
         var srcs = []; for (var i = 1; i <= N; i++) srcs.push('/assets/bts/' + (i < 10 ? '0' : '') + i + '.jpg');
         var layers = [document.createElement('img'), document.createElement('img')];
         layers.forEach(function (im) { im.alt = ''; im.decoding = 'async'; box.appendChild(im); });
-        var at = Math.floor(Math.random() * N), front = 0, timer = null, paused = false, started = false;
+        var at = Math.floor(Math.random() * N), front = 0, timer = null, started = false;
 
         function fit() {
             var on = true;   // full bleed on every screen
@@ -1281,12 +1281,10 @@
         function schedule() {
             clearTimeout(timer);
             timer = setTimeout(function () {
-                if (!paused && !document.hidden && box.classList.contains('is-on')) { at = (at + 1) % N; show(at, false); }
+                if (!document.hidden && box.classList.contains('is-on')) { at = (at + 1) % N; show(at, false); }   // always cycling; only a background tab waits
                 schedule();
             }, HOLD);
         }
-        box.addEventListener('mouseenter', function () { paused = true; });
-        box.addEventListener('mouseleave', function () { paused = false; });
         window.addEventListener('resize', fit);
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
         fit();
