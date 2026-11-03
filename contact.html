@@ -474,6 +474,19 @@
         .contact-bts img.is-shown { opacity: 1; }
         body.dark-mode .contact-bts { background: #1a1a1a; }
         @media (prefers-reduced-motion: reduce) { .contact-bts img { transition: none; } }
+        /* Scrub cue: over the photos the cursor dot grows chevrons; while scrubbing a
+           counter rides beside it. Both are white in a difference blend like the dot. */
+        .cursor::before, .cursor::after { content: ''; position: absolute; top: 50%; width: 6px; height: 6px; border: solid #fff; border-width: 0 0 2px 2px; opacity: 0; transition: opacity 0.2s ease, transform 0.2s ease; }
+        .cursor::before { left: -14px; transform: translateY(-50%) rotate(45deg); }
+        .cursor::after { right: -14px; transform: translateY(-50%) rotate(-135deg); }
+        .cursor.is-drag::before, .cursor.is-drag::after { opacity: 1; }
+        body.bts-scrubbing .cursor::before { transform: translate(-4px, -50%) rotate(45deg); }
+        body.bts-scrubbing .cursor::after { transform: translate(4px, -50%) rotate(-135deg); }
+        .bts-count { position: fixed; z-index: 99998; pointer-events: none; transform: translate(18px, 14px); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; color: #fff; mix-blend-mode: difference; opacity: 0; transition: opacity 0.15s ease; white-space: nowrap; }
+        body.bts-scrubbing .bts-count { opacity: 1; }
+        body.bts-scrubbing, body.bts-scrubbing * { -webkit-user-select: none; user-select: none; }
+        .contact-bts img { -webkit-user-drag: none; }
+        .contact-page { touch-action: pan-y; }   /* sideways finger drags reach the scrub on phones */
         /* Every piece of type sits over a photo now, so all of it inverts: white ink in a
            difference blend shows as the opposite tone of whatever is behind it. The blend
            goes on each block, so the block blends with the photo as one layer. */
@@ -1247,27 +1260,31 @@
     <script>
     // Behind-the-scenes slideshow (photos in /assets/bts, 01 to 21), full bleed behind
     // the whole page. The new photo fades in over the old one (2.2s), so it never dips
-    // to black between photos; each photo then holds ~2.7s.
-    // The show starts on a random photo; only the current and next are ever loaded.
+    // to black between photos; each photo then holds ~2.7s. It starts on a random photo
+    // and only loads the current and next one until someone scrubs.
+    //
+    // Scrub: press anywhere that is not a link, an address or the newsletter field and
+    // drag sideways; every 40px is one photo, instantly (drag left = forward, like a
+    // swipe). Letting go hands back to the slideshow from that photo. Over the photos
+    // the cursor dot shows chevrons; while scrubbing a counter rides beside it.
     (function () {
         var box = document.getElementById('contactBts');
-        var page = document.querySelector('.contact-page');
-        var stack = document.querySelector('.contact-bottom');
-        if (!box || !page || !stack) return;
-        var N = 21, FADE = 2200, HOLD = FADE + 2700;
+        if (!box) return;
+        var N = 21, FADE = 2200, HOLD = FADE + 2700, STEP = 40;
         var srcs = []; for (var i = 1; i <= N; i++) srcs.push('/assets/bts/' + (i < 10 ? '0' : '') + i + '.jpg');
         var layers = [document.createElement('img'), document.createElement('img')];
-        layers.forEach(function (im) { im.alt = ''; im.decoding = 'async'; box.appendChild(im); });
-        var at = Math.floor(Math.random() * N), front = 0, timer = null, started = false;
+        layers.forEach(function (im) { im.alt = ''; im.decoding = 'async'; im.draggable = false; box.appendChild(im); });
+        var at = Math.floor(Math.random() * N), front = 0, timer = null, started = false, drag = null, warmed = false;
 
         function fit() {
-            var on = true;   // full bleed on every screen
-            box.classList.toggle('is-on', on);
-            if (on && !started) { started = true; show(at, true); schedule(); }
+            box.classList.add('is-on');   // full bleed on every screen
+            if (!started) { started = true; show(at, true); schedule(); }
         }
         function show(i, first) {
             var next = layers[first ? front : 1 - front], prev = layers[front];
             next.onload = function () {
+                next.onload = null;
+                if (drag && drag.moved) return;   // a scrub took over meanwhile
                 next.style.zIndex = 2; prev.style.zIndex = 1;   // the new photo fades in on top
                 next.classList.add('is-shown');
                 if (!first) {
@@ -1278,15 +1295,64 @@
             };
             next.src = srcs[i];
         }
+        // scrubbing: cut straight to photo i on the top layer, no fade
+        function cut(i) {
+            var top = layers[front], other = layers[1 - front];
+            other.onload = null;
+            top.style.transition = other.style.transition = 'none';
+            top.src = srcs[i]; top.style.zIndex = 2; top.classList.add('is-shown');
+            other.style.zIndex = 1; other.classList.remove('is-shown');
+            void top.offsetWidth;
+            top.style.transition = other.style.transition = '';
+        }
         function schedule() {
             clearTimeout(timer);
             timer = setTimeout(function () {
-                if (!document.hidden && box.classList.contains('is-on')) { at = (at + 1) % N; show(at, false); }   // always cycling; only a background tab waits
+                if (!document.hidden && !drag) { at = (at + 1) % N; show(at, false); }   // always cycling; only a background tab or a scrub waits
                 schedule();
             }, HOLD);
         }
+        function warmAll() { if (warmed) return; warmed = true; srcs.forEach(function (u) { new Image().src = u; }); }
+
+        // what counts as the photo (draggable) versus something to click
+        function interactive(t) { return !!(t && t.closest && t.closest('a, button, input, textarea, select, label, form, .contact-swap, .nav, .site-footer, .logo-bottom')); }
+        var cursor = document.getElementById('cursor');
+        var count = document.createElement('div');
+        count.className = 'bts-count'; count.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(count);
+        function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+        document.addEventListener('pointerdown', function (e) {
+            if (e.button !== 0 || interactive(e.target)) return;
+            e.preventDefault();   // no text selection, no image ghost
+            drag = { x: e.clientX, start: at, moved: false };
+            warmAll();
+        });
+        document.addEventListener('pointermove', function (e) {
+            if (cursor) cursor.classList.toggle('is-drag', !interactive(e.target));
+            if (!drag) return;
+            var dx = e.clientX - drag.x;
+            if (!drag.moved) {
+                if (Math.abs(dx) < 6) return;
+                drag.moved = true; drag.x = e.clientX; dx = 0;
+                document.body.classList.add('bts-scrubbing');
+            }
+            var i = ((drag.start - Math.round(dx / STEP)) % N + N) % N;
+            if (i !== at) { at = i; cut(at); }
+            count.textContent = pad(at + 1) + ' / ' + N;
+            count.style.left = e.clientX + 'px'; count.style.top = e.clientY + 'px';
+        }, { passive: true });
+        function release() {
+            if (!drag) return;
+            var moved = drag.moved; drag = null;
+            document.body.classList.remove('bts-scrubbing');
+            if (moved) schedule();   // the next photo comes one full beat after letting go
+        }
+        document.addEventListener('pointerup', release);
+        document.addEventListener('pointercancel', release);
+        window.addEventListener('blur', release);
+
         window.addEventListener('resize', fit);
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
         fit();
     })();
     </script>
