@@ -474,14 +474,8 @@
         .contact-bts img.is-shown { opacity: 1; }
         body.dark-mode .contact-bts { background: #1a1a1a; }
         @media (prefers-reduced-motion: reduce) { .contact-bts img { transition: none; } }
-        /* Scrub cue: over the photos the cursor dot grows chevrons; while scrubbing a
-           counter rides beside it. Both are white in a difference blend like the dot. */
-        .cursor::before, .cursor::after { content: ''; position: absolute; top: 50%; width: 6px; height: 6px; border: solid #fff; border-width: 0 0 2px 2px; opacity: 0; transition: opacity 0.2s ease, transform 0.2s ease; }
-        .cursor::before { left: -14px; transform: translateY(-50%) rotate(45deg); }
-        .cursor::after { right: -14px; transform: translateY(-50%) rotate(-135deg); }
-        .cursor.is-drag::before, .cursor.is-drag::after { opacity: 1; }
-        body.bts-scrubbing .cursor::before { transform: translate(-4px, -50%) rotate(45deg); }
-        body.bts-scrubbing .cursor::after { transform: translate(4px, -50%) rotate(-135deg); }
+        /* Scrub cue: while scrubbing a counter rides beside the cursor dot, white in a
+           difference blend like the dot. */
         .bts-count { position: fixed; z-index: 99998; pointer-events: none; transform: translate(18px, 14px); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; color: #fff; mix-blend-mode: difference; opacity: 0; transition: opacity 0.15s ease; white-space: nowrap; }
         body.bts-scrubbing .bts-count { opacity: 1; }
         body.bts-scrubbing, body.bts-scrubbing * { -webkit-user-select: none; user-select: none; }
@@ -1264,9 +1258,9 @@
     // and only loads the current and next one until someone scrubs.
     //
     // Scrub: press anywhere that is not a link, an address or the newsletter field and
-    // drag sideways; every 40px is one photo, instantly (drag left = forward, like a
-    // swipe). Letting go hands back to the slideshow from that photo. Over the photos
-    // the cursor dot shows chevrons; while scrubbing a counter rides beside it.
+    // drag sideways; every 40px is one photo, instantly (drag right = up the count,
+    // left = down). Letting go hands back to the slideshow from that photo. While
+    // scrubbing a counter rides beside the cursor dot.
     (function () {
         var box = document.getElementById('contactBts');
         if (!box) return;
@@ -1316,7 +1310,6 @@
 
         // what counts as the photo (draggable) versus something to click
         function interactive(t) { return !!(t && t.closest && t.closest('a, button, input, textarea, select, label, form, .contact-swap, .nav, .site-footer, .logo-bottom')); }
-        var cursor = document.getElementById('cursor');
         var count = document.createElement('div');
         count.className = 'bts-count'; count.setAttribute('aria-hidden', 'true');
         document.body.appendChild(count);
@@ -1329,7 +1322,6 @@
             warmAll();
         });
         document.addEventListener('pointermove', function (e) {
-            if (cursor) cursor.classList.toggle('is-drag', !interactive(e.target));
             if (!drag) return;
             var dx = e.clientX - drag.x;
             if (!drag.moved) {
@@ -1337,7 +1329,7 @@
                 drag.moved = true; drag.x = e.clientX; dx = 0;
                 document.body.classList.add('bts-scrubbing');
             }
-            var i = ((drag.start - Math.round(dx / STEP)) % N + N) % N;
+            var i = ((drag.start + Math.round(dx / STEP)) % N + N) % N;   // right = up the count, left = down
             if (i !== at) { at = i; cut(at); }
             count.textContent = pad(at + 1) + ' / ' + N;
             count.style.left = e.clientX + 'px'; count.style.top = e.clientY + 'px';
