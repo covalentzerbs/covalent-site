@@ -1,0 +1,5 @@
+# Not part of the public site
+.env
+.env*.local
+newsletter/
+covalent-newsletter/
