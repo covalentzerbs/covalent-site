@@ -766,11 +766,11 @@
         /* BRANDED SCROLLBAR — replaces the native macOS overlay scrollbar
            with a thin Bond-Blue line on the right edge of the page. */
         html {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(89, 121, 233, 0.45) transparent;
+            scrollbar-width: none;   /* no visible scrollbar; scrolling still works */
         }
         html::-webkit-scrollbar {
-            width: 6px;
+            width: 0;
+            height: 0;
         }
         html::-webkit-scrollbar-track {
             background: transparent;

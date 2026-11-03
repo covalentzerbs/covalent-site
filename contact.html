@@ -467,12 +467,23 @@
         .contact-general { margin: 0; }
 
         /* Behind-the-scenes slideshow (desktop and tablet only; phones keep the stacked page) */
-        .contact-bts { position: relative; display: none; overflow: hidden; background: #ececec; }
+        /* Full bleed: the photos fill the whole page behind everything, on every screen size */
+        .contact-bts { position: fixed; inset: 0; z-index: 0; display: none; overflow: hidden; background: #0A0A0A; }
         .contact-bts.is-on { display: block; }
         .contact-bts img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 2.2s ease-in-out; }
         .contact-bts img.is-shown { opacity: 1; }
         body.dark-mode .contact-bts { background: #1a1a1a; }
         @media (prefers-reduced-motion: reduce) { .contact-bts img { transition: none; } }
+        /* Every piece of type sits over a photo now, so all of it inverts: white ink in a
+           difference blend shows as the opposite tone of whatever is behind it. The blend
+           goes on each block, so the block blends with the photo as one layer. */
+        .contact-right, .contact-list, .contact-bottom { position: relative; z-index: 1; }
+        .contact-right, .contact-list, .contact-bottom, .nav, .logo-bottom, .site-footer {
+            mix-blend-mode: difference; --black: #FFFFFF; --footer-ink: #FFFFFF;
+        }
+        /* dark mode keeps its orange type, without the blend */
+        body.dark-mode .contact-right, body.dark-mode .contact-list, body.dark-mode .contact-bottom,
+        body.dark-mode .nav, body.dark-mode .logo-bottom, body.dark-mode .site-footer { mix-blend-mode: normal; }
 
         /* Desktop layout (Ben's sketch): a 2 x 2 grid.
              photos (top left)          cities (top right)
@@ -495,12 +506,7 @@
             /* The photos are pinned to the page's top-left margins and sized by script:
                3:2, as tall as the room above the contact stack allows, so the frame's
                bottom-right corner reaches in under the cities and the names. */
-            .contact-bts { position: absolute; z-index: 0; }
-            /* Type that can sit over the photos inverts there: white ink in a difference
-               blend reads black on the page and the opposite tone over the photo. The
-               blend is on the containers so each block blends with the photo as a whole. */
-            .contact-right, .contact-list { position: relative; z-index: 1; mix-blend-mode: difference; --black: #FFFFFF; }
-            body.dark-mode .contact-right, body.dark-mode .contact-list { mix-blend-mode: normal; }
+
             .contact-right { grid-area: cities; align-self: start; }
             .contact-list { grid-area: people; align-self: end; align-items: flex-end; text-align: right; }
             .contact-list .contact-person { align-items: flex-end; }
@@ -824,11 +830,11 @@
         /* BRANDED SCROLLBAR — replaces the native macOS overlay scrollbar
            with a thin Bond-Blue line on the right edge of the page. */
         html {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(89, 121, 233, 0.45) transparent;
+            scrollbar-width: none;   /* no visible scrollbar; scrolling still works */
         }
         html::-webkit-scrollbar {
-            width: 6px;
+            width: 0;
+            height: 0;
         }
         html::-webkit-scrollbar-track {
             background: transparent;
@@ -1239,10 +1245,9 @@
     <script src="scripts/analytics.js"></script>
     <script src="/scripts/scroll.js"></script>
     <script>
-    // Behind-the-scenes slideshow (photos in /assets/bts, 01 to 21). The frame is pinned
-    // to the page's top-left margins; it is 3:2 and as tall as the room above the
-    // contact stack allows (capped at the page width). The new photo fades in over the
-    // old one (2.2s), so the frame never dips to grey; each photo then holds ~2.7s.
+    // Behind-the-scenes slideshow (photos in /assets/bts, 01 to 21), full bleed behind
+    // the whole page. The new photo fades in over the old one (2.2s), so it never dips
+    // to black between photos; each photo then holds ~2.7s.
     // The show starts on a random photo; only the current and next are ever loaded.
     (function () {
         var box = document.getElementById('contactBts');
@@ -1256,16 +1261,7 @@
         var at = Math.floor(Math.random() * N), front = 0, timer = null, paused = false, started = false;
 
         function fit() {
-            var on = window.innerWidth > 768;   // phones keep the stacked page without photos
-            if (on) {
-                var cs = getComputedStyle(page), p = page.getBoundingClientRect(), k = stack.getBoundingClientRect();
-                var left = parseFloat(cs.paddingLeft), top = parseFloat(cs.paddingTop), right = parseFloat(cs.paddingRight);
-                var h = k.top - p.top - top - 32, w = h * 1.5, maxW = p.width - left - right;
-                if (w > maxW) { w = maxW; h = w / 1.5; }
-                on = h >= 160;
-                box.style.left = left + 'px'; box.style.top = top + 'px';
-                box.style.width = Math.round(w) + 'px'; box.style.height = Math.round(h) + 'px';
-            }
+            var on = true;   // full bleed on every screen
             box.classList.toggle('is-on', on);
             if (on && !started) { started = true; show(at, true); schedule(); }
         }
