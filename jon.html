@@ -27,6 +27,8 @@
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/assets/css/footer.css">
+    <script src="/scripts/newsletter.js" defer></script>
     <style>
 
         /* CSS Variables */
@@ -228,9 +230,6 @@
             transition-delay: 0.3s;
         }
 
-
-
-
         .menu-link:hover {
             opacity: 1 !important;
         }
@@ -339,43 +338,7 @@
         }
 
         /* ==================== */
-        /* ==================== */
-        /* GLOBAL FOOTER        */
-        /* ==================== */
-        .site-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1001;
-            opacity: 1;
-        }
-        .site-footer-left {
-            font-size: 0.7rem;
-            font-weight: 300;
-            color: var(--black);
-            opacity: 0.5;
-        }
-        .site-footer-right {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            opacity: 0.5;
-        }
-        .site-footer-socials {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .social-link {
-            color: var(--black);
-            display: flex;
-            align-items: center;
-        }
+        
 
         /* ==================== */
         /* CLOCK */
@@ -520,9 +483,6 @@
         }
         body.dark-mode .logo-bottom:hover svg path { fill: #FFFFFF !important; }
 
-        body.dark-mode .social-link { color: #FF4500 !important; }
-        body.dark-mode .site-footer-left { color: #FF4500 !important; -webkit-text-fill-color: #FF4500; }
-
         body.dark-mode .contact-email {
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
@@ -578,69 +538,12 @@
         /* ==================== */
         /* DARK MODE TOGGLE */
         /* ==================== */
-        .dark-mode-toggle {
-            cursor: none;
-        }
+        
 
-        .dark-mode-toggle input {
-            display: none;
-        }
-
-        .toggle-track {
-            width: 28px;
-            height: 16px;
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            position: relative;
-            transition: background 0.3s ease;
-            cursor: none;
-            display: block;
-        }
-
-        .toggle-track::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 12px;
-            height: 12px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 50%;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .dark-mode-toggle input:checked + .toggle-track {
-            background: rgba(255, 69, 0, 0.8);
-        }
-
-        .dark-mode-toggle input:checked + .toggle-track::after {
-            transform: translateX(12px);
-            background: #FF4500;
-        }
         /* SOCIAL ICON BRAND HOVER */
         /* SOCIAL ICON BRAND HOVER - high-saturation feedback */
-        .social-link {
-            transition: color 0.18s ease, opacity 0.18s ease, transform 0.18s ease, filter 0.18s ease;
-            transform-origin: center;
-        }
-        .social-link[aria-label="Instagram"]:hover {
-            color: #E1306C !important;
-            opacity: 1 !important;
-            transform: scale(1.22);
-            filter: drop-shadow(0 0 10px rgba(225, 48, 108, 0.55)) saturate(1.4);
-        }
-        .social-link[aria-label="LinkedIn"]:hover {
-            color: #0A66C2 !important;
-            opacity: 1 !important;
-            transform: scale(1.22);
-            filter: drop-shadow(0 0 10px rgba(10, 102, 194, 0.6)) saturate(1.4);
-        }
-        .social-link.social-link-ionic:hover {
-            color: #714BDD !important;
-            opacity: 1 !important;
-            transform: scale(1.22);
-            filter: drop-shadow(0 0 10px rgba(113, 75, 221, 0.6)) saturate(1.4);
-        }
+        
+
         /* Lift the muted .menu-socials row so the hovered icon shows full color */
         .menu-overlay.active .menu-socials:hover { opacity: 1 !important; }
         /* BRANDED SCROLLBAR - replaces the native macOS overlay scrollbar
@@ -679,7 +582,6 @@
         /* Page scrolls, so the footer flows after the content instead of
            being pinned like the single-screen pages. */
         html, body { height: auto; min-height: 100%; }
-        .site-footer { position: static; margin-top: 4rem; }
 
         .roster-page {
             width: 100%;
@@ -961,10 +863,6 @@
             -webkit-text-fill-color: #FF4500;
         }
 
-
-
-
-
         /* ==================== */
         /* ROSTER HOVER PREVIEW */
         /* ==================== */
@@ -1021,8 +919,7 @@
         body.roster-hover .site-footer-left,
         body.roster-hover .social-link { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF; }
 
-        /* Footer link inherits footer colour (kills default visited-link purple) */
-        .footer-link, .footer-link:link, .footer-link:visited { color: inherit; }
+        
         /* Theme switch: a short cross-fade instead of a hard cut. The class is
            only on <body> for the duration of the fade, so it never fights the
            site's own transitions the rest of the time. */
@@ -1486,6 +1383,16 @@
     <!-- Global Footer -->
     <footer class="site-footer">
         <div class="site-footer-left">2026, Covalent Studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">Privacy</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/terms" class="footer-link">Terms</a></div>
+        <form class="newsletter-form" action="/api/newsletter/subscribe" method="post" novalidate>
+            <label class="newsletter-label" for="newsletterEmail">Newsletter</label>
+            <input class="newsletter-input" id="newsletterEmail" type="email" name="email" placeholder="Email" autocomplete="email" required>
+            <div class="newsletter-hp" aria-hidden="true">
+                <label for="newsletterCompany">Leave this empty</label>
+                <input id="newsletterCompany" type="text" name="company" tabindex="-1" autocomplete="off">
+            </div>
+            <button class="newsletter-submit" type="submit" aria-label="Subscribe">&rarr;</button>
+            <p class="newsletter-status" role="status" aria-live="polite"></p>
+        </form>
         <div class="site-footer-right">
             <div class="site-footer-socials">
                 <label class="dark-mode-toggle">
