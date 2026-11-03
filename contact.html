@@ -507,8 +507,8 @@
             padding: 0;
             transition: transform 0.2s ease, color 0.2s ease;
         }
-        /* Solid arrow cut like the logomark: flat fill, 45° head, head as tall as the caps */
-        .newsletter-submit svg { display: block; width: 1em; height: 1em; }
+        /* Open arrow with the logomark's cuts: square ends, 45° head, stroke as heavy as the caps */
+        .newsletter-submit svg { display: block; width: 0.8em; height: 0.8em; }
         .newsletter-submit:hover { transform: translateX(0.15em); color: #FF4500; -webkit-text-fill-color: #FF4500; }
         .newsletter-submit:disabled { opacity: 0.4; }
         .newsletter-input:focus-visible,
@@ -895,7 +895,7 @@
                         <input id="newsletterCompany" type="text" name="company" tabindex="-1" autocomplete="off">
                     </div>
                     <button class="newsletter-submit" type="submit" aria-label="Subscribe">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 10.3h11.5V3.5L23 12l-10.5 8.5v-6.8H1z" fill="currentColor"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M1 12H21M13 4l8 8-8 8" stroke="currentColor" stroke-width="3.4" stroke-linecap="butt" stroke-linejoin="miter"/></svg>
                     </button>
                     <p class="newsletter-status" role="status" aria-live="polite"></p>
                 </form>
