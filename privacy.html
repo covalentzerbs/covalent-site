@@ -28,7 +28,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="/assets/css/footer.css">
-    <script src="/scripts/newsletter.js" defer></script>
     <style>
 
         /* CSS Variables */
@@ -682,21 +681,17 @@
     <!-- Global Footer -->
     <footer class="site-footer">
         <div class="site-footer-left">2026, Covalent Studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">Privacy</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/terms" class="footer-link">Terms</a></div>
-        <form class="newsletter-form" action="/api/newsletter/subscribe" method="post" novalidate>
-            <label class="newsletter-label" for="newsletterEmail">Newsletter</label>
-            <input class="newsletter-input" id="newsletterEmail" type="email" name="email" placeholder="Email" autocomplete="email" required>
-            <div class="newsletter-hp" aria-hidden="true">
-                <label for="newsletterCompany">Leave this empty</label>
-                <input id="newsletterCompany" type="text" name="company" tabindex="-1" autocomplete="off">
-            </div>
-            <button class="newsletter-submit" type="submit" aria-label="Subscribe">&rarr;</button>
-            <p class="newsletter-status" role="status" aria-live="polite"></p>
-        </form>
         <div class="site-footer-right">
             <div class="site-footer-socials">
-                <label class="dark-mode-toggle">
-                    <input type="checkbox" id="darkModeToggle">
-                    <span class="toggle-track"></span>
+                <label class="dark-mode-toggle" title="Light / dark">
+                    <input type="checkbox" id="darkModeToggle" aria-label="Dark mode">
+                    <svg class="theme-icon theme-icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon--moon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    </svg>
                 </label>
                 <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
