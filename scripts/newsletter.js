@@ -1,5 +1,5 @@
-// Newsletter signup in the footer. Posts the email to /api/newsletter/subscribe
-// and reports back in the status line above the field.
+// Newsletter signup on the contact page. Posts the email to /api/newsletter/subscribe
+// and reports back in the status line under the field.
 (function () {
     var form = document.querySelector('.newsletter-form');
     if (!form) return;

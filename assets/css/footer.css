@@ -62,102 +62,36 @@ body.dark-mode .site-footer { --footer-ink: #FF4500; }
 .social-link[aria-label="LinkedIn"]:hover { color: #0A66C2 !important; opacity: 1 !important; transform: scale(1.22); filter: drop-shadow(0 0 10px rgba(10, 102, 194, 0.6)) saturate(1.4); }
 .social-link.social-link-ionic:hover { color: #714BDD !important; opacity: 1 !important; transform: scale(1.22); filter: drop-shadow(0 0 10px rgba(113, 75, 221, 0.6)) saturate(1.4); }
 
-/* Light / dark switch */
-.dark-mode-toggle { cursor: none; }
-.dark-mode-toggle input { display: none; }
-.toggle-track {
-    width: 28px;
+/* Light / dark: the icon shows the mode you're in (sun = light, moon = dark).
+   The checkbox under it stays so each page's existing toggle script works. */
+.dark-mode-toggle {
+    position: relative;
+    display: grid;
+    width: 16px;
     height: 16px;
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
-    position: relative;
-    transition: background 0.3s ease;
+    color: inherit;
     cursor: none;
-    display: block;
+    transition: color 0.18s ease, transform 0.18s ease, filter 0.18s ease;
 }
-.toggle-track::after {
-    content: '';
+.dark-mode-toggle:hover {
+    color: #FF4500;
+    transform: scale(1.22);
+    filter: drop-shadow(0 0 10px rgba(255, 69, 0, 0.55));
+}
+body.dark-mode .dark-mode-toggle:hover { color: #FFFFFF; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.45)); }
+.dark-mode-toggle input {
     position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 12px;
-    height: 12px;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 50%;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.dark-mode-toggle input:checked + .toggle-track { background: rgba(255, 69, 0, 0.8); }
-.dark-mode-toggle input:checked + .toggle-track::after { transform: translateX(12px); background: #FF4500; }
-
-/* Newsletter signup — sits between the credit line and the icons */
-.newsletter-form {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-left: auto;
-    opacity: 0.5;
-    transition: opacity 0.2s ease;
-}
-.newsletter-form:focus-within { opacity: 1; }
-.newsletter-input {
-    width: 10rem;
-    padding: 0.15rem 0;
-    font: inherit;
-    color: inherit;
-    -webkit-text-fill-color: currentColor;
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid currentColor;
-    border-radius: 0;
-    outline: none;
-}
-.newsletter-input::placeholder {
-    color: inherit;
-    -webkit-text-fill-color: currentColor;
-    opacity: 0.6;
-}
-.newsletter-submit {
-    font: inherit;
-    color: inherit;
-    -webkit-text-fill-color: currentColor;
-    background: none;
-    border: 0;
-    padding: 0 0.1rem;
-}
-.newsletter-submit:disabled { opacity: 0.4; }
-.newsletter-input:focus-visible,
-.newsletter-submit:focus-visible {
-    outline: 1px solid currentColor;
-    outline-offset: 2px;
-}
-/* Honeypot: off-screen rather than display:none, so bots still fill it */
-.newsletter-hp {
-    position: absolute;
-    left: -9999px;
     width: 1px;
     height: 1px;
-    overflow: hidden;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
 }
-.newsletter-status {
-    position: absolute;
-    right: 0;
-    bottom: calc(100% + 0.4rem);
-    white-space: nowrap;
+.dark-mode-toggle:has(input:focus-visible) { outline: 1px solid currentColor; outline-offset: 3px; border-radius: 50%; }
+.theme-icon {
+    grid-area: 1 / 1;
+    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.newsletter-status:empty { display: none; }
-
-@media (max-width: 768px) {
-    .site-footer {
-        flex-wrap: wrap;
-        row-gap: 0.75rem;
-        padding: 1rem 1.5rem;
-    }
-    /* Signup gets its own row above the credit line and icons */
-    .newsletter-form {
-        order: -1;
-        width: 100%;
-        margin-left: 0;
-    }
-    .newsletter-input { flex: 1; width: auto; max-width: 16rem; }
-}
+.theme-icon--moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+body.dark-mode .theme-icon--sun { opacity: 0; transform: rotate(90deg) scale(0.5); }
+body.dark-mode .theme-icon--moon { opacity: 1; transform: none; }

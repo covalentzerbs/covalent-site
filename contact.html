@@ -468,6 +468,61 @@
         .contact-bottom .contact-swap { font-size: clamp(0.9rem, 1.35vw, 1.4rem); }
         .contact-bottom .contact-role { font-size: clamp(0.7rem, 0.85vw, 0.9rem); }
 
+        /* Newsletter: a third line in the bottom-left stack. The field takes the
+           names' bold type, underlined; status lines up like "Email Copied". */
+        .contact-newsletter .contact-role { cursor: none; }
+        .newsletter-form {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: clamp(0.9rem, 1.35vw, 1.4rem);
+            font-weight: 700;
+            letter-spacing: -0.045em;
+            line-height: 1;
+            color: var(--black);
+        }
+        .newsletter-input {
+            width: 13em;
+            padding: 0 0 0.12em;
+            font: inherit;
+            letter-spacing: inherit;
+            color: inherit;
+            -webkit-text-fill-color: currentColor;
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid currentColor;
+            border-radius: 0;
+            outline: none;
+        }
+        .newsletter-input::placeholder { color: inherit; -webkit-text-fill-color: currentColor; opacity: 0.3; }
+        .newsletter-submit {
+            font: inherit;
+            color: inherit;
+            -webkit-text-fill-color: currentColor;
+            background: none;
+            border: 0;
+            padding: 0;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .newsletter-submit:hover { transform: translateX(0.15em); color: #FF4500; -webkit-text-fill-color: #FF4500; }
+        .newsletter-submit:disabled { opacity: 0.4; }
+        .newsletter-input:focus-visible,
+        .newsletter-submit:focus-visible { outline: 1px solid currentColor; outline-offset: 3px; }
+        /* Honeypot: off-screen rather than display:none, so bots still fill it */
+        .newsletter-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+        .newsletter-status {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin: 0.35rem 0 0;
+            font-size: clamp(0.65rem, 0.85vw, 0.85rem);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+        }
+        .newsletter-status:empty { display: none; }
+
         /* Copy toast */
 
         /* ==================== */
@@ -596,6 +651,8 @@
             .contact-swap { font-size: clamp(1.1rem, 5.6vw, 2rem); }
             .contact-bottom { position: static; margin-top: 2rem; gap: 1.25rem; }
             .contact-bottom .contact-swap { font-size: clamp(0.95rem, 4vw, 1.2rem); }
+            .newsletter-form { font-size: clamp(0.95rem, 4vw, 1.2rem); }
+            .newsletter-input { width: auto; flex: 1; max-width: 16em; }
 
             /* Hide clock and footer — just the email, nothing else */
             .clock-widget,
@@ -648,6 +705,12 @@
             color: #FF4500 !important;
             -webkit-text-fill-color: #FF4500;
         }
+
+        body.dark-mode .newsletter-form {
+            color: #FF4500 !important;
+            -webkit-text-fill-color: #FF4500;
+        }
+        body.dark-mode .newsletter-submit:hover { color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF; }
 
         body.dark-mode .clock-row {
             color: #FF4500 !important;
@@ -819,6 +882,18 @@
                 </a>
                 <span class="copied-tag" aria-live="polite">Email Copied</span>
             </div>
+            <div class="contact-person contact-newsletter">
+                <label class="contact-role" for="newsletterEmail">Newsletter</label>
+                <form class="newsletter-form" action="/api/newsletter/subscribe" method="post" novalidate>
+                    <input class="newsletter-input" id="newsletterEmail" type="email" name="email" placeholder="Email" autocomplete="email" required>
+                    <div class="newsletter-hp" aria-hidden="true">
+                        <label for="newsletterCompany">Leave this empty</label>
+                        <input id="newsletterCompany" type="text" name="company" tabindex="-1" autocomplete="off">
+                    </div>
+                    <button class="newsletter-submit" type="submit" aria-label="Subscribe">&rarr;</button>
+                    <p class="newsletter-status" role="status" aria-live="polite"></p>
+                </form>
+            </div>
         </div>
     </main>
 
@@ -828,21 +903,17 @@
     <!-- Global Footer -->
     <footer class="site-footer site-footer--fixed">
         <div class="site-footer-left">2026, Covalent Studios&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/privacy" class="footer-link">Privacy</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="/terms" class="footer-link">Terms</a></div>
-        <form class="newsletter-form" action="/api/newsletter/subscribe" method="post" novalidate>
-            <label class="newsletter-label" for="newsletterEmail">Newsletter</label>
-            <input class="newsletter-input" id="newsletterEmail" type="email" name="email" placeholder="Email" autocomplete="email" required>
-            <div class="newsletter-hp" aria-hidden="true">
-                <label for="newsletterCompany">Leave this empty</label>
-                <input id="newsletterCompany" type="text" name="company" tabindex="-1" autocomplete="off">
-            </div>
-            <button class="newsletter-submit" type="submit" aria-label="Subscribe">&rarr;</button>
-            <p class="newsletter-status" role="status" aria-live="polite"></p>
-        </form>
         <div class="site-footer-right">
             <div class="site-footer-socials">
-                <label class="dark-mode-toggle">
-                    <input type="checkbox" id="darkModeToggle">
-                    <span class="toggle-track"></span>
+                <label class="dark-mode-toggle" title="Light / dark">
+                    <input type="checkbox" id="darkModeToggle" aria-label="Dark mode">
+                    <svg class="theme-icon theme-icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon--moon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                    </svg>
                 </label>
                 <a href="https://www.instagram.com/covalentstudios" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
