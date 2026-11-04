@@ -1253,7 +1253,7 @@
     <script>
     // Behind-the-scenes slideshow (photos in /assets/bts, 01 to 21), full bleed behind
     // the whole page. The new photo fades in over the old one (2.2s), so it never dips
-    // to black between photos; each photo then holds ~2.7s. The order is shuffled on every visit
+    // to black between photos; each photo then holds ~2.7s. It plays 01 to 17 in Ben's chosen order
     // and only loads the current and next one until someone scrubs.
     //
     // Scrub: press anywhere that is not a link, an address or the newsletter field and
@@ -1265,10 +1265,9 @@
         if (!box) return;
         var N = 17, FADE = 2200, HOLD = FADE + 2700, STEP = 40;
         var srcs = []; for (var i = 1; i <= N; i++) srcs.push('/assets/bts/' + (i < 10 ? '0' : '') + i + '.jpg');
-        for (var j = N - 1; j > 0; j--) { var k = Math.floor(Math.random() * (j + 1)), t = srcs[j]; srcs[j] = srcs[k]; srcs[k] = t; }   // a fresh shuffle every visit
         var layers = [document.createElement('img'), document.createElement('img')];
         layers.forEach(function (im) { im.alt = ''; im.decoding = 'async'; im.draggable = false; box.appendChild(im); });
-        var at = Math.floor(Math.random() * N), front = 0, timer = null, started = false, drag = null, warmed = false;
+        var at = 0, front = 0, timer = null, started = false, drag = null, warmed = false;
 
         function fit() {
             box.classList.add('is-on');   // full bleed on every screen
