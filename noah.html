@@ -1323,7 +1323,7 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164238677" data-va="1.367" aria-label="Play The Summer Smash">
+                        data-vimeo="1164238677" data-va="1.367" data-prodco="Lyrical" aria-label="Play The Summer Smash">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2175521266-3ed99257ed0088a578edb627ee59e6b279f57bed6d461416c39dca3497c30039-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2175521266-3ed99257ed0088a578edb627ee59e6b279f57bed6d461416c39dca3497c30039-d_640?region=us 640w, https://i.vimeocdn.com/video/2175521266-3ed99257ed0088a578edb627ee59e6b279f57bed6d461416c39dca3497c30039-d_1280?region=us 1280w"
@@ -2017,7 +2017,7 @@
             var d = det && (!det.draft || preview) ? det : null;              // draft: the whole block waits for ?preview
             var dir = (document.querySelector('.director-name') || {}).textContent || '';
             setCell(infoProdco, item.prodco || (d && d.prodco) || '');
-            setCell(infoClient, item.client);
+            setCell(infoClient, item.client || item.title);   // a spot with no client shows its title there
             setCell(infoDirector, dir.trim());
             casePanel.innerHTML = ''; creditsPanel.innerHTML = '';
             var csAll = (d && d.caseStudy) || {};

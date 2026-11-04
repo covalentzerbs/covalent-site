@@ -1820,7 +1820,7 @@
             var d = det && (!det.draft || preview) ? det : null;              // draft: the whole block waits for ?preview
             var dir = (document.querySelector('.director-name') || {}).textContent || '';
             setCell(infoProdco, item.prodco || (d && d.prodco) || '');
-            setCell(infoClient, item.client);
+            setCell(infoClient, item.client || item.title);   // a spot with no client shows its title there
             setCell(infoDirector, dir.trim());
             casePanel.innerHTML = ''; creditsPanel.innerHTML = '';
             var csAll = (d && d.caseStudy) || {};
