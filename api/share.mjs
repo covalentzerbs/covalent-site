@@ -83,12 +83,13 @@ export async function GET(request) {
     const image = spot.image.startsWith('http') ? spot.image : SITE + spot.image;
     const page = `${SITE}/${dir}/${clip}`;
     const desc = [spot.client, name ? 'Directed by ' + name : ''].filter(Boolean).join('. ');
-    html = setMeta(html, 'og:title', spot.title);
+    const heading = name ? `${spot.title} - ${name}` : spot.title;   // "The Spirit of Chicago - Noah Keckler"
+    html = setMeta(html, 'og:title', heading);
     html = setMeta(html, 'og:description', desc);
     html = setMeta(html, 'og:image', image);
     html = setMeta(html, 'og:url', page);
     html = setMeta(html, 'twitter:card', 'summary_large_image', true);
-    html = setMeta(html, 'twitter:title', spot.title, true);
+    html = setMeta(html, 'twitter:title', heading, true);
     html = setMeta(html, 'twitter:description', desc, true);
     html = setMeta(html, 'twitter:image', image, true);
     html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${attr(desc)}">`);
