@@ -58,9 +58,11 @@ function slugFor(t, all) {
 
 function setMeta(html, key, value, isName) {
   const a = isName ? 'name' : 'property';
-  const tag = `<meta ${a}="${key}" content="${attr(value)}">`;
-  const re = new RegExp(`<meta ${a}="${key.replace(/[.:]/g, '\\$&')}" content="[^"]*">`);
-  return re.test(html) ? html.replace(re, tag) : html.replace('</head>', `    ${tag}\n</head>`);
+  // data-page keeps the page's own value, so the viewer can put it back when the spot closes
+  const re = new RegExp(`<meta ${a}="${key.replace(/[.:]/g, '\\$&')}" content="([^"]*)">`);
+  const m = html.match(re);
+  const tag = `<meta ${a}="${key}" content="${attr(value)}" data-page="${m ? m[1] : ''}">`;
+  return m ? html.replace(re, tag) : html.replace('</head>', `    ${tag}\n</head>`);
 }
 
 export async function GET(request) {
@@ -92,7 +94,7 @@ export async function GET(request) {
     html = setMeta(html, 'twitter:title', heading, true);
     html = setMeta(html, 'twitter:description', desc, true);
     html = setMeta(html, 'twitter:image', image, true);
-    html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${attr(desc)}">`);
+    html = setMeta(html, 'description', desc, true);
   }
 
   return new Response(html, {

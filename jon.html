@@ -2055,6 +2055,7 @@
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
             renderInfo(item); viewer.scrollTop=0;
             if(!fromUrl) clipUrl(item, wasOpen);
+            setShareMeta(allTiles().filter(function(o){ var m=o.querySelector('.reel-media'); return m && m.getAttribute('data-vimeo')===item.vimeo; })[0]);
             viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
             prevBtn.style.opacity=idx>0?'0.6':'0.15';
             nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
@@ -2087,6 +2088,37 @@
             var url=basePath+'/'+tileSlug(li)+location.search;
             try{ if(replace && pushedClip) history.replaceState({clip:1}, '', url); else { history.pushState({clip:1}, '', url); pushedClip=true; } }catch(e){}
         }
+        // Public pages: while a spot is open the page's own preview tags describe that spot,
+        // so sharing from the browser (Safari's share sheet reads the open page) shows the
+        // spot's still and "Title - Director", the same as api/share.mjs gives a pasted link.
+        var shareMeta = (function(){
+            if(basePath.indexOf('/roster')===0) return null;
+            var keys=[['property','og:title'],['property','og:description'],['property','og:image'],['property','og:url'],['name','twitter:title'],['name','twitter:description'],['name','twitter:image'],['name','twitter:card'],['name','description']];
+            var tags={}, saved={};
+            keys.forEach(function(k){
+                var el=document.querySelector('meta['+k[0]+'="'+k[1]+'"]');
+                if(!el){ el=document.createElement('meta'); el.setAttribute(k[0],k[1]); el.setAttribute('content',''); document.head.appendChild(el); }
+                tags[k[1]]=el; saved[k[1]]=el.hasAttribute('data-page') ? el.getAttribute('data-page') : el.getAttribute('content');
+            });
+            return { tags:tags, saved:saved, title:document.title, name:saved['og:title'] };
+        })();
+        function setShareMeta(li){
+            if(!shareMeta) return;
+            var t=shareMeta.tags;
+            if(!li){ for(var k in t) t[k].setAttribute('content', shareMeta.saved[k]); document.title=shareMeta.title; return; }
+            var title=((li.querySelector('.reel-title')||{}).textContent||'').trim(), client=((li.querySelector('.reel-client')||{}).textContent||'').trim();
+            var img=li.querySelector('img'), best='', bw=0;
+            if(img){ best=img.getAttribute('src')||''; (img.getAttribute('srcset')||'').split(',').forEach(function(part){ var b=part.trim().split(' '), w=parseInt(b[1],10)||0; if(b[0] && w>bw){ bw=w; best=b[0]; } }); }
+            try{ best=new URL(best, 'https://covalentstudios.co/').href; }catch(e){}
+            var name=shareMeta.name, heading=name ? title+' - '+name : title;
+            var desc=[client, name ? 'Directed by '+name : ''].filter(Boolean).join('. ');
+            t['og:title'].setAttribute('content', heading); t['twitter:title'].setAttribute('content', heading);
+            t['og:description'].setAttribute('content', desc); t['twitter:description'].setAttribute('content', desc); t['description'].setAttribute('content', desc);
+            if(best){ t['og:image'].setAttribute('content', best); t['twitter:image'].setAttribute('content', best); }
+            t['twitter:card'].setAttribute('content', 'summary_large_image');
+            t['og:url'].setAttribute('content', 'https://covalentstudios.co'+basePath+'/'+tileSlug(li));
+            document.title=heading;
+        }
         function clipFromUrl(){
             var rest=location.pathname.replace(/\/$/,''); if(rest.indexOf(basePath+'/')!==0) return null;
             return decodeURIComponent(rest.slice(basePath.length+1)) || null;
@@ -2117,6 +2149,7 @@
                 if(pushedClip){ pushedClip=false; try{ history.back(); }catch(e){} }
                 else if(clipFromUrl()){ try{ history.replaceState(null,'',basePath+location.search+(document.querySelector('.reel-grid[data-set="music"]:not([hidden])')?'#music':'')); }catch(e){} }
             }
+            setShareMeta(null);
             viewer.classList.remove('active');
             document.body.classList.remove('viewer-open','viewer-exit-active');
             if(exitCur) exitCur.classList.remove('show');
