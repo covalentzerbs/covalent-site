@@ -491,6 +491,10 @@
         /* dark mode keeps its orange type, without the blend */
         body.dark-mode .contact-right, body.dark-mode .contact-list, body.dark-mode .contact-bottom,
         body.dark-mode .nav, body.dark-mode .logo-bottom, body.dark-mode .site-footer { mix-blend-mode: normal; }
+        /* hover colours stay true: while a link in a blended block is hovered, that block
+           drops the blend so the orange (and the footer's brand colours) are not inverted */
+        .nav:has(.nav-link:hover), .logo-bottom:hover,
+        .site-footer:has(.social-link:hover, .dark-mode-toggle:hover) { mix-blend-mode: normal; }
 
         /* Desktop layout (Ben's sketch): a 2 x 2 grid.
              photos (top left)          cities (top right)
