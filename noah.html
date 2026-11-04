@@ -1406,30 +1406,31 @@
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164237076" data-va="1.458" aria-label="Play 2024 Summer Smash - Official Commercial">
+                        data-vimeo="1164237076" data-va="1.458" aria-label="Play Summer Smash 2024">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/1876407292-3e281d559b4429775b83aa447310c4d1580b902471b3e43cf08e8852691fb3da-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/1876407292-3e281d559b4429775b83aa447310c4d1580b902471b3e43cf08e8852691fb3da-d_640?region=us 640w, https://i.vimeocdn.com/video/1876407292-3e281d559b4429775b83aa447310c4d1580b902471b3e43cf08e8852691fb3da-d_1280?region=us 1280w"
                          sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
                 </button>
                 <div class="reel-meta">
-                    <p class="reel-title">2024 Summer Smash - Official Commercial</p>
+                    <p class="reel-title">Summer Smash 2024</p>
                     <p class="reel-client">Lyrical Lemonade</p>
                 </div>
+                <script type="application/json" class="reel-detail">{"infoTitle":true}</script>
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
-                        data-vimeo="1164236894" data-va="1.333" data-prodco="Lyrical" aria-label="Play 2025 Summer Smash - Official Commercial">
+                        data-vimeo="1164236894" data-va="1.333" data-prodco="Lyrical" aria-label="Play Summer Smash 2025">
                     <img class="reel-thumb" alt="" loading="lazy" decoding="async"
                          src="https://i.vimeocdn.com/video/2175518422-8c3be9ca53f0bfec3b5baa796d64c99c8d3d6659831c20cd367d5ea4e0af6663-d_640?region=us"
                          srcset="https://i.vimeocdn.com/video/2175518422-8c3be9ca53f0bfec3b5baa796d64c99c8d3d6659831c20cd367d5ea4e0af6663-d_640?region=us 640w, https://i.vimeocdn.com/video/2175518422-8c3be9ca53f0bfec3b5baa796d64c99c8d3d6659831c20cd367d5ea4e0af6663-d_1280?region=us 1280w"
                          sizes="(max-width: 600px) 92vw, (max-width: 900px) 46vw, 31vw">
                 </button>
                 <div class="reel-meta">
-                    <p class="reel-title">2025 Summer Smash - Official Commercial</p>
+                    <p class="reel-title">Summer Smash 2025</p>
                     <p class="reel-client">Lyrical Lemonade</p>
                 </div>
-                <script type="application/json" class="reel-detail">{"credits":[{"group":"Production","items":[["Client","Lyrical Lemonade"],["Production Company","Lyrical"],["Director","Noah Keckler"],["Executive Producers",["@colebennett","@bertosolo"]],["Head of Production","@kristaworby"],["Production Designer","@dallysdorsey_"],["Location Manager","@waveymase"],["Production Assistant","@keenann.h"],["Talent","@unissfx"]]},{"group":"Post","items":[["VFX",["@monyyplus","@talhapervaiz_","@yusufkicanoglu","@sevenstudiosmedia"]]]}]}</script>
+                <script type="application/json" class="reel-detail">{"credits":[{"group":"Production","items":[["Client","Lyrical Lemonade"],["Production Company","Lyrical"],["Director","Noah Keckler"],["Executive Producers",["@colebennett","@bertosolo"]],["Head of Production","@kristaworby"],["Production Designer","@dallysdorsey_"],["Location Manager","@waveymase"],["Production Assistant","@keenann.h"],["Talent","@unissfx"]]},{"group":"Post","items":[["VFX",["@monyyplus","@talhapervaiz_","@yusufkicanoglu","@sevenstudiosmedia"]]]}],"infoTitle":true}</script>
             </li>
         </ul>
         <ul class="reel-grid" data-set="music" hidden>
@@ -2017,7 +2018,7 @@
             var d = det && (!det.draft || preview) ? det : null;              // draft: the whole block waits for ?preview
             var dir = (document.querySelector('.director-name') || {}).textContent || '';
             setCell(infoProdco, item.prodco || (d && d.prodco) || '');
-            setCell(infoClient, item.client || item.title);   // a spot with no client shows its title there
+            setCell(infoClient, (det && det.infoTitle) || !item.client ? item.title : item.client);   // no client, or detail.infoTitle: the title shows there
             setCell(infoDirector, dir.trim());
             casePanel.innerHTML = ''; creditsPanel.innerHTML = '';
             var csAll = (d && d.caseStudy) || {};

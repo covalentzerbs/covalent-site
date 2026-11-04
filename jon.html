@@ -1903,7 +1903,7 @@
             var d = det && (!det.draft || preview) ? det : null;              // draft: the whole block waits for ?preview
             var dir = (document.querySelector('.director-name') || {}).textContent || '';
             setCell(infoProdco, item.prodco || (d && d.prodco) || '');
-            setCell(infoClient, item.client || item.title);   // a spot with no client shows its title there
+            setCell(infoClient, (det && det.infoTitle) || !item.client ? item.title : item.client);   // no client, or detail.infoTitle: the title shows there
             setCell(infoDirector, dir.trim());
             casePanel.innerHTML = ''; creditsPanel.innerHTML = '';
             var csAll = (d && d.caseStudy) || {};
