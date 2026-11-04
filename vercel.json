@@ -4,6 +4,14 @@
     {
       "source": "/",
       "destination": "/directors"
+    },
+    {
+      "source": "/:dir(cam|jacob|jon|max|noah)/:clip",
+      "destination": "/:dir"
+    },
+    {
+      "source": "/roster/:dir/:clip",
+      "destination": "/roster/:dir"
     }
   ],
   "redirects": [

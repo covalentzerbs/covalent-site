@@ -1842,6 +1842,7 @@
             var until = performance.now() + 500;
             (function step() { if (lastX !== null) track(lastX, lastY); if (performance.now() < until) requestAnimationFrame(step); })();
         }
+        window.__setReelSide = setSide;
         function initial() { if (document.querySelector('.reel-switch')) setSide(location.hash === '#music' ? 'music' : 'commercial', false); }
         initial();
         var target = document.getElementById('rosterContent');   // gated pages: the markup arrives after the unlock
@@ -2048,7 +2049,7 @@
             if(window.Vimeo){ cb(); return; }
             var n=0; (function poll(){ if(window.Vimeo) return cb(); if(n++>120) return; setTimeout(poll,50); })();
         }
-        openViewer = function(idx) { viewerItems=collectItems(); vMuted=false; if(vVolume===0) vVolume=1; renderVol();
+        openViewer = function(idx, fromUrl) { var wasOpen=viewer.classList.contains('active'); viewerItems=collectItems(); vMuted=false; if(vVolume===0) vVolume=1; renderVol();
             current=idx; var item=viewerItems[idx];
             resetPlayer();
             // Build a fresh iframe each open — Vimeo's player.destroy() removes the
@@ -2064,6 +2065,7 @@
             viewer.style.setProperty('--va', item.va||1.778);
             clientEl.textContent=item.client||''; titleEl.textContent=item.title||'';
             renderInfo(item); viewer.scrollTop=0;
+            if(!fromUrl) clipUrl(item, wasOpen);
             viewer.classList.add('active'); document.body.classList.add('viewer-open'); document.body.classList.remove('click-cursor-active'); document.body.style.overflow='hidden';
             prevBtn.style.opacity=idx>0?'0.6':'0.15';
             nextBtn.style.opacity=idx<viewerItems.length-1?'0.6':'0.15';
@@ -2077,7 +2079,55 @@
                 }catch(e){}
             });
         };
-        function closeViewer() {
+        // Shareable addresses: each open spot puts its own path in the address bar
+        // (/noah/the-spirit-of-chicago, /roster/noah-keckler/the-spirit-of-chicago).
+        // vercel.json rewrites those paths back to the page, which opens the spot on load.
+        // Back (or a two-finger swipe) closes the viewer; closing steps back too.
+        var basePath = (function(){ var c=document.querySelector('link[rel=canonical]'); try{ return new URL(c.href).pathname.replace(/\/$/,''); }catch(e){ return location.pathname.split('/').slice(0, 2).join('/'); } })();
+        var pushedClip = false;
+        function slugify(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/&/g,' and ').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
+        function allTiles(){ return Array.prototype.slice.call(document.querySelectorAll('.reel-grid .reel-item')); }
+        function tileSlug(li){
+            var t=slugify((li.querySelector('.reel-title')||{}).textContent), c=slugify((li.querySelector('.reel-client')||{}).textContent);
+            var same=allTiles().filter(function(o){ return slugify((o.querySelector('.reel-title')||{}).textContent)===t; }).length;
+            return (same>1 && c ? c+'-' : '')+t || ('clip-'+(li.querySelector('.reel-media')||{getAttribute:function(){return ''}}).getAttribute('data-vimeo'));
+        }
+        function clipUrl(item, replace){
+            var li=allTiles().filter(function(o){ var m=o.querySelector('.reel-media'); return m && m.getAttribute('data-vimeo')===item.vimeo; })[0];
+            if(!li) return;
+            var url=basePath+'/'+tileSlug(li)+location.search;
+            try{ if(replace && pushedClip) history.replaceState({clip:1}, '', url); else { history.pushState({clip:1}, '', url); pushedClip=true; } }catch(e){}
+        }
+        function clipFromUrl(){
+            var rest=location.pathname.replace(/\/$/,''); if(rest.indexOf(basePath+'/')!==0) return null;
+            return decodeURIComponent(rest.slice(basePath.length+1)) || null;
+        }
+        function openFromUrl(){
+            var want=clipFromUrl(); if(!want) return false;
+            var li=allTiles().filter(function(o){ return tileSlug(o)===want; })[0]; if(!li) return false;
+            var grid=li.closest('.reel-grid'), side=grid && grid.getAttribute('data-set');
+            if(side && grid.hidden && window.__setReelSide) window.__setReelSide(side, false);
+            var idx=Array.prototype.indexOf.call(document.querySelectorAll('.reel-grid:not([hidden]) .reel-media'), li.querySelector('.reel-media'));
+            if(idx===-1) return false;
+            openViewer(idx, true); return true;
+        }
+        window.addEventListener('popstate', function(){
+            if(clipFromUrl()) { openFromUrl(); return; }
+            pushedClip=false;
+            if(viewer.classList.contains('active')) closeViewer(true);
+        });
+        // a shared link: open its spot once the tiles exist (gated pages: after the unlock)
+        setTimeout(function(){
+            if(!clipFromUrl()) return;
+            if(openFromUrl()) return;
+            var tgt=document.getElementById('rosterContent');
+            if(tgt){ var mo=new MutationObserver(function(){ if(openFromUrl()) mo.disconnect(); }); mo.observe(tgt,{childList:true}); }
+        }, 0);
+        function closeViewer(fromHistory) {
+            if(fromHistory!==true){
+                if(pushedClip){ pushedClip=false; try{ history.back(); }catch(e){} }
+                else if(clipFromUrl()){ try{ history.replaceState(null,'',basePath+location.search+(document.querySelector('.reel-grid[data-set="music"]:not([hidden])')?'#music':'')); }catch(e){} }
+            }
             viewer.classList.remove('active');
             document.body.classList.remove('viewer-open','viewer-exit-active');
             if(exitCur) exitCur.classList.remove('show');
