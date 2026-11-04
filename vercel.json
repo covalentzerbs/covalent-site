@@ -7,7 +7,7 @@
     },
     {
       "source": "/:dir(cam|jacob|jon|max|noah)/:clip",
-      "destination": "/:dir"
+      "destination": "/api/share?dir=:dir&clip=:clip"
     },
     {
       "source": "/roster/:dir/:clip",
@@ -96,5 +96,10 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/share.mjs": {
+      "includeFiles": "{cam,jacob,jon,max,noah}.html"
+    }
+  }
 }
