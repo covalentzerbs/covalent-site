@@ -1319,6 +1319,7 @@
                     <p class="reel-title">Smile</p>
                     <p class="reel-client">Les Miles</p>
                 </div>
+                <script type="application/json" class="reel-detail">{"director":"Cam Erickson + Dave Meyers"}</script>
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
@@ -1332,6 +1333,7 @@
                     <p class="reel-title">Pepsi</p>
                     <p class="reel-client">Pepsi</p>
                 </div>
+                <script type="application/json" class="reel-detail">{"director":"Cam Erickson + Dave Meyers"}</script>
             </li>
             <li class="reel-item">
                 <button class="reel-media" type="button"
@@ -1915,7 +1917,7 @@
             var dir = (document.querySelector('.director-name') || {}).textContent || '';
             setCell(infoProdco, item.prodco || (d && d.prodco) || '');
             setCell(infoClient, (det && det.infoTitle) || !item.client ? item.title : item.client);   // no client, or detail.infoTitle: the title shows there
-            setCell(infoDirector, dir.trim());
+            setCell(infoDirector, (det && det.director) || dir.trim());   // detail.director: a co-directed spot credits both names
             casePanel.innerHTML = ''; creditsPanel.innerHTML = '';
             var csAll = (d && d.caseStudy) || {};
             var cs = (!csAll.draft || preview) ? csAll : {};                 // caseStudy.draft: only the case study waits
@@ -2121,7 +2123,8 @@
             var img=li.querySelector('img'), best='', bw=0;
             if(img){ best=img.getAttribute('src')||''; (img.getAttribute('srcset')||'').split(',').forEach(function(part){ var b=part.trim().split(' '), w=parseInt(b[1],10)||0; if(b[0] && w>bw){ bw=w; best=b[0]; } }); }
             try{ best=new URL(best, 'https://covalentstudios.co/').href; }catch(e){}
-            var name=shareMeta.name, heading=name ? title+' - '+name : title;
+            var md=li.querySelector('script.reel-detail'), det=null; if(md){ try{ det=JSON.parse(md.textContent); }catch(e){} }
+            var name=(det && det.director) || shareMeta.name, heading=name ? title+' - '+name : title;
             var desc=[client, name ? 'Directed by '+name : ''].filter(Boolean).join('. ');
             t['og:title'].setAttribute('content', heading); t['twitter:title'].setAttribute('content', heading);
             t['og:description'].setAttribute('content', desc); t['twitter:description'].setAttribute('content', desc); t['description'].setAttribute('content', desc);

@@ -44,7 +44,10 @@ function tiles(html) {
       const n = parseInt(w, 10) || 0;
       if (u && n > best) { best = n; image = u; }
     }
-    out.push({ title, client, vimeo, image: decode(image) });
+    let director = '';   // detail.director: a co-directed spot
+    const md = li.match(/<script type="application\/json" class="reel-detail">([\s\S]*?)<\/script>/);
+    if (md) { try { director = JSON.parse(md[1]).director || ''; } catch {} }
+    out.push({ title, client, vimeo, director, image: decode(image) });
   }
   return out;
 }
@@ -81,7 +84,7 @@ export async function GET(request) {
   const all = tiles(html);
   const spot = all.find((t) => slugFor(t, all) === clip);
   if (spot) {
-    const name = decode((html.match(/<meta property="og:title" content="([^"]*)">/) || [])[1]);
+    const name = spot.director || decode((html.match(/<meta property="og:title" content="([^"]*)">/) || [])[1]);
     const image = spot.image.startsWith('http') ? spot.image : SITE + spot.image;
     const page = `${SITE}/${dir}/${clip}`;
     const desc = [spot.client, name ? 'Directed by ' + name : ''].filter(Boolean).join('. ');
