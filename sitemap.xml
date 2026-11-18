@@ -1,103 +1,1129 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://covalentstudios.co/</loc>
+    <lastmod>2026-11-18</lastmod>
     <priority>1.0</priority>
-    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://covalentstudios.co/about</loc>
+    <lastmod>2026-11-18</lastmod>
     <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://covalentstudios.co/contact</loc>
+    <lastmod>2026-11-18</lastmod>
     <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://covalentstudios.co/assets/reels/cam/smile-1280.jpg</image:loc>
+      <image:caption>Les Miles &quot;Smile&quot; commercial directed by Cam Erickson + Dave Meyers</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://covalentstudios.co/assets/reels/cam/pepsi-circles-1280.jpg</image:loc>
+      <image:caption>Pepsi commercial directed by Cam Erickson + Dave Meyers</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197154662-1f34086d4e31e899ff73ba725a0e71c052912cc3d67453eb51684abe8ba2dba2-d_1280?region=us</image:loc>
+      <image:caption>Puma Basketball &quot;Hoops Brand Campaign&quot; commercial directed by Cam Erickson</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197156649-68d00a008d543e0b049ab22acfdeb56ccdd53ede7e48add9eaf1386df3bbfbe7-d_1280?region=us</image:loc>
+      <image:caption>G-Star &quot;Burna Boy&quot; commercial directed by Cam Erickson</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197156545-18f0a112215c0508a0ba6cdd932104bc5d133b816102b03145d27ffd551d1fd0-d_1280?region=us</image:loc>
+      <image:caption>Activia &quot;Pre + Pro + Pro&quot; commercial directed by Cam Erickson</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197155646-8146ec1a159b3e801db74d712edbf559ce720895ad48089b99895e7c8da2d079-d_1280?region=us</image:loc>
+      <image:caption>Activia &quot;Gut Support&quot; commercial directed by Cam Erickson</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197157834-dc81a055568e8c2919af12a369857cd9369f774ee69fdecdc8531e8c4a4a9967-d_1280?region=us</image:loc>
+      <image:caption>Ludacris &quot;Pull Over&quot; music video directed by Cam Erickson</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197158185-3d3f095c133373ee846e1f7bd0c20bbe3e34b7cb5194b6f7c6aba4f1dd02313b-d_1280?region=us</image:loc>
+      <image:caption>Nige Witt music video directed by Cam Erickson</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197157110-37e643cb9569a642a00a12c9e90f8fe184bc0f999a8b260866c02061670a18b8-d_1280?region=us</image:loc>
+      <image:caption>HXG &quot;Redrum&quot; music video directed by Cam Erickson</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197158033-0527004f901d18a6ebdb73d52be736e7bd975991831a7862a3131bd158de1b1a-d_1280?region=us</image:loc>
+      <image:caption>Fontaines D.C. &quot;Marianne&quot; music video directed by Cam Erickson</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197158637-39fa58e8ef4706db0e46c510b9b4ecf8412f30613a0a7cf5bd5ff2e6c727679a-d_1280?region=us</image:loc>
+      <image:caption>Anytime Anyplace music video directed by Cam Erickson</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/smile</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://covalentstudios.co/assets/reels/cam/smile-1280.jpg</video:thumbnail_loc>
+      <video:title>Les Miles - Smile</video:title>
+      <video:description>Les Miles &quot;Smile&quot; commercial directed by Cam Erickson + Dave Meyers</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1235194484</video:player_loc>
+      <video:duration>61</video:duration>
+      <video:publication_date>2026-10-12</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/pepsi</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://covalentstudios.co/assets/reels/cam/pepsi-circles-1280.jpg</video:thumbnail_loc>
+      <video:title>Pepsi</video:title>
+      <video:description>Pepsi commercial directed by Cam Erickson + Dave Meyers</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223839056</video:player_loc>
+      <video:duration>60</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/hoops-brand-campaign</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197154662-1f34086d4e31e899ff73ba725a0e71c052912cc3d67453eb51684abe8ba2dba2-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Puma Basketball - Hoops Brand Campaign</video:title>
+      <video:description>Puma Basketball &quot;Hoops Brand Campaign&quot; commercial directed by Cam Erickson</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223836206</video:player_loc>
+      <video:duration>30</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/burna-boy</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197156649-68d00a008d543e0b049ab22acfdeb56ccdd53ede7e48add9eaf1386df3bbfbe7-d_1280?region=us</video:thumbnail_loc>
+      <video:title>G-Star - Burna Boy</video:title>
+      <video:description>G-Star &quot;Burna Boy&quot; commercial directed by Cam Erickson</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223838008</video:player_loc>
+      <video:duration>30</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/pre-pro-pro</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197156545-18f0a112215c0508a0ba6cdd932104bc5d133b816102b03145d27ffd551d1fd0-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Activia - Pre + Pro + Pro</video:title>
+      <video:description>Activia &quot;Pre + Pro + Pro&quot; commercial directed by Cam Erickson</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223837097</video:player_loc>
+      <video:duration>9</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/gut-support</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197155646-8146ec1a159b3e801db74d712edbf559ce720895ad48089b99895e7c8da2d079-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Activia - Gut Support</video:title>
+      <video:description>Activia &quot;Gut Support&quot; commercial directed by Cam Erickson</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223836204</video:player_loc>
+      <video:duration>8</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/pull-over</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197157834-dc81a055568e8c2919af12a369857cd9369f774ee69fdecdc8531e8c4a4a9967-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Ludacris - Pull Over</video:title>
+      <video:description>Ludacris &quot;Pull Over&quot; music video directed by Cam Erickson</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223838483</video:player_loc>
+      <video:duration>181</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/nige-witt</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197158185-3d3f095c133373ee846e1f7bd0c20bbe3e34b7cb5194b6f7c6aba4f1dd02313b-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Nige Witt</video:title>
+      <video:description>Nige Witt music video directed by Cam Erickson</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223838683</video:player_loc>
+      <video:duration>182</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/redrum</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197157110-37e643cb9569a642a00a12c9e90f8fe184bc0f999a8b260866c02061670a18b8-d_1280?region=us</video:thumbnail_loc>
+      <video:title>HXG - Redrum</video:title>
+      <video:description>HXG &quot;Redrum&quot; music video directed by Cam Erickson</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223838096</video:player_loc>
+      <video:duration>191</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/marianne</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197158033-0527004f901d18a6ebdb73d52be736e7bd975991831a7862a3131bd158de1b1a-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Fontaines D.C. - Marianne</video:title>
+      <video:description>Fontaines D.C. &quot;Marianne&quot; music video directed by Cam Erickson</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223837647</video:player_loc>
+      <video:duration>222</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/cam/anytime-anyplace</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197158637-39fa58e8ef4706db0e46c510b9b4ecf8412f30613a0a7cf5bd5ff2e6c727679a-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Anytime Anyplace</video:title>
+      <video:description>Anytime Anyplace music video directed by Cam Erickson</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223837578</video:player_loc>
+      <video:duration>160</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jacob</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177992177-ff6affcdca2550650f6a055291bcdafb072e11ca19c4dcf68f5032ed4c784003-d_1280?region=us</image:loc>
+      <image:caption>Pocket &quot;Rest Your Case&quot; commercial directed by Jacob Frost</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2195916042-fb29e964cb17f498220a12e72e51a13f1c4d58ff99bc2a731a103cc9f4320dbb-d_1280?region=us</image:loc>
+      <image:caption>Ford &quot;Flying Cars&quot; commercial directed by Jacob Frost</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280?region=us</image:loc>
+      <image:caption>Arc&#x27;teryx &quot;A City to Summit&quot; commercial directed by Jacob Frost</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2195916217-ee2a7cfc96ab8c78534ffd3afa01665545877052f7fcfb0f14516a209f228157-d_1280?region=us</image:loc>
+      <image:caption>PINCH &quot;Just Get the Door&quot; commercial directed by Jacob Frost</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2147773004-bfe04ac45210e7486d3ec60c04f84db2026c53fd35be3f9319ab3f4f770a5d61-d_1280?region=us</image:loc>
+      <image:caption>Onco Optima &quot;Refuse To Leave It To Chance&quot; commercial directed by Jacob Frost</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280?region=us</image:loc>
+      <image:caption>Wabi &quot;When Did We Stop Playing&quot; commercial directed by Jacob Frost</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2129030620-e34b7e0c8001f6efcbcb482157f38106e4e2d3c1037a7a1a0a6c7c923f294342-d_1280?region=us</image:loc>
+      <image:caption>Pocket &quot;Launch&quot; commercial directed by Jacob Frost</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2195916594-1bd9691db02a64b986ce1d76df37acde76d565d4091969888dc3c03f9dd72f4a-d_1280?region=us</image:loc>
+      <image:caption>FARE &quot;Behind The Bowl&quot; commercial directed by Jacob Frost</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2167332209-2e6e17f30b93c08b842d27b71c059107ec92ba441d1f37f630c59ddbab7e6362-d_1280?region=us</image:loc>
+      <image:caption>Archer Money &quot;Here&#x27;s Your F**king Money&quot; commercial directed by Jacob Frost</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jacob/rest-your-case</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177992177-ff6affcdca2550650f6a055291bcdafb072e11ca19c4dcf68f5032ed4c784003-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Pocket - Rest Your Case</video:title>
+      <video:description>Pocket &quot;Rest Your Case&quot; commercial directed by Jacob Frost</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1208625811?h=2c1db8183d</video:player_loc>
+      <video:duration>37</video:duration>
+      <video:publication_date>2026-07-09</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jacob/flying-cars</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2195916042-fb29e964cb17f498220a12e72e51a13f1c4d58ff99bc2a731a103cc9f4320dbb-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Ford - Flying Cars</video:title>
+      <video:description>Ford &quot;Flying Cars&quot; commercial directed by Jacob Frost</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1222851398</video:player_loc>
+      <video:duration>15</video:duration>
+      <video:publication_date>2026-08-31</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jacob/a-city-to-summit</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Arc&#x27;teryx - A City to Summit</video:title>
+      <video:description>Arc&#x27;teryx &quot;A City to Summit&quot; commercial directed by Jacob Frost</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1141586908</video:player_loc>
+      <video:duration>23</video:duration>
+      <video:publication_date>2025-11-29</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jacob/just-get-the-door</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2195916217-ee2a7cfc96ab8c78534ffd3afa01665545877052f7fcfb0f14516a209f228157-d_1280?region=us</video:thumbnail_loc>
+      <video:title>PINCH - Just Get the Door</video:title>
+      <video:description>PINCH &quot;Just Get the Door&quot; commercial directed by Jacob Frost</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1222851523</video:player_loc>
+      <video:duration>29</video:duration>
+      <video:publication_date>2026-08-31</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jacob/refuse-to-leave-it-to-chance</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2147773004-bfe04ac45210e7486d3ec60c04f84db2026c53fd35be3f9319ab3f4f770a5d61-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Onco Optima - Refuse To Leave It To Chance</video:title>
+      <video:description>Onco Optima &quot;Refuse To Leave It To Chance&quot; commercial directed by Jacob Frost</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1184586128</video:player_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2026-04-19</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jacob/when-did-we-stop-playing</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Wabi - When Did We Stop Playing</video:title>
+      <video:description>Wabi &quot;When Did We Stop Playing&quot; commercial directed by Jacob Frost</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1161268499</video:player_loc>
+      <video:duration>81</video:duration>
+      <video:publication_date>2026-02-02</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jacob/launch</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2129030620-e34b7e0c8001f6efcbcb482157f38106e4e2d3c1037a7a1a0a6c7c923f294342-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Pocket - Launch</video:title>
+      <video:description>Pocket &quot;Launch&quot; commercial directed by Jacob Frost</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1170047221?h=6ac82c19db</video:player_loc>
+      <video:duration>56</video:duration>
+      <video:publication_date>2026-03-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jacob/behind-the-bowl</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2195916594-1bd9691db02a64b986ce1d76df37acde76d565d4091969888dc3c03f9dd72f4a-d_1280?region=us</video:thumbnail_loc>
+      <video:title>FARE - Behind The Bowl</video:title>
+      <video:description>FARE &quot;Behind The Bowl&quot; commercial directed by Jacob Frost</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1222851861</video:player_loc>
+      <video:duration>90</video:duration>
+      <video:publication_date>2026-08-31</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jacob/here-s-your-f-king-money</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2167332209-2e6e17f30b93c08b842d27b71c059107ec92ba441d1f37f630c59ddbab7e6362-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Archer Money - Here&#x27;s Your F**king Money</video:title>
+      <video:description>Archer Money &quot;Here&#x27;s Your F**king Money&quot; commercial directed by Jacob Frost</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1200282915?h=ffeabc1665</video:player_loc>
+      <video:duration>43</video:duration>
+      <video:publication_date>2026-06-10</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_1280?region=us</image:loc>
+      <image:caption>True Value &quot;Your Project, Your Way&quot; commercial directed by Jon Schwartz</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2119572983-69df01103d13ebd094d13d900c46811a6593cd216e062a110c8db70e9876d76f-d_1280?region=us</image:loc>
+      <image:caption>Joybird &quot;Dialed In&quot; commercial directed by Jon Schwartz</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2119582199-472fab5f51cb7067e67690e5c9cb646647faccb37fb535daaeab7e140722e139-d_1280?region=us</image:loc>
+      <image:caption>Walmart &quot;Summer Trend&quot; commercial directed by Jon Schwartz</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177842612-1140d7efc92ea4f38ea54b1eef0380818bdc60202f8f25989884d3f61fb0b396-d_1280?region=us</image:loc>
+      <image:caption>Febreze &quot;Fresh Tour&quot; commercial directed by Jon Schwartz</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197133143-934bf4fda3566ce7414f7a70885b2c30722b84a75c55dc46e573d19dac8337a9-d_1280?region=us</image:loc>
+      <image:caption>USAA &quot;Full House of Rewards&quot; commercial directed by Jon Schwartz</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2119568926-449d11f54e69995fe60be558e93a5316d31e524ad5ed703f4b1e2edaf69614af-d_1280?region=us</image:loc>
+      <image:caption>Airbnb &quot;Getaways&quot; commercial directed by Jon Schwartz</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2175588663-bd65dc02bb100e88838e36ab4dc75000fb85c02f5eaa038f6180dc1cdc54ab76-d_1280?region=us</image:loc>
+      <image:caption>Google &quot;Travel&quot; commercial directed by Jon Schwartz</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2119581202-7150d90091578a27562849f1b74999c89a63fe464202aea20afc39a7f299f579-d_1280?region=us</image:loc>
+      <image:caption>Walmart &quot;Summer Entertaining&quot; commercial directed by Jon Schwartz</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2175588492-f6ea69ddafea78ebccb4233978c043d24553cfce560591cd236e0279b5d80470-d_1280?region=us</image:loc>
+      <image:caption>Cortland &quot;Love How You Live&quot; commercial directed by Jon Schwartz</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2175588793-fd6e62c7dbbf59ad38317e129dab3bd0ad72e9fa4cdaf0e86b8e03634ba52aa1-d_1280?region=us</image:loc>
+      <image:caption>Helium &quot;Barbershop&quot; commercial directed by Jon Schwartz</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon/your-project-your-way</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2119580512-caef33ee03015a2dfec98615d32735ff60f345f56e32ec9325c4d5bc596ec0ec-d_1280?region=us</video:thumbnail_loc>
+      <video:title>True Value - Your Project, Your Way</video:title>
+      <video:description>True Value &quot;Your Project, Your Way&quot; commercial directed by Jon Schwartz</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1163390482</video:player_loc>
+      <video:duration>15</video:duration>
+      <video:publication_date>2026-02-09</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon/dialed-in</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2119572983-69df01103d13ebd094d13d900c46811a6593cd216e062a110c8db70e9876d76f-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Joybird - Dialed In</video:title>
+      <video:description>Joybird &quot;Dialed In&quot; commercial directed by Jon Schwartz</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1163384182</video:player_loc>
+      <video:duration>30</video:duration>
+      <video:publication_date>2026-02-09</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon/summer-trend</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2119582199-472fab5f51cb7067e67690e5c9cb646647faccb37fb535daaeab7e140722e139-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Walmart - Summer Trend</video:title>
+      <video:description>Walmart &quot;Summer Trend&quot; commercial directed by Jon Schwartz</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1163391188</video:player_loc>
+      <video:duration>20</video:duration>
+      <video:publication_date>2026-02-09</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon/fresh-tour</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177842612-1140d7efc92ea4f38ea54b1eef0380818bdc60202f8f25989884d3f61fb0b396-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Febreze - Fresh Tour</video:title>
+      <video:description>Febreze &quot;Fresh Tour&quot; commercial directed by Jon Schwartz</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1208506341</video:player_loc>
+      <video:duration>30</video:duration>
+      <video:publication_date>2026-07-09</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon/full-house-of-rewards</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197133143-934bf4fda3566ce7414f7a70885b2c30722b84a75c55dc46e573d19dac8337a9-d_1280?region=us</video:thumbnail_loc>
+      <video:title>USAA - Full House of Rewards</video:title>
+      <video:description>USAA &quot;Full House of Rewards&quot; commercial directed by Jon Schwartz</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223819583</video:player_loc>
+      <video:duration>15</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon/getaways</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2119568926-449d11f54e69995fe60be558e93a5316d31e524ad5ed703f4b1e2edaf69614af-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Airbnb - Getaways</video:title>
+      <video:description>Airbnb &quot;Getaways&quot; commercial directed by Jon Schwartz</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1163382779</video:player_loc>
+      <video:duration>30</video:duration>
+      <video:publication_date>2026-02-09</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon/travel</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2175588663-bd65dc02bb100e88838e36ab4dc75000fb85c02f5eaa038f6180dc1cdc54ab76-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Google - Travel</video:title>
+      <video:description>Google &quot;Travel&quot; commercial directed by Jon Schwartz</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1206678657</video:player_loc>
+      <video:duration>31</video:duration>
+      <video:publication_date>2026-07-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon/summer-entertaining</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2119581202-7150d90091578a27562849f1b74999c89a63fe464202aea20afc39a7f299f579-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Walmart - Summer Entertaining</video:title>
+      <video:description>Walmart &quot;Summer Entertaining&quot; commercial directed by Jon Schwartz</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1163390792</video:player_loc>
+      <video:duration>15</video:duration>
+      <video:publication_date>2026-02-09</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon/love-how-you-live</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2175588492-f6ea69ddafea78ebccb4233978c043d24553cfce560591cd236e0279b5d80470-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Cortland - Love How You Live</video:title>
+      <video:description>Cortland &quot;Love How You Live&quot; commercial directed by Jon Schwartz</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1206678348</video:player_loc>
+      <video:duration>30</video:duration>
+      <video:publication_date>2026-07-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/jon/barbershop</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2175588793-fd6e62c7dbbf59ad38317e129dab3bd0ad72e9fa4cdaf0e86b8e03634ba52aa1-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Helium - Barbershop</video:title>
+      <video:description>Helium &quot;Barbershop&quot; commercial directed by Jon Schwartz</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1206678656</video:player_loc>
+      <video:duration>15</video:duration>
+      <video:publication_date>2026-07-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/max</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2195092897-9a6785a8fe877ac952a8b7f731dd95660a7d5889dd56aad19942dbe267a083b1-d_1280?region=us</image:loc>
+      <image:caption>NFLPA &quot;&#x27;26 Rookie Premiere&quot; commercial directed by Max Gilberg</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2195093028-d3b380ddf35e987dba42774c284c5e04250f4bd3e8dd5db4ee24192601d34837-d_1280?region=us</image:loc>
+      <image:caption>Powerade &quot;Hero&quot; commercial directed by Max Gilberg</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2197159376-445f70b1d2a6804db30e1db69334097afa05ce1e39a28b827381ca9bfe002c47-d_1280?region=us</image:loc>
+      <image:caption>New Era &quot;Take it Easy&quot; commercial directed by Max Gilberg</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2195092961-2a542997bf31b0869881202ec0d013bdf6fe0560c5aea1033fc39805fce85ea7-d_1280?region=us</image:loc>
+      <image:caption>Cleveland Browns &quot;2025 Intro&quot; commercial directed by Max Gilberg</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/max/26-rookie-premiere</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2195092897-9a6785a8fe877ac952a8b7f731dd95660a7d5889dd56aad19942dbe267a083b1-d_1280?region=us</video:thumbnail_loc>
+      <video:title>NFLPA - &#x27;26 Rookie Premiere</video:title>
+      <video:description>NFLPA &quot;&#x27;26 Rookie Premiere&quot; commercial directed by Max Gilberg</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1222196280</video:player_loc>
+      <video:duration>64</video:duration>
+      <video:publication_date>2026-08-28</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/max/hero</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2195093028-d3b380ddf35e987dba42774c284c5e04250f4bd3e8dd5db4ee24192601d34837-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Powerade - Hero</video:title>
+      <video:description>Powerade &quot;Hero&quot; commercial directed by Max Gilberg</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1222196377</video:player_loc>
+      <video:duration>85</video:duration>
+      <video:publication_date>2026-08-28</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/max/take-it-easy</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197159376-445f70b1d2a6804db30e1db69334097afa05ce1e39a28b827381ca9bfe002c47-d_1280?region=us</video:thumbnail_loc>
+      <video:title>New Era - Take it Easy</video:title>
+      <video:description>New Era &quot;Take it Easy&quot; commercial directed by Max Gilberg</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223840273</video:player_loc>
+      <video:duration>46</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/max/2025-intro</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2195092961-2a542997bf31b0869881202ec0d013bdf6fe0560c5aea1033fc39805fce85ea7-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Cleveland Browns - 2025 Intro</video:title>
+      <video:description>Cleveland Browns &quot;2025 Intro&quot; commercial directed by Max Gilberg</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1222196283</video:player_loc>
+      <video:duration>83</video:duration>
+      <video:publication_date>2026-08-28</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2221556408-ad9070db903881fda7d8eebec371c1feae7910c4fd36707473c8eb3a5470977c-d_1280?region=us</image:loc>
+      <image:caption>Chicago Blackhawks &quot;The Spirit of Chicago&quot; commercial directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2175521266-3ed99257ed0088a578edb627ee59e6b279f57bed6d461416c39dca3497c30039-d_1280?region=us</image:loc>
+      <image:caption>7Eleven &quot;The Summer Smash&quot; commercial directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2175516665-183f9b0933f451afde3290959ff2c5eda961b31b34110404f0e5431d309e17cd-d_1280?region=us</image:loc>
+      <image:caption>Sour Boss &quot;Elevator Pitch&quot; commercial directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2175520138-70434d76a3eeb185a10d7d2745cec8453695e6aa4934b416f3c13ec14e7728f4-d_1280?region=us</image:loc>
+      <image:caption>Chicago Cubs x Lyrical Lemonade &quot;Launch&quot; commercial directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2175519821-5692f07e73bfe30afa011e37199691c4d9d40d6451e5aadc07bd6db544a5c847-d_1280?region=us</image:loc>
+      <image:caption>RAW &quot;Anything but Ordinary&quot; commercial directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2175515992-b386993f2a6d7dcf9179096718e29c164ac4d8ff973bbc326804586b8013621b-d_1280?region=us</image:loc>
+      <image:caption>Everything, All At Once commercial directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2175517564-e98db865532e480a87fae5e155e705da24e80b6dc7f9fd7235ec7cf76d3ece1e-d_1280?region=us</image:loc>
+      <image:caption>Lyrical Lemonade &quot;2026 Summer Smash&quot; commercial directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/1876407292-3e281d559b4429775b83aa447310c4d1580b902471b3e43cf08e8852691fb3da-d_1280?region=us</image:loc>
+      <image:caption>Lyrical Lemonade &quot;Summer Smash 2024&quot; commercial directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2175518422-8c3be9ca53f0bfec3b5baa796d64c99c8d3d6659831c20cd367d5ea4e0af6663-d_1280?region=us</image:loc>
+      <image:caption>Lyrical Lemonade &quot;Summer Smash 2025&quot; commercial directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177129683-c96f9b6e2424895ed9a7fce82e935720efe6d820f9e0c067d3ca5ac278778bab-d_1280?region=us</image:loc>
+      <image:caption>SAILORR &quot;COCONUT (feat. Eem Triplin)&quot; music video directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177128938-e93a3bc7b841d7133936aaff25fc29c1c9167f8fc1851a8456d35c3414a096e4-d_1280?region=us</image:loc>
+      <image:caption>sosocamo &quot;me &amp; you (feat. SoFaygo)&quot; music video directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177159019-f66872b40cb7bfe3b6452063418f08fdd3a36b656158cdc88da28f969707ca82-d_1280?region=us</image:loc>
+      <image:caption>prettifun &quot;Feel Like Uzi&quot; music video directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177132265-423e76b62b68fb010b766d3f54c275570cf2a45d6744738b8dc3056f096a30c3-d_1280?region=us</image:loc>
+      <image:caption>Draft Day &quot;CITY ON FIRE&quot; music video directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177157032-f4ec958c6292c102c2cccf0c6409787c16af89122c5377cd1751c0ff6ed7880a-d_1280?region=us</image:loc>
+      <image:caption>FIG &quot;Seeking For Connection&quot; music video directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177132790-c7d92604fdcab93fa21345953861d9f7947058ed3d515a4901322e7dae0caaeb-d_1280?region=us</image:loc>
+      <image:caption>theMIND &quot;GINA&quot; music video directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177156092-4b76adaae767758506bd1e6621a1541d85f0ed6c22c13ace005896f62b993f35-d_1280?region=us</image:loc>
+      <image:caption>Heartgaze &quot;FUNERAL&quot; music video directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177156612-92dbd34aa7c81aaa924b06da291c284c219a51f6eb42420d3827081866bb035e-d_1280?region=us</image:loc>
+      <image:caption>Dreamer Isioma / The Celestials! &quot;In My Head&quot; music video directed by Noah Keckler</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://i.vimeocdn.com/video/2177155594-01a2c5faec7837a7cd043afb6aba42163d66e38a8db05a50f1047323431f1118-d_1280?region=us</image:loc>
+      <image:caption>Heartgaze &quot;TAMAGOTCHI (feat. Martín Berríos)&quot; music video directed by Noah Keckler</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/the-spirit-of-chicago</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2221556408-ad9070db903881fda7d8eebec371c1feae7910c4fd36707473c8eb3a5470977c-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Chicago Blackhawks - The Spirit of Chicago</video:title>
+      <video:description>Chicago Blackhawks &quot;The Spirit of Chicago&quot; commercial directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1243119225</video:player_loc>
+      <video:duration>43</video:duration>
+      <video:publication_date>2026-11-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/the-summer-smash</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2175521266-3ed99257ed0088a578edb627ee59e6b279f57bed6d461416c39dca3497c30039-d_1280?region=us</video:thumbnail_loc>
+      <video:title>7Eleven - The Summer Smash</video:title>
+      <video:description>7Eleven &quot;The Summer Smash&quot; commercial directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1164238677</video:player_loc>
+      <video:duration>70</video:duration>
+      <video:publication_date>2026-02-12</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/elevator-pitch</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2175516665-183f9b0933f451afde3290959ff2c5eda961b31b34110404f0e5431d309e17cd-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Sour Boss - Elevator Pitch</video:title>
+      <video:description>Sour Boss &quot;Elevator Pitch&quot; commercial directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1164239118</video:player_loc>
+      <video:duration>50</video:duration>
+      <video:publication_date>2026-02-12</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/launch</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2175520138-70434d76a3eeb185a10d7d2745cec8453695e6aa4934b416f3c13ec14e7728f4-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Chicago Cubs x Lyrical Lemonade - Launch</video:title>
+      <video:description>Chicago Cubs x Lyrical Lemonade &quot;Launch&quot; commercial directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1164237797</video:player_loc>
+      <video:duration>65</video:duration>
+      <video:publication_date>2026-02-12</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/anything-but-ordinary</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2175519821-5692f07e73bfe30afa011e37199691c4d9d40d6451e5aadc07bd6db544a5c847-d_1280?region=us</video:thumbnail_loc>
+      <video:title>RAW - Anything but Ordinary</video:title>
+      <video:description>RAW &quot;Anything but Ordinary&quot; commercial directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1164237342</video:player_loc>
+      <video:duration>50</video:duration>
+      <video:publication_date>2026-02-12</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/everything-all-at-once</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2175515992-b386993f2a6d7dcf9179096718e29c164ac4d8ff973bbc326804586b8013621b-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Everything, All At Once</video:title>
+      <video:description>Everything, All At Once commercial directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1205645142</video:player_loc>
+      <video:duration>83</video:duration>
+      <video:publication_date>2026-06-29</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/2026-summer-smash</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2175517564-e98db865532e480a87fae5e155e705da24e80b6dc7f9fd7235ec7cf76d3ece1e-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Lyrical Lemonade - 2026 Summer Smash</video:title>
+      <video:description>Lyrical Lemonade &quot;2026 Summer Smash&quot; commercial directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1205645141</video:player_loc>
+      <video:duration>66</video:duration>
+      <video:publication_date>2026-06-29</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/summer-smash-2024</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/1876407292-3e281d559b4429775b83aa447310c4d1580b902471b3e43cf08e8852691fb3da-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Lyrical Lemonade - Summer Smash 2024</video:title>
+      <video:description>Lyrical Lemonade &quot;Summer Smash 2024&quot; commercial directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1164237076</video:player_loc>
+      <video:duration>27</video:duration>
+      <video:publication_date>2026-02-12</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/summer-smash-2025</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2175518422-8c3be9ca53f0bfec3b5baa796d64c99c8d3d6659831c20cd367d5ea4e0af6663-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Lyrical Lemonade - Summer Smash 2025</video:title>
+      <video:description>Lyrical Lemonade &quot;Summer Smash 2025&quot; commercial directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1164236894</video:player_loc>
+      <video:duration>36</video:duration>
+      <video:publication_date>2026-02-12</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/coconut-feat-eem-triplin</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177129683-c96f9b6e2424895ed9a7fce82e935720efe6d820f9e0c067d3ca5ac278778bab-d_1280?region=us</video:thumbnail_loc>
+      <video:title>SAILORR - COCONUT (feat. Eem Triplin)</video:title>
+      <video:description>SAILORR &quot;COCONUT (feat. Eem Triplin)&quot; music video directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1207935080</video:player_loc>
+      <video:duration>167</video:duration>
+      <video:publication_date>2026-07-07</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/me-and-you-feat-sofaygo</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177128938-e93a3bc7b841d7133936aaff25fc29c1c9167f8fc1851a8456d35c3414a096e4-d_1280?region=us</video:thumbnail_loc>
+      <video:title>sosocamo - me &amp; you (feat. SoFaygo)</video:title>
+      <video:description>sosocamo &quot;me &amp; you (feat. SoFaygo)&quot; music video directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1207935079</video:player_loc>
+      <video:duration>150</video:duration>
+      <video:publication_date>2026-07-07</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/feel-like-uzi</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177159019-f66872b40cb7bfe3b6452063418f08fdd3a36b656158cdc88da28f969707ca82-d_1280?region=us</video:thumbnail_loc>
+      <video:title>prettifun - Feel Like Uzi</video:title>
+      <video:description>prettifun &quot;Feel Like Uzi&quot; music video directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1207960544</video:player_loc>
+      <video:duration>157</video:duration>
+      <video:publication_date>2026-07-07</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/city-on-fire</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177132265-423e76b62b68fb010b766d3f54c275570cf2a45d6744738b8dc3056f096a30c3-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Draft Day - CITY ON FIRE</video:title>
+      <video:description>Draft Day &quot;CITY ON FIRE&quot; music video directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1207937955</video:player_loc>
+      <video:duration>127</video:duration>
+      <video:publication_date>2026-07-07</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/seeking-for-connection</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177157032-f4ec958c6292c102c2cccf0c6409787c16af89122c5377cd1751c0ff6ed7880a-d_1280?region=us</video:thumbnail_loc>
+      <video:title>FIG - Seeking For Connection</video:title>
+      <video:description>FIG &quot;Seeking For Connection&quot; music video directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1207940506</video:player_loc>
+      <video:duration>180</video:duration>
+      <video:publication_date>2026-07-07</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/gina</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177132790-c7d92604fdcab93fa21345953861d9f7947058ed3d515a4901322e7dae0caaeb-d_1280?region=us</video:thumbnail_loc>
+      <video:title>theMIND - GINA</video:title>
+      <video:description>theMIND &quot;GINA&quot; music video directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1207937956</video:player_loc>
+      <video:duration>179</video:duration>
+      <video:publication_date>2026-07-07</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/funeral</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177156092-4b76adaae767758506bd1e6621a1541d85f0ed6c22c13ace005896f62b993f35-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Heartgaze - FUNERAL</video:title>
+      <video:description>Heartgaze &quot;FUNERAL&quot; music video directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1207940505</video:player_loc>
+      <video:duration>197</video:duration>
+      <video:publication_date>2026-07-07</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/in-my-head</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177156612-92dbd34aa7c81aaa924b06da291c284c219a51f6eb42420d3827081866bb035e-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Dreamer Isioma / The Celestials! - In My Head</video:title>
+      <video:description>Dreamer Isioma / The Celestials! &quot;In My Head&quot; music video directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1207940504</video:player_loc>
+      <video:duration>217</video:duration>
+      <video:publication_date>2026-07-07</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://covalentstudios.co/noah/tamagotchi-feat-martin-berrios</loc>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2177155594-01a2c5faec7837a7cd043afb6aba42163d66e38a8db05a50f1047323431f1118-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Heartgaze - TAMAGOTCHI (feat. Martín Berríos)</video:title>
+      <video:description>Heartgaze &quot;TAMAGOTCHI (feat. Martín Berríos)&quot; music video directed by Noah Keckler</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1207940507</video:player_loc>
+      <video:duration>192</video:duration>
+      <video:publication_date>2026-07-07</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/new-era</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2197159376-445f70b1d2a6804db30e1db69334097afa05ce1e39a28b827381ca9bfe002c47-d_1280?region=us</video:thumbnail_loc>
+      <video:title>New Era - Take it Easy</video:title>
+      <video:description>New Era &quot;Take it Easy&quot;. Directed by Max Gilberg. Agency: Major. Covalent Studios.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1223840273</video:player_loc>
+      <video:duration>46</video:duration>
+      <video:publication_date>2026-09-03</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/bo-house</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2174174962-87f9a5a012a9bd00951a8b149e0debeb596bad2f3b43d4ebab238312fe4bf2c9-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Bo House - Villa Peninsula</video:title>
+      <video:description>Bo House &quot;Villa Peninsula&quot;. Directed by Jacob Frost. Covalent Studios.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1205559620</video:player_loc>
+      <video:duration>18</video:duration>
+      <video:publication_date>2026-06-29</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/onco-optima</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2147773004-bfe04ac45210e7486d3ec60c04f84db2026c53fd35be3f9319ab3f4f770a5d61-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Onco Optima - Refuse to Leave It to Chance</video:title>
+      <video:description>Onco Optima &quot;Refuse to Leave It to Chance&quot;. Directed by Jacob Frost. Covalent Studios.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1184586128</video:player_loc>
+      <video:duration>45</video:duration>
+      <video:publication_date>2026-04-19</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/wabi</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2116569980-827a4c9a901fdcce2c94ba3cec07bb31cda14e49b9fc66e30805132417bf6713-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Wabi - When Did We Stop Playing?</video:title>
+      <video:description>Wabi &quot;When Did We Stop Playing?&quot;. Directed by Jacob Frost. Agency: Camp Studios. Covalent Studios.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1161268499</video:player_loc>
+      <video:duration>81</video:duration>
+      <video:publication_date>2026-02-02</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/aesop</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2126179638-f6c354c75518a1be78a136a9d2531222a8d363f2f1dec81d60727825d123bc01-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Aesop - Skin</video:title>
+      <video:description>Aesop &quot;Skin&quot;. Directed by Rob Luedtke. Covalent Studios.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1167988129</video:player_loc>
+      <video:duration>60</video:duration>
+      <video:publication_date>2026-02-25</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/pinch</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2089993227-e000ed9b7ef428ebf6588769ae040780042629649a7118b7c81199783dabe96a-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Pinch - Just Get The Door</video:title>
+      <video:description>Pinch &quot;Just Get The Door&quot;. Directed by Jacob Frost. Covalent Studios.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1140543709</video:player_loc>
+      <video:duration>29</video:duration>
+      <video:publication_date>2025-11-25</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/fare</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2099562557-bf7391e1545c3d2d6c768377715e672ea2aca83ac45a73f3024da8354b2717d3-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Fare - Behind the Bowl</video:title>
+      <video:description>Fare &quot;Behind the Bowl&quot;. Directed by Jacob Frost. Covalent Studios.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1142291147</video:player_loc>
+      <video:duration>90</video:duration>
+      <video:publication_date>2025-12-01</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/arcteryx</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2089031096-1db55212ce8d60b1ffaa49c54beb793e20934cb93e7df1fd0e2ac6ee80619aeb-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Arcteryx - A City to Summit</video:title>
+      <video:description>Arcteryx &quot;A City to Summit&quot;. Directed by Jacob Frost for Arc&#x27;teryx. Covalent Studios.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1141586908</video:player_loc>
+      <video:duration>23</video:duration>
+      <video:publication_date>2025-11-29</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/hyatt</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2099561094-be2875973c8819d32c4faae7afab7681cb8564188b1271444c1a43dabb5315d5-d_1280?region=us</video:thumbnail_loc>
+      <video:title>World of Hyatt</video:title>
+      <video:description>World of Hyatt. Directed by Jacob Frost. Agency: VML. Covalent Studios.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1149097153</video:player_loc>
+      <video:duration>31</video:duration>
+      <video:publication_date>2025-12-23</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/ever</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>https://i.vimeocdn.com/video/2099560891-36e638960a316e25a52fbf66821647feab77b29c0a3930becefced787395728d-d_1280?region=us</video:thumbnail_loc>
+      <video:title>Ever - Here To Be Great</video:title>
+      <video:description>Ever &quot;Here To Be Great&quot;. Directed by Jacob Frost. Covalent Studios.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1141278566</video:player_loc>
+      <video:duration>251</video:duration>
+      <video:publication_date>2025-11-27</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://covalentstudios.co/privacy</loc>
-    <priority>0.3</priority>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.2</priority>
   </url>
   <url>
     <loc>https://covalentstudios.co/terms</loc>
-    <priority>0.3</priority>
-    <changefreq>yearly</changefreq>
+    <lastmod>2026-11-18</lastmod>
+    <priority>0.2</priority>
   </url>
-    <url>
-        <loc>https://covalentstudios.co/cam</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://covalentstudios.co/jacob</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://covalentstudios.co/jon</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://covalentstudios.co/max</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>https://covalentstudios.co/noah</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
 </urlset>

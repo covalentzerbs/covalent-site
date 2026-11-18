@@ -98,6 +98,21 @@ export async function GET(request) {
     html = setMeta(html, 'twitter:description', desc, true);
     html = setMeta(html, 'twitter:image', image, true);
     html = setMeta(html, 'description', desc, true);
+    // this address is the spot's own watch page: its canonical, tab title and one VideoObject
+    html = html.replace(/<link rel="canonical" href="([^"]*)">/, (m, href) => `<link rel="canonical" href="${page}" data-page="${href}">`);
+    html = html.replace(/<title>([^<]*)<\/title>/, (m, t) => `<title data-page="${t}">${attr(heading)} // Covalent Studios</title>`);
+    const ldm = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+    if (ldm) {
+      try {
+        const graph = JSON.parse(ldm[1])['@graph'] || [];
+        const list = graph.find((n) => n['@type'] === 'ItemList');
+        const item = list && list.itemListElement.map((e) => e.item).find((v) => v.url === page);
+        if (item) {
+          const one = { '@context': 'https://schema.org', ...item };
+          html = html.replace('</head>', () => `    <script type="application/ld+json">${JSON.stringify(one).replace(/</g, '\\u003c')}</script>\n</head>`);
+        }
+      } catch {}
+    }
   }
 
   return new Response(html, {
