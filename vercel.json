@@ -6,7 +6,7 @@
       "destination": "/directors"
     },
     {
-      "source": "/:dir(cam|jacob|jon|max|noah)/:clip",
+      "source": "/:dir(cam|jacob|jon|justin|max|noah)/:clip",
       "destination": "/api/share?dir=:dir&clip=:clip"
     },
     {
@@ -61,8 +61,13 @@
       "permanent": true
     },
     {
+      "source": "/directors/justin",
+      "destination": "/justin",
+      "permanent": true
+    },
+    {
       "source": "/directors/justin-kaminuma",
-      "destination": "/directors/justin",
+      "destination": "/justin",
       "permanent": true
     }
   ],
@@ -99,7 +104,7 @@
   ],
   "functions": {
     "api/share.mjs": {
-      "includeFiles": "{cam,jacob,jon,max,noah}.html"
+      "includeFiles": "{cam,jacob,jon,justin,max,noah}.html"
     }
   }
 }

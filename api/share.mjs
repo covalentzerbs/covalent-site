@@ -7,7 +7,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const DIRS = new Set(['cam', 'jacob', 'jon', 'max', 'noah']);
+const DIRS = new Set(['cam', 'jacob', 'jon', 'justin', 'max', 'noah']);
 const SITE = 'https://covalentstudios.co';
 
 function decode(s) {
